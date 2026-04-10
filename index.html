@@ -7,12 +7,12 @@
   <meta name="description" content="Personalised AI bedtime stories starring your child. Their name, their world, their adventure — every night. No screens, no repeats, no making one up at 9pm." />
   <meta property="og:title" content="Yonder — Bedtime stories made just for them" />
   <meta property="og:description" content="Personalised bedtime stories starring your child. New every night. Coming soon to iOS and Android." />
-  <meta property="og:image" content="/public/yonder-logo.png" />
-  <link rel="icon" href="/public/app-icon.png" type="image/png" />
+  <meta property="og:image" content="public/yonder-logo.png" />
+  <link rel="icon" href="public/app-icon.png" type="image/png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,12 +64,11 @@
       -webkit-backdrop-filter: blur(8px);
     }
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      font-weight: 400;
+      font-family: 'Pacifico', cursive;
+      font-size: 22px;
       color: var(--parchment);
-      letter-spacing: -0.01em;
       text-decoration: none;
+      letter-spacing: 0;
     }
     .nav-cta {
       background: var(--accent);
@@ -811,10 +810,58 @@
     }
     .pain-item:hover { background: rgba(255,248,240,0.03); }
 
+    /* ─── NOT SCREENTIME STRIP ───────────────────────────────────────────── */
+    .noscreen-strip {
+      padding: 56px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .noscreen-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .noscreen-item {
+      flex: 1;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 0 40px;
+    }
+    .noscreen-item:first-child { padding-left: 0; }
+    .noscreen-item:last-child  { padding-right: 0; }
+    .noscreen-icon {
+      font-size: 26px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .noscreen-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .noscreen-body {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .noscreen-divider {
+      width: 1px;
+      align-self: stretch;
+      background: var(--border);
+      flex-shrink: 0;
+      margin: 4px 0;
+    }
+
     /* ─── RESPONSIVE ──────────────────────────────────────────────────────── */
     @media (max-width: 900px) {
       .container { padding: 0 24px; }
       nav { padding: 14px 24px; }
+      .noscreen-inner { flex-direction: column; gap: 32px; }
+      .noscreen-item { padding: 0 !important; }
+      .noscreen-divider { width: 100%; height: 1px; align-self: auto; margin: 0; }
       .problem-inner { grid-template-columns: 1fr; gap: 48px; }
       .features-grid { grid-template-columns: 1fr 1fr; }
       .feature-card:first-child { border-radius: 20px 0 0 0; }
@@ -861,7 +908,7 @@
 <!-- HERO -->
 <section class="hero">
   <img
-    src="/public/yonder-logo.png"
+    src="public/yonder-logo.png"
     alt="Yonder"
     class="hero-logo"
     id="hero-logo"
@@ -874,13 +921,13 @@
   </div>
 
   <h1 class="hero-headline">
-    Bedtime stories. <em>Not</em> screentime.
+    Bedtime stories starring <em>your child,</em> read aloud.
   </h1>
 
   <p class="hero-sub">
-    Every night, a new story — starring your child by name, with their companions
-    and their world at the centre of every adventure. Played aloud, lights off,
-    while they drift off to sleep.
+    A new story every night — their name, their world, their adventure.
+    Played aloud while they drift off to sleep.
+    No screen. No ads. No "just one more."
   </p>
 
   <div class="hero-actions">
@@ -900,6 +947,37 @@
     </div>
   </div>
   </div><!-- /hero-content -->
+</section>
+
+<!-- NOT SCREENTIME STRIP -->
+<section class="noscreen-strip">
+  <div class="container">
+    <div class="noscreen-inner reveal">
+      <div class="noscreen-item">
+        <div class="noscreen-icon">🌙</div>
+        <div>
+          <div class="noscreen-title">Audio only</div>
+          <div class="noscreen-body">Stories play aloud. Phone face-down, lights off — your child never looks at a screen.</div>
+        </div>
+      </div>
+      <div class="noscreen-divider"></div>
+      <div class="noscreen-item">
+        <div class="noscreen-icon">🚫</div>
+        <div>
+          <div class="noscreen-title">No ads. No badges. No hooks.</div>
+          <div class="noscreen-body">Nothing designed to keep them awake or coming back. Yonder is built to get them to sleep.</div>
+        </div>
+      </div>
+      <div class="noscreen-divider"></div>
+      <div class="noscreen-item">
+        <div class="noscreen-icon">😴</div>
+        <div>
+          <div class="noscreen-title">Designed to slow them down</div>
+          <div class="noscreen-body">Calm pace, gentle arc, quiet ending. Every story is written to drift children off, not engage them.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- PROBLEM -->
