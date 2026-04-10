@@ -109,12 +109,16 @@
     }
 
     .hero-logo {
-      /* mix-blend-mode: screen makes the black background transparent,
-         leaving only the white yonder wordmark + stars visible */
-      width: clamp(280px, 55vw, 520px);
-      mix-blend-mode: screen;
-      margin-bottom: 8px;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(80px, 16vw, 160px);
+      color: var(--parchment);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
       animation: fadeIn 1.2s ease-out both;
+      text-shadow:
+        0 0 80px rgba(232,168,56,0.2),
+        0 0 160px rgba(232,168,56,0.08);
     }
 
     .hero-badge {
@@ -262,77 +266,78 @@
     .problem-right {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px 32px;
-    }
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-row:first-child { padding-top: 0; }
-    .stat-row:last-child  { border-bottom: none; padding-bottom: 0; }
-    .stat-label {
-      font-size: 14px;
-      font-weight: 300;
-      color: var(--text-2);
-    }
-    .stat-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px;
-      font-weight: 400;
-      color: var(--parchment);
-      line-height: 1;
-    }
-    .stat-muted { color: var(--text-2); }
-    .stat-zero  { color: #C46060; }
-    .stat-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 4px 0;
     }
 
-    /* Cast card */
-    .stat-cast-label {
-      font-size: 10px;
+    /* Cover art showcase */
+    .cover-showcase {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(255,248,240,0.06);
+    }
+    .cover-showcase-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cover-showcase-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(10,12,35,0.7) 65%,
+        rgba(10,12,35,0.96) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+    }
+    .cover-showcase-meta {
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 6px;
+      color: var(--accent);
+      margin-bottom: 10px;
     }
-    .stat-cast-title {
+    .cover-showcase-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 28px;
       font-weight: 500;
       font-style: italic;
-      margin-bottom: 16px;
       line-height: 1.2;
+      margin-bottom: 8px;
     }
-    .stat-cast-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-cast-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .stat-cast-key {
+    .cover-showcase-cast {
       font-size: 13px;
       font-weight: 300;
       color: var(--text-2);
+      margin-bottom: 20px;
     }
-    .stat-cast-val {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--parchment);
+    .cover-showcase-play {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cover-showcase-play-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      color: #0F1230;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .cover-showcase-play span {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-2);
+      font-style: italic;
     }
 
     /* ─── SCREENS / PHONE MOCKUPS ─────────────────────────────────────────── */
@@ -877,11 +882,9 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
 
-    /* Stat card hover */
-    .stat-card {
-      transition: border-color 0.25s;
-    }
-    .stat-card:hover { border-color: var(--border-2); }
+    /* Cover showcase hover */
+    .cover-showcase { transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+    .cover-showcase:hover { transform: translateY(-4px); }
 
     /* ─── NOT SCREENTIME STRIP ───────────────────────────────────────────── */
     .noscreen-strip {
@@ -910,15 +913,15 @@
     }
     .noscreen-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 26px;
       font-weight: 500;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .noscreen-body {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 300;
       color: var(--text-2);
-      line-height: 1.7;
+      line-height: 1.75;
     }
     .noscreen-divider {
       width: 1px;
@@ -980,12 +983,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img
-    src="public/yonder-logo.png"
-    alt="Yonder"
-    class="hero-logo"
-    id="hero-logo"
-  />
+  <div class="hero-logo" id="hero-logo">yonder</div>
 
   <div id="hero-content" style="display:contents">
   <div class="hero-badge">
@@ -1061,48 +1059,23 @@
         <p class="problem-eyebrow">Sound familiar?</p>
         <h2 class="problem-heading">You bought the story box.<br>We know the feeling.</h2>
         <div class="problem-body">
-          <p>Those little boxes look great. The idea is wonderful. But the figures lose their novelty, the cards get boring, and loading a custom story is more effort than it should be. <strong>There's no shuffle. No variety.</strong> New packs cost a fortune, take weeks to arrive, and end up scattered around the room.</p>
+          <p>Those little boxes look great. The idea is wonderful. But the figures lose their novelty, the cards get boring, and loading a custom story is more effort than it should be. <strong>There's no shuffle. No variety.</strong> New packs cost a fortune and end up scattered around the room.</p>
           <p>And somehow, despite everything, at 8:45pm they still want you to <strong>make one up.</strong> Tonight. When you're already half-asleep yourself.</p>
           <p>Yonder is what you were hoping that box would be — except the stories never run out, and your child is always the hero.</p>
         </div>
       </div>
 
       <div class="problem-right reveal reveal-delay-2">
-        <div class="stat-card">
-          <div class="stat-row">
-            <span class="stat-label">Story packs bought</span>
-            <span class="stat-value">3</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Stories available</span>
-            <span class="stat-value">24</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Times heard this week</span>
-            <span class="stat-value stat-muted">47</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-row">
-            <span class="stat-label">New stories this month</span>
-            <span class="stat-value stat-zero">0</span>
-          </div>
-        </div>
-
-        <div class="stat-card stat-card-2">
-          <div class="stat-cast-label">Tonight's story</div>
-          <div class="stat-cast-title">The Dragon of Whispering Wood</div>
-          <div class="stat-cast-row">
-            <span class="stat-cast-key">Starring</span>
-            <span class="stat-cast-val">Tim</span>
-          </div>
-          <div class="stat-cast-row">
-            <span class="stat-cast-key">Also featuring</span>
-            <span class="stat-cast-val">Tim's friends</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-cast-row">
-            <span class="stat-cast-key">Your child appears</span>
-            <span class="stat-cast-val stat-zero">0 times</span>
+        <div class="cover-showcase">
+          <img src="public/cover-rose.png" class="cover-showcase-img" alt="Rose and the Door at the Bottom of the Garden" />
+          <div class="cover-showcase-overlay">
+            <div class="cover-showcase-meta">fairy tale · 8 min</div>
+            <div class="cover-showcase-title">Rose and the Door at the Bottom of the Garden</div>
+            <div class="cover-showcase-cast">starring Rose, Teddy &amp; Mr Bitey</div>
+            <div class="cover-showcase-play">
+              <div class="cover-showcase-play-btn">▶</div>
+              <span>Generated just for her</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1134,10 +1107,10 @@
               <img src="public/avatar-rose.png" class="sc-avatar-img" alt="Rose" />
               <div style="flex:1">
                 <div class="sc-name-chip">
-                  <small>Child's name</small>
-                  Rose, 4 · Amsterdam
+                  <small>Child's name · age</small>
+                  Rose · 4
                 </div>
-                <div class="sc-about">Pink &amp; purple lover · pizza fan</div>
+                <div class="sc-about">Amsterdam · pink &amp; purple · 🍕</div>
               </div>
             </div>
             <div class="sc-section-label">Interests</div>
