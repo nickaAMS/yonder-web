@@ -417,6 +417,19 @@
       background: linear-gradient(135deg, #D4837A, #E8A838);
       flex-shrink: 0;
     }
+    .sc-avatar-img {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--border-2);
+    }
+    .sc-about {
+      font-size: 9px;
+      color: var(--text-3);
+      margin-top: 3px;
+      padding-left: 1px;
+    }
     .sc-name-chip {
       background: var(--elevated);
       border: 1px solid var(--border-2);
@@ -478,16 +491,25 @@
       color: var(--accent);
     }
     .sc-mood-card .mood-emoji { font-size: 16px; display: block; margin-bottom: 3px; }
-    .sc-textarea {
+    .sc-textarea-wrap {
       background: var(--elevated);
       border: 1px solid var(--border-2);
       border-radius: 10px;
-      padding: 10px;
+      padding: 9px 10px 6px;
+      margin-bottom: 9px;
+    }
+    .sc-textarea {
       font-size: 10px;
       color: var(--text-2);
       line-height: 1.5;
-      margin-bottom: 10px;
       font-family: inherit;
+    }
+    .sc-inspire {
+      font-size: 9px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 5px;
+      letter-spacing: 0.03em;
     }
     .sc-generate-btn {
       width: 100%;
@@ -510,6 +532,15 @@
       position: relative;
       overflow: hidden;
       background: linear-gradient(135deg, #1A1F4B 0%, #2D1B4B 50%, #1B3B4B 100%);
+    }
+    .sc-cover-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute; inset: 0;
+      border-radius: 14px;
+    }
+    .sc-cover-fallback {
+      position: absolute; inset: 0;
     }
     .sc-cover-stars {
       position: absolute; inset: 0;
@@ -641,16 +672,15 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 40px;
-      position: relative;
-    }
-    .steps::before {
-      content: '';
-      position: absolute;
-      top: 28px; left: calc(16.6% + 20px); right: calc(16.6% + 20px);
-      height: 1px;
-      background: linear-gradient(to right, var(--accent) 0%, rgba(232,168,56,0.2) 100%);
     }
     .step { text-align: center; }
+    .step-number-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      gap: 0;
+    }
     .step-number {
       width: 56px; height: 56px;
       border-radius: 50%;
@@ -660,8 +690,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 22px;
       color: var(--accent);
-      margin: 0 auto 24px;
-      position: relative; z-index: 1;
+      flex-shrink: 0;
     }
     .step-title {
       font-family: 'Cormorant Garamond', serif;
@@ -1102,28 +1131,35 @@
           <div class="phone-content">
             <div class="sc-title">Build <span>Rose's</span><br>story world</div>
             <div class="sc-avatar-row">
-              <div class="sc-avatar"></div>
-              <div>
+              <img src="public/avatar-rose.png" class="sc-avatar-img" alt="Rose" />
+              <div style="flex:1">
                 <div class="sc-name-chip">
                   <small>Child's name</small>
-                  Rose
+                  Rose, 4 · Amsterdam
                 </div>
+                <div class="sc-about">Pink &amp; purple lover · pizza fan</div>
               </div>
             </div>
             <div class="sc-section-label">Interests</div>
             <div class="sc-chips">
-              <div class="sc-chip active">🦕 Dinosaurs</div>
-              <div class="sc-chip active">🐉 Dragons</div>
+              <div class="sc-chip active">🦄 Unicorns</div>
+              <div class="sc-chip active">🧜 Mermaids</div>
+              <div class="sc-chip active">🐱 Cats</div>
               <div class="sc-chip">🧚 Fairies</div>
-              <div class="sc-chip active">🌊 Ocean</div>
-              <div class="sc-chip">🚀 Space</div>
             </div>
-            <div class="sc-section-label">Companion</div>
+            <div class="sc-section-label">Companions</div>
             <div class="sc-companion">
               <div class="sc-companion-emoji">🧸</div>
               <div class="sc-companion-info">
-                <strong>Bunny</strong>
-                <span>A small stuffed rabbit who is very brave</span>
+                <strong>Teddy</strong>
+                <span>Her favourite stuffed bear</span>
+              </div>
+            </div>
+            <div class="sc-companion" style="margin-top:5px">
+              <div class="sc-companion-emoji">🐈</div>
+              <div class="sc-companion-info">
+                <strong>Mr Bitey</strong>
+                <span>Her grey cat</span>
               </div>
             </div>
           </div>
@@ -1144,24 +1180,25 @@
             <span class="phone-status-icons">▲ ◆ ▮</span>
           </div>
           <div class="phone-content">
-            <div class="sc-title" style="margin-bottom:12px;">Tonight's<br>adventure</div>
-            <div class="sc-section-label" style="margin-bottom:8px;">Mood or theme</div>
+            <div class="sc-title" style="margin-bottom:10px;">Tonight's<br>adventure</div>
+            <div class="sc-section-label" style="margin-bottom:7px;">Mood or theme</div>
             <div class="sc-mood-grid">
-              <div class="sc-mood-card active">
-                <span class="mood-emoji">🌙</span>Bedtime
+              <div class="sc-mood-card">
+                <span class="mood-emoji">😈</span>Mischief
               </div>
               <div class="sc-mood-card">
                 <span class="mood-emoji">⚔️</span>Quest
               </div>
               <div class="sc-mood-card">
-                <span class="mood-emoji">🦕</span>Dinosaurs
-              </div>
-              <div class="sc-mood-card">
                 <span class="mood-emoji">🐉</span>Dragons
               </div>
+              <div class="sc-mood-card active">
+                <span class="mood-emoji">🧚</span>Fairy tale
+              </div>
             </div>
-            <div class="sc-textarea">
-              Rose and Bunny discover a tiny door at the bottom of the garden...
+            <div class="sc-textarea-wrap">
+              <div class="sc-textarea">Rose finds a hidden door in the enchanted forest — but the Big Bad Wolf has a different plan...</div>
+              <div class="sc-inspire">✦ inspire me</div>
             </div>
             <div class="sc-generate-btn">✦ Generate story</div>
           </div>
@@ -1169,7 +1206,7 @@
         <div class="phone-caption">
           <div class="phone-caption-num">02</div>
           <div class="phone-caption-title">Pick the adventure</div>
-          <div class="phone-caption-body">Choose the mood. Add a spark if you want. Tap generate.</div>
+          <div class="phone-caption-body">Choose the mood. Write a spark or tap "inspire me." Then generate.</div>
         </div>
       </div>
 
@@ -1183,11 +1220,14 @@
           </div>
           <div class="phone-content">
             <div class="sc-cover">
-              <div class="sc-cover-stars"></div>
-              <div class="sc-cover-title">Rose and the Door at the Bottom of the Garden</div>
+              <img src="public/cover-rose.png" class="sc-cover-img" alt="Story cover" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+              <div class="sc-cover-fallback">
+                <div class="sc-cover-stars"></div>
+                <div class="sc-cover-title">Rose and the Door at the Bottom of the Garden</div>
+              </div>
             </div>
             <div class="sc-story-title">Rose and the Door<br>at the Bottom of the Garden</div>
-            <div class="sc-story-meta">8 min · bedtime · Rose, Bunny</div>
+            <div class="sc-story-meta">8 min · fairy tale · Rose, Teddy, Mr Bitey</div>
             <div class="sc-progress-bar">
               <div class="sc-progress-fill"></div>
             </div>
@@ -1200,8 +1240,8 @@
         </div>
         <div class="phone-caption">
           <div class="phone-caption-num">03</div>
-          <div class="phone-caption-title">Listen together</div>
-          <div class="phone-caption-body">Phone face-down. Lights off. Story plays — they drift away.</div>
+          <div class="phone-caption-title">Queue up tonight's stories</div>
+          <div class="phone-caption-body">Phone face-down, Chromecast, or Bluetooth speaker. Lights off. They drift away.</div>
         </div>
       </div>
 
@@ -1272,8 +1312,8 @@
       </div>
       <div class="step reveal reveal-delay-2">
         <div class="step-number">3</div>
-        <div class="step-title">Listen together</div>
-        <div class="step-body">The story plays aloud — calm, slow, paced for sleep. Put the phone down. Turn off the light. Let them drift away into their own adventure.</div>
+        <div class="step-title">Queue up tonight's stories</div>
+        <div class="step-body">The story plays aloud — calm, slow, paced for sleep. Phone face-down, Bluetooth speaker, or Chromecast. Lights off. They drift away.</div>
       </div>
     </div>
   </div>
