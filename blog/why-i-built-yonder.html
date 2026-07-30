@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- NOTE: absolute URLs below use https://yonder-web-review.vercel.app as a placeholder — update when the production domain is chosen -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Why I built Yonder | Yonder</title>
+  <meta name="description" content="My daughter wanted a bedtime story about a narwhal who was also a firefighter, and unicorns. It was 7:45pm, and that was the brief that started Yonder.">
+  <link rel="canonical" href="https://yonder-web-review.vercel.app/blog/why-i-built-yonder.html">
+  <meta property="og:title" content="Why I built Yonder">
+  <meta property="og:description" content="My daughter wanted a bedtime story about a narwhal who was also a firefighter, and unicorns. It was 7:45pm, and that was the brief that started Yonder.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yonder-web-review.vercel.app/blog/why-i-built-yonder.html">
+  <meta property="og:image" content="https://yonder-web-review.vercel.app/public/illustrations/family-bedtime.webp">
+  <meta property="article:published_time" content="2026-07-30">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Why I built Yonder">
+  <meta name="twitter:description" content="My daughter wanted a bedtime story about a narwhal who was also a firefighter, and unicorns. It was 7:45pm, and that was the brief that started Yonder.">
+  <meta name="twitter:image" content="https://yonder-web-review.vercel.app/public/illustrations/family-bedtime.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:oklch(16% .035 275);--night:oklch(21% .045 275);--paper:oklch(95% .025 77);--cream:oklch(88% .04 72);--honey:oklch(76% .13 72);--rose:oklch(59% .09 25);--mist:oklch(82% .018 72);--line:oklch(90% .03 75/.18);--serif:"Cormorant Garamond",Georgia,serif;--sans:"Plus Jakarta Sans",Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:16px;line-height:1.6}a{color:inherit}button,a{font:inherit}
+    .skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;z-index:9;background:var(--paper);color:var(--ink);padding:.7rem 1rem;border-radius:.5rem}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.25rem clamp(1.25rem,4vw,4rem);border-bottom:1px solid var(--line)}
+    .wordmark{font:600 2rem/1 var(--serif);text-decoration:none;letter-spacing:-.04em;color:var(--paper)}
+    .nav-links{display:flex;align-items:center;gap:1.25rem}
+    .nav-link{color:var(--mist);text-decoration:none;font-weight:600;font-size:.85rem}
+    .nav-link:hover,.nav-link.is-active{color:var(--paper);text-decoration:underline}
+    .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--honey);border-radius:999px;padding:.65rem 1.1rem;text-decoration:none;font-weight:700;font-size:.82rem;color:var(--honey);background:transparent;transition:transform .2s var(--ease),background .2s,box-shadow .2s}
+    .button:hover{transform:translateY(-2px);background:var(--paper);color:var(--ink);box-shadow:0 12px 26px oklch(10% .02 275/.22)}
+    .eyebrow{color:var(--honey);font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.25rem}
+    article{max-width:40rem;margin:0 auto;padding:clamp(3rem,8vw,5rem) clamp(1.25rem,6vw,2rem) clamp(4rem,9vw,6rem)}
+    .post-date{display:block;color:var(--honey);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.25rem}
+    article h1{font:600 clamp(2.4rem,6vw,3.6rem)/1.06 var(--serif);letter-spacing:-.03em;margin:0 0 2rem}
+    article h2{font:600 clamp(1.5rem,3.4vw,1.9rem)/1.2 var(--serif);letter-spacing:-.02em;margin:2.6rem 0 1.1rem;color:var(--cream)}
+    article p{font-size:1.07rem;line-height:1.75;color:var(--paper);margin:0 0 1.4rem}
+    article p:first-of-type{font-size:1.18rem;color:var(--mist)}
+    .back-link{display:inline-block;margin-top:1rem;color:var(--honey);font-weight:700;font-size:.85rem;text-decoration:none}
+    .back-link:hover{text-decoration:underline}
+    .footer{padding:1.5rem clamp(1.25rem,4vw,4rem);display:flex;justify-content:space-between;gap:1rem;color:var(--mist);font-size:.72rem;background:var(--night)}
+    .footer a{text-decoration:none;color:inherit}
+    .footer a:hover{text-decoration:underline}
+    @media(max-width:600px){.nav{flex-wrap:wrap}.footer{flex-direction:column;gap:.4rem}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="wordmark" href="../index.html">yonder</a>
+    <div class="nav-links">
+      <a class="nav-link is-active" href="../blog.html">Blog</a>
+      <a class="button" href="../index.html#preview">Request preview access</a>
+    </div>
+  </nav>
+  <main id="main">
+    <article>
+      <span class="post-date">30 July 2026</span>
+      <h1>Why I built Yonder</h1>
+
+      <p>My daughter wanted a story about a narwhal who was also, somehow, a firefighter. And unicorns. There are always unicorns. It was 7:45pm, lights were about to go off, and that was the brief.</p>
+
+      <p>It's probably worth saying what our bedtime actually looks like, because it explains where this fits. We read three books together. Chapters now, rather than books, since she's moved on to bigger ones. Then sometimes a story I make up on the spot. Then the lights go off and she has about forty-five minutes of audio playing while she drifts off.</p>
+
+      <p>Every family's ritual is different and ours has only ended up this way by accident, but the reading part is not the part I was ever looking to replace. It's the audio in the dark bit that I've been fiddling with.</p>
+
+      <p>It started smaller than an app. I wasn't trying to build anything. I was sitting on the edge of her bed with my phone tilted away from her, typing into ChatGPT and reading back whatever came out, because the stories I made up myself had all started to come out the same shape. Same beginning, same rescue, same tidy landing.</p>
+
+      <p>I was using it for ideas. A twist I hadn't thought of. Somewhere for the thing to go next when I'd run dry three sentences in.</p>
+
+      <p>The problem was the next night. And the night after. Her age, the names of her toys and imaginary friends, what she happened to be into that particular week, typed in again from scratch every time, because none of it carries over between chats. Nothing remembered anything.</p>
+
+      <h2>The Toniebox was getting boring</h2>
+
+      <p>The other thing going on was the Toniebox. That's what was filling those forty-five minutes after the lights went off, and she'd had the same handful of stories on it for months. She was visibly bored of them.</p>
+
+      <p>So the obvious thought arrived: the new stories we'd been making up together at bedtime could be the thing playing in the dark, rather than the same tracks again.</p>
+
+      <p>This is the part I've been underselling when I describe it to people. Getting a story narrated is possible on your own. I did it. You paste the text into ElevenLabs, generate the audio, download the file, work out how to get it onto something that plays in her room, build it into a playlist so it doesn't stop dead after four minutes, then set a sleep timer so it isn't still going at midnight.</p>
+
+      <p>Every one of those steps is doable on its own. Stacked together, at 7:45pm, they are not viable. That's the gap between something being possible and something being usable.</p>
+
+      <p>So: is there another way to solve this? Yes, obviously. You can do most things yourself if you're willing to put the work in. But at a child's bedtime you don't want a workaround, you want something easy and quick.</p>
+
+      <h2>What it isn't</h2>
+
+      <p>To say it plainly, since I know how this lands on some people: Yonder is not a replacement for reading to your kid. Keep your books. Keep whatever your routine is.</p>
+
+      <p>It's for the slot after that, when the lights are off and the story has to keep going without you in the room.</p>
+
+      <p>For a lot of families that slot is already filled, just not very well. The same Toniebox track for the four hundredth time. A Spotify story podcast nobody vetted, which may or may not have ads dropped into it. YouTube audio, which almost certainly will. Some kids don't have this slot at all. Plenty do.</p>
+
+      <p>The other question that comes up straight away is what it actually plays on, and getting that right took me far longer than writing any of the stories.</p>
+
+      <p>It works through Alexa, Google Nest and a Yoto Player. A phone or tablet face down with the screen off works perfectly well too, though I know a phone in the bedroom isn't for everyone.</p>
+
+      <h2>Two things that surprised me</h2>
+
+      <p>The first is how small children actually remember stories. They don't remember them by title. My daughter can't tell you the name of a story she loved last week. What she remembers is the picture on the cover. That's what she points at. That's how she asks for it again.</p>
+
+      <p>Once I noticed that, the cover stopped being decoration and became the actual index into the whole library. It sounds obvious written down. It wasn't obvious to me until I watched her do it.</p>
+
+      <p>The second is that the friction in the DIY version was never really about the AI. It was the admin. Re-entering who your child is, who her companions are, what she's into this week, every single time, and then the whole business of getting the audio somewhere useful. An app that already knows those things and hands you a finished thing to press play on removes the chore entirely.</p>
+
+      <p>That's most of the value, honestly. Not smarter writing. Just not having to repeat yourself.</p>
+
+      <h2>The AI objection</h2>
+
+      <p>I get this a lot when I try to describe the app to another parent. I can watch a face contort at the word "AI" before I've finished the sentence. I don't think that reaction is unreasonable, so I try not to argue with it. I'd rather just say what the thing actually does.</p>
+
+      <p>You approve every story before it plays. Nothing goes to your child without you saying yes first, whether that means reading the full text or just the synopsis.</p>
+
+      <p>And I'll be honest about how that goes in practice: past the first story or two, most parents aren't going to read the whole thing. It's only around 500 words, but bedtime is bedtime, and that's their call to make, not mine. So the promise can't rest on a parent standing guard over every story. It has to be in how the stories get written in the first place.</p>
+
+      <p>Stories aren't improvised. They're built to a specification. There are nine named story shapes, with a gentler set of them for two to five year olds. How much peril is allowed in a plot is a deliberate setting, and it's turned right down for the youngest kids. Any villain at that age has to be silly and bumbling rather than frightening. Vocabulary and pacing shift by age band.</p>
+
+      <p>And the one I'd put above all the others: the ending has to resolve before the last beat. No cliffhangers at bedtime. That isn't a nice-to-have, it's a rule, because a story that leaves something hanging in the dark is a mistake, not a hook.</p>
+
+      <p>The story is also written and finished before it plays. Nothing is being generated live while your child is listening. They're listening to a finished story, the same as if it were on a CD.</p>
+
+      <h2>The car</h2>
+
+      <p>One use case I keep wondering about is the car. Nobody's reading a book to their kid while driving, so it's audiobooks, or the same songs on a loop, or a screen bolted to the headrest.</p>
+
+      <p>I live in Amsterdam and don't actually own a car, so I'm probably the worst possible person to answer this one. But it nags at me.</p>
+
+      <h2>What I was actually going for</h2>
+
+      <p>Two things, really. That making the story should be a genuinely nice part of the evening, something you do together and you both enjoy, rather than another bit of admin dressed up. And that using it should be close to nothing: press play, leave the room, done.</p>
+
+      <p>If you give it a go, I hope some of that comes through.</p>
+
+      <h2>Where this is now</h2>
+
+      <p>Yonder isn't launched yet. I'm inviting a small group of families to try it first, mostly because I want to watch how it actually gets used before I decide what to build next.</p>
+
+      <a class="back-link" href="../blog.html">← Back to the blog</a>
+    </article>
+  </main>
+  <footer class="footer"><span>© 2026 Yonder · Amsterdam</span><span><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a></span></footer>
+</body>
+</html>

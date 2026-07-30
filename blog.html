@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- NOTE: absolute URLs below use https://yonder-web-review.vercel.app as a placeholder — update when the production domain is chosen -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Blog | Yonder</title>
+  <meta name="description" content="Notes from building Yonder — personalised bedtime audio stories. Starting with why we built it in the first place.">
+  <link rel="canonical" href="https://yonder-web-review.vercel.app/blog.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:oklch(16% .035 275);--night:oklch(21% .045 275);--paper:oklch(95% .025 77);--cream:oklch(88% .04 72);--honey:oklch(76% .13 72);--rose:oklch(59% .09 25);--mist:oklch(82% .018 72);--line:oklch(90% .03 75/.18);--serif:"Cormorant Garamond",Georgia,serif;--sans:"Plus Jakarta Sans",Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:16px;line-height:1.6}a{color:inherit}button,a{font:inherit}
+    .skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;z-index:9;background:var(--paper);color:var(--ink);padding:.7rem 1rem;border-radius:.5rem}
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.25rem clamp(1.25rem,4vw,4rem);border-bottom:1px solid var(--line)}
+    .wordmark{font:600 2rem/1 var(--serif);text-decoration:none;letter-spacing:-.04em;color:var(--paper)}
+    .nav-links{display:flex;align-items:center;gap:1.25rem}
+    .nav-link{color:var(--mist);text-decoration:none;font-weight:600;font-size:.85rem}
+    .nav-link:hover,.nav-link.is-active{color:var(--paper);text-decoration:underline}
+    .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--honey);border-radius:999px;padding:.65rem 1.1rem;text-decoration:none;font-weight:700;font-size:.82rem;color:var(--honey);background:transparent;transition:transform .2s var(--ease),background .2s,box-shadow .2s}
+    .button:hover{transform:translateY(-2px);background:var(--paper);color:var(--ink);box-shadow:0 12px 26px oklch(10% .02 275/.22)}
+    .eyebrow{color:var(--honey);font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.25rem}
+    .page-head{max-width:720px;margin:0 auto;padding:clamp(3.5rem,9vw,6rem) clamp(1.25rem,6vw,2rem) clamp(2.5rem,6vw,3.5rem)}
+    .page-head h1{font:600 clamp(2.6rem,6vw,4rem)/1 var(--serif);letter-spacing:-.03em;margin:0}
+    .page-head p{color:var(--mist);max-width:52ch;margin:1.2rem 0 0;font-size:1.02rem}
+    main{max-width:720px;margin:0 auto;padding:0 clamp(1.25rem,6vw,2rem) clamp(4rem,9vw,6rem)}
+    .post-list{list-style:none;margin:0;padding:0}
+    .post-item{border-top:1px solid var(--line)}
+    .post-item:last-child{border-bottom:1px solid var(--line)}
+    .post-link{display:block;text-decoration:none;color:inherit;padding:clamp(2rem,5vw,3rem) 0;transition:transform .2s var(--ease)}
+    .post-link:hover{transform:translateX(4px)}
+    .post-date{display:block;color:var(--honey);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.65rem}
+    .post-title{font:600 clamp(1.9rem,4vw,2.6rem)/1.12 var(--serif);letter-spacing:-.02em;margin:0 0 .75rem;color:var(--paper)}
+    .post-standfirst{color:var(--mist);font-size:1rem;line-height:1.6;max-width:58ch;margin:0 0 1rem}
+    .post-cta{display:inline-block;color:var(--honey);font-weight:700;font-size:.82rem}
+    .post-link:hover .post-title{text-decoration:underline}
+    .footer{padding:1.5rem clamp(1.25rem,4vw,4rem);display:flex;justify-content:space-between;gap:1rem;color:var(--mist);font-size:.72rem;background:var(--night)}
+    .footer a{text-decoration:none;color:inherit}
+    .footer a:hover{text-decoration:underline}
+    @media(max-width:600px){.nav{flex-wrap:wrap}.footer{flex-direction:column;gap:.4rem}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="wordmark" href="index.html">yonder</a>
+    <div class="nav-links">
+      <a class="nav-link is-active" href="blog.html">Blog</a>
+      <a class="button" href="index.html#preview">Request preview access</a>
+    </div>
+  </nav>
+  <div class="page-head">
+    <p class="eyebrow">From the studio</p>
+    <h1>The Yonder blog</h1>
+    <p>Notes on building personalised bedtime audio, one story at a time.</p>
+  </div>
+  <main id="main">
+    <ul class="post-list">
+      <li class="post-item">
+        <a class="post-link" href="blog/why-i-built-yonder.html">
+          <span class="post-date">30 July 2026</span>
+          <h2 class="post-title">Why I built Yonder</h2>
+          <p class="post-standfirst">On a narwhal who was also a firefighter, a bored Toniebox, and why the hardest part of a bedtime story was never the writing. The story of how Yonder started, and what it deliberately isn't.</p>
+          <span class="post-cta">Read the story →</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+  <footer class="footer"><span>© 2026 Yonder · Amsterdam</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></footer>
+</body>
+</html>
