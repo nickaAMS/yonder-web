@@ -1,0 +1,126 @@
+{
+  "sections": [
+    {
+      "title": "The basics",
+      "questions": [
+        {
+          "q": "What is Yonder, and how do I make a story?",
+          "a": [
+            "Yonder makes personalised bedtime stories with you and your child, then plays them as narrated audio after lights-out. You pick the ingredients together before bed, companions, a bit of mischief, a world, sometimes your child's own idea, and Yonder writes the story, gives it a cover and narrates it once you approve it. The cover matters more than the title, since young children remember stories by picture rather than name. It's built for any age, with particular focus on two to eight, and a gentler mode for two to five year olds that adjusts vocabulary, pacing and peril."
+          ]
+        },
+        {
+          "q": "What languages can stories be made in, and is Yonder available yet?",
+          "a": [
+            "English, French, German, Spanish, Italian and Dutch, with more coming. Yonder is currently in public beta. You can ask for an invitation using the form at the bottom of the Yonder website."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Is this AI, and is it safe for my child",
+      "questions": [
+        {
+          "q": "How do I know a story is appropriate for my child without reading the whole thing myself?",
+          "a": [
+            "You can read the full text or just the summary, and nothing reaches your child's shelf until you approve it. But past the first story or two, most parents won't read every word, and that's a reasonable thing to do at bedtime, not a failure on your part. So the real answer isn't \"read everything\". It is that stories are built to a specification before they ever reach you. We currently have nine named story 'shapes', with a gentler set for two to five year olds. A quest story might look like The Gruffalo: a hero sets off, meets trouble, and comes home changed. How much peril is in a plot is a deliberate setting, turned right down for the youngest children. Any villain at that age is written to be silly and bumbling, not frightening. And the ending always has to resolve before the final beat. No cliffhangers at bedtime, because a story that leaves something hanging in the dark is a mistake, not a hook."
+          ]
+        },
+        {
+          "q": "Is this replacing me reading to my child?",
+          "a": [
+            "No. Keep your books and your routine. Yonder is for the slot after that, when the lights are off and you might otherwise have used a Toniebox, a Yoto Player, an audiobook or a podcast."
+          ]
+        },
+        {
+          "q": "Is the story generated live while my child is listening?",
+          "a": [
+            "No. The story is fully written, cover included, before it ever plays. Your child is listening to a finished story, the same as if it were on a CD. Nothing is being made up in the dark, and nothing can change once you have approved it."
+          ]
+        },
+        {
+          "q": "Does my child talk to it? What is the microphone for?",
+          "a": [
+            "There is no chatbot and no back-and-forth. Your child never has a conversation with anything. The app uses the microphone in two places, both on your phone and both while you are sitting there together. Your child can say out loud what they want the story to be about, instead of you typing it, and it becomes one of the ingredients you choose from before you approve anything. Separately, you can record your own voice so stories can be narrated in it, which is optional and still being developed."
+          ]
+        },
+        {
+          "q": "What if the story turns out to be bad, boring or gets something wrong about my child?",
+          "a": [
+            "You can edit a story before you approve it. If you don't like it once it's made, just delete it."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Making a story",
+      "questions": [
+        {
+          "q": "Does it remember my child's details, and can I make stories for more than one child?",
+          "a": [
+            "Yes. Your child's name, age, interests and companions are saved so you don't have to re-enter them every time. For more than one child, create another profile, and you can pick two heroes when making a story together."
+          ]
+        },
+        {
+          "q": "How long is a story, and how long does it take to make one?",
+          "a": [
+            "You choose the length. A short story is around 380 words, a medium one around 700, and a long one around 1,200. Making one is quick: about 10 seconds for the story text, another 15 seconds for the cover, then 30 to 60 seconds for narration once you approve it."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Listening",
+      "questions": [
+        {
+          "q": "What can I play a story on?",
+          "a": [
+            "Alexa, Google Nest, a Yoto Player, any Bluetooth speaker, or a phone or tablet face down with the screen off. It isn't built for the car yet, but that's being worked on, with CarPlay and the Android equivalent both planned."
+          ]
+        },
+        {
+          "q": "What happens once a story finishes, and can my child hear it again?",
+          "a": [
+            "Playback stops once the queue has finished, and you can choose to follow it with white, pink or grey noise. Once a story is on the shelf, your child can replay it freely."
+          ]
+        },
+        {
+          "q": "What happens if the story generation fails or the audio doesn't load?",
+          "a": [
+            "A failed generation doesn't count against your credit. Narration is retried automatically, and if something fails badly, hit \"remix\" to make the story again."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Account and practical",
+      "questions": [
+        {
+          "q": "Is Yonder free, and how many stories do I get?",
+          "a": [
+            "There are three tiers: free, standard and premium. Each tier includes a set number of new stories a month, see plan details for the specifics."
+          ]
+        },
+        {
+          "q": "What happens to my child's data, and can I delete it?",
+          "a": [
+            "We store your child's first name, never a surname, along with age, reading age, favourite books, interests, pronouns and avatar images. Your child has no account, login or contact details of their own, but their profile is stored under your account, so it's linked to you rather than anonymous. You can delete your child's profile or your whole account at any time from within the app, which deletes everything permanently. There's no minimum age to set up an account.",
+            "If you make an avatar from a photo, the photo is used to draw the illustrated avatar and is not kept. Only the illustration is stored. The photo does get sent to the image model that draws it, in the same way the rest of the story is generated, but nothing keeps a copy of it afterwards."
+          ]
+        },
+        {
+          "q": "Does Yonder work offline, and can I use it on more than one device?",
+          "a": [
+            "You can't generate new stories without a connection, but you can play ones you've already made. You can also use Yonder on more than one device: log in under the same account and everything syncs."
+          ]
+        },
+        {
+          "q": "Can I use my own voice, or clone a voice for narration?",
+          "a": [
+            "Voice cloning is live, but it's still being developed."
+          ]
+        }
+      ]
+    }
+  ]
+}
