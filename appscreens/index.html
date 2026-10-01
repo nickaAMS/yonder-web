@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0F1230">
+<title>Screens preview</title>
+<style>
+  :root{--bg:#0F1230;--ink:#FFF8F0;--amber:#E8A838}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
+  .rail{display:flex;height:100dvh;width:100vw;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+  .rail::-webkit-scrollbar{display:none}
+  .slide{flex:0 0 100vw;height:100dvh;scroll-snap-align:center;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+  .slide img{max-width:100vw;max-height:100dvh;width:auto;height:auto;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+  /* on phones (portrait) the screenshot fills the screen edge to edge */
+  @media (max-aspect-ratio: 9/19.5){.slide img{width:100vw;height:auto}}
+  .hud{position:fixed;left:0;right:0;bottom:max(12px,env(safe-area-inset-bottom));display:flex;justify-content:center;gap:7px;pointer-events:none;z-index:5}
+  .dot{width:7px;height:7px;border-radius:50%;background:rgba(255,248,240,.35);transition:all .2s}
+  .dot.on{background:var(--amber);width:20px;border-radius:4px}
+  .count{position:fixed;top:max(10px,env(safe-area-inset-top));right:12px;font-size:12px;letter-spacing:.08em;color:rgba(255,248,240,.75);background:rgba(15,18,48,.55);padding:4px 10px;border-radius:12px;z-index:5;pointer-events:none}
+  .hint{position:fixed;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(255,248,240,.5);padding:20px 12px;z-index:5;cursor:pointer;user-select:none;display:none}
+  .hint.l{left:0}.hint.r{right:0}
+  @media (hover:hover) and (min-width:700px){.hint{display:block}}
+</style>
+</head>
+<body>
+<div class="rail" id="rail"></div>
+<div class="count" id="count"></div>
+<div class="hud" id="hud"></div>
+<div class="hint l" id="prev" aria-label="Previous">&#8249;</div>
+<div class="hint r" id="next" aria-label="Next">&#8250;</div>
+<script>
+const names=["01-hero","02-play","03-approve","04-free-start","05-put-the-phone-down","06-languages","07-profile","08-create","09-tonight","10-speakers"];
+const rail=document.getElementById('rail'),hud=document.getElementById('hud'),count=document.getElementById('count');
+names.forEach((n,i)=>{
+  const s=document.createElement('div');s.className='slide';
+  const im=new Image();im.src='img/'+n+'.webp';im.alt='Screenshot '+(i+1);im.decoding='async';if(i>1)im.loading='lazy';im.draggable=false;
+  s.appendChild(im);rail.appendChild(s);
+  const d=document.createElement('div');d.className='dot';hud.appendChild(d);
+});
+const dots=[...hud.children];
+function idx(){return Math.round(rail.scrollLeft/rail.clientWidth)}
+function update(){const i=idx();dots.forEach((d,k)=>d.classList.toggle('on',k===i));count.textContent=(i+1)+' / '+names.length;history.replaceState(null,'','#'+(i+1))}
+function go(i){i=Math.max(0,Math.min(names.length-1,i));rail.scrollTo({left:i*rail.clientWidth,behavior:'smooth'})}
+rail.addEventListener('scroll',()=>{clearTimeout(window._t);window._t=setTimeout(update,40)},{passive:true});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(idx()+1);if(e.key==='ArrowLeft')go(idx()-1);if(e.key==='Home')go(0);if(e.key==='End')go(names.length-1)});
+document.getElementById('next').onclick=()=>go(idx()+1);document.getElementById('prev').onclick=()=>go(idx()-1);
+window.addEventListener('resize',()=>go(idx()));
+const start=parseInt(location.hash.slice(1),10);if(start>0){rail.style.scrollBehavior='auto';rail.scrollLeft=(start-1)*rail.clientWidth;rail.style.scrollBehavior=''}
+update();
+</script>
+</body>
+</html>
