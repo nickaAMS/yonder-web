@@ -36,7 +36,7 @@ const names=["01-hero","02-play","03-approve","04-free-start","05-put-the-phone-
 const rail=document.getElementById('rail'),hud=document.getElementById('hud'),count=document.getElementById('count');
 names.forEach((n,i)=>{
   const s=document.createElement('div');s.className='slide';
-  const im=new Image();im.src='img/'+n+'.webp';im.alt='Screenshot '+(i+1);im.decoding='async';if(i>1)im.loading='lazy';im.draggable=false;
+  const im=new Image();im.src='/appscreens/img/'+n+'.webp';im.alt='Screenshot '+(i+1);im.decoding='async';if(i>1)im.loading='lazy';im.draggable=false;
   s.appendChild(im);rail.appendChild(s);
   const d=document.createElement('div');d.className='dot';hud.appendChild(d);
 });
