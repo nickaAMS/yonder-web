@@ -1,5 +1,15 @@
 {
   "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/s/:token/cover",
+      "destination": "/api/shared-story?token=:token&asset=cover"
+    },
+    {
+      "source": "/s/:token",
+      "destination": "/api/shared-story?token=:token"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

@@ -14,7 +14,7 @@ function doPost(e) {
     || SpreadsheetApp.getActiveSpreadsheet().insertSheet(SHEET_NAME);
 
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Timestamp', 'Email', 'Platform', 'How they heard about Yonder', 'Source']);
+    sheet.appendRow(['Timestamp', 'Email', 'Platform', 'How they heard about Namesake', 'Source']);
     sheet.getRange('A1:E1').setFontWeight('bold');
     sheet.setFrozenRows(1);
   }
