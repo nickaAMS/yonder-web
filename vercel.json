@@ -1,5 +1,12 @@
 {
   "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/blog/why-i-built-yonder.html",
+      "destination": "/blog/why-i-built-namesake.html",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/s/:token/cover",
@@ -8,6 +15,10 @@
     {
       "source": "/s/:token",
       "destination": "/api/shared-story?token=:token"
+    },
+    {
+      "source": "/download",
+      "destination": "/download.html"
     }
   ],
   "headers": [
