@@ -40,15 +40,19 @@ function imageUrlFromHtml(html) {
     .replaceAll('&#39;', "'") ?? null;
 }
 
-async function upstreamStoryHtml(token) {
-  return fetch(`${serviceUrl()}/s/${encodeURIComponent(token)}`, {
-    headers: { Accept: 'text/html' },
-  });
+async function upstreamStoryHtml(token, { viewerUserAgent, purpose } = {}) {
+  // The story service counts opens. It cannot see the visitor's real user
+  // agent through this proxy, so forward it, and flag our own cover sub-fetch
+  // so it is never counted as a page view.
+  const headers = { Accept: 'text/html' };
+  if (viewerUserAgent) headers['x-share-viewer-ua'] = String(viewerUserAgent);
+  if (purpose) headers['x-share-purpose'] = purpose;
+  return fetch(`${serviceUrl()}/s/${encodeURIComponent(token)}`, { headers });
 }
 
 async function serveCover(req, res, token) {
   try {
-    const storyResponse = await upstreamStoryHtml(token);
+    const storyResponse = await upstreamStoryHtml(token, { purpose: 'cover' });
     if (!storyResponse.ok) return unavailable(res);
     const coverUrl = imageUrlFromHtml(await storyResponse.text());
     if (!coverUrl) return unavailable(res);
@@ -84,7 +88,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const upstream = await upstreamStoryHtml(token);
+    const upstream = await upstreamStoryHtml(token, {
+      viewerUserAgent: req.headers['user-agent'],
+    });
     const body = await upstream.text();
     const coverUrl = `${requestOrigin(req)}/s/${encodeURIComponent(token)}/cover`;
     const html = body.replace(
