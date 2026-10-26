@@ -2,7 +2,7 @@
 
 > Personalised bedtime audio stories, created and approved by a parent before listening.
 
-Namesake creates original AI stories using a child profile, interests, companions and a parent-selected idea. Parents can review and edit the text before approval. Narrated listening can continue with the phone screen off. New stories require internet; offline playback requires downloaded audio. Story languages: English, French, German, Spanish, Italian and Dutch. Optional recorded-voice narration is still being developed.
+Namesake creates original AI stories using a child profile, interests, companions and a parent-selected idea. Parents can review and edit the text before approval. Namesake has Alexa setup, Echo pairing and story queues, plus Yoto account connection, story uploads and playlist management. A Yoto Make Your Own card is linked through the Yoto app. Google Cast is available from Android only, not iPhone. Toniebox support uses Creative-Tonies and is currently experimental. Narrated listening can continue with the phone screen off. New stories require internet; offline playback requires downloaded audio. Story languages: English, French, German, Spanish, Italian and Dutch. Optional recorded-voice narration is still being developed.
 
 ## Product and access
 

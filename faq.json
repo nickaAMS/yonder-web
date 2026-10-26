@@ -75,7 +75,7 @@
         {
           "q": "What can I play a story on?",
           "a": [
-            "Alexa, Google Nest, a Yoto Player, any Bluetooth speaker, or a phone or tablet face down with the screen off. It isn't built for the car yet, but that's being worked on, with CarPlay and the Android equivalent both planned."
+            "You can listen on a phone or tablet with the screen off, a Bluetooth speaker, Alexa, or a Yoto Player. Namesake has Alexa setup and pairing, and a story queue for your Echo. Connect your Yoto account to send stories and manage their order, then link the playlist to a Make Your Own card in the Yoto app. Google Cast works from the Android app, not iPhone. Toniebox support uses Creative-Tonies and is currently experimental."
           ]
         },
         {
