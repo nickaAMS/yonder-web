@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /s/
+Disallow: /google-sheets/
+Disallow: /.git/
+Disallow: /.vercel/
+
+Sitemap: https://trynamesake.com/sitemap.xml

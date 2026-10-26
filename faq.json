@@ -121,6 +121,17 @@
           ]
         }
       ]
+    },
+    {
+      "title": "Comparing story apps",
+      "questions": [
+        {
+          "q": "How does Namesake compare with other personalised storytelling apps?",
+          "a": [
+            "Namesake generates original stories around your child, companions and a parent-selected idea, then lets you review and approve them before narration. Oscar Stories and SmartDreams also advertise AI stories and audio. Little Stories by Diveo Media personalises a human-authored catalogue without generative AI, while StoryMe by Pinata Farms focuses on photo-personalised digital books. Our comparison guide explains where each may be a better fit: https://trynamesake.com/compare/"
+          ]
+        }
+      ]
     }
   ]
 }
