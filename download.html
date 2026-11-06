@@ -156,6 +156,7 @@
     .cta:focus-visible, .about-link:focus-visible, .website-link:focus-visible { outline: 2px solid var(--paper); outline-offset: 4px; }
     .cta[aria-disabled="true"] { cursor: not-allowed; opacity: .48; transform: none; }
     .setup-note { margin: .9rem 0 0; color: var(--faint); font-size: .72rem; line-height: 1.5; text-align: center; }
+    .setup-note a { color: var(--cream); text-decoration: underline; text-underline-offset: 2px; }
 
     .reassurance { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: start; padding: clamp(1.4rem, 4vw, 2rem); border-top: 1px solid var(--line); }
     .moon { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: 50%; background: rgba(232, 168, 56, .13); color: var(--honey); }
@@ -281,6 +282,7 @@
                 <a class="cta cta-secondary" id="android-play-cta" href="https://play.google.com/store/apps/details?id=com.storytime.storytime" target="_blank" rel="noopener noreferrer">2. Install on Google Play <span aria-hidden="true">→</span></a>
               </div>
               <p class="setup-note" id="android-play-note">Use the same Google account you are signed into on the Play Store.</p>
+              <p class="setup-note" id="android-apk-fallback" hidden style="margin-top: .45rem;">Already installed via direct download? <a id="android-fallback-cta" href="?mode=apk">Download latest APK directly</a></p>
             </div>
           </article>
         </div>
@@ -316,9 +318,10 @@
       link.rel = 'noopener noreferrer';
     }
 
-    function enableAndroidPlayFlow(groupUrl, playUrl) {
+    function enableAndroidPlayFlow(groupUrl, playUrl, apkUrl) {
       const apkFlow = document.getElementById('android-apk-flow');
       const playFlow = document.getElementById('android-play-flow');
+      const fallbackNote = document.getElementById('android-apk-fallback');
       if (apkFlow) apkFlow.style.display = 'none';
       if (playFlow) {
         playFlow.hidden = false;
@@ -326,6 +329,10 @@
       }
       if (groupUrl) connectDownloadLink('android-group-cta', groupUrl);
       if (playUrl) connectDownloadLink('android-play-cta', playUrl);
+      if (fallbackNote) {
+        fallbackNote.hidden = false;
+        if (apkUrl) connectDownloadLink('android-fallback-cta', apkUrl);
+      }
     }
 
     async function connectAndroidDownload() {
@@ -341,15 +348,16 @@
         const response = await fetch(ANDROID_BUILD_CONFIG);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const fields = (await response.json()).fields || {};
+        const apkUrl = fields.apkUrl?.stringValue;
         const playBetaEnabled = fields.playBetaEnabled?.booleanValue === true;
         if (playBetaEnabled && !forceApk) {
           enableAndroidPlayFlow(
             fields.playGroupUrl?.stringValue,
             fields.playStoreUrl?.stringValue,
+            apkUrl,
           );
           return;
         }
-        const apkUrl = fields.apkUrl?.stringValue;
         const version = fields.latestVersion?.stringValue;
         if (!apkUrl) throw new Error('APK URL is missing');
         connectDownloadLink('android-cta', apkUrl);
