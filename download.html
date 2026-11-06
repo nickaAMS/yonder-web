@@ -145,6 +145,13 @@
     }
     .platform .cta { margin-top: auto; }
     .android .cta { background: var(--leaf); color: #122212; }
+    .cta-stack { display: grid; gap: .65rem; margin-top: auto; }
+    .cta-stack .cta { margin-top: 0; }
+    .cta.cta-secondary {
+      background: rgba(169, 201, 144, .14);
+      border: 1px solid rgba(169, 201, 144, .45);
+      color: var(--paper);
+    }
     .cta:hover { transform: translateY(-2px); }
     .cta:focus-visible, .about-link:focus-visible, .website-link:focus-visible { outline: 2px solid var(--paper); outline-offset: 4px; }
     .cta[aria-disabled="true"] { cursor: not-allowed; opacity: .48; transform: none; }
@@ -253,14 +260,28 @@
               </span>
             </div>
             <h3>Android</h3>
-            <p class="platform-description">Download the latest Namesake preview directly to the Android device you will use.</p>
-            <ol class="steps">
-              <li><span><strong>Download Namesake</strong> using the button below.</span></li>
-              <li><span><strong>Allow the download</strong> when Android asks for permission.</span></li>
-              <li><span><strong>Open the downloaded file</strong> and choose Install.</span></li>
-            </ol>
-            <a class="cta" id="android-cta" href="#download">Download Android app <span aria-hidden="true">↓</span></a>
-            <p class="setup-note" id="android-note" aria-live="polite">Finding the latest Android preview…</p>
+            <div id="android-apk-flow" style="display: contents;">
+              <p class="platform-description">Download the latest Namesake preview directly to the Android device you will use.</p>
+              <ol class="steps">
+                <li><span><strong>Download Namesake</strong> using the button below.</span></li>
+                <li><span><strong>Allow the download</strong> when Android asks for permission.</span></li>
+                <li><span><strong>Open the downloaded file</strong> and choose Install.</span></li>
+              </ol>
+              <a class="cta" id="android-cta" href="#download">Download Android app <span aria-hidden="true">↓</span></a>
+              <p class="setup-note" id="android-note" aria-live="polite">Finding the latest Android preview…</p>
+            </div>
+            <div id="android-play-flow" hidden style="display: none;">
+              <p class="platform-description">Google shares preview apps through the Google Play Store. Join the preview group first to unlock the download.</p>
+              <ol class="steps">
+                <li><span><strong>Join the Namesake preview group</strong> below and tap <strong>Join group</strong> (using your Google Play email).</span></li>
+                <li><span><strong>Open Google Play</strong> in Step 2 and tap <strong>Install</strong>.</span></li>
+              </ol>
+              <div class="cta-stack">
+                <a class="cta" id="android-group-cta" href="https://groups.google.com/g/namesake-preview" target="_blank" rel="noopener noreferrer">1. Join preview group <span aria-hidden="true">→</span></a>
+                <a class="cta cta-secondary" id="android-play-cta" href="https://play.google.com/store/apps/details?id=com.storytime.storytime" target="_blank" rel="noopener noreferrer">2. Install on Google Play <span aria-hidden="true">→</span></a>
+              </div>
+              <p class="setup-note" id="android-play-note">Use the same Google account you are signed into on the Play Store.</p>
+            </div>
           </article>
         </div>
       </section>
@@ -295,12 +316,39 @@
       link.rel = 'noopener noreferrer';
     }
 
+    function enableAndroidPlayFlow(groupUrl, playUrl) {
+      const apkFlow = document.getElementById('android-apk-flow');
+      const playFlow = document.getElementById('android-play-flow');
+      if (apkFlow) apkFlow.style.display = 'none';
+      if (playFlow) {
+        playFlow.hidden = false;
+        playFlow.style.display = 'contents';
+      }
+      if (groupUrl) connectDownloadLink('android-group-cta', groupUrl);
+      if (playUrl) connectDownloadLink('android-play-cta', playUrl);
+    }
+
     async function connectAndroidDownload() {
+      const params = new URLSearchParams(window.location.search);
+      const forceBeta = params.get('beta') === '1' || params.get('mode') === 'play_beta';
+      const forceApk = params.get('beta') === '0' || params.get('mode') === 'apk';
+      if (forceBeta) {
+        enableAndroidPlayFlow();
+        return;
+      }
       const note = document.getElementById('android-note');
       try {
         const response = await fetch(ANDROID_BUILD_CONFIG);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const fields = (await response.json()).fields || {};
+        const playBetaEnabled = fields.playBetaEnabled?.booleanValue === true;
+        if (playBetaEnabled && !forceApk) {
+          enableAndroidPlayFlow(
+            fields.playGroupUrl?.stringValue,
+            fields.playStoreUrl?.stringValue,
+          );
+          return;
+        }
         const apkUrl = fields.apkUrl?.stringValue;
         const version = fields.latestVersion?.stringValue;
         if (!apkUrl) throw new Error('APK URL is missing');
