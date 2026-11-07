@@ -143,9 +143,10 @@
       text-decoration: none;
       transition: transform 180ms ease-out, opacity 180ms ease-out;
     }
-    .platform .cta { margin-top: auto; }
+    .platform .cta { margin-top: 0; }
+    .cta-area { margin-top: auto; min-height: 13.5rem; }
     .android .cta { background: var(--leaf); color: #122212; }
-    .cta-stack { display: grid; gap: .65rem; margin-top: auto; }
+    .cta-stack { display: grid; gap: .65rem; }
     .cta-stack .cta { margin-top: 0; }
     .cta.cta-secondary {
       background: rgba(169, 201, 144, .14);
@@ -177,6 +178,7 @@
       .cover-mosaic-set img { box-shadow: 0 8px 16px rgba(5, 7, 27, .25); }
       .section-top { gap: .8rem; }
       .platform { min-height: auto; }
+      .cta-area { min-height: 0; }
       footer { flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -249,8 +251,10 @@
               <li><span><strong><a href="https://apps.apple.com/app/testflight/id899247664" target="_blank" rel="noopener noreferrer">Install Apple’s TestFlight app</a></strong> from the App Store first. Without it, Safari says the address is invalid.</span></li>
               <li><span><strong>Open the invitation</strong> below, then tap Install in TestFlight.</span></li>
             </ol>
+            <div class="cta-area">
             <a class="cta" id="apple-cta" href="#download">Open TestFlight invitation <span aria-hidden="true">→</span></a>
             <p class="setup-note">You may be asked to sign in with your Apple ID.</p>
+            </div>
           </article>
 
     <article class="platform android" id="android">
@@ -268,21 +272,25 @@
                 <li><span><strong>Allow the download</strong> when Android asks for permission.</span></li>
                 <li><span><strong>Open the downloaded file</strong> and choose Install.</span></li>
               </ol>
+              <div class="cta-area">
               <a class="cta" id="android-cta" href="#download">Download Android app <span aria-hidden="true">↓</span></a>
               <p class="setup-note" id="android-note" aria-live="polite">Finding the latest Android preview…</p>
+              </div>
             </div>
             <div id="android-play-flow" hidden style="display: none;">
               <p class="platform-description">Google shares preview apps through the Google Play Store. Join the preview group first to unlock the download.</p>
               <ol class="steps">
-                <li><span><strong>Join the Namesake preview group</strong> below and tap <strong>Join group</strong> (using your Google Play email).</span></li>
+                <li><span><strong>Join the Namesake preview group</strong> below and tap <strong>Join group</strong>, using the email address you use for the Google Play Store.</span></li>
                 <li><span><strong>Open Google Play</strong> in Step 2 and tap <strong>Install</strong>.</span></li>
               </ol>
+              <div class="cta-area">
               <div class="cta-stack">
                 <a class="cta" id="android-group-cta" href="https://groups.google.com/g/namesake-preview" target="_blank" rel="noopener noreferrer">1. Join preview group <span aria-hidden="true">→</span></a>
                 <a class="cta cta-secondary" id="android-play-cta" href="https://play.google.com/store/apps/details?id=com.storytime.storytime" target="_blank" rel="noopener noreferrer">2. Install on Google Play <span aria-hidden="true">→</span></a>
               </div>
               <p class="setup-note" id="android-play-note">Use the same Google account you are signed into on the Play Store.</p>
               <p class="setup-note" id="android-apk-fallback" hidden style="margin-top: .45rem;">Already installed via direct download? <a id="android-fallback-cta" href="?mode=apk">Download latest APK directly</a></p>
+              </div>
             </div>
           </article>
         </div>
