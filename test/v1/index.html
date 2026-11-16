@@ -374,6 +374,16 @@
   }
   @media (prefers-reduced-motion:reduce) { .sum u { transition:none; } }
 
+  /* read along: the story's words under the books, the sentence being spoken picked out */
+  .readalong { margin-top:clamp(1.6rem,4vh,2.6rem); background:var(--cream) var(--paint) center/cover; box-shadow:0 4px 0 rgba(60,40,20,.2); padding:1.3rem clamp(1.1rem,3vw,2.4rem) 1.6rem; text-align:left; }
+  .readalong .caps { color:var(--tomato); font-size:.7rem; }
+  .ra-box { position:relative; height:clamp(11rem,34vh,17rem); overflow:hidden; margin-top:.9rem; scroll-behavior:smooth;
+            -webkit-mask-image:linear-gradient(transparent 0, #000 16%, #000 80%, transparent 100%); mask-image:linear-gradient(transparent 0, #000 16%, #000 80%, transparent 100%); }
+  .ra-box p { font:500 clamp(1.25rem,2.1vw,1.7rem)/1.4 var(--display); color:#a79f8d; margin:0 0 .9em; text-wrap:pretty; } .ra-box p:first-child { margin-top:3.2rem; } .ra-box p:last-child { margin-bottom:9rem; }
+  .ra-box span { transition:color .25s ease, background-color .25s ease; border-radius:2px; padding:.05em 0; } .ra-box span.ra-done { color:#5d5a55; }
+  .ra-box span.ra-now { color:var(--ink); background:rgba(242,193,78,.45); box-shadow:0 0 0 .18em rgba(242,193,78,.45); }
+  .track.live { outline:3px solid var(--tomato); outline-offset:3px; }
+
   /* header links, on the valance either side of the wordmark */
   .nav-l, .nav-r { position:absolute; z-index:2; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
   .nav-l { left:clamp(.9rem,3vw,2.2rem); } .nav-r { right:clamp(.9rem,3vw,2.2rem); }
@@ -560,9 +570,13 @@
   <h2>Hear one of their adventures.</h2>
   <p class="lede">Real stories made with Namesake, shared with their creators&rsquo; permission. Choose a book to play it.</p>
   <div class="tracks" id="tracks">
-    <button class="track" type="button" data-src="/public/stories/rose-stolen-supper-spell.mp3"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="" loading="lazy"><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
-    <button class="track" type="button" data-src="/public/stories/santosh-3-racing-tiger.mp3"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
-    <button class="track" type="button" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
+    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/public/stories/rose-stolen-supper-spell.mp3"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="" loading="lazy"><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
+    <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="/public/stories/santosh-3-racing-tiger.mp3"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
+    <button class="track" type="button" data-id="rose-pencil-draws-real-things" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
+  </div>
+  <div class="readalong" id="readalong" hidden>
+    <p class="caps"><span id="raTitle"></span> &middot; read along</p>
+    <div class="ra-box" id="raBox" aria-live="off"></div>
   </div>
   <audio id="audio2" preload="none"></audio>
 </div></section>
@@ -760,6 +774,20 @@
     if (curTrack !== t) { audio2.src = t.dataset.src; curTrack = t; } audio.pause(); audio2.play(); }); });
   audio2.addEventListener('play', markTracks); audio2.addEventListener('pause', markTracks); audio2.addEventListener('ended', markTracks);
   audio.addEventListener('play', function(){ audio2.pause(); });
+
+  // read along: transcripts with timings (the same data the current site uses), loaded the first time a story is played
+  var raEl = document.getElementById('readalong'), raBox = document.getElementById('raBox'), raTitle = document.getElementById('raTitle'), raData = null, raSpans = [], raNow = -1;
+  function raShow(id){ var st = (raData || []).filter(function(x){ return x.id === id; })[0]; if (!st) { raEl.hidden = true; return; }
+    raTitle.textContent = st.title; raBox.innerHTML = ''; raSpans = []; raNow = -1;
+    st.paragraphs.forEach(function(par){ var pEl = document.createElement('p'); par.forEach(function(sn){ var sp = document.createElement('span'); sp.textContent = sn[0]; sp._a = sn[1]; sp._b = sn[2]; pEl.appendChild(sp); pEl.appendChild(document.createTextNode(' ')); raSpans.push(sp); }); raBox.appendChild(pEl); });
+    raEl.hidden = false; raBox.scrollTop = 0;
+    setTimeout(function(){ if (raEl.scrollIntoView) raEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block:'nearest' }); }, 60); }   // the panel sits below the books, so bring it into view
+  function raTick(){ if (!raSpans.length) return; var t = audio2.currentTime, k = -1; for (var n = 0; n < raSpans.length; n++) { if (raSpans[n]._a <= t) k = n; else break; }
+    if (k === raNow) return; raNow = k; raSpans.forEach(function(sp, n){ sp.classList.toggle('ra-now', n === k); sp.classList.toggle('ra-done', n < k); });
+    if (k >= 0) raBox.scrollTop = Math.max(0, raSpans[k].offsetTop - raBox.clientHeight * .32); }
+  audio2.addEventListener('timeupdate', raTick); audio2.addEventListener('seeked', raTick);
+  tracks.forEach(function(t){ t.addEventListener('click', function(){ tracks.forEach(function(x){ x.classList.toggle('live', x === t); });
+    if (raData) raShow(t.dataset.id); else fetch('/test/assets-v3/readalong.json').then(function(r){ return r.json(); }).then(function(d){ raData = d; raShow(curTrack ? curTrack.dataset.id : t.dataset.id); }).catch(function(){ raEl.hidden = true; }); }); });
 })();
 </script>
 </body>
