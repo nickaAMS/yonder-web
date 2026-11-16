@@ -73,9 +73,9 @@
   .curtain img { width:100%; height:100%; }
   .curtain.r img { transform:scaleX(-1); }
   .hero-copy { position:absolute; z-index:5; left:50%; top:clamp(96px,15.5vh,154px); width:min(92vw,64rem); transform:translateX(-50%); text-align:center; will-change:transform,opacity; }
-  .hero-copy h1 { font:600 clamp(2.3rem,5.2vw,4.3rem)/1.02 var(--display); letter-spacing:-.018em; text-wrap:balance; }
+  .hero-copy h1 { font:600 clamp(2.3rem,5.8vw,4.9rem)/1.02 var(--display); letter-spacing:-.018em; text-wrap:balance; }
   .hero-copy h1 em { font-style:italic; color:var(--tomato); }
-  .hero-copy p { font:400 clamp(.98rem,1.25vw,1.12rem)/1.6 var(--text); color:#4d5167; max-width:36rem; margin:1.1rem auto 1.5rem; text-wrap:pretty; }
+  .hero-copy p { font:400 clamp(1.05rem,1.45vw,1.3rem)/1.55 var(--text); color:#4d5167; max-width:40rem; margin:1.1rem auto 1.5rem; text-wrap:pretty; }
   .hero-copy .ln { display:block; opacity:0; will-change:transform,opacity; }
   /* the scene: everything is placed from the stage's bottom edge, sizes in vh so it holds its shape on any screen */
   .scene { position:absolute; inset:0; z-index:2; pointer-events:none; }
@@ -159,9 +159,11 @@
   .lib-head .caps { color:#8a6a4a; } .lib-head.b { opacity:0; } .lib-head.b .caps { color:#aab0d6; } .lib-head.b h2 { color:var(--cream); }
   .lib-head h2 { font:600 clamp(1.9rem,4vw,3.2rem)/1.05 var(--display); letter-spacing:-.015em; margin-top:.8rem; text-wrap:balance; }
   /* a painted cabinet, four shelves of three; the covers are dressed as books (spine crease, page block, lean) */
-  .cabinet { position:absolute; z-index:2; left:50%; top:61%; --bw:clamp(50px,9.2vh,96px); padding:1.2vh; transform:translate(-50%,-50%); will-change:transform;
-             background:var(--sage) var(--paint) center/60vh auto; background-blend-mode:multiply; border-radius:3px; box-shadow:0 1.2vh 2.4vh rgba(60,40,20,.3); }
-  .cabinet::before { content:""; position:absolute; left:-1.6vh; right:-1.6vh; top:-2.2vh; height:2.6vh; background:var(--sage) var(--paint) center/60vh auto; background-blend-mode:multiply;
+  .cabinet { position:absolute; z-index:2; left:50%; top:61%; --bw:clamp(50px,9.2vh,96px); padding:1.2vh; transform:translate(-50%,-50%); will-change:transform; }
+  .cabbg { position:absolute; inset:-1.4vh; filter:url(#handcut) drop-shadow(0 1.2vh 1.4vh rgba(60,40,20,.3)); pointer-events:none; }
+  .cabbg i { position:absolute; inset:1.4vh; border-radius:3px; background:linear-gradient(100deg, rgba(255,255,255,.1), rgba(0,0,0,.08) 60%, rgba(255,255,255,.05)), var(--sage) var(--paint) center/60vh auto; background-blend-mode:normal,multiply; }
+  .cabbg b { position:absolute; inset:2.6vh; }
+  .cabinet::before { content:""; position:absolute; left:-1.9vh; right:-1.5vh; top:-2.3vh; height:2.8vh; filter:url(#handcut); transform:rotate(-.5deg); background:var(--sage) var(--paint) center/60vh auto; background-blend-mode:multiply;
                      border-radius:1.2vh 1.2vh 2px 2px; box-shadow:0 3px 3px rgba(40,30,15,.3); }
   .cabinet::after { content:""; position:absolute; left:6%; right:6%; bottom:-1.4vh; height:1.4vh; background:linear-gradient(90deg,#4f6b4c 0 12%,transparent 12% 88%,#4f6b4c 88%); }
   .bk { position:relative; z-index:1; width:var(--bw); aspect-ratio:2/3; border-radius:1px 3px 3px 1px; opacity:0; will-change:transform,opacity; background:#ddd; transform-origin:50% 100%; transform-style:preserve-3d;
@@ -173,8 +175,9 @@
   .bk::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
                background:linear-gradient(90deg,rgba(0,0,0,.34) 0,rgba(255,255,255,.22) 2.6%,rgba(0,0,0,.16) 5.5%,rgba(0,0,0,0) 10%,rgba(0,0,0,0) 92%,rgba(0,0,0,.1) 100%); }
   /* the book as an object: thickness, a page block, cloth and a debossed frame; the wordmark is the real file */
-  .book { --bwd:clamp(150px,27vh,270px); --bt:calc(var(--bwd) * .09); width:var(--bwd); }
-  .book::after { content:""; position:absolute; left:4%; right:-2%; bottom:-7%; height:9%; background:radial-gradient(closest-side, rgba(60,40,20,.42), rgba(60,40,20,0)); filter:blur(3px); z-index:-1; }
+  .book { --bwd:clamp(150px,27vh,270px); --bt:calc(var(--bwd) * .15); width:var(--bwd); }
+  .book::after { content:""; position:absolute; left:-8%; right:-14%; bottom:-9%; height:13%; background:radial-gradient(closest-side, rgba(50,32,14,.55), rgba(60,40,20,0)); filter:blur(5px); z-index:-1; }
+  .face.front { box-shadow:inset 0 0 0 1px rgba(255,255,255,.08), inset -10px 0 18px rgba(0,0,0,.16), inset 0 -8px 14px rgba(0,0,0,.12); }
   .face { box-shadow:none; border-radius:2px 5px 5px 2px; }
   .face::after { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
                  background:linear-gradient(90deg, rgba(0,0,0,.3) 0, rgba(255,255,255,.16) 2.4%, rgba(0,0,0,.14) 5.2%, rgba(0,0,0,0) 9%, rgba(0,0,0,0) 94%, rgba(0,0,0,.12) 100%); }
@@ -193,8 +196,8 @@
   .fig.extra img.sad, .fig.extra.sad img.happy { display:none; } .fig.extra.sad img.sad { display:block; }
 
   .cabinet { --cols:3; --rh:calc(var(--bw) * 1.5 + 3.8vh); }
-  .cgrid { display:grid; grid-template-columns:repeat(var(--cols), var(--bw)); column-gap:2.6vh; padding:0 2.8vh;
-           background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--rh) - 1.4vh), #6f8f6a calc(var(--rh) - 1.4vh), #86a37f calc(var(--rh) - 1.1vh), #5c7a58 var(--rh)),
+  .cgrid { position:relative; display:grid; grid-template-columns:repeat(var(--cols), var(--bw)); column-gap:var(--cg,2.6vh); padding:0 var(--cp,2.8vh); }
+  .cabbg b { background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--rh) - 1.4vh), #6f8f6a calc(var(--rh) - 1.4vh), #86a37f calc(var(--rh) - 1.1vh), #5c7a58 var(--rh)),
                       repeating-linear-gradient(to bottom, rgba(0,0,0,.5) 0, rgba(0,0,0,.12) calc(var(--rh) * .3), rgba(0,0,0,0) calc(var(--rh) * .6), rgba(0,0,0,.18) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) var(--rh)),
                       #3f4d3d var(--paint) center/50vh auto; background-blend-mode:multiply,normal,multiply; }
   .cgrid .bk { margin:2.4vh 0 1.4vh; }
@@ -241,7 +244,7 @@
   .final small { margin-top:2.4rem; font:400 .76rem/1.5 var(--text); color:#f0c9c0; max-width:30rem; }
 
   @media (min-width:761px) {
-    .cabinet { --cols:4; --bw:clamp(70px,13.2vh,150px); top:60%; }
+    .cabinet { --cols:4; --bw:clamp(74px,13.6vh,156px); top:60%; }
     .bedtime { left:50%; height:52vh; margin-left:-22vh; }
     /* devices: a row to the right of the bed whose size follows the room there, so the last one can never leave the screen */
     .devs { left:calc(50% + 37vh); right:2.5vw; bottom:6vh; gap:0; justify-content:space-between; align-items:flex-start; --dh:min(10vh, calc((50vw - 41vh) / 4.4)); }
@@ -258,11 +261,13 @@
     #hero .stage { --sw:178vw; --sh:100vw; }
     .fig { bottom:var(--bm, var(--b,12vh)); } .fig.pot, .fig.trouble { z-index:4; }
     .fig .chip { display:block; }
-    .inv-foot p { font-size:1.06rem; margin-bottom:.9rem; } .inv-foot small { font-size:.7rem; margin-top:.6rem; }
+    .inv-foot { bottom:clamp(1rem,3.5vh,2.4rem); } .inv-foot p { font-size:1.42rem; line-height:1.2; margin-bottom:1rem; } .inv-foot small { font-size:.68rem; margin-top:.6rem; }
+    /* the badger waits in the bottom-left corner on phones, its tag lying beside it along the bottom edge */
+    .fig.extra .tagwrap { left:58%; bottom:.4vh; transform:none; } .fig.extra .tagwrap::after { display:none; } .fig.extra .tagcard { width:136px; min-height:0; } .fig.extra .chip { display:none; }
     .curtain { width:15vw; }
-    .hero-copy { top:clamp(84px,12vh,112px); width:66vw; }
-    .hero-copy h1 { font-size:clamp(1.85rem,8.4vw,2.4rem); }
-    .hero-copy p { font-size:.92rem; line-height:1.5; margin:.8rem auto 1.1rem; }
+    .hero-copy { top:clamp(92px,13.5vh,124px); width:88vw; }
+    .hero-copy h1 { font-size:clamp(2.4rem,11.6vw,3.3rem); }
+    .hero-copy p { font-size:1.14rem; line-height:1.5; margin:1rem auto 1.3rem; }
     .cta { padding:.95rem 1.1rem; letter-spacing:.14em; font-size:.74rem; }
     .fig { left:var(--xm); height:var(--hm); } .scn.cottage, .scn.steps { left:var(--xm); } .scn.cottage { height:40vh; bottom:21vh; } .scn.birch.m { left:calc(var(--xm) - 6vh); height:52vh; }
     .scn.steps { height:8vh; bottom:10.5vh; } .scn.mush.b { left:calc(var(--xm) + 17vh); } .scn.birch { height:74vh; }
@@ -271,7 +276,7 @@
     .tagcard { width:154px; min-height:3.6rem; padding:.5rem .5rem .5rem 1.4rem; } .tagcard span { font-size:.74rem; }
     .fig { --td:var(--tx,0px) !important; }
     .programme { display:none; }
-    .cabinet { --bw:clamp(44px,8vh,70px); top:60%; }
+    .cabinet { --bw:min(21vw,8.5vh); --cg:1.8vh; --cp:2vh; top:60%; }
     .bedtime { left:50%; height:33vh; margin-left:-17.4vh; }
     .devs { left:0; right:0; bottom:35.5vh; justify-content:center; align-items:flex-start; gap:5vw; } .dev img { height:6.6vh; } .dev.ph img { height:6.6vh; } .dev span { font-size:.54rem; margin-top:.45rem; white-space:normal; max-width:4.4rem; text-align:center; line-height:1.5; } .dev b { top:3.2vh; width:5vh; height:5vh; margin:-2.5vh 0 0 -2.5vh; }
     .now { left:50%; top:27vh; bottom:auto; width:min(20.5rem,92vw); margin-left:calc(min(20.5rem,92vw) / -2); padding:.65rem .8rem .7rem; } .now .q { margin:.4rem 0; } .now .q img { width:1.7rem; }
@@ -283,6 +288,7 @@
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="handcut" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 
 <!-- 1. THE STORY IS CAST -->
 <section class="act" id="hero">
@@ -305,7 +311,6 @@
       <div class="scn cottage" style="--x:80%; --xm:56%"><img src="/test/assets-v3/cottage.webp" alt=""></div>
       <div class="scn grass"><img src="/test/assets-v3/grass.webp" alt=""></div>
       <div class="scn mush a"><img src="/test/assets-v3/mushrooms.webp" alt=""></div><div class="scn mush b" style="--x:80%; --xm:56%"><img src="/test/assets-v3/mushrooms.webp" alt=""></div>
-      <div class="scn steps" style="--x:42%; --xm:28%"><img src="/test/assets-v3/footprints.webp" alt=""></div>
 
       <div class="fig" data-name="Rose" style="--x:22%; --xm:20%; --h:25vh; --hm:23vh; --tx:22px; --td:-5.4rem"><img src="/test/assets-v3/rose.webp" alt="Paper figure of Rose in striped pyjamas"><div class="tagwrap"><div class="tagcard"><span data-t="The hero|Rose, aged 5. In her pyjamas, obviously."></span></div></div></div>
       <div class="fig" data-name="Shosh" style="--x:30%; --xm:33%; --h:13vh; --hm:12vh; --b:11vh; --td:1.2rem"><img src="/test/assets-v3/fox.webp" alt="Shosh, a plush toy fox with stitched eyes"><div class="tagwrap"><div class="tagcard"><span data-t="Her cuddly fox|Shosh. Always by her side."></span></div></div></div>
@@ -313,7 +318,7 @@
       <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:62%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:6vh"><img src="/test/assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The trouble|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
       <div class="fig pot" style="--x:62%; --xm:83%; --h:15vh; --hm:12vh; --b:13vh; --bm:9.5vh"><img src="/test/assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
       <div class="fig" data-name="Bad Man Matt" style="--x:69%; --xm:81%; --h:34vh; --hm:31vh; --b:14vh; --bm:15vh; --lift:.4rem; --tx:-34px"><img src="/test/assets-v3/matt.webp" alt="Paper figure of a tired villain in a doctor's coat smeared with pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|Bad Man Matt. Exceptionally greedy."></span></div></div></div>
-      <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:14%; --h:13vh; --hm:11vh; --b:11vh; --tx:26px"><img class="happy" src="/test/assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="/test/assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
+      <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:9%; --h:13vh; --hm:9.5vh; --b:11vh; --bm:1.2vh; --tx:26px"><img class="happy" src="/test/assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="/test/assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
       <div class="scn birch l"><img src="/test/assets-v3/birch.webp" alt=""></div><div class="scn birch r"><img src="/test/assets-v3/birch.webp" alt=""></div>
     </div>
 
@@ -326,7 +331,7 @@
       <div class="book-in" id="bookIn">
         <div class="b-edge" aria-hidden="true"></div><div class="b-spine" aria-hidden="true"></div>
         <div class="face front"><img class="b-mark" src="/public/namesake-wordmark.webp" alt="Namesake"><div class="plate"><i>starring</i><strong id="names"></strong></div><p class="caps b-foot">A bedtime story</p></div>
-        <div class="face back"><img src="/public/stories/rose-stolen-supper-spell.webp" alt=""></div>
+        <div class="face back"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""></div>
       </div>
     </div>
     <div class="inv-foot" id="invFoot">
@@ -335,7 +340,7 @@
         <span class="pi" aria-hidden="true"></span><span class="pt"><b id="listenLabel">Play this story</b><small>Read aloud &middot; 5:05</small></span>
         <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </button>
-      <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story and its real cover, shared with permission.</small>
+      <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story, shared with permission.</small>
       <audio id="audio" preload="none" src="/public/stories/rose-stolen-supper-spell.mp3"></audio>
     </div>
 
@@ -355,7 +360,8 @@
     <div class="lib-head a"><p class="caps">Night after night</p><h2>Each new adventure finds a home on their shelf.</h2></div>
     <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
     <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
-      <div class="cgrid"><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt=""></div><div class="bk pick" data-n="2"><img src="/public/home-optimized/cover-07.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-11.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-14.webp" alt=""></div><div class="bk pick" data-n="1"><img src="/public/stories/rose-stolen-supper-spell.webp" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/public/home-optimized/cover-18.webp" alt=""></div><div class="bk pick" data-n="3"><img src="/public/home-optimized/cover-02.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-09.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-16.webp" alt=""></div><div class="bk pick" data-n="4"><img src="/public/home-optimized/cover-05.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-12.webp" alt=""></div></div>
+      <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
+      <div class="cgrid"><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt=""></div><div class="bk pick" data-n="2"><img src="/public/home-optimized/cover-07.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-11.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-14.webp" alt=""></div><div class="bk pick" data-n="1"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/public/home-optimized/cover-18.webp" alt=""></div><div class="bk pick" data-n="3"><img src="/public/home-optimized/cover-02.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-09.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-16.webp" alt=""></div><div class="bk pick" data-n="4"><img src="/public/home-optimized/cover-05.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-12.webp" alt=""></div></div>
     </div>
     <div class="night" id="night"></div>
     <div class="bedtime" id="bedtime"><img src="/test/assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="/test/assets-v3/cattail2.webp" alt=""></div>
@@ -367,7 +373,7 @@
     </div>
     <button class="now" id="now" type="button" aria-label="Tonight's queue: four stories, about fifteen minutes. Play or pause the first story, Rose and the Stolen Supper Spell">
       <span class="caps">Tonight&rsquo;s queue &middot; 4 stories &middot; about 15 minutes</span>
-      <span class="q"><img src="/public/stories/rose-stolen-supper-spell.webp" alt=""><img src="/public/home-optimized/cover-07.webp" alt=""><img src="/public/home-optimized/cover-02.webp" alt=""><img src="/public/home-optimized/cover-05.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
+      <span class="q"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""><img src="/public/home-optimized/cover-07.webp" alt=""><img src="/public/home-optimized/cover-02.webp" alt=""><img src="/public/home-optimized/cover-05.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
       <strong>1. Rose and the Stolen Supper Spell</strong><small id="nowHint">Tap to hear it</small>
     </button>
     <div class="drape l" aria-hidden="true"></div><div class="drape r" aria-hidden="true"></div>
@@ -398,7 +404,7 @@
       copy = document.getElementById('copy'), lines = [].slice.call(hero.querySelectorAll('.ln')), cue = document.getElementById('cue'), onc = [].slice.call(hero.querySelectorAll('.onc')),
       hl = hero.querySelector('.house.l'), hr = hero.querySelector('.house.r'),
       Q = function(q){ return scene.querySelector(q); }, QA = function(q){ return [].slice.call(scene.querySelectorAll(q)); },
-      grass = Q('.grass'), rows = QA('.birchrow'), cottage = Q('.cottage'), birchL = Q('.birch.l'), birchR = Q('.birch.r'), birchM = Q('.birch.m'), mush = QA('.mush'), steps = Q('.steps'),
+      grass = Q('.grass'), rows = QA('.birchrow'), cottage = Q('.cottage'), birchL = Q('.birch.l'), birchR = Q('.birch.r'), birchM = Q('.birch.m'), mush = QA('.mush'),
       figs = QA('.fig'), book = document.getElementById('book'), bookIn = document.getElementById('bookIn'), names = document.getElementById('names'),
       headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot');
   var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
@@ -444,7 +450,6 @@
     k = out(P(.13, .22)); birchL.style.transform = 'translate3d(calc(' + ((1 - k) * -40 - clear * 50) + 'vw + ' + px(1.3) + 'px),0,0)';
     k = out(P(.15, .24)); birchR.style.transform = 'translate3d(calc(' + ((1 - k) * 40 + clear * 50) + 'vw + ' + px(1.3) + 'px),0,0)';
     mush.forEach(function(m, n){ k = back(P(.21 + n * .02, .26 + n * .02)) * (1 - clear); m.style.transform = 'translate3d(' + (n ? '-50%' : '0') + ',0,0) scale(' + Math.max(k, 0) + ')'; });
-    k = P(.39, .5); steps.style.clipPath = 'inset(0 ' + ((1 - k) * 100) + '% 0 0)'; steps.style.opacity = 1 - P(.74, .78); steps.style.transform = 'translate3d(' + px(1) + 'px,0,0)';
 
     // the cast: each hops in, its tag types itself, and at the end everyone but the badger folds into the book
     var bump = 0;
@@ -456,7 +461,7 @@
         swap = wide ? 0 : P(nxt - .005, nxt + .01);
         f._tag.style.opacity = (wide ? P(a + .02, a + .035) : P(a + .006, a + .016)) * gone * (1 - swap); }
       if (f._chip) f._chip.style.opacity = swap * gone;
-      if (extra) { var glum = P(.93, .955); f.classList.toggle('sad', p > .94); f.style.opacity = vis * (1 - P(.98, .995)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
+      if (extra) { var glum = P(.79, .815); f.classList.toggle('sad', p > .8); f.style.opacity = vis * (1 - P(.845, .87)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
       f.style.opacity = vis * (g < .93 ? 1 : 0);
       f.style.transform = 'translate3d(' + (h.dx * g + px(1) * (1 - g)) + 'px,calc(' + (h.dy * g) + 'px + ' + ((1 - inn) * 20 - Math.sin(g * Math.PI) * 16) + 'vh),0) scale(' + (1 - g * .62) + ') rotate(' + ((1 - Math.min(inn, 1)) * (n % 2 ? 7 : -7) + g * (n % 2 ? 200 : -200)) + 'deg)';
       if (!extra) bump += Math.sin(seg(g, .8, 1) * Math.PI);
@@ -466,8 +471,8 @@
     // the book rises, then turns over to the real cover; on desktop it grows and the words sit beside it
     var rise = back(P(.745, .8)), flip = ease(P(.925, .975)), mg = P(.865, .925), brew = Math.sin(mg * Math.PI);
     book.style.opacity = clamp(P(.745, .765));
-    var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 13);
-    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + (.7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : .04)) + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
+    var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 17);
+    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + (.7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1)) + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
     // the story is written: typed scraps spiral in behind the book, it glows and trembles, then stars fly as it turns over
     magicEl.style.transform = burstEl.style.transform = 'translate(' + (-bx) + 'vw,' + (-by) + 'vh)';
     wsps.forEach(function(w, n){ var sgm = seg(mg, n * .085, .4 + n * .085), e = ease(sgm), ang = n * 2.3 + e * 3.4, R = (1 - e) * (wide ? 56 : 46);
@@ -477,7 +482,7 @@
     halo.style.opacity = glow * (reduced ? 1 : .82 + Math.sin(t * 7) * .18); halo.style.transform = 'scale(' + (.45 + glow * .45 + P(.925, .96) * .45) + ')';
     bstars.forEach(function(st, n){ var e = out(bs), ang = n / bstars.length * 6.283 + .3, R = e * (wide ? 34 + (n % 3) * 10 : 22 + (n % 3) * 7);
       st.style.opacity = seg(bs, 0, .08) * (1 - seg(bs, .55, 1)); st.style.transform = 'translate3d(' + (Math.cos(ang) * R) + 'vh,' + (Math.sin(ang) * R + e * e * 9) + 'vh,0) rotate(' + (e * 320 + n * 40) + 'deg) scale(' + (.6 + (n % 4) * .32) + ')'; });
-    bookIn.style.transform = 'rotateY(' + (flip * 180) + 'deg)';
+    bookIn.style.transform = 'rotateX(' + ((1 - flip) * 7) + 'deg) rotateY(' + (24 * (1 - flip) * rise + flip * 180) + 'deg)';   // rests turned a little, so the spine and page block show
     var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
   }
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
