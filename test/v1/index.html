@@ -133,6 +133,24 @@
   }
   .inv-foot small { display:block; margin-top:.8rem; font:400 .78rem/1.4 var(--text); color:#7b6a55; }
   .inv-foot .cta { pointer-events:auto; }
+  /* a real player control, so it reads as "this plays the audio" */
+  .play { display:inline-flex; align-items:center; gap:.9rem; padding:.55rem 1.3rem .55rem .55rem; background:var(--navy); color:var(--cream); border:0; border-radius:999px; cursor:pointer; pointer-events:auto; text-align:left; }
+  .play:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+  .play .pi { position:relative; flex:none; width:3rem; height:3rem; border-radius:50%; background:var(--cream); }
+  .play .pi::before { content:""; position:absolute; left:55%; top:50%; transform:translate(-50%,-50%); border-style:solid; border-width:.56rem 0 .56rem .92rem; border-color:transparent transparent transparent var(--navy); }
+  .play.on .pi::before { left:50%; border:0; width:.9rem; height:1.05rem; background:linear-gradient(90deg,var(--navy) 0 34%,transparent 34% 66%,var(--navy) 66%); }
+  .play .pt b { display:block; font:600 1rem/1.1 var(--text); letter-spacing:.01em; } .play .pt small { display:block; margin-top:.25rem; font:400 .76rem/1 var(--text); color:#c9c6d6; }
+  .play .bars { height:1.5rem; margin-left:.3rem; } .play .bars i { background:#f2c14e; } .play.on .bars i { animation-play-state:running; }
+  /* a short name that stays on each figure once its full tag has gone (phones show one tag at a time) */
+  .fig .chip { display:none; position:absolute; left:0; bottom:calc(100% + .3rem); transform:translateX(-50%) rotate(-2deg); padding:.3rem .45rem .26rem; background:var(--cream); color:#3a3027;
+               font:400 .66rem/1 var(--tag); white-space:nowrap; box-shadow:0 2px 2px rgba(60,25,25,.28); opacity:0; pointer-events:none; }
+  /* the story being written: typed scraps spiral into the book, it glows, then stars fly as it turns over */
+  .magic, .burst { position:absolute; left:50%; top:56%; width:0; height:0; pointer-events:none; } .magic { z-index:3; } .burst { z-index:5; }
+  .halo { position:absolute; left:0; top:0; width:76vh; height:76vh; margin:-38vh 0 0 -38vh; border-radius:50%; opacity:0; will-change:transform,opacity;
+          background:radial-gradient(circle, rgba(244,168,40,.95) 0, rgba(246,186,70,.6) 30%, rgba(250,205,110,.25) 52%, rgba(255,214,120,0) 70%); }
+  .wsp { position:absolute; left:0; top:0; white-space:nowrap; padding:.42rem .62rem .36rem; background:var(--cream); color:#3a3027; font:400 clamp(.78rem,1.9vh,1.05rem)/1 var(--tag);
+         box-shadow:0 2px 2px rgba(60,25,25,.28); opacity:0; will-change:transform,opacity; }
+  .burst img { position:absolute; left:0; top:0; width:clamp(16px,3.4vh,32px); height:auto; margin:-1.7vh 0 0 -1.7vh; opacity:0; will-change:transform,opacity; filter:drop-shadow(0 2px 2px rgba(60,40,20,.3)); }
 
   /* ---------- 9. The library, then lights out ---------- */
   #curtain { height:480vh; }
@@ -235,7 +253,12 @@
     .now strong { font-size:clamp(1.3rem,2.9vh,1.8rem); } .now small { font-size:.85rem; } .bars { height:2.4rem; gap:4px; } .bars i { width:4px; }
   }
   @media (max-width:760px) {
+    /* a finger moves the page about one screen per swipe, so the acts are much shorter here */
+    #hero { height:520vh; } #curtain { height:340vh; }
     #hero .stage { --sw:178vw; --sh:100vw; }
+    .fig { bottom:var(--bm, var(--b,12vh)); } .fig.pot, .fig.trouble { z-index:4; }
+    .fig .chip { display:block; }
+    .inv-foot p { font-size:1.06rem; margin-bottom:.9rem; } .inv-foot small { font-size:.7rem; margin-top:.6rem; }
     .curtain { width:15vw; }
     .hero-copy { top:clamp(84px,12vh,112px); width:66vw; }
     .hero-copy h1 { font-size:clamp(1.85rem,8.4vw,2.4rem); }
@@ -244,14 +267,14 @@
     .fig { left:var(--xm); height:var(--hm); } .scn.cottage, .scn.steps { left:var(--xm); } .scn.cottage { height:40vh; bottom:21vh; } .scn.birch.m { left:calc(var(--xm) - 6vh); height:52vh; }
     .scn.steps { height:8vh; bottom:10.5vh; } .scn.mush.b { left:calc(var(--xm) + 17vh); } .scn.birch { height:74vh; }
     .scn.birch.l { left:-36vw; } .scn.birch.r { right:-36vw; } .scn.birch.m { display:none; } .scn.birchrow { height:50vh; bottom:22vh; margin-left:-36vh; } .scn.birchrow.b2 { margin-left:-108vh; } .scn.birchrow.b3 { margin-left:36vh; }
-    .inv-head { top:4.6rem; }
+    .inv-head { top:calc(clamp(58px,10vh,92px) + 1.1rem); } .inv-head h2 { margin-top:.55rem; }
     .tagcard { width:154px; min-height:3.6rem; padding:.5rem .5rem .5rem 1.4rem; } .tagcard span { font-size:.74rem; }
     .fig { --td:var(--tx,0px) !important; }
-    .inv-head { top:4.4rem; } .programme { display:none; }
+    .programme { display:none; }
     .cabinet { --bw:clamp(44px,8vh,70px); top:60%; }
-    .bedtime { left:50%; height:27vh; margin-left:-14.2vh; }
-    .devs { left:0; right:0; bottom:28.5vh; justify-content:center; gap:5vw; } .dev img { height:6.4vh; } .dev.ph img { height:7.2vh; } .dev span { font-size:.54rem; margin-top:.45rem; } .dev b { top:3.2vh; width:5vh; height:5vh; margin:-2.5vh 0 0 -2.5vh; }
-    .now { left:50%; bottom:39.5vh; margin-left:-9.8rem; width:19.6rem; padding:.55rem .75rem .6rem; } .now .q { margin:.4rem 0; } .now .q img { width:1.7rem; }
+    .bedtime { left:50%; height:33vh; margin-left:-17.4vh; }
+    .devs { left:0; right:0; bottom:35.5vh; justify-content:center; align-items:flex-start; gap:5vw; } .dev img { height:6.6vh; } .dev.ph img { height:6.6vh; } .dev span { font-size:.54rem; margin-top:.45rem; white-space:normal; max-width:4.4rem; text-align:center; line-height:1.5; } .dev b { top:3.2vh; width:5vh; height:5vh; margin:-2.5vh 0 0 -2.5vh; }
+    .now { left:50%; top:27vh; bottom:auto; width:min(20.5rem,92vw); margin-left:calc(min(20.5rem,92vw) / -2); padding:.65rem .8rem .7rem; } .now .q { margin:.4rem 0; } .now .q img { width:1.7rem; }
   }
   @media (prefers-reduced-motion:reduce) {
     #hero, #curtain { height:auto; } .stage { position:relative; } .cue { display:none; }
@@ -270,11 +293,11 @@
     </div>
     <div class="hero-copy" id="copy">
       <h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
-      <p class="ln">Bedtime stories about your child, their toys and their people, with their faces on the cover. You approve each one. They listen in the dark.</p>
+      <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
       <span class="ln"><a class="cta" href="/download.html">Try the Namesake Beta</a></span>
     </div>
     <div class="inv-head a"><p class="caps">Tonight&rsquo;s story</p><h2>First, the cast.</h2></div>
-    <div class="inv-head b"><p class="caps">Made in about a minute</p><h2>Then, a book.</h2></div>
+    <div class="inv-head b"><p class="caps">Made in about a minute</p><h2>Then we craft the story and a cover.</h2></div>
 
     <div class="scene" id="scene" style="--cx:79%; --cxm:74%;">
       <div class="scn birchrow b2"><img src="/test/assets-v3/birchrow.webp" alt=""></div><div class="scn birchrow"><img src="/test/assets-v3/birchrow.webp" alt=""></div><div class="scn birchrow b3"><img src="/test/assets-v3/birchrow.webp" alt=""></div>
@@ -286,14 +309,19 @@
 
       <div class="fig" data-name="Rose" style="--x:22%; --xm:20%; --h:25vh; --hm:23vh; --tx:22px; --td:-5.4rem"><img src="/test/assets-v3/rose.webp" alt="Paper figure of Rose in striped pyjamas"><div class="tagwrap"><div class="tagcard"><span data-t="The hero|Rose, aged 5. In her pyjamas, obviously."></span></div></div></div>
       <div class="fig" data-name="Shosh" style="--x:30%; --xm:33%; --h:13vh; --hm:12vh; --b:11vh; --td:1.2rem"><img src="/test/assets-v3/fox.webp" alt="Shosh, a plush toy fox with stitched eyes"><div class="tagwrap"><div class="tagcard"><span data-t="Her cuddly fox|Shosh. Always by her side."></span></div></div></div>
-      <div class="fig" data-name="Daddy" style="--x:42%; --xm:50%; --h:33vh; --hm:30vh; --lift:1.2rem"><img src="/test/assets-v3/daddy.webp" alt="Paper figure of Daddy in odd socks"><div class="tagwrap"><div class="tagcard"><span data-t="The sidekick|Daddy. Curly hair, odd socks. Brave-ish."></span></div></div></div>
-      <div class="fig trouble" style="--x:54%; --xm:62%; --h:9vh; --hm:8vh; --b:15vh"><img src="/test/assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The trouble|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
-      <div class="fig pot" style="--x:62%; --xm:72%; --h:15vh; --hm:13vh; --b:13vh"><img src="/test/assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
-      <div class="fig" data-name="Bad Man Matt" style="--x:69%; --xm:84%; --h:34vh; --hm:31vh; --b:14vh; --lift:.4rem; --tx:-34px"><img src="/test/assets-v3/matt.webp" alt="Paper figure of a tired villain in a doctor's coat smeared with pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|Bad Man Matt. Exceptionally greedy."></span></div></div></div>
-      <div class="fig extra" style="--x:13%; --xm:14%; --h:13vh; --hm:11vh; --b:11vh; --tx:26px"><img class="happy" src="/test/assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="/test/assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
+      <div class="fig" data-name="Daddy" style="--x:42%; --xm:47%; --h:33vh; --hm:30vh; --lift:1.2rem"><img src="/test/assets-v3/daddy.webp" alt="Paper figure of Daddy in odd socks"><div class="tagwrap"><div class="tagcard"><span data-t="The sidekick|Daddy. Curly hair, odd socks. Brave-ish."></span></div></div></div>
+      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:62%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:6vh"><img src="/test/assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The trouble|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
+      <div class="fig pot" style="--x:62%; --xm:83%; --h:15vh; --hm:12vh; --b:13vh; --bm:9.5vh"><img src="/test/assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
+      <div class="fig" data-name="Bad Man Matt" style="--x:69%; --xm:81%; --h:34vh; --hm:31vh; --b:14vh; --bm:15vh; --lift:.4rem; --tx:-34px"><img src="/test/assets-v3/matt.webp" alt="Paper figure of a tired villain in a doctor's coat smeared with pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|Bad Man Matt. Exceptionally greedy."></span></div></div></div>
+      <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:14%; --h:13vh; --hm:11vh; --b:11vh; --tx:26px"><img class="happy" src="/test/assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="/test/assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
       <div class="scn birch l"><img src="/test/assets-v3/birch.webp" alt=""></div><div class="scn birch r"><img src="/test/assets-v3/birch.webp" alt=""></div>
     </div>
 
+    <div class="magic" id="magic" aria-hidden="true"><i class="halo" id="halo"></i>
+      <span class="wsp">Once upon a time&hellip;</span><span class="wsp">a stolen supper</span><span class="wsp">Rose had a plan.</span><span class="wsp">&ldquo;Not the pesto!&rdquo;</span>
+      <span class="wsp">a brave-ish daddy</span><span class="wsp">one enormous spoon</span><span class="wsp">Shosh kept watch.</span><span class="wsp">The End.</span>
+    </div>
+    <div class="burst" id="burst" aria-hidden="true"><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""></div>
     <div class="book" id="book" aria-hidden="true">
       <div class="book-in" id="bookIn">
         <div class="b-edge" aria-hidden="true"></div><div class="b-spine" aria-hidden="true"></div>
@@ -303,16 +331,19 @@
     </div>
     <div class="inv-foot" id="invFoot">
       <p>Her name in the title. Her fox at her side. A baddy and a plot she made up. And a story she will ask for again and again.</p>
-      <button class="cta" id="listen" type="button">Hear this one</button>
+      <button class="play" id="listen" type="button" aria-label="Play the story Rose and the Stolen Supper Spell, read aloud, five minutes">
+        <span class="pi" aria-hidden="true"></span><span class="pt"><b id="listenLabel">Play this story</b><small>Read aloud &middot; 5:05</small></span>
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      </button>
       <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story and its real cover, shared with permission.</small>
       <audio id="audio" preload="none" src="/public/stories/rose-stolen-supper-spell.mp3"></audio>
     </div>
 
     <div class="house l" aria-hidden="true"></div><div class="house r" aria-hidden="true"></div>
     <div class="onc l" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
-      <p class="ln">Bedtime stories about your child, their toys and their people, with their faces on the cover. You approve each one. They listen in the dark.</p>
+      <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
       <span class="ln"><a class="cta" href="/download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div><div class="onc r" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
-      <p class="ln">Bedtime stories about your child, their toys and their people, with their faces on the cover. You approve each one. They listen in the dark.</p>
+      <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
       <span class="ln"><a class="cta" href="/download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div>
     <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<i></i></p>
   </div>
@@ -372,10 +403,11 @@
       headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot');
   var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
   // when each member of the cast arrives (act progress), in scene order: Rose, Shosh, Daddy, the trouble, the pot, Matt, the badger
-  var AT = [.25, .30, .36, .43, .49, .52, .585];
+  var ATd = [.25, .30, .36, .43, .49, .52, .585], ATm = [.25, .31, .37, .43, .47, .50, .57], AT = ATd;   // phones: spaced so each tag finishes typing before the next arrives
+  var halo = document.getElementById('halo'), magicEl = document.getElementById('magic'), burstEl = document.getElementById('burst'), wsps = [].slice.call(hero.querySelectorAll('.wsp')), bstars = [].slice.call(burstEl.querySelectorAll('img'));
   var cast = figs.filter(function(f){ return f.dataset.name; });
   cast.forEach(function(f, k){ var sp = document.createElement('span'); sp.textContent = (k === cast.length - 1 ? 'and ' : '') + f.dataset.name + (k < cast.length - 1 ? ', ' : ''); names.appendChild(sp); f._name = sp; });
-  figs.forEach(function(f, k){ f._at = AT[k]; f._tag = f.querySelector('.tagwrap'); var sp = f.querySelector('[data-t]');
+  figs.forEach(function(f, k){ f._tag = f.querySelector('.tagwrap'); var cn = f.dataset.chip || f.dataset.name; if (cn) { f._chip = document.createElement('span'); f._chip.className = 'chip'; f._chip.textContent = cn; f.appendChild(f._chip); } var sp = f.querySelector('[data-t]');
     if (sp) { var parts = sp.dataset.t.split('|'); f._label = parts[0]; f._text = parts[1]; f._span = sp; f._shown = -1; f._who = f.querySelector('.who'); } });
   var home = [];
   function castGeo(){ figs.forEach(function(f){ f.style.transform = ''; }); var W = stage.offsetWidth, H = stage.offsetHeight;
@@ -388,6 +420,7 @@
     var t = (now - T0) / 1000, p = reduced ? 1 : prog(hero), W = stage.offsetWidth, H = stage.offsetHeight, k, i, wide = !narrow.matches;
     if (!(t > 0)) t = 0;
     var P = function(x, y){ return seg(p, x, y); };
+    AT = wide ? ATd : ATm;
 
     // 0 to .1: house curtains part; the headline stays put and changes colour exactly at the curtain edge
     var open = ease(P(0, .1)), th = Math.sin(open * Math.PI) * 3 * Math.min(1, W / H * .8), tan = Math.tan(th * Math.PI / 180) * H, xl = (.51 - open * 1.03 * .51) * W, xr = W - xl;
@@ -400,7 +433,7 @@
     // headline: lines rise once on load (time), then the whole block lifts away for good as the forest arrives
     for (i = 0; i < lines.length; i++) { k = reduced ? 1 : out(arr(t, .15 + lines[i]._i * .14, .7)); lines[i].style.opacity = k; lines[i].style.transform = 'translate3d(0,' + ((1 - k) * 26) + 'px,0)'; }
     var gone = P(.17, .23); copy.style.opacity = 1 - gone; copy.style.transform = 'translateX(-50%) translateY(' + (-ease(gone) * 60) + 'px)'; copy.style.pointerEvents = gone > .5 ? 'none' : 'auto';
-    headA.style.opacity = P(.23, .27) * (1 - P(.74, .78)); headB.style.opacity = P(.83, .87) * (wide ? 1 - P(.91, .95) : 1);
+    headA.style.opacity = P(.23, .27) * (1 - P(.74, .78)); headB.style.opacity = P(.83, .87) * (1 - P(.925, .955));
 
     // .11 to .26: the forest builds, back to front; .7 onward it clears for the book
     var clear = ease(P(.75, .86)), px = function(d){ return mx * d * -14; };
@@ -416,11 +449,14 @@
     // the cast: each hops in, its tag types itself, and at the end everyone but the badger folds into the book
     var bump = 0;
     figs.forEach(function(f, n){
-      var a = f._at, inn = back(P(a, a + .045)), vis = P(a, a + .012), extra = f.classList.contains('extra'), g = extra ? 0 : ease(P(.755 + n * .014, .845 + n * .014)), h = home[n] || { dx:0, dy:0 };
-      if (f._span) { typeTag(f, P(a + .03, a + .075));
+      var a = AT[n], inn = back(P(a, a + .045)), vis = P(a, a + .012), extra = f.classList.contains('extra'), g = extra ? 0 : ease(P(.75 + n * .011, .82 + n * .011)), h = home[n] || { dx:0, dy:0 };
+      var gone = 1 - P(.73, .76), swap = 0;
+      if (f._span) { typeTag(f, wide ? P(a + .03, a + .075) : P(a + .012, a + .045));
         var nxt = AT[n + 1] === undefined ? .76 : (n === 3 ? AT[5] : AT[n + 1]);            // phone: one tag at a time
-        f._tag.style.opacity = P(a + .02, a + .035) * (1 - P(.73, .76)) * (wide ? 1 : 1 - P(nxt - .005, nxt + .01)); }
-      if (extra) { var glum = P(.885, .92); f.classList.toggle('sad', p > .9); f.style.opacity = vis * (1 - P(.965, .985)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
+        swap = wide ? 0 : P(nxt - .005, nxt + .01);
+        f._tag.style.opacity = (wide ? P(a + .02, a + .035) : P(a + .006, a + .016)) * gone * (1 - swap); }
+      if (f._chip) f._chip.style.opacity = swap * gone;
+      if (extra) { var glum = P(.93, .955); f.classList.toggle('sad', p > .94); f.style.opacity = vis * (1 - P(.98, .995)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
       f.style.opacity = vis * (g < .93 ? 1 : 0);
       f.style.transform = 'translate3d(' + (h.dx * g + px(1) * (1 - g)) + 'px,calc(' + (h.dy * g) + 'px + ' + ((1 - inn) * 20 - Math.sin(g * Math.PI) * 16) + 'vh),0) scale(' + (1 - g * .62) + ') rotate(' + ((1 - Math.min(inn, 1)) * (n % 2 ? 7 : -7) + g * (n % 2 ? 200 : -200)) + 'deg)';
       if (!extra) bump += Math.sin(seg(g, .8, 1) * Math.PI);
@@ -428,11 +464,21 @@
     });
 
     // the book rises, then turns over to the real cover; on desktop it grows and the words sit beside it
-    var rise = back(P(.745, .8)), flip = ease(P(.9, .965));
+    var rise = back(P(.745, .8)), flip = ease(P(.925, .975)), mg = P(.865, .925), brew = Math.sin(mg * Math.PI);
     book.style.opacity = clamp(P(.745, .765));
-    book.style.transform = 'translate(calc(-50% - ' + (wide ? flip * 19 : 0) + 'vw),calc(-50% - ' + (flip * (wide ? 4 : 7)) + 'vh)) scale(' + (.7 + rise * .3 + bump * .045 + flip * (wide ? .78 : .06)) + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2) + 'deg)';
+    var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 13);
+    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + (.7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : .04)) + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
+    // the story is written: typed scraps spiral in behind the book, it glows and trembles, then stars fly as it turns over
+    magicEl.style.transform = burstEl.style.transform = 'translate(' + (-bx) + 'vw,' + (-by) + 'vh)';
+    wsps.forEach(function(w, n){ var sgm = seg(mg, n * .085, .4 + n * .085), e = ease(sgm), ang = n * 2.3 + e * 3.4, R = (1 - e) * (wide ? 56 : 46);
+      w.style.opacity = seg(sgm, 0, .14) * (1 - seg(sgm, .82, 1));
+      w.style.transform = 'translate(-50%,-50%) translate3d(' + (Math.cos(ang) * R * (wide ? 1.5 : .62)) + 'vh,' + (Math.sin(ang) * R) + 'vh,0) rotate(' + ((1 - e) * (n % 2 ? 26 : -26)) + 'deg) scale(' + (1 - e * .55) + ')'; });
+    var glow = P(.875, .925) * (1 - P(.95, .985)), bs = P(.925, .97);
+    halo.style.opacity = glow * (reduced ? 1 : .82 + Math.sin(t * 7) * .18); halo.style.transform = 'scale(' + (.45 + glow * .45 + P(.925, .96) * .45) + ')';
+    bstars.forEach(function(st, n){ var e = out(bs), ang = n / bstars.length * 6.283 + .3, R = e * (wide ? 34 + (n % 3) * 10 : 22 + (n % 3) * 7);
+      st.style.opacity = seg(bs, 0, .08) * (1 - seg(bs, .55, 1)); st.style.transform = 'translate3d(' + (Math.cos(ang) * R) + 'vh,' + (Math.sin(ang) * R + e * e * 9) + 'vh,0) rotate(' + (e * 320 + n * 40) + 'deg) scale(' + (.6 + (n % 4) * .32) + ')'; });
     bookIn.style.transform = 'rotateY(' + (flip * 180) + 'deg)';
-    var f2 = P(.965, .99); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
+    var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
   }
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
     addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, { passive:true });
@@ -453,25 +499,26 @@
 
     // the library fills, the lights go out, one story plays, the curtains close
     var c = reduced ? .7 : prog(cur);
-var dark = ease(seg(c, .42, .56)), up = ease(seg(c, .42, .6));
-    bks.forEach(function(b, n){ var o = .02 + n * .027, fly = seg(c, o, o + .1), k = back(fly), e = out(fly), rest = 17 * (1 - dark);
+    var dark = ease(wide ? seg(c, .42, .56) : seg(c, .36, .46)), up = ease(seg(c, .42, .6)), leave = wide ? 0 : ease(seg(c, .6, .67)), bo = wide ? .027 : .02;   // phones: the cabinet leaves before the bed arrives
+    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(c, o, o + .1), k = back(fly), e = out(fly), rest = 17 * (1 - dark);
       b.style.opacity = seg(c, o, o + .008); b.style.zIndex = fly < 1 ? 6 : 1;
       b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
-    shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (up * 27) + 'vh)) scale(' + (1 - up * .63) + ')';
+    shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
+    shelves.style.opacity = 1 - leave;
     night.style.opacity = dark * .88;
     var sr = libStage.getBoundingClientRect();
-    picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = seg(c, .5 + pk.n * .025, .54 + pk.n * .025);
+    picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = wide ? seg(c, .5 + pk.n * .025, .54 + pk.n * .025) : seg(c, .44 + pk.n * .025, .48 + pk.n * .025) * (1 - leave);
       pk.lit.style.left = (r.left - sr.left) + 'px'; pk.lit.style.top = (r.top - sr.top) + 'px'; pk.lit.style.width = r.width + 'px'; pk.lit.style.height = r.height + 'px'; pk.lit.style.opacity = on; });
     var act = Math.floor(performance.now() / 2600) % devs.length; devs.forEach(function(d, n){ d.classList.toggle('on', reduced ? n === 0 : n === act); });
-    libA.style.opacity = 1 - seg(c, .38, .46); libB.style.opacity = seg(c, .5, .58) * (1 - seg(c, .84, .9));
-    var bedIn = out(seg(c, .5, .66)), nowIn = out(seg(c, .64, .72));
-    bedtime.style.transform = 'translate3d(0,' + ((1 - bedIn) * 110) + '%,0)'; spk.style.transform = 'translate3d(0,' + ((1 - back(seg(c, .56, .68))) * 30) + 'vh,0)'; spk.style.opacity = seg(c, .56, .6);
-    now.style.opacity = nowIn; now.style.transform = 'translate3d(0,' + ((1 - nowIn) * 14) + 'px,0)'; now.style.pointerEvents = nowIn > .5 && c < .86 ? 'auto' : 'none';
-    libStage.classList.toggle('playing', c > .64 && c < .9);
-    var close = ease(seg(c, .82, .95));
+    libA.style.opacity = wide ? 1 - seg(c, .38, .46) : 1 - seg(c, .34, .4); libB.style.opacity = wide ? seg(c, .5, .58) * (1 - seg(c, .84, .9)) : seg(c, .42, .5) * (1 - seg(c, .88, .93));
+    var bedIn = out(wide ? seg(c, .5, .66) : seg(c, .64, .76)), nowIn = out(wide ? seg(c, .64, .72) : seg(c, .7, .77)), dv = wide ? seg(c, .56, .68) : seg(c, .68, .78);
+    bedtime.style.transform = 'translate3d(0,' + ((1 - bedIn) * 110) + '%,0)'; spk.style.transform = 'translate3d(0,' + ((1 - back(dv)) * 30) + 'vh,0)'; spk.style.opacity = seg(dv, 0, .35);
+    now.style.opacity = nowIn; now.style.transform = 'translate3d(0,' + ((1 - nowIn) * 14) + 'px,0)'; now.style.pointerEvents = nowIn > .5 && c < (wide ? .86 : .9) ? 'auto' : 'none';
+    libStage.classList.toggle('playing', c > (wide ? .64 : .7) && c < .92);
+    var close = ease(wide ? seg(c, .82, .95) : seg(c, .88, .96));
     dl.style.transform = 'translate3d(' + (-101 + close * 101) + '%,0,0)';
     dr.style.transform = 'translate3d(' + (101 - close * 101) + '%,0,0)';
-    fin.style.opacity = seg(c, .93, .99); fin.style.pointerEvents = c > .95 ? 'auto' : 'none';
+    fin.style.opacity = wide ? seg(c, .93, .99) : seg(c, .95, .995); fin.style.pointerEvents = c > .95 ? 'auto' : 'none';
 
     requestAnimationFrame(frame);
   }
@@ -481,7 +528,8 @@ var dark = ease(seg(c, .42, .56)), up = ease(seg(c, .42, .6));
   requestAnimationFrame(frame);
 
   var audio = document.getElementById('audio'), btn = document.getElementById('listen'), hint = document.getElementById('nowHint');
-  function label(){ btn.textContent = audio.paused ? 'Hear this one' : 'Pause'; hint.textContent = audio.paused ? 'Tap to hear it' : 'Playing. Tap to pause'; }
+  var listenLabel = document.getElementById('listenLabel');
+  function label(){ btn.classList.toggle('on', !audio.paused); listenLabel.textContent = audio.paused ? 'Play this story' : 'Pause'; hint.textContent = audio.paused ? 'Tap to hear it' : 'Playing. Tap to pause'; }
   function toggle(){ if (audio.paused) audio.play(); else audio.pause(); }
   btn.addEventListener('click', toggle); now.addEventListener('click', toggle); audio.addEventListener('play', label); audio.addEventListener('pause', label);
 })();
