@@ -47,7 +47,7 @@
   #hero { height:900vh; }
   #hero .stage { background:var(--paper) var(--paint) center/cover; color:var(--ink); }
   .dusk { position:absolute; inset:0; z-index:1; background:var(--navy) var(--paint) center/cover; background-blend-mode:multiply; opacity:0; }
-  .top { position:absolute; z-index:9; top:0; left:0; right:0; will-change:transform; }
+  .top { position:fixed; z-index:40; top:0; left:0; right:0; }
   .wordmark { position:absolute; z-index:2; top:.55rem; left:50%; transform:translateX(-50%); }
   .wordmark img { height:clamp(2rem,5.4vh,2.9rem); width:auto; }
   .programme { position:absolute; z-index:2; top:1.25rem; right:clamp(1rem,3vw,2.2rem); background:var(--cream); color:var(--navy); border:0; padding:.65rem .8rem;
@@ -64,9 +64,11 @@
   .onc { position:absolute; inset:0; z-index:8; pointer-events:none; } .onc .cta { pointer-events:auto; }
   .onc .hero-copy h1 { color:var(--cream); } .onc .hero-copy h1 em { color:#f2c14e; } .onc .hero-copy p { color:#f6ddd3; }
   .onc .hero-copy .cta { background:var(--cream); color:var(--navy); }
-  .cue { position:absolute; z-index:8; left:0; right:0; bottom:clamp(1.2rem,5vh,2.6rem); text-align:center; color:var(--cream); pointer-events:none; }
-  .cue i { display:block; width:1px; height:2.2rem; margin:.7rem auto 0; background:var(--cream); transform-origin:50% 0; animation:cue 1.8s ease-in-out infinite; }
-  @keyframes cue { 0%,100% { transform:scaleY(.35); opacity:.5; } 50% { transform:scaleY(1); opacity:1; } }
+  .cue { position:absolute; z-index:8; left:0; right:0; bottom:clamp(1.6rem,6vh,3.4rem); text-align:center; color:#fff3dc; pointer-events:none; font-size:clamp(.92rem,1.25vw,1.12rem); font-weight:600; letter-spacing:.2em; text-shadow:0 1px 0 rgba(60,15,10,.45); }
+  .cue i { display:block; width:1.15rem; height:1.15rem; margin:.75rem auto 0; border-right:3px solid #f2c14e; border-bottom:3px solid #f2c14e; animation:cue 1.25s ease-in-out infinite; }
+  .cue i + i { margin-top:-.45rem; animation-delay:.16s; }
+  @keyframes cue { 0%,100% { transform:translateY(-.3rem) rotate(45deg); opacity:.45; } 50% { transform:translateY(.4rem) rotate(45deg); opacity:1; } }
+  @media (prefers-reduced-motion:reduce) { .cue i { animation:none; transform:rotate(45deg); } }
   .house.l { left:0; transform-origin:0 0; } .house.r { right:0; transform-origin:100% 0; }
   .curtain { position:absolute; z-index:6; top:0; height:100%; width:min(25.8vh,24vw); filter:var(--shadow); will-change:transform; transform-origin:50% 0; }
   .curtain.l { left:0; } .curtain.r { right:0; }
@@ -155,7 +157,7 @@
   /* ---------- 9. The library, then lights out ---------- */
   #curtain { height:480vh; }
   #curtain .stage { background:var(--paper) var(--paint) center/cover; }
-  .lib-head { position:absolute; z-index:6; top:clamp(3.4rem,9vh,5.6rem); left:0; right:0; text-align:center; padding:0 1.25rem; will-change:opacity; }
+  .lib-head { position:absolute; z-index:6; top:calc(clamp(58px,10vh,92px) + .9rem); left:0; right:0; text-align:center; padding:0 1.25rem; will-change:opacity; }
   .lib-head .caps { color:#8a6a4a; } .lib-head.b { opacity:0; } .lib-head.b .caps { color:#aab0d6; } .lib-head.b h2 { color:var(--cream); }
   .lib-head h2 { font:600 clamp(1.9rem,4vw,3.2rem)/1.05 var(--display); letter-spacing:-.015em; margin-top:.8rem; text-wrap:balance; }
   /* a painted cabinet, four shelves of three; the covers are dressed as books (spine crease, page block, lean) */
@@ -244,7 +246,7 @@
   .final small { margin-top:2.4rem; font:400 .76rem/1.5 var(--text); color:#f0c9c0; max-width:30rem; }
 
   @media (min-width:761px) {
-    .cabinet { --cols:4; --bw:clamp(74px,13.6vh,156px); top:60%; }
+    .cabinet { --cols:4; --bw:clamp(74px,13.2vh,152px); top:61.5%; }
     .bedtime { left:50%; height:52vh; margin-left:-22vh; }
     /* devices: a row to the right of the bed whose size follows the room there, so the last one can never leave the screen */
     .devs { left:calc(50% + 37vh); right:2.5vw; bottom:6vh; gap:0; justify-content:space-between; align-items:flex-start; --dh:min(10vh, calc((50vw - 41vh) / 4.4)); }
@@ -302,13 +304,15 @@
 <div class="grain" aria-hidden="true"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="handcut" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 
+<!-- header: fixed for the whole page -->
+<div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
+      <a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
+      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/download.html">Get the App</a></div>
+</div>
+
 <!-- 1. THE STORY IS CAST -->
 <section class="act" id="hero">
   <div class="stage" id="heroStage">
-    <div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
-      <a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
-      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/download.html">Get the App</a></div>
-    </div>
     <div class="hero-copy" id="copy">
       <h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
       <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
@@ -362,7 +366,7 @@
       <span class="ln"><a class="cta" href="/download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div><div class="onc r" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
       <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
       <span class="ln"><a class="cta" href="/download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div>
-    <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<i></i></p>
+    <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<i></i><i></i></p>
   </div>
 </section>
 
@@ -473,7 +477,7 @@
         swap = wide ? 0 : P(nxt - .005, nxt + .01);
         f._tag.style.opacity = (wide ? P(a + .02, a + .035) : P(a + .006, a + .016)) * gone * (1 - swap); }
       if (f._chip) f._chip.style.opacity = swap * gone;
-      if (extra) { var glum = P(.79, .815); f.classList.toggle('sad', p > .8); f.style.opacity = vis * (1 - P(.845, .87)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
+      if (extra) { var glum = P(.855, .875); f.classList.toggle('sad', p > .86); f.style.opacity = vis * (1 - P(.888, .908)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
       f.style.opacity = vis * (g < .93 ? 1 : 0);
       f.style.transform = 'translate3d(' + (h.dx * g + px(1) * (1 - g)) + 'px,calc(' + (h.dy * g) + 'px + ' + ((1 - inn) * 20 - Math.sin(g * Math.PI) * 16) + 'vh),0) scale(' + (1 - g * .62) + ') rotate(' + ((1 - Math.min(inn, 1)) * (n % 2 ? 7 : -7) + g * (n % 2 ? 200 : -200)) + 'deg)';
       if (!extra) bump += Math.sin(seg(g, .8, 1) * Math.PI);

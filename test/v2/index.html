@@ -35,7 +35,7 @@
 
   #hero { position:relative; height:680vh; }
   .stage { position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:var(--paper) var(--paint) center/cover; }
-  .top { position:absolute; z-index:9; top:0; left:0; right:0; filter:drop-shadow(0 4px 3px rgba(60,20,15,.35)); }
+  .top { position:fixed; z-index:40; top:0; left:0; right:0; filter:drop-shadow(0 4px 3px rgba(60,20,15,.35)); }
   .valance { height:clamp(58px,10vh,92px); background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply;
              -webkit-mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat;
                      mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat; }
@@ -146,6 +146,7 @@
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
+<div class="top"><div class="valance" aria-hidden="true"></div><a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a><div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/download.html">Get the App</a></div></div>
 <section id="hero">
   <div class="stage" id="stage">
     <div class="world" aria-hidden="true">
@@ -201,7 +202,6 @@
     </div>
     <p class="cue caps" id="cue" aria-hidden="true">Scroll to meet the cast</p>
 
-    <div class="top"><div class="valance" aria-hidden="true"></div><a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a><div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/download.html">Get the App</a></div></div>
   </div>
 </section>
 <p style="max-width:34rem;margin:0 auto;padding:5rem 1.5rem 7rem;text-align:center;font:400 1rem/1.6 var(--text);color:#5d5f6e">Variant B ends here. From this point the page continues as in the main demo: the scene folds into the book, the real cover, then bedtime. <a href="/test/v1" style="color:var(--tomato)">Open the main demo</a>.<br><br><a class="cta" href="/download.html">Try the Namesake Beta</a></p>
