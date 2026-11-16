@@ -1,0 +1,274 @@
+<!doctype html>
+<!--
+  Namesake redesign demo, VARIANT B (2026-11-16): "the cast in the title".
+  After Nicholas's August reference: the headline stays on screen for the whole opening as a hanging paper
+  sign, the cast appear from behind it with name tags, and then the world behind them changes (forest, then
+  space) while the same cast stays put. Opening only; the book reveal and bedtime scenes are in index.html.
+  Serve from the yonder-web root so /public/ resolves.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Namesake redesign demo: cast in the title</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Jost:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#1f2a55; --navy-deep:#171d38; --red:#bb3a2f; --rose-deep:#a5322a; --mustard:#dba531; --sage:#6f8f6a; --cream:#efe4cf; --paper:#efe3c8; --tomato:#c8452c; --ink:#232842;
+    --paint:url(/test/assets-v3/wall.webp);
+    --display:"Cormorant Garamond",Georgia,serif; --text:"Jost",system-ui,sans-serif; --tag:"Special Elite","Courier New",monospace;
+  }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--text); overflow-x:hidden; }
+  img { display:block; max-width:none; }
+  h1,p { margin:0; }
+  .caps { font:500 .74rem/1 var(--text); letter-spacing:.24em; text-transform:uppercase; }
+  .cta { display:inline-block; font:600 .82rem/1 var(--text); letter-spacing:.2em; text-transform:uppercase; text-decoration:none; color:var(--cream); background:var(--navy);
+         padding:1.05rem 1.6rem; border-radius:2px; box-shadow:0 0 0 2px var(--cream), 0 5px 0 rgba(8,12,30,.35); }
+  .cta:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+  .grain { position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.16; mix-blend-mode:multiply;
+           background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  #hero { position:relative; height:680vh; }
+  .stage { position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; background:var(--paper) var(--paint) center/cover; }
+  .top { position:absolute; z-index:9; top:0; left:0; right:0; filter:drop-shadow(0 4px 3px rgba(60,20,15,.35)); }
+  .valance { height:clamp(58px,10vh,92px); background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply;
+             -webkit-mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat;
+                     mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat; }
+  .wordmark { position:absolute; top:.55rem; left:50%; transform:translateX(-50%); } .wordmark img { height:clamp(2rem,5.4vh,2.9rem); width:auto; }
+  .curtain { position:absolute; z-index:8; top:0; height:100%; width:min(25.8vh,15vw); filter:drop-shadow(0 .45vh .35vh rgba(60,40,20,.3)); transform-origin:50% 0; will-change:transform; }
+  .curtain.l { left:0; } .curtain.r { right:0; } .curtain img { width:100%; height:100%; } .curtain.r img { transform:scaleX(-1); }
+
+  /* worlds: flats that rise from the floor or drop from the flies behind the sign. No crossfades. */
+  .world { position:absolute; inset:0; z-index:1; pointer-events:none; }
+  .fl { position:absolute; will-change:transform; } .fl > img { height:100%; width:auto; }
+  .fl.rowa { left:50%; bottom:16vh; height:44vh; margin-left:-33vh; opacity:.55; } .fl.rowb { left:50%; bottom:16vh; height:44vh; margin-left:-99vh; opacity:.55; } .fl.rowc { left:50%; bottom:16vh; height:44vh; margin-left:33vh; opacity:.55; }
+  .fl.grass { left:-5vw; right:-5vw; bottom:-20vh; height:44vh; } .fl.grass > img { width:100%; }
+  .fl.cottage { right:max(14vw, calc(50% - 70vh)); bottom:16vh; height:30vh; filter:drop-shadow(0 .4vh .3vh rgba(60,40,20,.3)); }
+  .fl.mush { left:max(16vw, calc(50% - 60vh)); bottom:9vh; height:8vh; }
+  .fl.pot { left:calc(50% + 6vh); bottom:8vh; height:12vh; filter:drop-shadow(0 .4vh .3vh rgba(40,40,20,.3)); }
+  .backdrop { position:absolute; inset:-2vh 0 0 0; z-index:2; background:var(--navy) var(--paint) center/cover; background-blend-mode:multiply; transform:translateY(-104%); will-change:transform; box-shadow:0 8px 14px rgba(8,12,30,.45); }
+  .space { position:absolute; inset:0; z-index:3; pointer-events:none; }
+  .hang { position:absolute; top:0; width:0; transform-origin:50% 0; will-change:transform; } .hang i { display:block; width:1.5px; margin-left:-.75px; background:#e9dcc0; }
+  .hang img { position:absolute; left:0; transform:translateX(-50%); filter:drop-shadow(0 .3vh .3vh rgba(8,12,30,.5)); }
+  .fl.planet { left:max(9vw, calc(50% - 74vh)); bottom:13vh; height:17vh; filter:drop-shadow(0 .4vh .4vh rgba(8,12,30,.5)); }
+  .fl.rocket { left:0; bottom:10vh; height:15vh; filter:drop-shadow(0 .4vh .4vh rgba(8,12,30,.5)); }
+
+  /* the sign: real text, given a cut-paper backing by a ring of shadows, hung on two threads */
+  .rig { position:absolute; z-index:5; left:50%; top:0; transform-origin:50% 0; will-change:transform; }
+  .signwrap { position:relative; isolation:isolate; margin-top:clamp(150px,27vh,270px); transform:translateX(-50%); font-size:clamp(2.75rem,11.4vw,10.4rem); text-align:center; white-space:nowrap; }
+  .thread { position:absolute; z-index:0; bottom:calc(100% - .5em); width:2px; height:60vh; background:#b9a98a; } .thread.a { left:16%; } .thread.b { right:16%; }
+  .sign { position:relative; z-index:3; font:700 1em/.9 var(--display); letter-spacing:-.022em; color:var(--navy); filter:drop-shadow(0 .05em .035em rgba(60,40,20,.38)); }
+  .sign.backing { position:absolute; z-index:2; inset:0; color:var(--cream); filter:drop-shadow(0 .05em .035em rgba(60,40,20,.38)); } .sign.backing em { color:var(--cream); }
+  h1.sign { filter:none; }
+  .sign .l1, .sign .l2 { display:block; } .sign .l2 { font-size:.7em; margin-top:.06em; } .sign em { font-style:italic; color:var(--tomato); }
+  /* cast: they live behind the sign and come out from behind its letters */
+  .pup { position:absolute; z-index:1; height:var(--h); will-change:transform,opacity; opacity:0; }
+  .pup { width:max-content; }
+  .pup > img { height:100%; width:auto; filter:drop-shadow(0 .04em .03em rgba(40,40,20,.35)); }
+  .pup.rose { --h:1.42em; left:30%; bottom:calc(100% - .52em); margin-left:-.25em; }
+  .pup.shosh { --h:.82em; left:30%; bottom:calc(100% - .06em); margin-left:.34em; }
+  .pup.mummy { --h:1.95em; left:calc(100% - .2em); top:.05em; transform-origin:0 80%; }
+  .pup.bitey { --h:.72em; z-index:4; left:84%; bottom:calc(100% + .2em); }
+  .pup.daddy { --h:1.95em; right:calc(100% - .2em); top:-.2em; transform-origin:100% 80%; }
+  .pup.matt { --h:1.95em; left:calc(100% - .2em); top:.05em; transform-origin:0 80%; }
+  .pup.badger { --h:.66em; z-index:4; left:84%; bottom:calc(100% + .2em); }
+  /* a plaque is positioned in the SIGN's em units (so it tracks the figures at every size); the card inside sets its own type */
+  .plq { position:absolute; z-index:5; margin:0; opacity:0; will-change:transform,opacity; }
+  .plq > span { display:block; padding:.5em .65em .42em; background:var(--cream) var(--paint) center/cover; font:400 clamp(.7rem,.115em,1.02rem)/1.25 var(--tag); color:#3a3027; white-space:nowrap; text-align:left; box-shadow:0 3px 2px rgba(60,25,25,.28); }
+  .plq b { display:block; font-weight:400; color:var(--tomato); letter-spacing:.08em; text-transform:uppercase; font-size:.86em; margin-bottom:.1em; }
+  .plq.rose { right:calc(70% + .4em); bottom:calc(100% + .42em); }
+  .plq.shosh { left:calc(30% + 1.06em); bottom:calc(100% + .26em); }
+  .plq.mummy { right:-1.05em; top:calc(100% + .06em); }
+  .plq.bitey { left:calc(84% + .5em); bottom:calc(100% + .5em); transform:rotate(-2deg); }
+  .plq.daddy { right:calc(100% - .12em); top:calc(100% + .04em); transform:rotate(-3deg); }
+  .plq.matt { right:-1.05em; top:calc(100% + .06em); transform:rotate(2.5deg); }
+  .plq.badger { left:calc(84% + .5em); bottom:calc(100% + .5em); transform:rotate(-2deg); }
+
+  .under { position:absolute; z-index:6; left:50%; bottom:clamp(1.2rem,4.5vh,3rem); transform:translateX(-50%); width:min(90vw,40rem); text-align:center; }
+  .bill { position:absolute; z-index:4; left:50%; top:calc(100% + .66em); width:min(5.6em, 88vw); margin-left:calc(min(5.6em, 88vw) / -2); transform-origin:50% -.4em; will-change:transform; }
+  .bt { position:absolute; bottom:calc(100% - 2px); width:2px; height:.8em; background:#b9a98a; } .bt.a { left:14%; } .bt.b { right:14%; }
+  .bill-in { display:grid; perspective:900px; filter:drop-shadow(0 .035em .03em rgba(60,25,25,.34)); }
+  .bill-in p { grid-area:1 / 1; margin:0; padding:.72em 1.05em .8em; background:var(--cream) var(--paint) center/cover; font:600 italic clamp(1.25rem,.2em,2.05rem)/1.15 var(--display); color:var(--ink); text-align:center; text-wrap:balance;
+               backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:rotateX(-92deg); transform-origin:50% 0; transition:transform .5s cubic-bezier(.3,1.4,.5,1);
+               clip-path:polygon(0 3%, 6% 0, 31% 2%, 55% 0, 78% 2.5%, 100% 0, 99% 48%, 100% 97%, 71% 100%, 44% 98%, 19% 100%, 0 98%, 1% 52%); }
+  .bill-in p.on { transform:rotateX(0deg); }
+  .bill-in p b { display:block; font:400 .46em/1 var(--tag); letter-spacing:.14em; text-transform:uppercase; color:var(--tomato); margin-bottom:.55em; }
+  .fl.ufo { right:max(5vw, calc(50% - 84vh)); bottom:9vh; height:13vh; filter:drop-shadow(0 .4vh .4vh rgba(8,12,30,.5)); }
+  .fl.sat { left:max(15vw, calc(50% - 62vh)); top:14vh; height:8.5vh; filter:drop-shadow(0 .4vh .4vh rgba(8,12,30,.5)); }
+  .fl.planet2 { right:max(13vw, calc(50% - 66vh)); top:15vh; height:7vh; filter:hue-rotate(150deg) saturate(.75) drop-shadow(0 .3vh .3vh rgba(8,12,30,.5)); }
+  .fl.comet { left:0; top:0; height:17vh; opacity:0; filter:drop-shadow(0 .3vh .3vh rgba(8,12,30,.45)); }
+  .helm { position:absolute; z-index:2; left:var(--hx,-18%); top:var(--hy,-6%); width:var(--hw,136%); aspect-ratio:1; border-radius:50%; border:.028em solid #efe4cf; opacity:0; will-change:transform,opacity;
+          background:radial-gradient(circle at 30% 26%, rgba(255,255,255,.5) 0 9%, rgba(255,255,255,.1) 10% 42%, rgba(255,255,255,.04) 43%); box-shadow:0 .02em .03em rgba(8,12,30,.4); }
+  .cue { position:absolute; z-index:7; left:0; right:0; top:calc(clamp(58px,10vh,92px) + 1.1rem); text-align:center; color:#8a6a4a; pointer-events:none; }
+
+  @media (max-width:760px) {
+    .signwrap { margin-top:23vh; font-size:18.5vw; } .sign { line-height:.86; } .sign .w { display:block; } .sign .l2 { font-size:.72em; margin-top:.08em; }
+    .thread.a { left:22%; } .thread.b { right:22%; }
+    .pup.rose { --h:1.4em; left:38%; bottom:calc(100% - .5em); } .pup.shosh { --h:.8em; left:38%; margin-left:.36em; bottom:calc(100% - .06em); }
+    .pup.daddy { --h:1.75em; right:calc(100% - .66em); top:.5em; } .pup.matt, .pup.mummy { --h:1.75em; left:calc(100% - .66em); top:.7em; }
+    .pup.badger, .pup.bitey { left:72%; }
+    .plq > span { font-size:.72rem; }
+    .plq.rose { left:auto; right:calc(62% + .36em); bottom:calc(100% + .5em); } .plq.shosh { left:calc(38% + 1.12em); right:auto; bottom:calc(100% + .22em); } .plq.shosh > span, .plq.matt > span { white-space:normal; width:7.4rem; }
+    .plq.daddy { right:auto; left:-.22em; top:calc(100% + .08em); } .plq.matt, .plq.mummy { left:auto; right:-.22em; top:calc(100% + .08em); }
+    .bill { top:calc(100% + 1.25em); width:88vw; margin-left:-44vw; } .bill-in p { font-size:1.28rem; }
+    .fl.ufo { right:4vw; bottom:35vh; height:9vh; } .fl.sat { left:5%; top:12.5vh; height:6vh; } .fl.planet2 { right:7%; top:12vh; height:5vh; }
+    .plq.badger, .plq.bitey { display:none; }
+    .fl.cottage { height:26vh; right:4vw; bottom:20vh; } .fl.rowa, .fl.rowb, .fl.rowc { bottom:20vh; height:36vh; } .fl.rowa { margin-left:-27vh; } .fl.rowb { margin-left:-81vh; } .fl.rowc { margin-left:27vh; }
+    .fl.grass { bottom:-12vh; } .fl.mush { bottom:23vh; left:8vw; } .fl.pot { bottom:22vh; left:30vw; height:10vh; }
+    .fl.planet { left:5vw; bottom:25vh; height:14vh; } .fl.rocket { bottom:22vh; height:12vh; }
+    .cta { padding:.95rem 1.1rem; letter-spacing:.14em; font-size:.74rem; }
+    .cue { top:auto; bottom:calc(clamp(1.2rem,4.5vh,3rem) + 4.4rem); }
+  }
+  @media (prefers-reduced-motion:reduce) { #hero { height:auto; } .stage { position:relative; } .cue { display:none; } }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<section id="hero">
+  <div class="stage" id="stage">
+    <div class="world" aria-hidden="true">
+      <div class="fl rowb"><img src="/test/assets-v3/birchrow.webp" alt=""></div><div class="fl rowa"><img src="/test/assets-v3/birchrow.webp" alt=""></div><div class="fl rowc"><img src="/test/assets-v3/birchrow.webp" alt=""></div>
+      <div class="fl cottage"><img src="/test/assets-v3/cottage.webp" alt=""></div>
+      <div class="fl grass"><img src="/test/assets-v3/grass.webp" alt=""></div>
+      <div class="fl mush"><img src="/test/assets-v3/mushrooms.webp" alt=""></div>
+      <div class="fl pot"><img src="/test/assets-v3/cauldron.webp" alt=""></div>
+    </div>
+    <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+    <div class="space" id="space" aria-hidden="true">
+      <div class="hang" style="left:14%" data-l="20" data-s="9"><i></i><img src="/test/assets-v3/moon.webp" alt=""></div>
+      <div class="hang" style="left:27%" data-l="13" data-s="4"><i></i><img src="/test/assets-v3/star.webp" alt=""></div>
+      <div class="hang" style="left:74%" data-l="16" data-s="5"><i></i><img src="/test/assets-v3/star.webp" alt=""></div>
+      <div class="hang" style="left:88%" data-l="24" data-s="3.6"><i></i><img src="/test/assets-v3/star.webp" alt=""></div>
+      <div class="hang" style="left:6%" data-l="46" data-s="3.2"><i></i><img src="/test/assets-v3/star.webp" alt=""></div>
+      <div class="hang" style="left:94%" data-l="52" data-s="4.2"><i></i><img src="/test/assets-v3/star.webp" alt=""></div>
+      <div class="fl planet"><img src="/test/assets-v3/planet.webp" alt=""></div>
+      <div class="fl planet2"><img src="/test/assets-v3/planet.webp" alt=""></div>
+      <div class="fl sat"><img src="/test/assets-v3/satellite.webp" alt=""></div>
+      <div class="fl ufo"><img src="/test/assets-v3/ufo.webp" alt=""></div>
+      <div class="fl comet"><img src="/test/assets-v3/comet.webp" alt=""></div>
+      <div class="fl rocket"><img src="/test/assets-v3/rocket.webp" alt=""></div>
+    </div>
+
+    <div class="rig" id="rig">
+      <div class="signwrap" id="signwrap">
+        <i class="thread a"></i><i class="thread b"></i>
+        <div class="pup rose"><img src="/test/assets-v3/rose.webp" alt="Rose, a paper figure in striped pyjamas"><i class="helm"></i></div>
+        <div class="pup daddy"><img src="/test/assets-v3/daddy.webp" alt="Daddy, in odd socks"></div>
+        <div class="pup shosh"><img src="/test/assets-v3/fox.webp" alt="Shosh, a plush toy fox"><i class="helm" style="--hw:112%; --hx:-6%; --hy:-7%"></i></div>
+        <div class="pup matt"><img src="/test/assets-v3/matt.webp" alt="Bad Man Matt, a tired villain in a pesto-stained coat"></div>
+        <div class="pup mummy"><img src="/test/assets-v3/mummy.webp" alt="Mummy, holding a cup of tea"></div>
+        <div class="sign backing" id="backing" aria-hidden="true"><span class="l1"><span class="w">Audio</span> <span class="w">stories</span></span><span class="l2"><span class="w">where <em>they&rsquo;re</em></span> <span class="w">the hero.</span></span></div>
+        <h1 class="sign" id="sign"><span class="l1"><span class="w">Audio</span> <span class="w">stories</span></span><span class="l2"><span class="w">where <em>they&rsquo;re</em></span> <span class="w">the hero.</span></span></h1>
+        <div class="pup badger"><img src="/test/assets-v3/badger.webp" alt="A badger with muddy knees"></div>
+        <div class="pup bitey"><img src="/test/assets-v3/catsit.webp" alt="Mr Bitey, an unimpressed cat"><i class="helm" style="--hw:120%; --hx:-10%; --hy:-8%"></i></div>
+        <div class="bill" id="bill"><i class="bt a"></i><i class="bt b"></i><div class="bill-in" id="billIn">
+          <p><b>Namesake makes</b>bedtime stories about your child and their people. You choose the cast.</p>
+          <p><b>Tonight</b>An enchanted forest, and all the pasta pesto in Amsterdam has been stolen.</p>
+          <p><b>Tomorrow</b>Space. Rose, Shosh, Mummy, Daddy and Mr Bitey are off on an alien adventure.</p>
+        </div></div>
+        <p class="plq rose"><span><b>The hero</b>Rose, aged 5</span></p>
+        <p class="plq daddy"><span><b>The sidekick</b>Daddy. Brave-ish.</span></p>
+        <p class="plq shosh"><span><b>Her cuddly fox</b>Shosh. Always by her side.</span></p>
+        <p class="plq matt"><span><b>The baddy</b>Bad Man Matt. Exceptionally greedy.</span></p>
+        <p class="plq mummy"><span><b>New in the cast</b>Mummy. Co-pilot.</span></p>
+        <p class="plq bitey"><span><b>Also new</b>Mr Bitey. Not keen on space.</span></p>
+        <p class="plq badger"><span><b>Not in the cast</b>Came anyway.</span></p>
+      </div>
+    </div>
+
+    <div class="under">
+      <a class="cta" href="/download.html">Try the Namesake Beta</a>
+    </div>
+    <p class="cue caps" id="cue" aria-hidden="true">Scroll to meet the cast</p>
+
+    <div class="top"><div class="valance" aria-hidden="true"></div><a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a></div>
+  </div>
+</section>
+<p style="max-width:34rem;margin:0 auto;padding:5rem 1.5rem 7rem;text-align:center;font:400 1rem/1.6 var(--text);color:#5d5f6e">Variant B ends here. From this point the page continues as in the main demo: the scene folds into the book, the real cover, then bedtime. <a href="/test/v1" style="color:var(--tomato)">Open the main demo</a>.</p>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }, seg = function(p,a,b){ return clamp((p - a) / (b - a)); };
+  var ease = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }, out = function(t){ return 1 - Math.pow(1 - t, 3); };
+  var back = function(t){ var c = 1.9; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+  var hero = document.getElementById('hero'), $ = function(q){ return hero.querySelector(q); }, $$ = function(q){ return [].slice.call(hero.querySelectorAll(q)); };
+  function prog(){ var r = hero.getBoundingClientRect(), travel = r.height - innerHeight; return travel > 4 ? clamp(-r.top / travel) : 0; }
+
+  // the paper backing behind the letters: two rings of shadows in the paper colour, so the text stays real text
+  var sign = document.getElementById('backing'), sh = [];
+  [.08, .16, .24, .32].forEach(function(r){ for (var a = 0; a < 28; a++) { var th = a / 28 * Math.PI * 2; sh.push((Math.cos(th) * r).toFixed(3) + 'em ' + (Math.sin(th) * r).toFixed(3) + 'em 0 #efe4cf'); } });
+  sign.style.textShadow = sh.join(',');
+
+  var rig = document.getElementById('rig'), rose = $('.pup.rose'), daddy = $('.pup.daddy'), matt = $('.pup.matt'), badger = $('.pup.badger'),
+      shosh = $('.pup.shosh'), mummy = $('.pup.mummy'), bitey = $('.pup.bitey'),
+      plq = { rose:$('.plq.rose'), shosh:$('.plq.shosh'), daddy:$('.plq.daddy'), matt:$('.plq.matt'), badger:$('.plq.badger'), mummy:$('.plq.mummy'), bitey:$('.plq.bitey') }, rot = { rose:-2, shosh:2, daddy:-3, matt:2.5, badger:-2, mummy:2.5, bitey:-2 },
+      rows = $$('.fl.rowa, .fl.rowb, .fl.rowc'), grass = $('.fl.grass'), cottage = $('.fl.cottage'), mush = $('.fl.mush'), pot = $('.fl.pot'),
+      backdrop = document.getElementById('backdrop'), hangs = $$('.hang'), planet = $('.fl.planet'), rocket = $('.fl.rocket'),
+      slips = $$('#billIn p'), bill = document.getElementById('bill'), ufo = $('.fl.ufo'), sat = $('.fl.sat'), planet2 = $('.fl.planet2'), comet = $('.fl.comet'), helms = $$('.helm'), space = document.getElementById('space'), cue = document.getElementById('cue'), T0 = performance.now();
+  for (var xi = 0; xi < 10; xi++) { var hg = document.createElement('div'); hg.className = 'hang'; hg.style.left = (3 + (xi * 37 + 11) % 94) + '%'; hg.dataset.l = 8 + (xi * 23) % 58; hg.dataset.s = (2.2 + (xi % 4) * .7).toFixed(1);
+    hg.innerHTML = '<i></i><img src="/test/assets-v3/star.webp" alt="">'; space.insertBefore(hg, space.firstChild); }
+  hangs = $$('.hang');
+  hangs.forEach(function(h){ h.firstChild.style.height = h.dataset.l + 'vh'; h.lastChild.style.height = h.dataset.s + 'vh'; });
+  function tagIn(el, key, k){ el.style.opacity = clamp(k * 3); el.style.transform = 'translateY(' + ((1 - out(k)) * 10) + 'px) rotate(' + rot[key] + 'deg)'; }
+  rot.mummy = 2.5; rot.rose = -2; rot.shosh = 2;
+
+  function frame(now){
+    var t = reduced ? 0 : (now - T0) / 1000, p = reduced ? 1 : prog(), P = function(a, b){ return seg(p, a, b); }, k;
+    cue.style.opacity = 1 - P(0, .03);
+    var sway = Math.sin(t * .9) * .5;
+var drop = reduced ? 1 : clamp((t - .15) / 1.3), settle = Math.sin(drop * Math.PI * 3) * (1 - drop) * 4;
+    rig.style.transform = 'translateY(' + ((1 - back(drop)) * -75) + 'vh) rotate(' + (sway * .35 + settle + Math.sin(P(.62, .8) * Math.PI * 3) * (1 - P(.62, .8)) * 1.6) + 'deg)';
+    var idle = reduced ? 0 : (1 - P(.005, .035)) * clamp((t - 1.6) / .5), pk = function(ph, amt){ var v = Math.sin(t * 1.25 + ph); return idle * amt * (v > 0 ? v * v : 0); };
+
+    // the cast come out from behind the letters, one at a time
+    k = Math.max(back(P(.04, .1)), pk(0, .5)); rose.style.opacity = Math.max(P(.04, .055), idle > 0 ? 1 : 0); rose.style.transform = 'translateY(' + ((1 - k) * .9) + 'em) rotate(' + ((1 - k) * 6) + 'deg)'; tagIn(plq.rose, 'rose', P(.08, .12));
+    k = Math.max(back(P(.11, .16)), pk(-.5, .55)); shosh.style.opacity = Math.max(P(.11, .12), idle > 0 ? 1 : 0); shosh.style.transform = 'translateY(' + ((1 - k) * .7) + 'em) rotate(' + ((1 - k) * -10 + 4) + 'deg)'; tagIn(plq.shosh, 'shosh', P(.14, .18));
+    k = Math.max(back(P(.19, .26)), pk(2.2, .5)); daddy.style.opacity = Math.max(P(.19, .205), idle > 0 ? 1 : 0); daddy.style.transform = 'translateX(' + ((1 - k) * .9) + 'em) rotate(' + (-14 + (1 - k) * 14 + Math.sin(t * 1.2) * .6) + 'deg)'; tagIn(plq.daddy, 'daddy', P(.24, .28));
+    // the baddy arrives, and when the story changes he is thrown out and Mummy takes his place
+    var chuck = P(.68, .78), c2 = chuck * chuck;
+    k = Math.max(back(P(.29, .36)), pk(4.1, .45)); matt.style.opacity = Math.max(P(.29, .305), idle > 0 ? 1 : 0) * (1 - P(.77, .78));
+    matt.style.transform = 'translate(' + ((1 - k) * -.9 + c2 * 5) + 'em,' + (-Math.sin(chuck * Math.PI * .75) * 3.2 + c2 * 1.5) + 'em) rotate(' + (13 - (1 - k) * 13 + Math.sin(t * 1.1 + 1) * .6 * (1 - chuck) + chuck * 560) + 'deg)';
+    plq.matt.style.opacity = clamp(P(.34, .38) * 3) * (1 - P(.66, .69)); plq.matt.style.transform = 'translateY(' + ((1 - out(P(.34, .38))) * 10 + P(.66, .69) * 14) + 'px) rotate(' + (2.5 + P(.66, .69) * 14) + 'deg)';
+    k = back(P(.8, .87)); mummy.style.opacity = P(.8, .815); mummy.style.transform = 'translateX(' + ((1 - k) * -.9) + 'em) rotate(' + (11 - (1 - k) * 11 + Math.sin(t * 1.1 + 1) * .5) + 'deg)'; tagIn(plq.mummy, 'mummy', P(.85, .89));
+    // the badger turns up uninvited, and leaves with the forest; Mr Bitey takes the same perch in space
+    k = P(.4, .46); var hop = ease(P(.66, .72));
+    badger.style.opacity = P(.4, .41) * (1 - P(.71, .72)); badger.style.transform = 'translateY(' + ((1 - back(k)) * -1.8 - hop * 4) + 'em) rotate(' + (hop * -200) + 'deg)';
+    plq.badger.style.opacity = clamp(P(.45, .49) * 3) * (1 - P(.64, .67)); plq.badger.style.transform = 'translateY(' + ((1 - out(P(.45, .49))) * 10) + 'px) rotate(-2deg)';
+    k = P(.86, .93); bitey.style.opacity = P(.86, .87); bitey.style.transform = 'translateY(' + ((1 - back(k)) * -2.2) + 'em)'; tagIn(plq.bitey, 'bitey', P(.92, .96));
+
+    // world one rises from the floor; world two drops from the flies while world one sinks
+    var sink = ease(P(.66, .8));
+    k = out(P(.48, .56)); grass.style.transform = 'translateY(' + ((1 - k) * 50 + sink * 50) + 'vh)';
+    rows.forEach(function(r, n){ k = out(P(.49 + n * .012, .58 + n * .012)); r.style.transform = 'translateY(' + ((1 - k) * 70 + sink * 80) + 'vh)'; });
+    k = back(P(.53, .61)); cottage.style.transform = 'translateY(' + ((1 - k) * 60 + sink * 70) + 'vh) rotate(' + ((1 - k) * 6) + 'deg)';
+    k = back(P(.57, .62)) * (1 - sink); mush.style.transform = 'scale(' + Math.max(k, 0) + ')'; mush.style.transformOrigin = '50% 100%';
+    k = back(P(.58, .64)); pot.style.transform = 'translateY(' + ((1 - k) * 40 + sink * 60) + 'vh)';
+    backdrop.style.transform = 'translateY(' + (-104 + out(P(.66, .78)) * 104) + '%)';
+    hangs.forEach(function(h, n){ var ha = P(.72 + n * .011, .84 + n * .011); h.style.opacity = ha > 0 ? 1 : 0;
+      h.style.transform = 'translateY(' + ((1 - out(ha)) * -90) + 'vh) rotate(' + (Math.sin(ha * 11) * 13 * (1 - ha) + Math.sin(t * .8 + n) * 1.3) + 'deg)'; });
+    k = back(P(.78, .88)); planet.style.transform = 'translateY(' + ((1 - k) * 50) + 'vh) rotate(' + (Math.sin(t * .4) * 3) + 'deg)';
+    k = P(.82, 1); rocket.style.opacity = k > 0 ? 1 : 0; rocket.style.transform = 'translate(' + (-20 + k * 125) + 'vw,' + (-k * 12 + Math.sin(k * 9) * 1.5) + 'vh)';
+
+    // more of space: a satellite drifts in, a saucer bobs, a second planet, a comet crosses, and the cast get helmets
+    k = out(P(.76, .87)); sat.style.transform = 'translate(' + ((1 - k) * -45) + 'vw,' + (Math.sin(t * .7) * .8) + 'vh) rotate(' + (-12 + Math.sin(t * .5) * 5) + 'deg)';
+    k = back(P(.8, .9)); ufo.style.transform = 'translate(' + ((1 - k) * 45) + 'vw,' + (Math.sin(t * 1.3) * 1.3) + 'vh) rotate(' + (Math.sin(t * .9) * 4) + 'deg)';
+    k = back(P(.82, .9)); planet2.style.transform = 'scale(' + Math.max(k, 0) + ')';
+    k = P(.85, 1); comet.style.opacity = k > 0 && k < 1 ? 1 : 0; comet.style.transform = 'translate(' + (-22 + k * 140) + 'vw,' + (-22 + k * 105) + 'vh)';
+    k = back(P(.88, .95)); helms.forEach(function(h){ h.style.opacity = clamp(k * 2); h.style.transform = 'scale(' + Math.max(k, 0) + ')'; });
+
+    // the billing card under the sign flips over when the story changes; one side is always fully readable
+    var w = p < .5 ? 0 : p < .7 ? 1 : 2; slips.forEach(function(s, n){ s.classList.toggle('on', n === w); });
+    bill.style.transform = 'rotate(' + (-1 + Math.sin(t * .8 + 1) * .7) + 'deg)';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
