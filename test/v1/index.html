@@ -284,6 +284,18 @@
   @media (prefers-reduced-motion:reduce) {
     #hero, #curtain { height:auto; } .stage { position:relative; } .cue { display:none; }
   }
+
+  /* header links, on the valance either side of the wordmark */
+  .nav-l, .nav-r { position:absolute; z-index:2; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
+  .nav-l { left:clamp(.9rem,3vw,2.2rem); } .nav-r { right:clamp(.9rem,3vw,2.2rem); }
+  .nav-l a { color:#efe4cf; font:500 .76rem/1 "Jost",system-ui,sans-serif; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; padding:.7rem 0; }
+  .nav-l a:hover { text-decoration:underline; text-underline-offset:.35em; }
+  .nav-r a { background:#efe4cf; color:#1f2a55; font:600 .72rem/1 "Jost",system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; text-decoration:none; padding:.68rem .95rem; border-radius:2px; }
+  .nav-l a:focus-visible, .nav-r a:focus-visible { outline:2px solid #f2c14e; outline-offset:3px; }
+  @media (max-width:760px) {
+    .nav-l { left:.7rem; gap:.85rem; } .nav-l a { font-size:.62rem; letter-spacing:.12em; }
+    .nav-r { right:.6rem; } .nav-r a { font-size:.58rem; letter-spacing:.08em; padding:.55rem .55rem; }
+  }
 </style>
 </head>
 <body>
@@ -295,7 +307,7 @@
   <div class="stage" id="heroStage">
     <div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
       <a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
-      <button class="programme caps" type="button" aria-label="Programme (scene list, not wired in this demo)">Programme</button>
+      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/download.html">Get the App</a></div>
     </div>
     <div class="hero-copy" id="copy">
       <h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
