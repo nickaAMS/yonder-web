@@ -289,6 +289,91 @@
     #hero, #curtain { height:auto; } .stage { position:relative; } .cue { display:none; }
   }
 
+  /* ---------- no closing curtain: the lights-out scene hands on to the rest of the page ---------- */
+  .drape, .final { display:none !important; }
+  .more { position:absolute; z-index:6; left:0; right:0; bottom:clamp(.7rem,2.2vh,1.4rem); text-align:center; color:#f3ead6; opacity:0; pointer-events:none; font-size:.8rem; font-weight:600; letter-spacing:.2em; }
+  .more i { display:block; width:.8rem; height:.8rem; margin:.4rem auto 0; border-right:2.5px solid #f2c14e; border-bottom:2.5px solid #f2c14e; animation:cue 1.25s ease-in-out infinite; }
+
+  /* ---------- the rest of the page: calm, mostly still ---------- */
+  .low { position:relative; padding:clamp(4.5rem,11vh,8rem) clamp(1.2rem,5vw,4rem); background:var(--paper) var(--paint) center/cover; color:var(--ink); }
+  .low.dark { background:var(--navy-deep) var(--paint) center/cover; background-blend-mode:multiply; color:var(--cream); }
+  .low.tint { background:#e8cdbf var(--paint) center/cover; background-blend-mode:multiply; }
+  .low-in { max-width:68rem; margin:0 auto; }
+  .low .caps { color:#8a6a4a; } .low.dark .caps { color:#aab0d6; }
+  .low h2 { font:600 clamp(2.1rem,4.4vw,3.6rem)/1.04 var(--display); letter-spacing:-.016em; margin-top:.8rem; max-width:18ch; text-wrap:balance; }
+  .low .lede { font:400 clamp(1.05rem,1.4vw,1.25rem)/1.55 var(--text); max-width:36rem; margin-top:1.2rem; color:#4d5167; text-wrap:pretty; } .low.dark .lede { color:#cfd2e6; }
+  .low.center { text-align:center; } .low.center h2, .low.center .lede { margin-left:auto; margin-right:auto; }
+  .two { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(2rem,5vw,4.5rem); align-items:center; }
+  /* 1. you are in charge: a manuscript slip with one line struck out in red pencil */
+  .slip { position:relative; background:var(--cream) var(--paint) center/cover; color:#3a3027; padding:1.6rem 1.5rem 1.8rem; transform:rotate(-1.5deg); box-shadow:0 5px 0 rgba(8,12,30,.35);
+          font:400 clamp(.95rem,1.25vw,1.12rem)/1.75 var(--tag); clip-path:polygon(0 2%,5% 0,34% 1.5%,62% 0,100% 1%,99% 50%,100% 98%,68% 100%,40% 98.5%,12% 100%,0 99%,1% 48%); }
+  .slip s { text-decoration:none; background:linear-gradient(transparent 46%, var(--tomato) 46% 58%, transparent 58%); background-size:0% 100%; background-repeat:no-repeat; transition:background-size 1s ease .3s; }
+  .slip ins { text-decoration:none; color:var(--tomato); opacity:0; transition:opacity .5s ease 1.2s; }
+  .seen .slip s { background-size:100% 100%; } .seen .slip ins { opacity:1; }
+  .slip-wrap { position:relative; } .slip-wrap img { position:absolute; right:-4%; bottom:-22%; width:46%; transform:rotate(-14deg); filter:drop-shadow(0 4px 3px rgba(8,12,30,.5)); }
+  .ticks { list-style:none; margin:1.6rem 0 0; padding:0; display:grid; gap:.7rem; font:400 1.05rem/1.4 var(--text); }
+  .ticks li { padding-left:1.7rem; position:relative; } .ticks li::before { content:""; position:absolute; left:.1rem; top:.25rem; width:.4rem; height:.75rem; border-right:2.5px solid #f2c14e; border-bottom:2.5px solid #f2c14e; transform:rotate(40deg); }
+  /* 2 and 3: numbered cards and the rules list */
+  .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); margin-top:clamp(2rem,5vh,3.4rem); }
+  .card { background:var(--cream) var(--paint) center/cover; padding:1.5rem 1.4rem 1.6rem; box-shadow:0 4px 0 rgba(60,40,20,.2); } .card:nth-child(odd) { transform:rotate(-.7deg); } .card:nth-child(even) { transform:rotate(.6deg); }
+  .card b { display:block; font:400 .82rem/1 var(--tag); letter-spacing:.14em; color:var(--tomato); }
+  .card h3 { font:600 1.5rem/1.1 var(--display); margin:.7rem 0 .5rem; } .card p { font:400 .98rem/1.55 var(--text); color:#4d5167; }
+  .notes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem clamp(1.5rem,4vw,3rem); margin-top:clamp(1.6rem,4vh,2.6rem); font:400 1.02rem/1.55 var(--text); color:#4d5167; }
+  .rules { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1.3rem,3vh,2rem) clamp(2rem,5vw,4.5rem); margin-top:clamp(2rem,5vh,3.4rem); counter-reset:r; }
+  .rules div { counter-increment:r; padding-left:3rem; position:relative; } .rules div::before { content:counter(r); position:absolute; left:0; top:-.1rem; font:600 italic 2rem/1 var(--display); color:var(--tomato); }
+  .rules h3 { font:600 1.35rem/1.15 var(--display); } .rules p { font:400 .98rem/1.55 var(--text); color:#4d4a52; margin-top:.35rem; }
+  /* 4. languages */
+  .langs { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.8rem; }
+  .langs button { font:500 .8rem/1 var(--text); letter-spacing:.14em; text-transform:uppercase; padding:.75rem 1rem; border:1.5px solid #6d74a6; background:none; color:var(--cream); border-radius:2px; cursor:pointer; }
+  .langs button[aria-pressed="true"] { background:var(--cream); color:var(--navy); border-color:var(--cream); } .langs button:focus-visible { outline:2px solid #f2c14e; outline-offset:3px; }
+  .lang-show { display:grid; grid-template-columns:auto minmax(0,1fr); gap:1.4rem; align-items:center; }
+  .lang-show img { width:clamp(120px,16vw,200px); aspect-ratio:2/3; object-fit:cover; border-radius:2px 5px 5px 2px; box-shadow:0 8px 14px rgba(0,0,0,.4); transform:rotate(-2deg); }
+  .lang-show q { display:block; quotes:none; font:500 italic clamp(1.3rem,2.2vw,1.9rem)/1.25 var(--display); } .lang-show small { display:block; margin-top:.8rem; font:400 .8rem/1.4 var(--text); color:#aab0d6; }
+  /* 5. hear more */
+  .tracks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); margin-top:clamp(2rem,5vh,3.4rem); text-align:left; }
+  .track { display:flex; flex-direction:column; align-items:flex-start; gap:.9rem; background:var(--cream) var(--paint) center/cover; padding:1.1rem; border:0; cursor:pointer; color:var(--ink); box-shadow:0 4px 0 rgba(60,40,20,.2); text-align:left; }
+  .track:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+  .track img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:2px; }
+  .track strong { font:600 1.3rem/1.12 var(--display); } .track small { font:400 .8rem/1.4 var(--text); color:#6b6558; }
+  .track .play { pointer-events:none; padding:.4rem 1rem .4rem .4rem; } .track .play .pi { width:2.3rem; height:2.3rem; } .track .play .pt b { font-size:.86rem; }
+  /* 6. the end */
+  .low.end { background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply; color:var(--cream); text-align:center; padding-bottom:2.4rem; }
+  .low.end h2 { margin-left:auto; margin-right:auto; } .low.end .lede { color:#f4dcd2; margin-left:auto; margin-right:auto; }
+  .low.end .cta { background:var(--cream); color:var(--navy); margin-top:2rem; font-size:.95rem; padding:1.2rem 2rem; }
+  .foot { margin-top:clamp(4rem,10vh,6.5rem); padding-top:1.4rem; border-top:1px solid rgba(239,228,207,.3); display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; font:400 .86rem/1.4 var(--text); color:#f0c9c0; }
+  .foot a { color:var(--cream); text-decoration:none; } .foot a:hover { text-decoration:underline; } .foot span { flex-basis:100%; }
+  @media (max-width:760px) {
+    .two { grid-template-columns:1fr; } .cards, .tracks { grid-template-columns:1fr; } .notes, .rules { grid-template-columns:1fr; }
+    .slip-wrap { margin:0 .4rem 2.6rem; } .tracks { max-width:19rem; margin-left:auto; margin-right:auto; } .lang-show { grid-template-columns:1fr; } .lang-show img { width:44vw; }
+    .card:nth-child(n) { transform:none; }
+  }
+  @media (prefers-reduced-motion:reduce) { .slip s, .slip ins { transition:none; } .more i { animation:none; transform:rotate(45deg); } }
+
+  /* dark blue sections: brushed texture like the other backgrounds (a boosted copy of the paint, blended in) */
+  .low.dark { background:#1a1f4b; isolation:isolate; overflow:hidden; }
+  .low.dark::before { content:""; position:absolute; inset:0; z-index:-1; background:var(--paint) center/cover; filter:grayscale(1) brightness(.56) contrast(8); mix-blend-mode:overlay; opacity:.55; pointer-events:none; }
+  /* app screenshots, shown as phones */
+  .shot { display:block; width:min(100%,19rem); height:auto; border-radius:1.5rem; border:.4rem solid #10132e; box-shadow:0 14px 26px rgba(8,12,30,.38); }
+  .shots { position:relative; display:flex; justify-content:center; align-items:flex-start; gap:0; padding:1rem 0 2rem; }
+  .shots .shot { width:min(56%,15rem); } .shots .shot.a { transform:rotate(-3deg); position:relative; z-index:1; } .shots .shot.b { transform:rotate(3.5deg) translateY(2.4rem); margin-left:-14%; }
+  .steps { list-style:none; margin:clamp(1.6rem,4vh,2.4rem) 0 0; padding:0; display:grid; gap:1.2rem; }
+  .steps li { display:grid; grid-template-columns:2.6rem minmax(0,1fr); align-items:start; } .steps b { font:400 .9rem/1.9 var(--tag); letter-spacing:.14em; color:var(--tomato); }
+  .steps h3 { font:600 1.5rem/1.1 var(--display); } .steps p { font:400 1rem/1.5 var(--text); color:#4d5167; margin-top:.3rem; }
+  #make .notes { grid-template-columns:1fr; gap:.8rem; font-size:.96rem; }
+  /* you are in charge: the review screen, the summary Namesake gives you, and the pencil */
+  .review { position:relative; display:flex; justify-content:center; padding:0 0 4.5rem; }
+  .review .shot { width:min(62%,15.5rem); transform:rotate(2.5deg); border-color:#0b0e24; }
+  .sum { position:absolute; left:0; bottom:1.2rem; width:min(74%,21rem); background:#12163a; border:1px solid #2c3270; border-radius:.9rem; padding:.9rem 1rem; box-shadow:0 12px 22px rgba(0,0,0,.5); transform:rotate(-2deg); }
+  .sum p { display:grid; grid-template-columns:1.25rem minmax(0,1fr); gap:.6rem; align-items:start; font:400 .95rem/1.4 var(--text); color:#8f95bd; } .sum p + p { margin-top:.5rem; }
+  .sum svg { width:1.15rem; height:1.15rem; margin-top:.12rem; } .sum b { font-weight:500; color:#eef0fb; }
+  .sum u { text-decoration:none; background:linear-gradient(var(--tomato),var(--tomato)) 0 100%/0% 2.5px no-repeat; padding-bottom:2px; transition:background-size .7s ease .4s; } .sum p:nth-child(3) u { transition-delay:1s; }
+  .seen .sum u { background-size:100% 2.5px; }
+  .review .pen { position:absolute; right:2%; bottom:-.6rem; width:42%; transform:rotate(-16deg); filter:drop-shadow(0 4px 3px rgba(8,12,30,.5)); }
+  @media (max-width:760px) {
+    .shots { padding:0 0 3rem; } .review { padding-bottom:6.5rem; margin-top:.5rem; } .sum { width:86%; } .sum p { font-size:.9rem; }
+  }
+  @media (prefers-reduced-motion:reduce) { .sum u { transition:none; } }
+
   /* header links, on the valance either side of the wordmark */
   .nav-l, .nav-r { position:absolute; z-index:2; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
   .nav-l { left:clamp(.9rem,3vw,2.2rem); } .nav-r { right:clamp(.9rem,3vw,2.2rem); }
@@ -394,6 +479,7 @@
       <span class="q"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt=""><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt=""><img src="/test/assets-v3/shelf-toy-grabber.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
       <strong>1. Rose and the Stolen Supper Spell</strong><small id="nowHint">Tap to hear it</small>
     </button>
+    <p class="more caps" id="more" aria-hidden="true">And here is how it works<i></i></p>
     <div class="drape l" aria-hidden="true"></div><div class="drape r" aria-hidden="true"></div>
     <div class="final" id="final">
       <h2>A library of stories, starring them.</h2>
@@ -403,6 +489,91 @@
     </div>
   </div>
 </section>
+
+
+<!-- ===== THE REST OF THE PAGE: calm sections, wording carried from the current site ===== -->
+<section class="low dark" id="charge"><div class="low-in two">
+  <div>
+    <p class="caps">Made for parents</p>
+    <h2>You&rsquo;re in charge.</h2>
+    <p class="lede">Every story comes to you first. Before you read a word, Namesake tells you the scary bit, what happens to the villain and how it ends. Then you approve it, or you don&rsquo;t.</p>
+    <ul class="ticks"><li>You approve every story before they hear it.</li><li>No surprises, no autoplay, no ads.</li><li>One story or a queue of favourites. It plays what you chose, then stops.</li></ul>
+  </div>
+  <div class="review watch">
+    <img class="shot" src="/public/home-optimized/review-story.webp" alt="Namesake review screen: a story's cover, a three-line summary and the Approve and add to shelf button" loading="lazy">
+    <div class="sum" role="group" aria-label="What Namesake shows you before you approve">
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span><u>Scary bit:</u> <b>Bad Man Matt steals Rose&rsquo;s food</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span><u>Ends:</u> <b>Calm</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Checked for age 5</span></p>
+    </div>
+    <img class="pen" src="/test/assets-v3/redpencil.webp" alt="" loading="lazy">
+  </div>
+</div></section>
+
+<section class="low" id="make"><div class="low-in two">
+  <div>
+    <p class="caps">Made together, before bedtime</p>
+    <h2>How you make one.</h2>
+    <p class="lede">Choose a few ingredients that make the story unmistakably theirs. It takes a moment, not a questionnaire.</p>
+    <ol class="steps">
+      <li><b>01</b><div><h3>Pick companions</h3><p>Bunny or bear, Mummy or Daddy. Their adventure begins with someone they love.</p></div></li>
+      <li><b>02</b><div><h3>Add a little mischief</h3><p>A tiny twist to make the adventure exciting, always gentle enough for bedtime.</p></div></li>
+      <li><b>03</b><div><h3>Choose a world</h3><p>A moon garden, pirate ship or train to the stars. Tonight&rsquo;s story goes somewhere new.</p></div></li>
+    </ol>
+    <div class="notes"><p>Namesake already knows them. Their name, age, interests and who lives in their world are saved once, so you are not setting it all up again every night.</p><p>More than one child? Give each their own profile, or choose two heroes for a story together.</p></div>
+  </div>
+  <div class="shots">
+    <img class="shot a" src="/public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen for choosing who is in Rose's story, a little mischief and a world" loading="lazy">
+    <img class="shot b" src="/public/home-optimized/rose-library.webp" alt="Namesake phone screen showing the approved stories on Rose's shelf" loading="lazy">
+  </div>
+</div></section>
+
+<section class="low dark" id="languages"><div class="low-in two">
+  <div>
+    <p class="caps">Made for home languages</p>
+    <h2>Their adventure, in the language they know best.</h2>
+    <p class="lede">Every new story can be created in the language they hear at home, with narration and vocabulary made for them.</p>
+    <div class="langs" id="langs" role="group" aria-label="Choose a language to see a sample line"></div>
+  </div>
+  <div class="lang-show" aria-live="polite"><img id="langCover" src="/public/covers/cover-fr-lanterne.webp" alt="" loading="lazy"><div><q id="langLine"></q><small id="langTitle"></small></div></div>
+</div></section>
+
+<section class="low tint" id="craft"><div class="low-in">
+  <p class="caps">Rules the AI can&rsquo;t break</p>
+  <h2>How a Namesake story is built.</h2>
+  <p class="lede">Every story is built to a written specification, shaped to a child of exactly their age: easy enough to follow, surprising enough to be worth hearing twice.</p>
+  <div class="rules">
+    <div><h3>You set the brief.</h3><p>Choose the theme and the characters, and add the idea itself if they have given you one. A narwhal who is also a firefighter, for instance. And unicorns. Always unicorns.</p></div>
+    <div><h3>Nine story shapes.</h3><p>Every story is built on one of nine named shapes, from a quiet wander to a small quest, with a gentler set kept for two to five year olds.</p></div>
+    <div><h3>How much goes wrong is a choice.</h3><p>Every story needs something to go a little wrong. How much, and how frightening, is set by age, and for the under-threes it is turned right down.</p></div>
+    <div><h3>It resolves before it ends.</h3><p>The ending has to settle the story&rsquo;s central problem before the final beat. No cliffhangers at bedtime.</p></div>
+    <div><h3>Vocabulary and pacing by age.</h3><p>Sentence length and word choice shift by age band, rather than one reading level for everyone.</p></div>
+    <div><h3>Villains stay silly.</h3><p>If a young child&rsquo;s story has a villain at all, they are bumbling rather than frightening.</p></div>
+    <div><h3>Finished before it plays.</h3><p>The story is written and finished in advance, never generated live while they listen. Nothing changes once you have approved it.</p></div>
+  </div>
+</div></section>
+
+
+<section class="low center" id="hear"><div class="low-in">
+  <p class="caps">A little of their world</p>
+  <h2>Hear one of their adventures.</h2>
+  <p class="lede">Real stories made with Namesake, shared with their creators&rsquo; permission. Choose a book to play it.</p>
+  <div class="tracks" id="tracks">
+    <button class="track" type="button" data-src="/public/stories/rose-stolen-supper-spell.mp3"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="" loading="lazy"><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
+    <button class="track" type="button" data-src="/public/stories/santosh-3-racing-tiger.mp3"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
+    <button class="track" type="button" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
+  </div>
+  <audio id="audio2" preload="none"></audio>
+</div></section>
+
+<section class="low end" id="end"><div class="low-in">
+  <p class="caps" style="color:#f0c9c0">Small preview, real families</p>
+  <h2>Make their first story tonight.</h2>
+  <p class="lede">We&rsquo;re inviting a small group of families to help shape Namesake before launch. It works just as well in the car: an alternative to a screen in the headrest, or the same album for the fortieth time.</p>
+  <a class="cta" href="/download.html">Get the App</a>
+  <div class="foot"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a><a href="/compare/index.html">Compare</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></div>
+</div></section>
 
 <script>
 (function(){
@@ -440,8 +611,9 @@
     f._span.innerHTML = t > 0 ? '<b>' + f._label + '</b>' + f._text.slice(0, n) : ''; if (f._who) f._who.classList.toggle('on', t >= 1); }
   function arr(t, at, dur){ return clamp((t - at) / dur); }
   lines.forEach(function(l){ l._i = [].indexOf.call(l.closest('.hero-copy').querySelectorAll('.ln'), l); });
+  var START = window.NS_START || 0;   // variant B's full page starts this act part-way through (at the book)
   function castFrame(now){
-    var t = (now - T0) / 1000, p = reduced ? 1 : prog(hero), W = stage.offsetWidth, H = stage.offsetHeight, k, i, wide = !narrow.matches;
+    var t = (now - T0) / 1000, p = reduced ? 1 : START + (1 - START) * prog(hero), W = stage.offsetWidth, H = stage.offsetHeight, k, i, wide = !narrow.matches;
     if (!(t > 0)) t = 0;
     var P = function(x, y){ return seg(p, x, y); };
     AT = wide ? ATd : ATm;
@@ -518,7 +690,7 @@
       night = document.getElementById('night'), devs = [].slice.call(cur.querySelectorAll('.dev')), bedtime = document.getElementById('bedtime'), spk = document.getElementById('spk'),
       now = document.getElementById('now'), picks = bks.filter(function(b){ return b.dataset.n; }).map(function(b){ var d = document.createElement('div'); d.className = 'picklit';
         d.innerHTML = '<img src="' + b.querySelector('img').getAttribute('src') + '" alt=""><b>' + b.dataset.n + '</b>'; libStage.insertBefore(d, bedtime); return { el:b, lit:d, n:+b.dataset.n }; }),
-      libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
+      moreCue = document.getElementById('more'), libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
 
   var bookSettled = false;
   function frame(){
@@ -540,12 +712,13 @@
     picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = wide ? seg(c, .5 + pk.n * .025, .54 + pk.n * .025) : seg(c, .44 + pk.n * .025, .48 + pk.n * .025) * (1 - leave);
       pk.lit.style.left = (r.left - sr.left) + 'px'; pk.lit.style.top = (r.top - sr.top) + 'px'; pk.lit.style.width = r.width + 'px'; pk.lit.style.height = r.height + 'px'; pk.lit.style.opacity = on; });
     var act = Math.floor(performance.now() / 2600) % devs.length; devs.forEach(function(d, n){ d.classList.toggle('on', reduced ? n === 0 : n === act); });
-    libA.style.opacity = wide ? 1 - seg(c, .38, .46) : 1 - seg(c, .34, .4); libB.style.opacity = wide ? seg(c, .5, .58) * (1 - seg(c, .84, .9)) : seg(c, .42, .5) * (1 - seg(c, .88, .93));
+    libA.style.opacity = wide ? 1 - seg(c, .38, .46) : 1 - seg(c, .34, .4); libB.style.opacity = wide ? seg(c, .5, .58) : seg(c, .42, .5);
     var bedIn = out(wide ? seg(c, .5, .66) : seg(c, .64, .76)), nowIn = out(wide ? seg(c, .64, .72) : seg(c, .7, .77)), dv = wide ? seg(c, .56, .68) : seg(c, .68, .78);
     bedtime.style.transform = 'translate3d(0,' + ((1 - bedIn) * 110) + '%,0)'; spk.style.transform = 'translate3d(0,' + ((1 - back(dv)) * 30) + 'vh,0)'; spk.style.opacity = seg(dv, 0, .35);
-    now.style.opacity = nowIn; now.style.transform = 'translate3d(0,' + ((1 - nowIn) * 14) + 'px,0)'; now.style.pointerEvents = nowIn > .5 && c < (wide ? .86 : .9) ? 'auto' : 'none';
-    libStage.classList.toggle('playing', c > (wide ? .64 : .7) && c < .92);
-    var close = ease(wide ? seg(c, .82, .95) : seg(c, .88, .96));
+    now.style.opacity = nowIn; now.style.transform = 'translate3d(0,' + ((1 - nowIn) * 14) + 'px,0)'; now.style.pointerEvents = nowIn > .5 ? 'auto' : 'none';
+    libStage.classList.toggle('playing', c > (wide ? .64 : .7));
+    moreCue.style.opacity = wide ? seg(c, .8, .88) : seg(c, .84, .92);
+    var close = 0;
     dl.style.transform = 'translate3d(' + (-101 + close * 101) + '%,0,0)';
     dr.style.transform = 'translate3d(' + (101 - close * 101) + '%,0,0)';
     fin.style.opacity = wide ? seg(c, .93, .99) : seg(c, .95, .995); fin.style.pointerEvents = c > .95 ? 'auto' : 'none';
@@ -562,6 +735,31 @@
   function label(){ btn.classList.toggle('on', !audio.paused); listenLabel.textContent = audio.paused ? 'Play this story' : 'Pause'; hint.textContent = audio.paused ? 'Tap to hear it' : 'Playing. Tap to pause'; }
   function toggle(){ if (audio.paused) audio.play(); else audio.pause(); }
   btn.addEventListener('click', toggle); now.addEventListener('click', toggle); audio.addEventListener('play', label); audio.addEventListener('pause', label);
+
+  /* ----- the rest of the page ----- */
+  // red-pencil strike plays once when the slip scrolls into view
+  if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { threshold:.6 });
+    [].forEach.call(document.querySelectorAll('.watch'), function(el){ io.observe(el); }); } else { [].forEach.call(document.querySelectorAll('.watch'), function(el){ el.classList.add('seen'); }); }
+  // languages: one sample line and cover per language (same data as the current site)
+  var LANGS = [
+    { n:'English', t:'Rose and the Moonlit Map', c:'/public/covers/cover-en-moonlit-map.webp', l:'Rose traced the moonlit path on her map and listened for the owl’s soft hoot…' },
+    { n:'Français', t:'Rose et la Lanterne Perdue', c:'/public/covers/cover-fr-lanterne.webp', l:'Rose suivit la lueur de la lanterne, tout droit dans la forêt endormie…' },
+    { n:'Deutsch', t:'Rose und die Sternenbrücke', c:'/public/covers/cover-de-sternenbruecke.webp', l:'Rose setzte einen Fuß auf die Sternenbrücke, die leise über den Bach glitzerte…' },
+    { n:'Español', t:'Rose y el Jardín de las Luciérnagas', c:'/public/covers/cover-es-luciernagas.webp', l:'Rose siguió a las luciérnagas hasta el jardín secreto que brillaba en la noche…' },
+    { n:'Italiano', t:'Rose e la Chiave delle Nuvole', c:'/public/covers/cover-it-nuvole.webp', l:'Rose girò la chiave dorata e le nuvole si aprirono come un cancello di sogno…' },
+    { n:'Nederlands', t:'Rose en het Fluisterbos', c:'/public/covers/cover-nl-fluisterbos.webp', l:'Rose luisterde naar het fluisterbos, waar elk blad haar de weg naar huis wees…' } ];
+  var langBox = document.getElementById('langs'), langCover = document.getElementById('langCover'), langLine = document.getElementById('langLine'), langTitle = document.getElementById('langTitle');
+  function setLang(k){ var L = LANGS[k]; langCover.src = L.c; langCover.alt = L.t + ' story cover'; langLine.textContent = L.l; langTitle.textContent = L.t;
+    [].forEach.call(langBox.children, function(b, n){ b.setAttribute('aria-pressed', n === k ? 'true' : 'false'); }); }
+  LANGS.forEach(function(L, k){ var b = document.createElement('button'); b.type = 'button'; b.textContent = L.n; b.addEventListener('click', function(){ setLang(k); }); langBox.appendChild(b); });
+  setLang(1);
+  // hear more: one shared player; starting one story stops the other players on the page
+  var audio2 = document.getElementById('audio2'), tracks = [].slice.call(document.querySelectorAll('.track')), curTrack = null;
+  function markTracks(){ tracks.forEach(function(t){ var on = t === curTrack && !audio2.paused; t.querySelector('.play').classList.toggle('on', on); t.querySelector('.pt b').textContent = on ? 'Pause' : 'Play'; }); }
+  tracks.forEach(function(t){ t.addEventListener('click', function(){ if (curTrack === t && !audio2.paused) { audio2.pause(); return; }
+    if (curTrack !== t) { audio2.src = t.dataset.src; curTrack = t; } audio.pause(); audio2.play(); }); });
+  audio2.addEventListener('play', markTracks); audio2.addEventListener('pause', markTracks); audio2.addEventListener('ended', markTracks);
+  audio.addEventListener('play', function(){ audio2.pause(); });
 })();
 </script>
 </body>
