@@ -168,12 +168,12 @@
   .cabinet::before { content:""; position:absolute; left:-1.9vh; right:-1.5vh; top:-2.3vh; height:2.8vh; filter:url(#handcut); transform:rotate(-.5deg); background:var(--sage) var(--paint) center/60vh auto; background-blend-mode:multiply;
                      border-radius:1.2vh 1.2vh 2px 2px; box-shadow:0 3px 3px rgba(40,30,15,.3); }
   .cabinet::after { content:""; position:absolute; left:6%; right:6%; bottom:-1.4vh; height:1.4vh; background:linear-gradient(90deg,#4f6b4c 0 12%,transparent 12% 88%,#4f6b4c 88%); }
-  .bk { position:relative; z-index:1; width:var(--bw); aspect-ratio:2/3; border-radius:1px 3px 3px 1px; opacity:0; will-change:transform,opacity; background:#ddd; transform-origin:50% 100%; transform-style:preserve-3d;
-        box-shadow:1.5px 0 0 #f4ecd9, 2.5px 0 0 #cfc5ad, 3.5px 0 0 #f4ecd9, 4.5px .5px 0 #c4b99f, 5.5px .5px 0 #efe6d1, 9px 3px 7px rgba(0,0,0,.45); }
+  .bk { position:relative; z-index:1; width:var(--bw); aspect-ratio:2/3; border-radius:1px 3px 3px 1px; opacity:0; will-change:transform; background:#ddd; transform-origin:50% 100%; transform-style:preserve-3d;
+        box-shadow:0 .5vh .45vh -.25vh rgba(0,0,0,.7), -.5vh .2vh .9vh rgba(0,0,0,.32); }
   .bk img { width:100%; height:100%; object-fit:cover; border-radius:inherit; }
-  .bk::before { content:""; position:absolute; left:0; top:0; bottom:0; width:calc(var(--bw) * .17); transform-origin:0 50%; transform:rotateY(90deg); border-radius:2px 0 0 2px;
-                background:linear-gradient(rgba(255,255,255,.14),rgba(0,0,0,.2)), var(--spine,#7a2f28) var(--paint) center/30vh auto; background-blend-mode:normal,multiply; box-shadow:inset 0 .9vh 0 -.6vh rgba(255,235,190,.55), inset 0 -.9vh 0 -.6vh rgba(255,235,190,.55); }
-  .bk:nth-child(4n+1) { --spine:#27376b; } .bk:nth-child(4n+2) { --spine:#8a3a2c; } .bk:nth-child(4n+3) { --spine:#b0832a; } .bk:nth-child(4n) { --spine:#4d6b4a; }
+  /* the page block: a real side face running back from the fore-edge, seen because each book is turned a little to the left */
+  .bk::before { content:""; position:absolute; right:0; top:1.3%; bottom:1.3%; width:calc(var(--bw) * .2); transform-origin:100% 50%; transform:rotateY(-90deg);
+                background:linear-gradient(90deg, rgba(70,48,22,.6), rgba(70,48,22,.12) 55%, rgba(255,255,255,.1)), repeating-linear-gradient(90deg, #f6eedc 0 1px, #d6caae 1px 2.2px); }
   .bk::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
                background:linear-gradient(90deg,rgba(0,0,0,.34) 0,rgba(255,255,255,.22) 2.6%,rgba(0,0,0,.16) 5.5%,rgba(0,0,0,0) 10%,rgba(0,0,0,0) 92%,rgba(0,0,0,.1) 100%); }
   /* the book as an object: thickness, a page block, cloth and a debossed frame; the wordmark is the real file */
@@ -195,14 +195,16 @@
   .b-edge, .b-spine { position:absolute; top:1.1%; bottom:1.1%; left:calc(50% - var(--bt) / 2); width:var(--bt); }
   .b-edge { transform:rotateY(90deg) translateZ(calc(var(--bwd) / 2 - 3px)); background:repeating-linear-gradient(90deg, #f6eedc 0 1px, #d8ccb0 1px 2.4px); box-shadow:inset 0 0 6px rgba(90,70,40,.35); }
   .b-spine { top:0; bottom:0; transform:rotateY(-90deg) translateZ(calc(var(--bwd) / 2)); background:linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.08) 45%, rgba(0,0,0,.25)), #4d6e4f var(--paint) center/cover; background-blend-mode:normal,multiply; border-radius:3px; }
+  /* once turned over, the side we can see is the fore-edge of the story book, so it is dressed as pages */
+  .book-in.turned .b-spine { top:1.1%; bottom:1.1%; border-radius:0; background:linear-gradient(90deg, rgba(70,48,22,.1), rgba(70,48,22,.5)), repeating-linear-gradient(90deg, #f6eedc 0 1px, #d8ccb0 1px 2.4px); background-blend-mode:normal; box-shadow:inset 0 0 6px rgba(90,70,40,.35); }
   .fig.extra img.sad, .fig.extra.sad img.happy { display:none; } .fig.extra.sad img.sad { display:block; }
 
   .cabinet { --cols:3; --rh:calc(var(--bw) * 1.5 + 3.8vh); }
   .cgrid { position:relative; display:grid; grid-template-columns:repeat(var(--cols), var(--bw)); column-gap:var(--cg,2.6vh); padding:0 var(--cp,2.8vh); }
-  .cabbg b { background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--rh) - 1.4vh), #6f8f6a calc(var(--rh) - 1.4vh), #86a37f calc(var(--rh) - 1.1vh), #5c7a58 var(--rh)),
+  .cabbg b { background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--rh) - 2.5vh), #485a45 calc(var(--rh) - 2.5vh), #5e7659 calc(var(--rh) - 1.45vh), #86a37f calc(var(--rh) - 1.45vh), #86a37f calc(var(--rh) - 1.25vh), #55694f calc(var(--rh) - 1.25vh), #38463a var(--rh)),
                       repeating-linear-gradient(to bottom, rgba(0,0,0,.5) 0, rgba(0,0,0,.12) calc(var(--rh) * .3), rgba(0,0,0,0) calc(var(--rh) * .6), rgba(0,0,0,.18) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) var(--rh)),
-                      #3f4d3d var(--paint) center/50vh auto; background-blend-mode:multiply,normal,multiply; }
-  .cgrid .bk { margin:2.4vh 0 1.4vh; }
+                      #3f4d3d var(--paint) center/50vh auto; background-blend-mode:normal,normal,multiply; }
+  .cgrid .bk { margin:1.9vh 0 1.9vh; }
   .bedtime img.tail { position:absolute; z-index:2; left:81%; top:56.5%; width:19%; height:auto; transform-origin:4% 50%; animation:tail 7.5s ease-in-out infinite; filter:drop-shadow(0 2px 2px rgba(8,12,30,.3));
                       -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 22%); mask-image:linear-gradient(90deg, transparent 0, #000 22%); }
   @keyframes tail { 0%,100% { transform:rotate(-3deg); } 50% { transform:rotate(6deg); } }
@@ -377,7 +379,7 @@
     <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
     <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
       <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
-      <div class="cgrid"><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt=""></div><div class="bk pick" data-n="2"><img src="/public/home-optimized/cover-07.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-11.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-14.webp" alt=""></div><div class="bk pick" data-n="1"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/public/home-optimized/cover-18.webp" alt=""></div><div class="bk pick" data-n="3"><img src="/public/home-optimized/cover-02.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-09.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-16.webp" alt=""></div><div class="bk pick" data-n="4"><img src="/public/home-optimized/cover-05.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt=""></div><div class="bk"><img src="/public/home-optimized/cover-12.webp" alt=""></div></div>
+      <div class="cgrid"><div class="bk"><img src="/test/assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="/test/assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="/test/assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/test/assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="/test/assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="/test/assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="/test/assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
     </div>
     <div class="night" id="night"></div>
     <div class="bedtime" id="bedtime"><img src="/test/assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="/test/assets-v3/cattail2.webp" alt=""></div>
@@ -389,7 +391,7 @@
     </div>
     <button class="now" id="now" type="button" aria-label="Tonight's queue: four stories, about fifteen minutes. Play or pause the first story, Rose and the Stolen Supper Spell">
       <span class="caps">Tonight&rsquo;s queue &middot; 4 stories &middot; about 15 minutes</span>
-      <span class="q"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""><img src="/public/home-optimized/cover-07.webp" alt=""><img src="/public/home-optimized/cover-02.webp" alt=""><img src="/public/home-optimized/cover-05.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
+      <span class="q"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt=""><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt=""><img src="/test/assets-v3/shelf-toy-grabber.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
       <strong>1. Rose and the Stolen Supper Spell</strong><small id="nowHint">Tap to hear it</small>
     </button>
     <div class="drape l" aria-hidden="true"></div><div class="drape r" aria-hidden="true"></div>
@@ -488,7 +490,10 @@
     var rise = back(P(.745, .8)), flip = ease(P(.925, .975)), mg = P(.865, .925), brew = Math.sin(mg * Math.PI);
     book.style.opacity = clamp(P(.745, .765));
     var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 17);
-    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + (.7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1)) + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
+    // once the turn is done and the book is enlarged, it is laid out at that size instead of being a stretched small copy, so the cover stays sharp
+    var bsc = .7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1), big = flip >= 1 && bsc > 1;
+    if (big) { book.style.setProperty('--bwd', 'calc(clamp(150px,27vh,270px) * ' + bsc + ')'); book.style.perspective = (1400 * bsc) + 'px'; bsc = 1; } else { book.style.removeProperty('--bwd'); book.style.perspective = ''; }
+    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + bsc + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
     // the story is written: typed scraps spiral in behind the book, it glows and trembles, then stars fly as it turns over
     magicEl.style.transform = burstEl.style.transform = 'translate(' + (-bx) + 'vw,' + (-by) + 'vh)';
     wsps.forEach(function(w, n){ var sgm = seg(mg, n * .085, .4 + n * .085), e = ease(sgm), ang = n * 2.3 + e * 3.4, R = (1 - e) * (wide ? 56 : 46);
@@ -498,7 +503,10 @@
     halo.style.opacity = glow * (reduced ? 1 : .82 + Math.sin(t * 7) * .18); halo.style.transform = 'scale(' + (.45 + glow * .45 + P(.925, .96) * .45) + ')';
     bstars.forEach(function(st, n){ var e = out(bs), ang = n / bstars.length * 6.283 + .3, R = e * (wide ? 34 + (n % 3) * 10 : 22 + (n % 3) * 7);
       st.style.opacity = seg(bs, 0, .08) * (1 - seg(bs, .55, 1)); st.style.transform = 'translate3d(' + (Math.cos(ang) * R) + 'vh,' + (Math.sin(ang) * R + e * e * 9) + 'vh,0) rotate(' + (e * 320 + n * 40) + 'deg) scale(' + (.6 + (n % 4) * .32) + ')'; });
-    bookIn.style.transform = 'rotateX(' + ((1 - flip) * 7) + 'deg) rotateY(' + (24 * (1 - flip) * rise + flip * 180) + 'deg)';   // rests turned a little, so the spine and page block show
+    bookIn.style.transform = 'rotateX(' + ((1 - flip) * 7 + flip * 2) + 'deg) rotateY(' + (24 * (1 - flip) * rise + flip * 167) + 'deg)';   // rests turned a little, before and after the turn, so its thickness shows
+    bookIn.classList.toggle('turned', flip > .5);
+    // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
+    var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
     var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
   }
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
@@ -512,6 +520,7 @@
         d.innerHTML = '<img src="' + b.querySelector('img').getAttribute('src') + '" alt=""><b>' + b.dataset.n + '</b>'; libStage.insertBefore(d, bedtime); return { el:b, lit:d, n:+b.dataset.n }; }),
       libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
 
+  var bookSettled = false;
   function frame(){
     mx += (tx - mx) * .06; my += (ty - my) * .06;
 
@@ -521,7 +530,7 @@
     // the library fills, the lights go out, one story plays, the curtains close
     var c = reduced ? .7 : prog(cur);
     var dark = ease(wide ? seg(c, .42, .56) : seg(c, .36, .46)), up = ease(seg(c, .42, .6)), leave = wide ? 0 : ease(seg(c, .6, .67)), bo = wide ? .027 : .02;   // phones: the cabinet leaves before the bed arrives
-    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(c, o, o + .1), k = back(fly), e = out(fly), rest = 17 * (1 - dark);
+    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(c, o, o + .1), k = back(fly), e = out(fly), rest = -16 * (1 - dark);
       b.style.opacity = seg(c, o, o + .008); b.style.zIndex = fly < 1 ? 6 : 1;
       b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
     shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
