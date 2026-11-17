@@ -384,6 +384,20 @@
   .ra-box span.ra-now { color:var(--ink); background:rgba(242,193,78,.45); box-shadow:0 0 0 .18em rgba(242,193,78,.45); }
   .track.live { outline:3px solid var(--tomato); outline-offset:3px; }
 
+  /* the three books stand at an angle with real thickness and lift a little under the pointer (carried over from the live site) */
+  .track { padding:1.4rem 1.1rem 1.1rem; }
+  .bko { --h:.55rem; position:relative; display:block; width:84%; margin:0 auto .5rem 6%; aspect-ratio:2/3; transform-style:preserve-3d;
+         transform:perspective(1400px) rotateY(-19deg) rotateX(2deg); transition:transform .3s ease; }
+  .track .bko img { position:absolute; inset:0; width:100%; height:100%; aspect-ratio:auto; object-fit:cover; border-radius:2px 4px 4px 2px; transform:translateZ(var(--h));
+                    box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+  .bko::before { content:""; position:absolute; inset:0; border-radius:2px 4px 4px 2px; background:#3a2f26; transform:translateZ(calc(var(--h) * -1)); box-shadow:-1.1rem 1.3rem 1.6rem rgba(60,40,20,.38); }
+  .bko::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:2px 4px 4px 2px; transform:translateZ(calc(var(--h) + .5px));
+                background:linear-gradient(90deg, rgba(0,0,0,.28) 0, rgba(255,255,255,.2) 2.2%, rgba(0,0,0,.12) 4.6%, rgba(0,0,0,0) 9%, rgba(0,0,0,0) 90%, rgba(255,255,255,.1) 100%); }
+  .bko .pg { position:absolute; right:calc(var(--h) * -1); top:3px; bottom:3px; width:calc(var(--h) * 2); transform:rotateY(90deg);
+             background:repeating-linear-gradient(90deg, #f6eedc 0 1px, #d4c8ae 1px 2.3px); box-shadow:inset 0 0 5px rgba(90,70,40,.4); }
+  .track:hover .bko, .track:focus-visible .bko, .track.live .bko { transform:perspective(1400px) rotateY(-12deg) rotateX(2deg) translateY(-7px); }
+  @media (prefers-reduced-motion:reduce) { .bko { transition:none; } }
+
   /* header links, on the valance either side of the wordmark */
   .nav-l, .nav-r { position:absolute; z-index:2; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
   .nav-l { left:clamp(.9rem,3vw,2.2rem); } .nav-r { right:clamp(.9rem,3vw,2.2rem); }
@@ -404,7 +418,7 @@
 <!-- header: fixed for the whole page -->
 <div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
       <a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
-      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/download.html">Get the App</a></div>
+      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/test/download">Get the App</a></div>
 </div>
 
 <!-- 1. THE STORY IS CAST -->
@@ -413,7 +427,7 @@
     <div class="hero-copy" id="copy">
       <h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
       <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
-      <span class="ln"><a class="cta" href="/download.html">Try the Namesake Beta</a></span>
+      <span class="ln"><a class="cta" href="/test/download">Try the Namesake Beta</a></span>
     </div>
     <div class="inv-head a"><p class="caps">Tonight&rsquo;s story</p><h2>First, the cast.</h2></div>
     <div class="inv-head b"><p class="caps">Made in about a minute</p><h2>Then we craft the story and a cover.</h2></div>
@@ -460,9 +474,9 @@
     <div class="house l" aria-hidden="true"></div><div class="house r" aria-hidden="true"></div>
     <div class="onc l" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
       <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
-      <span class="ln"><a class="cta" href="/download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div><div class="onc r" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
+      <span class="ln"><a class="cta" href="/test/download" tabindex="-1">Try the Namesake Beta</a></span></div></div><div class="onc r" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
       <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
-      <span class="ln"><a class="cta" href="/download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div>
+      <span class="ln"><a class="cta" href="/test/download" tabindex="-1">Try the Namesake Beta</a></span></div></div>
     <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<i></i><i></i></p>
   </div>
 </section>
@@ -494,7 +508,7 @@
     <div class="final" id="final">
       <h2>A library of stories, starring them.</h2>
       <p>You make each one in about a minute. They listen as they drift off to sleep, night after night.</p>
-      <a class="cta" href="/download.html">Try the Namesake Beta</a>
+      <a class="cta" href="/test/download">Try the Namesake Beta</a>
       <small>Demo only. The full page also has the audio player, the red pencil, lights out, and the calmer sections below (how you make one, how a story is built, languages, listening).</small>
     </div>
   </div>
@@ -570,9 +584,9 @@
   <h2>Hear one of their adventures.</h2>
   <p class="lede">Real stories made with Namesake, shared with their creators&rsquo; permission. Choose a book to play it.</p>
   <div class="tracks" id="tracks">
-    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/public/stories/rose-stolen-supper-spell.mp3"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="" loading="lazy"><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
-    <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="/public/stories/santosh-3-racing-tiger.mp3"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
-    <button class="track" type="button" data-id="rose-pencil-draws-real-things" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
+    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/public/stories/rose-stolen-supper-spell.mp3"><span class="bko"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
+    <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="/public/stories/santosh-3-racing-tiger.mp3"><span class="bko"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
+    <button class="track" type="button" data-id="rose-pencil-draws-real-things" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><span class="bko"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
   </div>
   <div class="readalong" id="readalong" hidden>
     <p class="caps"><span id="raTitle"></span> &middot; read along</p>
@@ -585,7 +599,7 @@
   <p class="caps" style="color:#f0c9c0">Small preview, real families</p>
   <h2>Make their first story tonight.</h2>
   <p class="lede">We&rsquo;re inviting a small group of families to help shape Namesake before launch. It works just as well in the car: an alternative to a screen in the headrest, or the same album for the fortieth time.</p>
-  <a class="cta" href="/download.html">Get the App</a>
+  <a class="cta" href="/test/download">Get the App</a>
   <div class="foot"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a><a href="/compare/index.html">Compare</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></div>
 </div></section>
 

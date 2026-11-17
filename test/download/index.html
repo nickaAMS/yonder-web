@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a5322a">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Join the Namesake preview on iPhone or Android.">
+  <title>Get Namesake | Preview access (redesign test)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=Jost:wght@400;500;600&amp;family=Special+Elite&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#1f2a55; --navy-deep:#171d38; --rose-deep:#a5322a; --mustard:#dba531; --sage:#6f8f6a; --cream:#efe4cf; --paper:#efe3c8; --tomato:#c8452c; --ink:#232842;
+            --paint:url(/test/assets-v3/wall.webp); --display:"Cormorant Garamond",Georgia,serif; --text:"Jost",system-ui,sans-serif; --tag:"Special Elite","Courier New",monospace;
+            --gut:max(1.25rem, calc((100vw - 68rem) / 2)); }
+    * { box-sizing:border-box; }
+    html { -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+    body { min-width:320px; margin:0; background:var(--paper) var(--paint) center/cover fixed; color:var(--ink); font:400 1rem/1.6 var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+    a { color:inherit; } h1,h2,h3,p { margin-top:0; }
+    .skip-link { position:absolute; left:-9999px; } .skip-link:focus { left:1rem; top:1rem; z-index:60; padding:.7rem 1rem; background:var(--cream); color:var(--navy); }
+    .grain { position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.16; mix-blend-mode:multiply;
+             background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    /* header: the same scalloped band, links and wordmark as the home page */
+    .top { position:fixed; z-index:40; top:0; left:0; right:0; filter:drop-shadow(0 4px 3px rgba(60,20,15,.35)); }
+    .valance { height:clamp(58px,10vh,92px); background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply;
+               -webkit-mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat;
+                       mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat; }
+    .wordmark { position:absolute; top:.55rem; left:50%; transform:translateX(-50%); } .wordmark img { height:clamp(2rem,5.4vh,2.9rem) !important; width:auto; display:block; }
+    .nav-l, .nav-r { position:absolute; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
+    .nav-l { left:clamp(.9rem,3vw,2.2rem); } .nav-r { right:clamp(.9rem,3vw,2.2rem); }
+    .nav-l a { color:#efe4cf; font:500 .76rem/1 var(--text); letter-spacing:.2em; text-transform:uppercase; text-decoration:none; padding:.7rem 0; } .nav-l a:hover { text-decoration:underline; text-underline-offset:.35em; }
+    .nav-r a { background:#efe4cf; color:#1f2a55; font:600 .72rem/1 var(--text); letter-spacing:.16em; text-transform:uppercase; text-decoration:none; padding:.68rem .95rem; border-radius:2px; }
+    .top a:focus-visible { outline:2px solid #f2c14e; outline-offset:3px; }
+
+    .eyebrow { margin:0 0 1rem; color:#8a6a4a; font:500 .74rem/1 var(--text); letter-spacing:.24em; text-transform:uppercase; }
+    .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(240px,.7fr); gap:clamp(2rem,6vw,5rem); align-items:center; padding:calc(clamp(58px,10vh,92px) + clamp(2.5rem,8vh,5.5rem)) var(--gut) clamp(3.5rem,8vh,6rem); }
+    h1 { max-width:12ch; margin-bottom:1.3rem; font:600 clamp(3rem,7vw,5.4rem)/.98 var(--display); letter-spacing:-.02em; text-wrap:balance; }
+    h1 em, h2 em { color:var(--tomato); font-style:italic; }
+    .intro { max-width:34rem; margin-bottom:1.8rem; color:#4d5167; font-size:clamp(1.05rem,1.4vw,1.25rem); line-height:1.55; }
+    .about-link { display:inline-flex; align-items:center; gap:.5rem; font:600 .82rem/1 var(--text); letter-spacing:.18em; text-transform:uppercase; text-decoration:none; color:var(--navy); border-bottom:2px solid var(--tomato); padding-bottom:.35rem; }
+    .about-link span { color:var(--tomato); transition:transform .18s ease-out; } .about-link:hover span { transform:translateX(3px); }
+    /* the drifting wall of covers, on paper: soft top and bottom edges instead of dark fades */
+    .cover-mosaic { position:relative; width:100%; height:clamp(420px,62vh,600px); margin:0; overflow:hidden; transform:rotate(1.5deg);
+                    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 86%,transparent 100%); mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 86%,transparent 100%); }
+    .cover-mosaic-track { display:flex; flex-direction:column; gap:clamp(8px,1vw,12px); animation:mosaic-pan 58s linear infinite; will-change:transform; }
+    .cover-mosaic-set { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(8px,1vw,12px); padding:0 6px; }
+    .cover-mosaic-set img { display:block; width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:1px 3px 3px 1px; box-shadow:1.5px 0 0 #f4ecd9, 3px 0 0 #cfc5ad, 6px 4px 8px rgba(60,40,20,.35); }
+    @keyframes mosaic-pan { to { transform:translateY(calc(-50% - 6px)); } }
+
+    /* choose your phone: midnight band with the brushed texture, two paper cards */
+    .download-section { position:relative; isolation:isolate; overflow:hidden; background:#1a1f4b; color:var(--cream); padding:clamp(4rem,10vh,7rem) var(--gut); }
+    .download-section::before { content:""; position:absolute; inset:0; z-index:-1; background:var(--paint) center/cover; filter:grayscale(1) brightness(.56) contrast(8); mix-blend-mode:overlay; opacity:.55; pointer-events:none; }
+    .download-section .eyebrow { color:#aab0d6; }
+    .section-top { display:grid; grid-template-columns:minmax(0,1fr) minmax(230px,.7fr); gap:2rem; align-items:end; margin-bottom:clamp(2rem,5vh,3rem); }
+    h2 { margin-bottom:0; font:600 clamp(2.1rem,4.4vw,3.6rem)/1.04 var(--display); letter-spacing:-.016em; }
+    .section-top > p { margin-bottom:.3rem; color:#cfd2e6; font-size:1.02rem; }
+    .platforms { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1.2rem,3vw,2.2rem); }
+    .platform { position:relative; display:flex; flex-direction:column; min-height:29rem; padding:clamp(1.5rem,3vw,2.2rem); background:var(--cream) var(--paint) center/cover; color:var(--ink); box-shadow:0 5px 0 rgba(8,12,30,.4); }
+    .platform.apple { transform:rotate(-.5deg); } .platform.android { transform:rotate(.5deg); }
+    .platform-head { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .platform-label { font:400 .82rem/1 var(--tag); letter-spacing:.12em; text-transform:uppercase; color:var(--tomato); }
+    .platform-icon { display:grid; width:2.7rem; height:2.7rem; place-items:center; border:1.5px solid #cdbf9f; border-radius:50%; color:var(--navy); } .android .platform-icon { color:#4f6b4c; }
+    .platform h3 { margin:1.8rem 0 .5rem; font:600 clamp(2rem,3.6vw,2.7rem)/1 var(--display); letter-spacing:-.015em; }
+    .platform-description { max-width:34ch; margin-bottom:1.6rem; color:#4d5167; font-size:1rem; }
+    .steps { display:grid; gap:.9rem; margin:0 0 2rem; padding:0; list-style:none; counter-reset:install; }
+    .steps li { display:grid; grid-template-columns:2.2rem minmax(0,1fr); gap:.6rem; align-items:start; color:#4d5167; font-size:.96rem; }
+    .steps li::before { counter-increment:install; content:counter(install, decimal-leading-zero); font:400 .84rem/1.9 var(--tag); letter-spacing:.1em; color:var(--tomato); }
+    .steps strong { color:var(--ink); font-weight:600; }
+    .cta-area { margin-top:auto; min-height:13.5rem; }
+    .cta { display:inline-flex; width:100%; align-items:center; justify-content:center; gap:.6rem; min-height:3.4rem; padding:.9rem 1rem; border-radius:2px; background:var(--navy); color:var(--cream);
+           font:600 .82rem/1.2 var(--text); letter-spacing:.16em; text-transform:uppercase; text-align:center; text-decoration:none; box-shadow:0 3px 0 rgba(8,12,30,.35); transition:transform .15s ease, box-shadow .15s ease; }
+    .cta:hover { transform:translateY(-1px); box-shadow:0 4px 0 rgba(8,12,30,.35); } .cta:active { transform:translateY(2px); box-shadow:0 1px 0 rgba(8,12,30,.35); }
+    .cta-stack { display:grid; gap:.7rem; }
+    .cta.cta-secondary { background:transparent; color:var(--navy); box-shadow:inset 0 0 0 2px var(--navy); }
+    .cta:focus-visible, .about-link:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+    .cta[aria-disabled="true"] { cursor:not-allowed; opacity:.5; transform:none; }
+    .setup-note { margin:.9rem 0 0; color:#7b6a55; font-size:.82rem; line-height:1.5; text-align:center; } .setup-note a { color:var(--navy); text-decoration:underline; text-underline-offset:2px; }
+
+    .reassurance { display:grid; grid-template-columns:auto minmax(0,1fr); gap:1.1rem; align-items:start; padding:clamp(2.6rem,7vh,4.5rem) var(--gut); background:#e8cdbf var(--paint) center/cover; background-blend-mode:multiply; }
+    .moon { display:grid; width:2.4rem; height:2.4rem; place-items:center; border-radius:50%; background:var(--cream); color:var(--tomato); }
+    .reassurance p { max-width:44rem; margin:0; color:#4d4a52; font-size:1.02rem; } .reassurance strong { color:var(--ink); font-family:var(--display); font-size:1.3em; font-weight:600; display:block; margin-bottom:.2rem; }
+    footer { display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; padding:1.8rem var(--gut) 2.4rem; background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply; color:#f0c9c0; font-size:.86rem; }
+    footer a { color:var(--cream); text-decoration:none; } footer a:hover { text-decoration:underline; }
+
+    @media (max-width:760px) {
+      .nav-r .wide { display:none; }
+      .nav-l { left:.7rem; gap:.85rem; } .nav-l a { font-size:.62rem; letter-spacing:.12em; } .nav-r { right:.6rem; } .nav-r a { font-size:.58rem; letter-spacing:.08em; padding:.55rem .55rem; }
+      .hero, .section-top, .platforms { grid-template-columns:1fr; }
+      .hero { gap:2rem; padding-top:calc(clamp(58px,10vh,92px) + 2.2rem); } h1 { font-size:clamp(2.7rem,13vw,3.6rem); }
+      .cover-mosaic { height:400px; transform:none; } .cover-mosaic-track { animation-duration:34s; }
+      .section-top { gap:.8rem; } .platform { min-height:auto; } .platform.apple, .platform.android { transform:none; } .cta-area { min-height:0; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; } *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+      .cover-mosaic-track { animation:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#download">Skip to download options</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="top"><div class="valance" aria-hidden="true"></div><a class="wordmark" href="/test/v1" aria-label="Namesake home"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a><div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/test/v1">About<span class="wide"> Namesake</span></a></div></div>
+
+
+    <main>
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">A small preview for real families</p>
+          <h1>Stories where <em>they</em> are the hero.</h1>
+          <p class="intro">Namesake creates gentle, personalised audio adventures for bedtime. Choose the theme and the cast of characters, then press play and send them off to sleep with stories starring them and the things they love.</p>
+          <a class="about-link" href="https://trynamesake.com/">Discover Namesake <span aria-hidden="true">→</span></a>
+        </div>
+        <figure class="cover-mosaic" aria-label="Fifteen example personalised Namesake story covers">
+          <div class="cover-mosaic-track">
+            <div class="cover-mosaic-set">
+              <img src="/public/covers/cover-01.webp" alt="" fetchpriority="high">
+              <img src="/public/covers/cover-02.webp" alt="">
+              <img src="/public/covers/cover-03.webp" alt="">
+              <img src="/public/covers/cover-04.webp" alt="">
+              <img src="/public/covers/cover-05.webp" alt="">
+              <img src="/public/covers/cover-06.webp" alt="">
+              <img src="/public/covers/cover-07.webp" alt="">
+              <img src="/public/covers/cover-08.webp" alt="">
+              <img src="/public/covers/cover-09.webp" alt="">
+              <img src="/public/covers/cover-10.webp" alt="">
+              <img src="/public/covers/cover-11.webp" alt="">
+              <img src="/public/covers/cover-12.webp" alt="">
+              <img src="/public/covers/cover-13.webp" alt="">
+              <img src="/public/covers/cover-14.webp" alt="">
+              <img src="/public/covers/cover-15.webp" alt="">
+            </div>
+          </div>
+        </figure>
+      </header>
+
+      <section class="download-section" id="download" aria-labelledby="download-title">
+        <div class="section-top">
+          <div>
+            <p class="eyebrow">Preview access</p>
+            <h2 id="download-title">Choose your phone.</h2>
+          </div>
+          <p>It takes just a moment. Follow the steps for your device, then Namesake will be ready for tonight’s story.</p>
+        </div>
+
+        <div class="platforms">
+    <article class="platform apple" id="apple">
+            <div class="platform-head">
+              <span class="platform-label">For iPhone and iPad</span>
+              <span class="platform-icon" aria-hidden="true">
+                <svg width="22" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 12.8c0-2.8 2.3-4.2 2.4-4.3-1.3-1.9-3.3-2.2-4-2.2-1.7-.2-3.3 1-4.1 1-.9 0-2.2-1-3.7-1-1.9 0-3.7 1.1-4.7 2.8-2 3.5-.5 8.6 1.4 11.4 1 1.4 2 2.9 3.5 2.8 1.4-.1 1.9-.9 3.7-.9s2.2.9 3.7.9c1.5 0 2.5-1.4 3.4-2.8 1.1-1.6 1.5-3.1 1.5-3.2-.1 0-3-1.2-3-4.5ZM14 4.8c.7-.9 1.2-2.2 1.1-3.5-1.1 0-2.4.7-3.1 1.6-.6.7-1.2 2-1.1 3.3 1.2.1 2.4-.6 3.1-1.4Z"/></svg>
+              </span>
+            </div>
+            <h3>Apple</h3>
+            <p class="platform-description">Apple shares preview apps through TestFlight, Apple’s official app for trying new apps before they launch on the App Store.</p>
+            <ol class="steps">
+              <li><span><strong><a href="https://apps.apple.com/app/testflight/id899247664" target="_blank" rel="noopener noreferrer">Install Apple’s TestFlight app</a></strong> from the App Store first. Without it, Safari says the address is invalid.</span></li>
+              <li><span><strong>Open the invitation</strong> below, then tap Install in TestFlight.</span></li>
+            </ol>
+            <div class="cta-area">
+            <a class="cta" id="apple-cta" href="#download">Open TestFlight invitation <span aria-hidden="true">→</span></a>
+            <p class="setup-note">You may be asked to sign in with your Apple ID.</p>
+            </div>
+          </article>
+
+    <article class="platform android" id="android">
+            <div class="platform-head">
+              <span class="platform-label">For Android</span>
+              <span class="platform-icon" aria-hidden="true">
+                <svg width="26" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.5 19.3 6l-.9-.4-1.8 3.6a8.3 8.3 0 0 0-9.2 0L5.6 5.6l-.9.4 1.7 3.5A6.8 6.8 0 0 0 5 13.7h14a6.8 6.8 0 0 0-1.4-4.2ZM8.5 12.1a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6Zm7 0a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6ZM5 14.7v4.4c0 .8.7 1.5 1.5 1.5S8 19.9 8 19.1v-4.4H5Zm11 0v4.4c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5v-4.4h-3Zm-7 0v5.9c0 .8.7 1.5 1.5 1.5h3c.8 0 1.5-.7 1.5-1.5v-5.9H9Z"/></svg>
+              </span>
+            </div>
+            <h3>Android</h3>
+            <div id="android-apk-flow" style="display: contents;">
+              <p class="platform-description">Download the latest Namesake preview directly to the Android device you will use.</p>
+              <ol class="steps">
+                <li><span><strong>Download Namesake</strong> using the button below.</span></li>
+                <li><span><strong>Allow the download</strong> when Android asks for permission.</span></li>
+                <li><span><strong>Open the downloaded file</strong> and choose Install.</span></li>
+              </ol>
+              <div class="cta-area">
+              <a class="cta" id="android-cta" href="#download">Download Android app <span aria-hidden="true">↓</span></a>
+              <p class="setup-note" id="android-note" aria-live="polite">Finding the latest Android preview…</p>
+              </div>
+            </div>
+            <div id="android-play-flow" hidden style="display: none;">
+              <p class="platform-description">Google shares preview apps through the Google Play Store. Join the preview group first to unlock the download.</p>
+              <ol class="steps">
+                <li><span><strong>Join the Namesake preview group</strong> below and tap <strong>Join group</strong>, using the email address you use for the Google Play Store.</span></li>
+                <li><span><strong>Open Google Play</strong> in Step 2 and tap <strong>Install</strong>.</span></li>
+              </ol>
+              <div class="cta-area">
+              <div class="cta-stack">
+                <a class="cta" id="android-group-cta" href="https://groups.google.com/g/namesake-preview" target="_blank" rel="noopener noreferrer">1. Join preview group <span aria-hidden="true">→</span></a>
+                <a class="cta cta-secondary" id="android-play-cta" href="https://play.google.com/store/apps/details?id=com.storytime.storytime" target="_blank" rel="noopener noreferrer">2. Install on Google Play <span aria-hidden="true">→</span></a>
+              </div>
+              <p class="setup-note" id="android-play-note">Use the same Google account you are signed into on the Play Store.</p>
+              <p class="setup-note" id="android-apk-fallback" hidden style="margin-top: .45rem;">Already installed via direct download? <a id="android-fallback-cta" href="?mode=apk">Download latest APK directly</a></p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <aside class="reassurance" aria-label="Preview information">
+        <span class="moon" aria-hidden="true">✦</span>
+        <p><strong>Thank you for helping shape Namesake.</strong> This is a preview build, so you may occasionally see something still being polished. Your feedback helps make the bedtime routine calmer and more magical for every family.</p>
+      </aside>
+    </main>
+
+    <footer>
+      <span>© 2026 Namesake</span>
+      <a href="https://trynamesake.com/">trynamesake.com</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </footer>
+
+  <script>
+    const APPLE_TESTFLIGHT_URL = 'https://testflight.apple.com/join/xhnSr9Zn';
+    const ANDROID_BUILD_CONFIG = 'https://firestore.googleapis.com/v1/projects/storytime-app-cf2d0/databases/(default)/documents/app_config/android_update';
+
+    function connectDownloadLink(id, url) {
+      const link = document.getElementById(id);
+      const isConfigured = /^https:\/\//.test(url);
+      if (!isConfigured) {
+        link.setAttribute('aria-disabled', 'true');
+        link.setAttribute('title', 'This beta link will be added before the page is shared.');
+        link.addEventListener('click', (event) => event.preventDefault());
+        return;
+      }
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+    }
+
+    function enableAndroidPlayFlow(groupUrl, playUrl, apkUrl) {
+      const apkFlow = document.getElementById('android-apk-flow');
+      const playFlow = document.getElementById('android-play-flow');
+      const fallbackNote = document.getElementById('android-apk-fallback');
+      if (apkFlow) apkFlow.style.display = 'none';
+      if (playFlow) {
+        playFlow.hidden = false;
+        playFlow.style.display = 'contents';
+      }
+      if (groupUrl) connectDownloadLink('android-group-cta', groupUrl);
+      if (playUrl) connectDownloadLink('android-play-cta', playUrl);
+      if (fallbackNote) {
+        fallbackNote.hidden = false;
+        if (apkUrl) connectDownloadLink('android-fallback-cta', apkUrl);
+      }
+    }
+
+    async function connectAndroidDownload() {
+      const params = new URLSearchParams(window.location.search);
+      const forceBeta = params.get('beta') === '1' || params.get('mode') === 'play_beta';
+      const forceApk = params.get('beta') === '0' || params.get('mode') === 'apk';
+      if (forceBeta) {
+        enableAndroidPlayFlow();
+        return;
+      }
+      const note = document.getElementById('android-note');
+      try {
+        const response = await fetch(ANDROID_BUILD_CONFIG);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const fields = (await response.json()).fields || {};
+        const apkUrl = fields.apkUrl?.stringValue;
+        const playBetaEnabled = fields.playBetaEnabled?.booleanValue === true;
+        if (playBetaEnabled && !forceApk) {
+          enableAndroidPlayFlow(
+            fields.playGroupUrl?.stringValue,
+            fields.playStoreUrl?.stringValue,
+            apkUrl,
+          );
+          return;
+        }
+        const version = fields.latestVersion?.stringValue;
+        if (!apkUrl) throw new Error('APK URL is missing');
+        connectDownloadLink('android-cta', apkUrl);
+        note.textContent = version ? `Latest preview: ${version}` : 'Latest Android preview ready to download.';
+      } catch (error) {
+        const button = document.getElementById('android-cta');
+        button.setAttribute('aria-disabled', 'true');
+        button.addEventListener('click', (event) => event.preventDefault());
+        note.textContent = 'We could not load the latest Android preview. Please refresh and try again.';
+      }
+    }
+
+    connectDownloadLink('apple-cta', APPLE_TESTFLIGHT_URL);
+    connectAndroidDownload();
+
+    const mosaicTrack = document.querySelector('.cover-mosaic-track');
+    if (mosaicTrack) {
+      const repeatedSet = mosaicTrack.firstElementChild.cloneNode(true);
+      repeatedSet.setAttribute('aria-hidden', 'true');
+      mosaicTrack.appendChild(repeatedSet);
+    }
+  </script>
+</body>
+</html>
