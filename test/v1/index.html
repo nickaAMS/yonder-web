@@ -320,8 +320,8 @@
   .card h3 { font:600 1.5rem/1.1 var(--display); margin:.7rem 0 .5rem; } .card p { font:400 .98rem/1.55 var(--text); color:#4d5167; }
   .notes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem clamp(1.5rem,4vw,3rem); margin-top:clamp(1.6rem,4vh,2.6rem); font:400 1.02rem/1.55 var(--text); color:#4d5167; }
   .rules { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1.3rem,3vh,2rem) clamp(2rem,5vw,4.5rem); margin-top:clamp(2rem,5vh,3.4rem); counter-reset:r; }
-  .rules div { counter-increment:r; padding-left:3rem; position:relative; } .rules div::before { content:counter(r); position:absolute; left:0; top:-.1rem; font:600 italic 2rem/1 var(--display); color:var(--tomato); }
-  .rules h3 { font:600 1.35rem/1.15 var(--display); } .rules p { font:400 .98rem/1.55 var(--text); color:#4d4a52; margin-top:.35rem; }
+  .rules div { counter-increment:r; padding-left:3.4rem; position:relative; } .rules div::before { content:counter(r); position:absolute; left:0; top:-.1rem; font:600 italic clamp(2.2rem,2.8vw,2.7rem)/1 var(--display); color:var(--tomato); }
+  .rules h3 { font:600 clamp(1.6rem,2.1vw,1.95rem)/1.15 var(--display); } .rules p { font:400 clamp(1.08rem,1.35vw,1.22rem)/1.55 var(--text); color:#4d4a52; margin-top:.45rem; }
   /* 4. languages */
   .langs { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.8rem; }
   .langs button { font:500 .8rem/1 var(--text); letter-spacing:.14em; text-transform:uppercase; padding:.75rem 1rem; border:1.5px solid #6d74a6; background:none; color:var(--cream); border-radius:2px; cursor:pointer; }
@@ -415,7 +415,8 @@
   .sum-note { position:relative; margin:1rem 0 0; padding-left:3.5rem; font:600 italic 1.22rem/1.2 var(--display); color:#f3e9d2; transform:rotate(-1.5deg); text-wrap:balance; }
   .sum-note svg { position:absolute; left:.55rem; top:-1.5rem; width:2.6rem; height:3.1rem; overflow:visible; fill:none; stroke:var(--tomato); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
   .makegrid { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:clamp(2rem,5vw,4.5rem); align-items:center; margin-top:clamp(2rem,5vh,3.2rem); }
-  .shot.big { width:min(100%,21rem); justify-self:center; transform:rotate(-2.5deg); }
+  .shotwrap { justify-self:center; width:min(100%,21rem); } .shot.big { width:100%; transform:rotate(-2.5deg); }
+  .shot-note { color:var(--ink); margin:1.5rem 0 0 1.2rem; transform:rotate(-2deg); }
   .mocks { list-style:none; margin:0; padding:0; display:grid; gap:1.4rem; }
   .mocks li { display:grid; grid-template-columns:minmax(0,15.5rem) minmax(0,1fr); gap:1.4rem; align-items:center; }
   .mock { background:#12163a; border:1px solid #2c3270; border-radius:1.1rem; padding:1rem 1rem 1.1rem; color:#eef0fb; box-shadow:0 10px 18px rgba(8,12,30,.3); } .mocks li:nth-child(odd) .mock { transform:rotate(-1.2deg); } .mocks li:nth-child(even) .mock { transform:rotate(1deg); }
@@ -432,7 +433,7 @@
   .nar i { width:.95rem; height:.95rem; border-radius:50%; border:1.5px solid #6a71b4; flex:none; } .nar.on { border-color:#e8a838; background:#1c2150; color:#fff; } .nar.on i { border-color:#e8a838; background:radial-gradient(#e8a838 0 45%, transparent 50%); }
   .nar.rec { border-style:dashed; color:#e8a838; } .nar svg { width:1rem; height:1rem; flex:none; }
   .wave { margin-left:auto; display:flex; align-items:center; gap:2px; height:1.1rem; } .wave b { width:2.5px; border-radius:2px; background:#e8a838; height:40%; } .wave b:nth-child(2) { height:80%; } .wave b:nth-child(3) { height:55%; } .wave b:nth-child(4) { height:100%; } .wave b:nth-child(5) { height:65%; } .wave b:nth-child(6) { height:35%; } .wave b:nth-child(7) { height:70%; }
-  .extras-h { margin-top:clamp(2.4rem,6vh,3.6rem); color:#8a6a4a; } .mocks.extras { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.6rem clamp(1.5rem,4vw,3rem); margin-top:1.2rem; } .mocks.extras li { grid-template-columns:1fr; gap:1.1rem; align-content:start; } .mocks.extras .mock { width:min(100%,21rem); }
+  .extras-h { margin-top:clamp(2.4rem,6vh,3.6rem); color:#8a6a4a; } .mocks.extras { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.6rem clamp(1.5rem,4vw,3rem); margin-top:1.2rem; } .mocks.extras { grid-template-rows:auto auto; } .mocks.extras li { grid-row:span 2; grid-template-columns:1fr; grid-template-rows:subgrid; gap:1.1rem; } .mocks.extras .mock { width:min(100%,21rem); align-self:center; }
   .mocks.extras .cap { grid-template-columns:1.6rem minmax(0,1fr); } .mocks.extras .cap b { font:600 1.5rem/1.1 var(--display); letter-spacing:0; }
   .chips { display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center; } .chips span { font:500 .74rem/1 var(--text); padding:.5rem .7rem; border:1px solid #4a5196; border-radius:999px; color:#cfd2e6; }
   .chips span.on { background:#e8a838; border-color:#e8a838; color:#12163a; font-weight:600; }
@@ -449,7 +450,7 @@
   .devgrid h3 { font:600 1.45rem/1.1 var(--display); } .devgrid h3 em { font:400 .62rem/1 var(--tag); font-style:normal; letter-spacing:.12em; text-transform:uppercase; color:var(--cream); background:var(--tomato); padding:.3rem .45rem .22rem; margin-left:.4rem; vertical-align:.25em; white-space:nowrap; }
   .devgrid p { font:400 .98rem/1.5 var(--text); color:#4d5167; margin-top:.4rem; }
   @media (max-width:760px) {
-    .makegrid { grid-template-columns:1fr; } .shot.big { width:min(74%,17rem); } .mocks li, .mocks.extras li { grid-template-columns:1fr; gap:.9rem; } .mocks.extras { grid-template-columns:1fr; } .mock { max-width:19rem; } #make .notes { grid-template-columns:1fr; }
+    .makegrid { grid-template-columns:1fr; } .shotwrap { width:min(74%,17rem); } .mocks li, .mocks.extras li { grid-template-columns:1fr; gap:.9rem; } .mocks.extras { grid-template-columns:1fr; } .mock { max-width:19rem; } #make .notes { grid-template-columns:1fr; }
     .devgrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; } .devgrid li { padding:1.1rem .9rem 1rem; } .devgrid li:nth-child(n) { transform:none; } .devgrid img { height:4.6rem; } .devgrid img.wide { max-height:4.6rem; } .devgrid h3 { font-size:1.2rem; } .devgrid p { font-size:.9rem; }
     .review .slip-wrap { margin:0 .4rem 2.6rem; } .sum-wrap { justify-self:stretch; width:auto; }
   }
@@ -515,7 +516,7 @@
       <div class="book-in" id="bookIn">
         <div class="b-edge" aria-hidden="true"></div><div class="b-spine" aria-hidden="true"></div>
         <div class="face front"><img class="b-mark" src="/public/namesake-wordmark.webp" alt="Namesake"><div class="plate"><i>starring</i><strong id="names"></strong></div><p class="caps b-foot">A bedtime story</p></div>
-        <div class="face back"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""></div>
+        <div class="face back"><img src="/test/assets-v3/cover-supper-spell-gentle.jpg" alt=""></div>
       </div>
     </div>
     <!-- callouts on the finished cover: labels beside the book, curved arrows drawn to the spot each one is about -->
@@ -554,7 +555,7 @@
     <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
     <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
       <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
-      <div class="cgrid"><div class="bk"><img src="/test/assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="/test/assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="/test/assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/test/assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="/test/assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="/test/assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="/test/assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
+      <div class="cgrid"><div class="bk"><img src="/test/assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="/test/assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="/test/assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="/test/assets-v3/cover-supper-spell-gentle.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/test/assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="/test/assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="/test/assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="/test/assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
     </div>
     <div class="night" id="night"></div>
     <div class="bedtime" id="bedtime"><img src="/test/assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="/test/assets-v3/cattail2.webp" alt=""></div>
@@ -566,7 +567,7 @@
     </div>
     <button class="now" id="now" type="button" aria-label="Tonight's queue: four stories, about fifteen minutes. Play or pause the first story, Rose and the Stolen Supper Spell">
       <span class="caps">Tonight&rsquo;s queue &middot; 4 stories &middot; about 15 minutes</span>
-      <span class="q"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt=""><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt=""><img src="/test/assets-v3/shelf-toy-grabber.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
+      <span class="q"><img src="/test/assets-v3/cover-supper-spell-gentle.jpg" alt=""><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt=""><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt=""><img src="/test/assets-v3/shelf-toy-grabber.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
       <strong>1. Rose and the Stolen Supper Spell</strong><small id="nowHint">Tap to hear it</small>
     </button>
     <p class="more caps" id="more" aria-hidden="true">And here is how it works<i></i></p>
@@ -604,9 +605,9 @@
 <section class="low" id="make"><div class="low-in">
   <p class="caps">Made together, before bedtime</p>
   <h2>How you make one.</h2>
-  <p class="lede">Three quick choices make the story unmistakably theirs. It takes a moment, not a questionnaire.</p>
+  <p class="lede">Three quick choices make the story unmistakably theirs. Namesake already knows their name, age, interests and who lives in their world, so it takes a moment, not a questionnaire.</p>
   <div class="makegrid">
-    <img class="shot big" src="/public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen: A new story for Rose, with rows for who is in it, a little mischief and their world" loading="lazy">
+    <div class="shotwrap"><img class="shot big" src="/public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen: A new story for Rose, with rows for who is in it, a little mischief and their world" loading="lazy"><p class="sum-note shot-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>More than one child? Give each their own profile, or put two heroes in one story.</p></div>
     <ol class="mocks">
       <li><div class="mock" aria-hidden="true"><p class="mk-h">Choose who&rsquo;s in it</p><div class="avs"><span class="on"><i style="--cx:.257"></i>Rose</span><span><i style="--cx:.5"></i>Mr Bitey</span><span class="on"><i style="--cx:.738"></i>Shosh</span></div>
             <p class="mk-h mk-2">A little mischief</p><div class="avs"><span class="on"><i style="--cx:.249;--cy:.524"></i>Bad Man Matt</span><span><i style="--cx:.5;--cy:.524"></i>Big Bad Wolf</span><span><i style="--cx:.745;--cy:.524"></i>Medium Bad Mungo</span></div></div>
@@ -621,10 +622,11 @@
   <ul class="mocks extras">
     <li><div class="mock" aria-hidden="true"><p class="mk-t">Choose a classic tale</p><p class="mk-s">Set the story in a world you already know</p><div class="worlds"><img class="on" src="/test/assets-v3/world-peter-pan.webp" alt="Peter Pan" loading="lazy"><img src="/test/assets-v3/world-alice-in-wonderland.webp" alt="Alice in Wonderland" loading="lazy"><img src="/test/assets-v3/world-the-jungle-book.webp" alt="The Jungle Book" loading="lazy"><img src="/test/assets-v3/world-the-wind-in-the-willows.webp" alt="The Wind in the Willows" loading="lazy"></div></div>
         <div class="cap"><b>+</b><h3>Set it in a classic world</h3><p>Peter Pan, Alice in Wonderland, The Jungle Book and more. Their own adventure, in a world you already know.</p></div></li>
-    <li><div class="mock" aria-hidden="true"><p class="mk-h">Narrator</p><p class="nar"><i></i>Standard narrator</p><p class="mk-h mk-2">Your voices</p><p class="nar on"><i></i>Daddy<span class="wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span></p><p class="nar rec"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Record a voice</p></div>
-        <div class="cap"><b>+</b><h3>Told in your own voice</h3><p>Record a short sample once, and Namesake can narrate their stories in your voice. Available on paid plans.</p></div></li>
+    <li><div class="mock" aria-hidden="true"><p class="mk-h">Narrator</p><div class="chips"><span>Default</span><span class="on">Female</span><span>Male</span></div>
+          <p class="mk-h mk-2">Accent</p><div class="chips"><span class="on">British</span><span>American</span><span>Irish</span><span>Australian</span><span>Indian</span></div>
+          <p class="mk-h mk-2">Your voices</p><p class="nar rec"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Record a voice</p></div>
+        <div class="cap"><b>+</b><h3>Narrated in a voice you choose</h3><p>A natural voice of your choice: male or female, British, American, Irish, Australian or Indian. Or even your own, from a small sample.</p></div></li>
   </ul>
-  <div class="notes"><p>Namesake already knows them. Their name, age, interests and who lives in their world are saved once, so you are not setting it all up again every night.</p><p>More than one child? Give each their own profile, or choose two heroes for a story together.</p></div>
 </div></section>
 
 <section class="low dark" id="languages"><div class="low-in two">
@@ -672,7 +674,7 @@
   <h2>Hear one of their adventures.</h2>
   <p class="lede">Real stories made with Namesake, shared with their creators&rsquo; permission. Choose a book to play it.</p>
   <div class="tracks" id="tracks">
-    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/public/stories/rose-stolen-supper-spell.mp3"><span class="bko"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
+    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/public/stories/rose-stolen-supper-spell.mp3"><span class="bko"><img src="/test/assets-v3/cover-supper-spell-gentle.jpg" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
     <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="/public/stories/santosh-3-racing-tiger.mp3"><span class="bko"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
     <button class="track" type="button" data-id="rose-pencil-draws-real-things" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><span class="bko"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
   </div>
@@ -799,14 +801,16 @@
     // callouts: placed from the cover's actual position on screen, so they follow it at every size
     coBox.style.opacity = f2;
     if (f2 > 0) { var br = book.getBoundingClientRect(), sr2 = stage.getBoundingClientRect(), L = br.left - sr2.left, T = br.top - sr2.top, bw = br.width, bh = br.height, R = L + bw;
-      var spec = wide ? { name:[R + bw * .1, T + bh * .03, null, .8, .2, 'l'], baddy:[R + bw * .1, T + bh * .5, null, .9, .6, 'l'], fox:[R + bw * .08, T + bh * .88, null, .21, .84, 'l'],
-                       face: L > 190 ? [L - 164, T + bh * .4, 150, .2, .6, 'r'] : [R + bw * .1, T + bh * .26, null, .24, .58, 'l'] }
-                      : { name:[R + 8, T + bh * .02, W - R - 14, .86, .22, 'l'], baddy:[R + 8, T + bh * .5, W - R - 14, .88, .62, 'l'], fox:[6, T + bh * .7, L - 14, .16, .84, 'r'], face:[6, T + bh * .3, L - 14, .2, .6, 'r'] };
-      cos.forEach(function(c, n){ var sp = spec[c.dataset.k]; c.style.left = sp[0] + 'px'; c.style.top = sp[1] + 'px'; c.style.width = sp[2] ? Math.max(sp[2], 60) + 'px' : (wide ? Math.min(bw * .42, 150) + 'px' : ''); c.style.textAlign = sp[5] === 'r' ? 'right' : 'left';
-        var cr = c.getBoundingClientRect(), tx = L + bw * sp[3], ty = T + bh * sp[4], sx = sp[5] === 'r' ? cr.right - sr2.left + 4 : cr.left - sr2.left - 4, sy = cr.top - sr2.top + cr.height * (c.dataset.k === 'name' ? .9 : .55);
-        if (!wide) { sx = sp[5] === 'r' ? cr.right - sr2.left - cr.width * .3 : cr.left - sr2.left + cr.width * .3; sy = cr.bottom - sr2.top + 3; }
-        var mxp = (sx + tx) / 2, myp = (sy + ty) / 2, bend = c.dataset.k === 'fox' && wide ? bh * .16 : (wide ? -bh * .07 : bh * .06);
-        coArrows[n].setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' Q' + mxp.toFixed(1) + ' ' + (myp + bend).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1)); }); }
+      // spec per label: [left, top, width, target x, target y (fractions of the cover), side the label sits on, curve control x, y (fractions)].
+      // Tuned to this cover: Bad Man Matt stands on the left, Rose in the middle holding Shosh, Daddy on the right. Each arrow keeps clear of the faces:
+      // "face" runs through the blank cloud left of "Spell" and drops between Matt's hair and Daddy's; "fox" dips under the cart wheel to the tail.
+      var lw = wide ? Math.min(150, L - 18) : L - 14, lx = wide ? L - lw - 12 : 6, rx = wide ? R + bw * .08 : R + 8, rw = wide ? Math.min(bw * .42, 150) : W - R - 14, showL = lw >= 62;
+      var spec = { name:[lx, T + bh * (wide ? .02 : -.02), lw, .22, .115, 'r', .05, .1], face:[lx, T + bh * (wide ? .21 : .2), lw, .42, .455, 'r', .34, .265],
+                   baddy:[lx, T + bh * (wide ? .47 : .46), lw, .09, .5, 'r', -.02, .47], fox:[rx, T + bh * (wide ? .84 : .7), rw, .535, .79, 'l', .85, 1.25] };
+      cos.forEach(function(c, n){ var sp = spec[c.dataset.k], hide = sp[5] === 'r' && !showL; c.style.visibility = coArrows[n].style.visibility = hide ? 'hidden' : '';
+        c.style.left = sp[0] + 'px'; c.style.top = sp[1] + 'px'; c.style.width = Math.max(sp[2], 60) + 'px'; c.style.textAlign = sp[5] === 'r' ? 'right' : 'left';
+        var cr = c.getBoundingClientRect(), tx = L + bw * sp[3], ty = T + bh * sp[4], sx = sp[5] === 'r' ? cr.right - sr2.left + 5 : cr.left - sr2.left - 5, sy = cr.top - sr2.top + cr.height * (c.dataset.k === 'fox' ? .7 : .55);
+        coArrows[n].setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' Q' + (L + bw * sp[6]).toFixed(1) + ' ' + (T + bh * sp[7]).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1)); }); }
   }
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
     addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, { passive:true });
