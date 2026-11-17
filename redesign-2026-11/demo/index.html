@@ -91,7 +91,14 @@
   .fig { z-index:3; position:absolute; left:var(--x); bottom:var(--b,12vh); height:var(--h); transform-origin:50% 100%; will-change:transform,opacity; opacity:0; }
   .fig > img { height:100%; width:auto; margin-left:-50%; filter:drop-shadow(0 6px 4px rgba(40,40,20,.3)); }
   .fig .tagwrap { position:absolute; left:0; bottom:calc(100% + 1.9rem + var(--lift,0rem)); transform:translateX(calc(-50% + var(--td,0px))); pointer-events:none; will-change:opacity; }
-  .fig .tagwrap::after { left:calc(50% - var(--td,0px)); top:auto; bottom:calc(-1.9rem - var(--lift,0rem)); height:calc(1.7rem + var(--lift,0rem)); transform:none; }
+  /* Extend each string through the transparent space above the painted silhouette. */
+  .fig { --figure-height:var(--h); --string-inset:calc(var(--figure-height) * var(--silhouette-top,.01)); }
+  .fig[data-name="Daddy"] { --silhouette-top:.025; }
+  .fig:has(> img[src$="/fox.webp"]) { --silhouette-top:.125; }
+  .fig.trouble { --silhouette-top:.185; }
+  .fig[data-name="Bad Man Matt"] { --silhouette-top:.055; }
+  .fig[data-name="Wicked Witch"], .fig.extra { --silhouette-top:.015; }
+  .fig .tagwrap::after { left:calc(50% - var(--td,0px)); top:auto; bottom:calc(-1.9rem - var(--lift,0rem) - var(--string-inset)); height:calc(1.9rem + var(--lift,0rem) + var(--string-inset)); transform:none; }
   .fig .tagwrap::before { top:calc(50% - .25rem); }
   .fig .tagcard { margin-top:0; }
   .inv-head { position:absolute; z-index:5; top:clamp(5.4rem,14vh,8.4rem); left:0; right:0; text-align:center; padding:0 1.25rem; opacity:0; }
@@ -269,7 +276,7 @@
     .hero-copy h1 { font-size:clamp(2.4rem,11.6vw,3.3rem); }
     .hero-copy p { font-size:1.14rem; line-height:1.5; margin:1rem auto 1.3rem; }
     .cta { padding:.95rem 1.1rem; letter-spacing:.14em; font-size:.74rem; }
-    .fig { left:var(--xm); height:var(--hm); } .scn.cottage, .scn.steps { left:var(--xm); } .scn.cottage { height:40vh; bottom:21vh; } .scn.birch.m { left:calc(var(--xm) - 6vh); height:52vh; }
+    .fig { left:var(--xm); height:var(--hm); --figure-height:var(--hm); } .scn.cottage, .scn.steps { left:var(--xm); } .scn.cottage { height:40vh; bottom:21vh; } .scn.birch.m { left:calc(var(--xm) - 6vh); height:52vh; }
     .scn.steps { height:8vh; bottom:10.5vh; } .scn.mush.b { left:calc(var(--xm) + 17vh); } .scn.birch { height:74vh; }
     .scn.birch.l { left:-36vw; } .scn.birch.r { right:-36vw; } .scn.birch.m { display:none; } .scn.birchrow { height:50vh; bottom:22vh; margin-left:-36vh; } .scn.birchrow.b2 { margin-left:-108vh; } .scn.birchrow.b3 { margin-left:36vh; }
     .inv-head { top:calc(clamp(58px,10vh,92px) + 1.1rem); } .inv-head h2 { margin-top:.55rem; }
@@ -392,6 +399,8 @@
   .track:hover .bko, .track:focus-visible .bko, .track.live .bko { transform:perspective(1400px) rotateY(-12deg) rotateX(2deg) translateY(-7px); }
   @media (prefers-reduced-motion:reduce) { .bko { transition:none; } }
 
+  /* Keep each target in the book face's transformed coordinate space. */
+  .cover-target { position:absolute; width:0; height:0; }
   /* callouts on the finished cover */
   .callouts { position:absolute; inset:0; z-index:5; pointer-events:none; opacity:0; }
   .callouts svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
@@ -701,12 +710,18 @@
       <div class="book-in" id="bookIn">
         <div class="b-edge" aria-hidden="true"></div><div class="b-spine" aria-hidden="true"></div>
         <div class="face front"><img class="b-mark" src="../../public/namesake-wordmark.webp" alt="Namesake"><div class="plate"><i>starring</i><strong id="names"></strong></div><p class="caps b-foot">A bedtime story</p></div>
-        <div class="face back"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt=""></div>
+        <div class="face back">
+          <img src="assets-v3/cover-supper-spell-gentle.jpg" alt="">
+          <i class="cover-target" data-k="name" style="left:24%;top:11%"></i>
+          <i class="cover-target" data-k="baddy" style="left:21%;top:43%"></i>
+          <i class="cover-target" data-k="fox" style="left:51%;top:62%"></i>
+          <i class="cover-target" data-k="face" style="left:43%;top:53%"></i>
+        </div>
       </div>
     </div>
     <!-- callouts on the finished cover: labels beside the book, curved arrows drawn to the spot each one is about -->
     <div class="callouts" id="callouts" aria-hidden="true">
-      <svg id="coSvg"><defs><marker id="coHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#c8452c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <svg id="coSvg"><defs><marker id="coHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#c8452c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
         <path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/></svg>
       <p class="co" data-k="name">Her name in the title</p>
       <p class="co" data-k="baddy">A baddy she made up</p>
@@ -874,6 +889,8 @@
       grass = Q('.grass'), rows = QA('.birchrow'), cottage = Q('.cottage'), birchL = Q('.birch.l'), birchR = Q('.birch.r'), birchM = Q('.birch.m'), mush = QA('.mush'),
       figs = QA('.fig'), book = document.getElementById('book'), bookIn = document.getElementById('bookIn'), names = document.getElementById('names'),
       headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot'), coBox = document.getElementById('callouts'), cos = [].slice.call(coBox.querySelectorAll('.co')), coArrows = [].slice.call(coBox.querySelectorAll('.co-arrow'));
+  var coverImage = book.querySelector('.face.back img'), coverTargets = {};
+  book.querySelectorAll('.cover-target').forEach(function(target){ coverTargets[target.dataset.k] = target; });
   var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
   // when each member of the cast arrives (act progress), in scene order: Rose, Foxy, Daddy, the trouble, the pot, Matt, the badger
   var ATd = [.25, .30, .36, .43, .49, .52, .585], ATm = [.25, .31, .37, .43, .47, .50, .57], AT = ATd;   // phones: spaced so each tag finishes typing before the next arrives
@@ -952,7 +969,12 @@
     book.style.opacity = clamp(P(.745, .765));
     var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 17);
     // once the turn is done and the book is enlarged, it is laid out at that size instead of being a stretched small copy, so the cover stays sharp
-    var bsc = .7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1), big = flip >= 1 && bsc > 1;
+    var bsc = .7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1);
+    // Leave a label gutter beside the finished cover, including tall, narrow desktop windows.
+    var naturalWidth = Math.max(150, Math.min(innerHeight * .27, 270));
+    var coverLimit = (wide ? .62 * W - 164 : W - 152) / naturalWidth;
+    bsc = Math.min(bsc, bsc + (coverLimit - bsc) * flip);
+    var big = flip >= 1 && bsc > 1;
     if (big) { book.style.setProperty('--bwd', 'calc(clamp(150px,27vh,270px) * ' + bsc + ')'); book.style.perspective = (1400 * bsc) + 'px'; bsc = 1; } else { book.style.removeProperty('--bwd'); book.style.perspective = ''; }
     book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + bsc + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
     // the story is written: typed scraps spiral in behind the book, it glows and trembles, then stars fly as it turns over
@@ -972,19 +994,33 @@
     // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
     var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
     var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
-    // callouts: placed from the cover's actual position on screen, so they follow it at every size
     coBox.style.opacity = f2;
-    if (f2 > 0) { var br = book.getBoundingClientRect(), sr2 = stage.getBoundingClientRect(), L = br.left - sr2.left, T = br.top - sr2.top, bw = br.width, bh = br.height, R = L + bw;
-      // spec per label: [left, top, width, target x, target y (fractions of the cover), side the label sits on, curve control x, y (fractions)].
-      // Tuned to this cover: Bad Man Matt stands on the left, Rose in the middle holding Foxy, Daddy on the right. Each arrow keeps clear of the faces:
-      // "face" runs through the blank cloud left of "Spell" and drops between Matt's hair and Daddy's; "fox" dips under the cart wheel to the tail.
-      var lw = wide ? Math.min(150, L - 18) : L - 14, lx = wide ? L - lw - 12 : 6, rx = wide ? R + bw * .08 : R + 8, rw = wide ? Math.min(bw * .42, 150) : W - R - 14, showL = lw >= 62;
-      var spec = { name:[lx, T + bh * (wide ? .02 : -.02), lw, .22, .115, 'r', .05, .1], face:[lx, T + bh * (wide ? .21 : .2), lw, .42, .455, 'r', .34, .265],
-                   baddy:[lx, T + bh * (wide ? .47 : .46), lw, .09, .5, 'r', -.02, .47], fox:[rx, T + bh * (wide ? .84 : .7), rw, .535, .79, 'l', .85, 1.25] };
-      cos.forEach(function(c, n){ var sp = spec[c.dataset.k], hide = sp[5] === 'r' && !showL; c.style.visibility = coArrows[n].style.visibility = hide ? 'hidden' : '';
-        c.style.left = sp[0] + 'px'; c.style.top = sp[1] + 'px'; c.style.width = Math.max(sp[2], 60) + 'px'; c.style.textAlign = sp[5] === 'r' ? 'right' : 'left';
-        var cr = c.getBoundingClientRect(), tx = L + bw * sp[3], ty = T + bh * sp[4], sx = sp[5] === 'r' ? cr.right - sr2.left + 5 : cr.left - sr2.left - 5, sy = cr.top - sr2.top + cr.height * (c.dataset.k === 'fox' ? .7 : .55);
-        coArrows[n].setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' Q' + (L + bw * sp[6]).toFixed(1) + ' ' + (T + bh * sp[7]).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1)); }); }
+    if (f2 > 0) {
+      var br = coverImage.getBoundingClientRect(), sr2 = stage.getBoundingClientRect();
+      var L = br.left - sr2.left, T = br.top - sr2.top, bw = br.width, bh = br.height, R = L + bw;
+      var lw = wide ? Math.min(150, L - 18) : L - 14, lx = wide ? L - lw - 12 : 6;
+      var rx = wide ? R + bw * .08 : R + 8, rw = wide ? Math.min(bw * .42, 150) : W - R - 14;
+      // Label height on the cover and the curve's control point, expressed as fractions of the image bounds.
+      var layout = { name:[wide ? .02 : -.02, .05, .1], face:[wide ? .21 : .2, .37, .28],
+                     baddy:[wide ? .47 : .46, -.02, .42], fox:[wide ? .84 : .7, .84, 1.15] };
+      cos.forEach(function(c, n){
+        var key = c.dataset.k, guide = layout[key], onRight = key === 'fox', arrow = coArrows[n];
+        var available = onRight ? rw : lw;
+        c.style.visibility = arrow.style.visibility = available < 60 ? 'hidden' : '';
+        c.style.left = (onRight ? rx : lx) + 'px';
+        var top = T + bh * guide[0];
+        if (wide && onRight) top = Math.max(top, foot.getBoundingClientRect().bottom - sr2.top + 10);
+        c.style.top = top + 'px';
+        c.style.width = Math.max(available, 60) + 'px';
+        c.style.textAlign = onRight ? 'left' : 'right';
+        var label = c.getBoundingClientRect(), target = coverTargets[key].getBoundingClientRect();
+        var sx = (onRight ? label.left - 5 : label.right + 5) - sr2.left;
+        var sy = label.top - sr2.top + label.height * (onRight ? .7 : .55);
+        arrow.setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) +
+          ' Q' + (L + bw * guide[1]).toFixed(1) + ' ' + (T + bh * guide[2]).toFixed(1) +
+          ' ' + (target.left - sr2.left).toFixed(1) + ' ' + (target.top - sr2.top).toFixed(1));
+      });
+    }
   }
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
     addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, { passive:true });
