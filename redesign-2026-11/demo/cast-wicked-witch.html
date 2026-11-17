@@ -10,7 +10,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Namesake redesign demo</title>
+<title>Namesake redesign demo | Shallow scallops</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,6 +265,7 @@
     #hero .stage { --sw:178vw; --sh:100vw; }
     .fig { bottom:var(--bm, var(--b,12vh)); } .fig.pot, .fig.trouble { z-index:4; }
     .fig .chip { display:block; }
+    .fig.trouble .chip { left:clamp(3.6rem,19vw,4.6rem); bottom:.7rem; }
     .inv-foot { bottom:clamp(1rem,3.5vh,2.4rem); } .inv-foot p { font-size:1.42rem; line-height:1.2; margin-bottom:1rem; } .inv-foot small { font-size:.68rem; margin-top:.6rem; }
     /* the badger waits in the bottom-left corner on phones, its tag lying beside it along the bottom edge */
     .fig.extra .tagwrap { left:58%; bottom:.4vh; transform:none; } .fig.extra .tagwrap::after { display:none; } .fig.extra .tagcard { width:136px; min-height:0; } .fig.extra .chip { display:none; }
@@ -467,6 +468,71 @@
     .nav-l { left:.7rem; gap:.85rem; } .nav-l a { font-size:.62rem; letter-spacing:.12em; }
     .nav-r { right:.6rem; } .nav-r a { font-size:.58rem; letter-spacing:.08em; padding:.55rem .55rem; }
   }
+  /* Seaside booth: dyed canvas, bound opening edges and a scalloped pelmet. */
+  :root {
+    --booth-blue:oklch(38% .091 249);
+    --booth-stripe:oklch(89% .049 83);
+    --booth-stripe-width:clamp(63px,9.5vw,132px);
+    --booth-canvas:
+      repeating-linear-gradient(0deg, #fae6bc11 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, #161d2b14 0 1px, transparent 1px 4px);
+  }
+  .house {
+    --canvas-direction:90deg;
+    background:
+      var(--booth-canvas),
+      repeating-linear-gradient(var(--canvas-direction),
+        #111c3430 0, transparent 22%, #f6e5b817 34%, #111c342e 50%) 0 0 / var(--booth-stripe-width) 100%,
+      var(--paint) center / cover,
+      repeating-linear-gradient(var(--canvas-direction),
+        var(--booth-blue) 0 52%, var(--booth-stripe) 52% 100%) 0 0 / var(--booth-stripe-width) 100%;
+    background-blend-mode:normal,normal,normal,multiply,normal;
+    box-shadow:none;
+  }
+  .house.l { --canvas-direction:270deg; background-position:right top; }
+  .house::after {
+    content:"";
+    position:absolute;
+    inset:0 0 0 auto;
+    width:8px;
+    background:
+      repeating-linear-gradient(0deg, #ead3a537 0 2px, transparent 2px 5px) center / 1px 100% no-repeat,
+      linear-gradient(90deg, #111c3460, var(--booth-blue) 45%, #152238dd);
+  }
+  .house.r::after { inset:0 auto 0 0; transform:scaleX(-1); }
+  .onc .hero-copy::before {
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:clamp(-24px,-2vw,-14px) max(0px,calc((100% - 46rem) / 2));
+    border-block:1px solid #d6b377;
+    background:#162849f5;
+    box-shadow:inset 0 0 0 4px #152645;
+  }
+  .cue {
+    width:max-content;
+    max-width:calc(100% - 24px);
+    margin-inline:auto;
+    padding:.65rem .8rem .55rem;
+    background:#162849f5;
+  }
+  /* The navigation and shallow scallops are cut from one continuous canvas. */
+  .topwrap { filter:drop-shadow(0 2px 2px #16284956); }
+  .valance {
+    --scallop-width:clamp(44px,5vw,76px);
+    --scallop-depth:8px;
+    height:56px;
+    background:var(--booth-canvas), #213957;
+    background-blend-mode:normal;
+    mask:
+      radial-gradient(ellipse 50% 100% at 50% 0%,#171014 96%,transparent)
+        center bottom / var(--scallop-width) var(--scallop-depth) repeat-x,
+      linear-gradient(#171014,#171014) center top / 100% calc(100% - var(--scallop-depth) + 1px) no-repeat;
+  }
+  .wordmark { top:6px; }
+  .wordmark img { height:36px; }
+  .nav-l, .nav-r { top:0; height:48px; }
+  .nav-l a, .nav-r a { display:flex; align-items:center; min-height:32px; }
 </style>
 </head>
 <body>
@@ -500,9 +566,9 @@
       <div class="fig" data-name="Rose" style="--x:22%; --xm:20%; --h:25vh; --hm:23vh; --tx:22px; --td:-5.4rem"><img src="assets-v3/rose.webp" alt="Paper figure of Rose in striped pyjamas"><div class="tagwrap"><div class="tagcard"><span data-t="The hero|Rose, aged 5. In her pyjamas, obviously."></span></div></div></div>
       <div class="fig" data-name="Shosh" style="--x:30%; --xm:33%; --h:13vh; --hm:12vh; --b:11vh; --td:1.2rem"><img src="assets-v3/fox.webp" alt="Shosh, a plush toy fox with stitched eyes"><div class="tagwrap"><div class="tagcard"><span data-t="Her cuddly fox|Shosh. Always by her side."></span></div></div></div>
       <div class="fig" data-name="Daddy" style="--x:42%; --xm:47%; --h:33vh; --hm:30vh; --lift:1.2rem"><img src="assets-v3/daddy.webp" alt="Paper figure of Daddy in odd socks"><div class="tagwrap"><div class="tagcard"><span data-t="The sidekick|Daddy. Curly hair, odd socks. Brave-ish."></span></div></div></div>
-      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:62%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:6vh"><img src="assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The plot|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
-      <div class="fig pot" style="--x:62%; --xm:83%; --h:15vh; --hm:12vh; --b:13vh; --bm:9.5vh"><img src="assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
-      <div class="fig" data-name="Wicked Witch" style="--x:69%; --xm:75%; --h:34vh; --hm:min(31vh, 66vw); --b:14vh; --bm:15vh; --lift:.4rem; --tx:-34px"><img src="assets-v3/wicked-witch-audition.webp" alt="Paper figure of the Wicked Witch in a patched plum dress, holding a green potion"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|The Wicked Witch. She pinched the pesto."></span></div></div></div>
+      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:61%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:1vh"><img src="assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The plot|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
+      <div class="fig pot" style="--x:62%; --xm:64%; --h:15vh; --hm:min(10vh, 22vw); --b:13vh; --bm:8vh"><img src="assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
+      <div class="fig" data-name="Wicked Witch" style="--x:max(74%, calc(62% + 14vh)); --xm:87%; --h:26vh; --hm:min(22vh, 55vw); --b:14vh; --bm:14vh; --lift:.4rem; --tx:-20px"><img src="assets-v3/wicked-witch-front.webp" alt="Front-facing paper figure of the Wicked Witch in a plum dress, holding a green potion"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|The Wicked Witch. She pinched the pesto."></span></div></div></div>
       <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:9%; --h:13vh; --hm:9.5vh; --b:11vh; --bm:1.2vh; --tx:26px"><img class="happy" src="assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
       <div class="scn birch l"><img src="assets-v3/birch.webp" alt=""></div><div class="scn birch r"><img src="assets-v3/birch.webp" alt=""></div>
     </div>
