@@ -1,0 +1,963 @@
+<!doctype html>
+<!--
+  Namesake website redesign: STYLE AND MOTION DEMO (2026-11-15). Not the site.
+  Shows three things for sign-off before the full build: the layered paper hero,
+  the inventory-to-book assembly, and the curtain close. Self-contained scroll
+  driver; the full build moves this onto the scroll-craft engine.
+  Serve from the yonder-web root so ../../public/ resolves.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Namesake redesign demo | Toy theatre curtain</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#1f2a55; --navy-deep:#171d38; --rose:#dfa3a0; --rose-deep:#a5322a; --red:#bb3a2f; --mustard:#dba531; --wood:#7a5438;
+    --sage:#6f8f6a; --cream:#efe4cf; --paper:#efe3c8; --tomato:#c8452c; --ink:#232842;
+    --paint:url(assets-v3/wall.webp);
+    --display:"Cormorant Garamond",Georgia,serif; --text:"Jost",system-ui,sans-serif; --tag:"Special Elite","Courier New",monospace;
+    --shadow:drop-shadow(0 .45vh .35vh rgba(60,40,20,.3));
+  }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--text); overflow-x:hidden; }
+  img { display:block; max-width:none; }
+  h1,h2,p { margin:0; }
+  .grain { position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.16; mix-blend-mode:multiply;
+           background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .caps { font:500 .74rem/1 var(--text); letter-spacing:.24em; text-transform:uppercase; }
+  .cta { display:inline-block; font:600 .82rem/1 var(--text); letter-spacing:.2em; text-transform:uppercase; text-decoration:none;
+         color:var(--cream); background:var(--navy); padding:1.05rem 1.6rem; border:0; border-radius:2px; cursor:pointer;
+         box-shadow:0 3px 0 rgba(8,12,30,.35); transition:transform .15s ease, box-shadow .15s ease; }
+  .cta:hover { transform:translateY(-1px); box-shadow:0 4px 0 rgba(8,12,30,.35); }
+  .cta:active { transform:translateY(2px); box-shadow:0 1px 0 rgba(8,12,30,.35); }
+  .cta:focus-visible, .programme:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+
+  .act { position:relative; }
+  .stage { position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; }
+
+  /* ---------- 1. Curtain up ---------- */
+  /* One opening act: the curtains part on an empty paper stage, the story's setting builds, the cast arrive one
+     at a time with a tag saying who they are, and the whole scene folds into the book. */
+  #hero { height:900vh; }
+  #hero .stage { background:var(--paper) var(--paint) center/cover; color:var(--ink); }
+  .dusk { position:absolute; inset:0; z-index:1; background:var(--navy) var(--paint) center/cover; background-blend-mode:multiply; opacity:0; }
+  .top { position:fixed; z-index:40; top:0; left:0; right:0; }
+  .wordmark { position:absolute; z-index:2; top:.55rem; left:50%; transform:translateX(-50%); }
+  .wordmark img { height:clamp(2rem,5.4vh,2.9rem); width:auto; }
+  .programme { position:absolute; z-index:2; top:1.25rem; right:clamp(1rem,3vw,2.2rem); background:var(--cream); color:var(--navy); border:0; padding:.65rem .8rem;
+               border-radius:1px; box-shadow:0 2px 0 rgba(8,12,30,.4); transform:rotate(2deg); cursor:pointer; }
+  .valance { height:clamp(58px,10vh,92px); background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply;
+             -webkit-mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat;
+                     mask:radial-gradient(circle at 50% 0,#000 70%,transparent 71%) 0 100%/clamp(54px,7vw,96px) 58% repeat-x, linear-gradient(#000,#000) 0 0/100% 62% no-repeat; }
+  .topwrap { filter:drop-shadow(0 4px 3px rgba(60,20,15,.35)); }
+  /* closed house curtains: two painted panels that sweep open on arrival */
+  .house { position:absolute; z-index:7; top:0; bottom:0; width:51%; will-change:transform;
+           background:repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 5.5vw, rgba(0,0,0,.09) 5.5vw 5.9vw, rgba(255,255,255,.06) 5.9vw 6.3vw), var(--paint) center/cover, var(--red);
+           background-blend-mode:normal,multiply; box-shadow:0 0 26px rgba(60,20,15,.45); overflow:hidden; }
+  /* the headline never moves: a cream copy shows over the curtains, the ink copy on the wall, cut exactly at the curtain edge */
+  .onc { position:absolute; inset:0; z-index:8; pointer-events:none; } .onc .cta { pointer-events:auto; }
+  .onc .hero-copy h1 { color:var(--cream); } .onc .hero-copy h1 em { color:#f2c14e; } .onc .hero-copy p { color:#f6ddd3; }
+  .onc .hero-copy .cta { background:var(--cream); color:var(--navy); }
+  .cue { position:absolute; z-index:8; left:0; right:0; bottom:clamp(1.6rem,6vh,3.4rem); text-align:center; color:#fff3dc; pointer-events:none; font-size:clamp(.92rem,1.25vw,1.12rem); font-weight:600; letter-spacing:.2em; text-shadow:0 1px 0 rgba(60,15,10,.45); }
+  .cue i { display:block; width:1.15rem; height:1.15rem; margin:.75rem auto 0; border-right:3px solid #f2c14e; border-bottom:3px solid #f2c14e; animation:cue 1.25s ease-in-out infinite; }
+  .cue i + i { margin-top:-.45rem; animation-delay:.16s; }
+  @keyframes cue { 0%,100% { transform:translateY(-.3rem) rotate(45deg); opacity:.45; } 50% { transform:translateY(.4rem) rotate(45deg); opacity:1; } }
+  @media (prefers-reduced-motion:reduce) { .cue i { animation:none; transform:rotate(45deg); } }
+  .house.l { left:0; transform-origin:0 0; } .house.r { right:0; transform-origin:100% 0; }
+  .curtain { position:absolute; z-index:6; top:0; height:100%; width:min(25.8vh,24vw); filter:var(--shadow); will-change:transform; transform-origin:50% 0; }
+  .curtain.l { left:0; } .curtain.r { right:0; }
+  .curtain img { width:100%; height:100%; }
+  .curtain.r img { transform:scaleX(-1); }
+  .hero-copy { position:absolute; z-index:5; left:50%; top:clamp(96px,15.5vh,154px); width:min(92vw,64rem); transform:translateX(-50%); text-align:center; will-change:transform,opacity; }
+  .hero-copy h1 { font:600 clamp(2.3rem,5.8vw,4.9rem)/1.02 var(--display); letter-spacing:-.018em; text-wrap:balance; }
+  .hero-copy h1 em { font-style:italic; color:var(--tomato); }
+  .hero-copy p { font:400 clamp(1.05rem,1.45vw,1.3rem)/1.55 var(--text); color:#4d5167; max-width:40rem; margin:1.1rem auto 1.5rem; text-wrap:pretty; }
+  .hero-copy .ln { display:block; opacity:0; will-change:transform,opacity; }
+  /* the scene: everything is placed from the stage's bottom edge, sizes in vh so it holds its shape on any screen */
+  .scene { position:absolute; inset:0; z-index:2; pointer-events:none; }
+  .scn { position:absolute; will-change:transform,opacity; }
+  .scn > img { height:100%; width:auto; filter:var(--shadow); }
+  .scn.birchrow { left:50%; bottom:20vh; height:46vh; margin-left:-34.5vh; opacity:.55; } .scn.birchrow.b2 { margin-left:-103.5vh; } .scn.birchrow.b3 { margin-left:34.5vh; }
+  .scn.birchrow > img { filter:none; }
+  .scn.grass { left:-5vw; right:-5vw; bottom:-13vh; height:44vh; } .scn.grass > img { width:100%; height:100%; filter:drop-shadow(0 -3px 3px rgba(40,50,30,.25)); }
+  .scn.cottage { left:var(--x); bottom:21vh; height:44vh; transform-origin:50% 100%; }
+  .scn.birch { bottom:6vh; height:94vh; } .scn.birch.l { left:max(-5vw, calc(50% - 104vh)); } .scn.birch.r { right:max(-5vw, calc(50% - 106vh)); } .scn.birch.r > img { transform:scaleX(-1); }
+  .scn.birch.m { left:calc(var(--x) - 9vh); bottom:18vh; height:70vh; opacity:.9; }
+  .scn.mush { bottom:14vh; height:9vh; transform-origin:50% 100%; } .scn.mush.a { left:calc(50% - 4vh); } .scn.mush.b { left:calc(var(--x) + 26vh); height:7vh; bottom:17vh; }
+  .scn.steps { left:var(--x); bottom:9.5vh; height:13vh; } .scn.steps > img { filter:none; }
+  /* a member of the cast: the figure, and above it a tag on a short string saying who they are */
+  .fig { z-index:3; position:absolute; left:var(--x); bottom:var(--b,12vh); height:var(--h); transform-origin:50% 100%; will-change:transform,opacity; opacity:0; }
+  .fig > img { height:100%; width:auto; margin-left:-50%; filter:drop-shadow(0 6px 4px rgba(40,40,20,.3)); }
+  .fig .tagwrap { position:absolute; left:0; bottom:calc(100% + 1.9rem + var(--lift,0rem)); transform:translateX(calc(-50% + var(--td,0px))); pointer-events:none; will-change:opacity; }
+  .fig .tagwrap::after { left:calc(50% - var(--td,0px)); top:auto; bottom:calc(-1.9rem - var(--lift,0rem)); height:calc(1.7rem + var(--lift,0rem)); transform:none; }
+  .fig .tagwrap::before { top:calc(50% - .25rem); }
+  .fig .tagcard { margin-top:0; }
+  .inv-head { position:absolute; z-index:5; top:clamp(5.4rem,14vh,8.4rem); left:0; right:0; text-align:center; padding:0 1.25rem; opacity:0; }
+  .inv-head .caps { color:#8a6a4a; }
+  .inv-head h2 { font:600 clamp(1.9rem,4vw,3.2rem)/1.05 var(--display); letter-spacing:-.015em; margin-top:.8rem; text-wrap:balance; }
+  /* the tag is built in CSS so its text is real, selectable and translatable */
+  .tagcard { position:relative; margin-top:1.3rem; width:clamp(140px,13.4vw,212px); min-height:5.4rem; padding:.65rem .7rem .6rem 1.6rem; background:var(--cream);
+             clip-path:polygon(.8rem 0,100% 0,100% 100%,.8rem 100%,0 calc(100% - .8rem),0 .8rem); transform:rotate(var(--tilt,-2deg)); }
+  .tagwrap { filter:drop-shadow(0 3px 2px rgba(60,25,25,.28)); position:relative; }
+  .tagwrap::before { content:""; position:absolute; z-index:2; left:.42rem; top:calc(1.3rem + 50% - .95rem); width:.5rem; height:.5rem; border-radius:50%; background:var(--rose); box-shadow:0 0 0 2px #d8c9ac; }
+  .tagwrap::after { content:""; position:absolute; z-index:1; left:.62rem; top:-.35rem; width:1px; height:calc(1.3rem + 50% - .3rem); border-left:1.5px solid var(--tomato); transform:rotate(4deg); transform-origin:bottom; }
+  .tagcard span { display:block; font:400 clamp(.78rem,1.04vw,1rem)/1.32 var(--tag); color:#3a3027; text-align:left; }
+  .tagcard b { display:block; font-weight:400; color:var(--tomato); letter-spacing:.08em; text-transform:uppercase; margin-bottom:.15rem; }
+  .ex:nth-child(even) .tagcard { --tilt:1.5deg; }
+  /* whose idea: tick boxes on the tag, because the idea can come from the child, the parent or Namesake */
+  .tagcard .who { margin-top:.45rem; padding-top:.4rem; border-top:1px dashed #b9a98a; opacity:0; transition:opacity .35s ease; } .tagcard .who.on { opacity:1; }
+  .who u { display:block; text-decoration:none; white-space:nowrap; } .who u::before { content:''; display:inline-block; width:.62em; height:.62em; margin-right:.45em; border:1.5px solid #3a3027; vertical-align:-.02em; }
+  .who u.x::before { background:linear-gradient(45deg,transparent 42%,var(--tomato) 42% 58%,transparent 58%), linear-gradient(-45deg,transparent 42%,var(--tomato) 42% 58%,transparent 58%); }
+  .book { position:absolute; z-index:4; left:50%; top:56%; width:clamp(150px,27vh,270px); aspect-ratio:2/3; transform:translate(-50%,-50%); perspective:1400px; opacity:0; will-change:transform,opacity; }
+  .book-in { position:absolute; inset:0; transform-style:preserve-3d; will-change:transform; }
+  .face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:3px 6px 6px 3px; overflow:hidden; box-shadow:0 14px 22px rgba(60,25,25,.35), inset 7px 0 0 rgba(0,0,0,.12); }
+  .face.front { background:var(--sage); display:grid; place-items:center; }
+  .face.back { transform:rotateY(180deg); background:#222; }
+  .face.back img { width:100%; height:100%; object-fit:cover; }
+  .plate { width:76%; background:var(--cream); color:var(--ink); padding:1.2rem .8rem 1.3rem; text-align:center; box-shadow:0 2px 0 rgba(0,0,0,.18); }
+  .plate .caps { font-size:.56rem; color:#7b7566; }
+  .plate i { display:block; font:500 italic 1rem/1 var(--display); margin:.7rem 0 .35rem; color:#7b7566; }
+  .plate strong { display:block; font:600 clamp(1.05rem,2.3vh,1.5rem)/1.12 var(--display); min-height:4.5em; }
+  .plate strong span { opacity:0; transition:opacity .3s ease; }
+  .plate strong span.on { opacity:1; }
+  .inv-foot { position:absolute; z-index:5; left:0; right:0; bottom:clamp(1.6rem,6vh,4rem); text-align:center; padding:0 1.25rem; opacity:0; }
+  .inv-foot p { font:500 italic clamp(1.15rem,2vw,1.55rem)/1.3 var(--display); max-width:34rem; margin:0 auto 1.1rem; text-wrap:balance; }
+  
+  @media (min-width:761px) {
+    .inv-foot { left:52%; right:auto; bottom:auto; top:52%; width:min(38vw,31rem); transform:translateY(-50%); text-align:left; padding:0; }
+    .inv-foot p { font-size:clamp(1.5rem,2.5vw,2.25rem); line-height:1.18; margin:0 0 1.4rem; }
+  }
+  .inv-foot small { display:block; margin-top:.8rem; font:400 .78rem/1.4 var(--text); color:#7b6a55; }
+  .inv-foot .cta { pointer-events:auto; }
+  /* a real player control, so it reads as "this plays the audio" */
+  .play { display:inline-flex; align-items:center; gap:.9rem; padding:.55rem 1.3rem .55rem .55rem; background:var(--navy); color:var(--cream); border:0; border-radius:999px; cursor:pointer; pointer-events:auto; text-align:left; }
+  .play:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+  .play .pi { position:relative; flex:none; width:3rem; height:3rem; border-radius:50%; background:var(--cream); }
+  .play .pi::before { content:""; position:absolute; left:55%; top:50%; transform:translate(-50%,-50%); border-style:solid; border-width:.56rem 0 .56rem .92rem; border-color:transparent transparent transparent var(--navy); }
+  .play.on .pi::before { left:50%; border:0; width:.9rem; height:1.05rem; background:linear-gradient(90deg,var(--navy) 0 34%,transparent 34% 66%,var(--navy) 66%); }
+  .play .pt b { display:block; font:600 1rem/1.1 var(--text); letter-spacing:.01em; } .play .pt small { display:block; margin-top:.25rem; font:400 .76rem/1 var(--text); color:#c9c6d6; }
+  .play .bars { height:1.5rem; margin-left:.3rem; } .play .bars i { background:#f2c14e; } .play.on .bars i { animation-play-state:running; }
+  /* a short name that stays on each figure once its full tag has gone (phones show one tag at a time) */
+  .fig .chip { display:none; position:absolute; left:0; bottom:calc(100% + .3rem); transform:translateX(-50%) rotate(-2deg); padding:.3rem .45rem .26rem; background:var(--cream); color:#3a3027;
+               font:400 .66rem/1 var(--tag); white-space:nowrap; box-shadow:0 2px 2px rgba(60,25,25,.28); opacity:0; pointer-events:none; }
+  /* the story being written: typed scraps spiral into the book, it glows, then stars fly as it turns over */
+  .magic, .burst { position:absolute; left:50%; top:56%; width:0; height:0; pointer-events:none; } .magic { z-index:3; } .burst { z-index:5; }
+  .halo { position:absolute; left:0; top:0; width:76vh; height:76vh; margin:-38vh 0 0 -38vh; border-radius:50%; opacity:0; will-change:transform,opacity;
+          background:radial-gradient(circle, rgba(244,168,40,.95) 0, rgba(246,186,70,.6) 30%, rgba(250,205,110,.25) 52%, rgba(255,214,120,0) 70%); }
+  .wsp { position:absolute; left:0; top:0; white-space:nowrap; padding:.42rem .62rem .36rem; background:var(--cream); color:#3a3027; font:400 clamp(.78rem,1.9vh,1.05rem)/1 var(--tag);
+         box-shadow:0 2px 2px rgba(60,25,25,.28); opacity:0; will-change:transform,opacity; }
+  .burst img { position:absolute; left:0; top:0; width:clamp(16px,3.4vh,32px); height:auto; margin:-1.7vh 0 0 -1.7vh; opacity:0; will-change:transform,opacity; filter:drop-shadow(0 2px 2px rgba(60,40,20,.3)); }
+
+  /* ---------- 9. The library, then lights out ---------- */
+  #curtain { height:480vh; }
+  #curtain .stage { background:var(--paper) var(--paint) center/cover; }
+  .lib-head { position:absolute; z-index:6; top:calc(clamp(58px,10vh,92px) + .9rem); left:0; right:0; text-align:center; padding:0 1.25rem; will-change:opacity; }
+  .lib-head .caps { color:#8a6a4a; } .lib-head.b { opacity:0; } .lib-head.b .caps { color:#aab0d6; } .lib-head.b h2 { color:var(--cream); }
+  .lib-head h2 { font:600 clamp(1.9rem,4vw,3.2rem)/1.05 var(--display); letter-spacing:-.015em; margin-top:.8rem; text-wrap:balance; }
+  /* a painted cabinet, four shelves of three; the covers are dressed as books (spine crease, page block, lean) */
+  .cabinet { position:absolute; z-index:2; left:50%; top:61%; --bw:clamp(50px,9.2vh,96px); padding:1.2vh; transform:translate(-50%,-50%); will-change:transform; }
+  .cabbg { position:absolute; inset:-1.4vh; filter:url(#handcut) drop-shadow(0 1.2vh 1.4vh rgba(60,40,20,.3)); pointer-events:none; }
+  .cabbg i { position:absolute; inset:1.4vh; border-radius:3px; background:linear-gradient(100deg, rgba(255,255,255,.1), rgba(0,0,0,.08) 60%, rgba(255,255,255,.05)), var(--sage) var(--paint) center/60vh auto; background-blend-mode:normal,multiply; }
+  .cabbg b { position:absolute; inset:2.6vh; }
+  .cabinet::before { content:""; position:absolute; left:-1.9vh; right:-1.5vh; top:-2.3vh; height:2.8vh; filter:url(#handcut); transform:rotate(-.5deg); background:var(--sage) var(--paint) center/60vh auto; background-blend-mode:multiply;
+                     border-radius:1.2vh 1.2vh 2px 2px; box-shadow:0 3px 3px rgba(40,30,15,.3); }
+  .cabinet::after { content:""; position:absolute; left:6%; right:6%; bottom:-1.4vh; height:1.4vh; background:linear-gradient(90deg,#4f6b4c 0 12%,transparent 12% 88%,#4f6b4c 88%); }
+  .bk { position:relative; z-index:1; width:var(--bw); aspect-ratio:2/3; border-radius:1px 3px 3px 1px; opacity:0; will-change:transform; background:#ddd; transform-origin:50% 100%; transform-style:preserve-3d;
+        box-shadow:0 .5vh .45vh -.25vh rgba(0,0,0,.7), -.5vh .2vh .9vh rgba(0,0,0,.32); }
+  .bk img { width:100%; height:100%; object-fit:cover; border-radius:inherit; }
+  /* the page block: a real side face running back from the fore-edge, seen because each book is turned a little to the left */
+  .bk::before { content:""; position:absolute; right:0; top:1.3%; bottom:1.3%; width:calc(var(--bw) * .2); transform-origin:100% 50%; transform:rotateY(-90deg);
+                background:linear-gradient(90deg, rgba(70,48,22,.6), rgba(70,48,22,.12) 55%, rgba(255,255,255,.1)), repeating-linear-gradient(90deg, #f6eedc 0 1px, #d6caae 1px 2.2px); }
+  .bk::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+               background:linear-gradient(90deg,rgba(0,0,0,.34) 0,rgba(255,255,255,.22) 2.6%,rgba(0,0,0,.16) 5.5%,rgba(0,0,0,0) 10%,rgba(0,0,0,0) 92%,rgba(0,0,0,.1) 100%); }
+  /* the book as an object: thickness, a page block, cloth and a debossed frame; the wordmark is the real file */
+  .book { --bwd:clamp(150px,27vh,270px); --bt:calc(var(--bwd) * .15); width:var(--bwd); }
+  .book::after { content:""; position:absolute; left:-8%; right:-14%; bottom:-9%; height:13%; background:radial-gradient(closest-side, rgba(50,32,14,.55), rgba(60,40,20,0)); filter:blur(5px); z-index:-1; }
+  .face.front { box-shadow:inset 0 0 0 1px rgba(255,255,255,.08), inset -10px 0 18px rgba(0,0,0,.16), inset 0 -8px 14px rgba(0,0,0,.12); }
+  .face { box-shadow:none; border-radius:2px 5px 5px 2px; }
+  .face::after { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+                 background:linear-gradient(90deg, rgba(0,0,0,.3) 0, rgba(255,255,255,.16) 2.4%, rgba(0,0,0,.14) 5.2%, rgba(0,0,0,0) 9%, rgba(0,0,0,0) 94%, rgba(0,0,0,.12) 100%); }
+  .face.front { transform:translateZ(calc(var(--bt) / 2)); display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:11% 0 9%;
+                background:repeating-linear-gradient(0deg, rgba(0,0,0,.05) 0 1px, rgba(255,255,255,.03) 1px 2px), repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 1px, rgba(255,255,255,.03) 1px 2px), #5f8460 var(--paint) center/cover;
+                background-blend-mode:normal,normal,multiply; }
+  .face.front::before { content:""; position:absolute; inset:4.5% 5% 4.5% 8.5%; border:1.5px solid rgba(244,226,180,.5); border-radius:2px; box-shadow:inset 0 0 0 3px rgba(0,0,0,0), inset 0 0 0 4.5px rgba(244,226,180,.22), 0 1px 0 rgba(0,0,0,.18); pointer-events:none; }
+  .face.back { transform:rotateY(180deg) translateZ(calc(var(--bt) / 2)); }
+  .b-mark { position:relative; width:56%; height:auto; margin-left:3.5%; filter:drop-shadow(0 1px 0 rgba(0,0,0,.25)); }
+  .book .plate { position:relative; width:70%; margin-left:3.5%; padding:.9rem .7rem 1rem; background:var(--cream) var(--paint) center/cover; box-shadow:0 1px 0 rgba(255,255,255,.4) inset, 0 2px 3px rgba(0,0,0,.28); transform:rotate(-.6deg); }
+  .book .plate i { margin:0 0 .3rem; } .book .plate strong { min-height:3.4em; }
+  .b-foot { position:relative; margin-left:3.5%; font-size:.5rem; color:rgba(244,226,180,.82); }
+  .b-edge, .b-spine { position:absolute; top:1.1%; bottom:1.1%; left:calc(50% - var(--bt) / 2); width:var(--bt); }
+  .b-edge { transform:rotateY(90deg) translateZ(calc(var(--bwd) / 2 - 3px)); background:repeating-linear-gradient(90deg, #f6eedc 0 1px, #d8ccb0 1px 2.4px); box-shadow:inset 0 0 6px rgba(90,70,40,.35); }
+  .b-spine { top:0; bottom:0; transform:rotateY(-90deg) translateZ(calc(var(--bwd) / 2)); background:linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.08) 45%, rgba(0,0,0,.25)), #4d6e4f var(--paint) center/cover; background-blend-mode:normal,multiply; border-radius:3px; }
+  /* once turned over, the side we can see is the fore-edge of the story book, so it is dressed as pages */
+  .book-in.turned .b-spine { top:1.1%; bottom:1.1%; border-radius:0; background:linear-gradient(90deg, rgba(70,48,22,.1), rgba(70,48,22,.5)), repeating-linear-gradient(90deg, #f6eedc 0 1px, #d8ccb0 1px 2.4px); background-blend-mode:normal; box-shadow:inset 0 0 6px rgba(90,70,40,.35); }
+  .fig.extra img.sad, .fig.extra.sad img.happy { display:none; } .fig.extra.sad img.sad { display:block; }
+
+  .cabinet { --cols:3; --rh:calc(var(--bw) * 1.5 + 3.8vh); }
+  .cgrid { position:relative; display:grid; grid-template-columns:repeat(var(--cols), var(--bw)); column-gap:var(--cg,2.6vh); padding:0 var(--cp,2.8vh); }
+  .cabbg b { background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--rh) - 2.5vh), #485a45 calc(var(--rh) - 2.5vh), #5e7659 calc(var(--rh) - 1.45vh), #86a37f calc(var(--rh) - 1.45vh), #86a37f calc(var(--rh) - 1.25vh), #55694f calc(var(--rh) - 1.25vh), #38463a var(--rh)),
+                      repeating-linear-gradient(to bottom, rgba(0,0,0,.5) 0, rgba(0,0,0,.12) calc(var(--rh) * .3), rgba(0,0,0,0) calc(var(--rh) * .6), rgba(0,0,0,.18) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) var(--rh)),
+                      #3f4d3d var(--paint) center/50vh auto; background-blend-mode:normal,normal,multiply; }
+  .cgrid .bk { margin:1.9vh 0 1.9vh; }
+  .bedtime img.tail { position:absolute; z-index:2; left:81%; top:56.5%; width:19%; height:auto; transform-origin:4% 50%; animation:tail 7.5s ease-in-out infinite; filter:drop-shadow(0 2px 2px rgba(8,12,30,.3));
+                      -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 22%); mask-image:linear-gradient(90deg, transparent 0, #000 22%); }
+  @keyframes tail { 0%,100% { transform:rotate(-3deg); } 50% { transform:rotate(6deg); } }
+  @media (prefers-reduced-motion:reduce) { .bedtime img.tail { animation:none; } }
+  .night { position:absolute; inset:0; z-index:3; background:var(--navy-deep) var(--paint) center/cover; background-blend-mode:multiply; opacity:0; pointer-events:none; }
+  .picklit { position:absolute; z-index:4; opacity:0; pointer-events:none; border-radius:1px 3px 3px 1px; box-shadow:0 0 0 2px #f2c14e, 0 0 18px 4px rgba(255,214,120,.45); }
+  .picklit img { width:100%; height:100%; object-fit:cover; border-radius:inherit; }
+  .picklit b { position:absolute; left:-.55rem; top:-.55rem; width:1.35rem; height:1.35rem; border-radius:50%; background:#f2c14e; color:var(--navy-deep); font:600 .78rem/1.35rem var(--text); text-align:center; }
+  .bedtime { position:absolute; z-index:5; left:54%; bottom:-1vh; height:37vh; aspect-ratio:1022/969; margin-left:-19.5vh; will-change:transform; }
+  .bedtime img { width:100%; height:100%; filter:drop-shadow(0 -2px 6px rgba(8,12,30,.4)); }
+  /* three ways it plays: the sound hops from one to the next */
+  .devs { position:absolute; z-index:5; left:calc(54% + 22vh); bottom:5.5vh; display:flex; align-items:flex-end; gap:2.6vh; will-change:transform; }
+  .dev { position:relative; display:flex; flex-direction:column; align-items:center; }
+  .dev img { height:10.5vh; width:auto; position:relative; z-index:1; filter:drop-shadow(0 3px 3px rgba(8,12,30,.45)); transition:transform .4s ease; } .dev.ph img { height:12vh; transform:rotate(6deg); }
+  .dev span { margin-top:.7rem; font:500 .62rem/1 var(--text); letter-spacing:.2em; text-transform:uppercase; color:#aab0d6; transition:color .4s ease; white-space:nowrap; }
+  .dev b { position:absolute; left:50%; top:5vh; width:8vh; height:8vh; margin:-4vh 0 0 -4vh; border-radius:50%; border:2px solid #f2c14e; opacity:0; }
+  .playing .dev.on b { animation:ring 2.4s ease-out infinite; } .playing .dev.on b:nth-child(2) { animation-delay:.8s; } .playing .dev.on b:nth-child(3) { animation-delay:1.6s; }
+  .playing .dev.on span { color:#f2c14e; } .playing .dev.on img { transform:translateY(-.6vh); } .playing .dev.ph.on img { transform:translateY(-.6vh) rotate(6deg); }
+  .playing .bars i { animation-play-state:running; }
+  @keyframes ring { 0% { transform:scale(.5); opacity:.85; } 100% { transform:scale(2.4); opacity:0; } }
+  .now { position:absolute; z-index:6; left:calc(54% + 21vh); bottom:27vh; display:block; padding:.75rem .9rem .8rem; border:0; border-radius:3px; cursor:pointer; width:min(22rem,32vw);
+         background:var(--cream); color:var(--ink); text-align:left; box-shadow:0 3px 0 rgba(8,12,30,.45); opacity:0; will-change:transform,opacity; }
+  .now:focus-visible { outline:2px solid #f2c14e; outline-offset:4px; }
+  .now .caps { font-size:.58rem; color:#7b7566; display:block; }
+  .now .q { display:flex; align-items:center; gap:.45rem; margin:.6rem 0 .55rem; }
+  .now .q img { width:2.1rem; aspect-ratio:2/3; object-fit:cover; border-radius:1px; opacity:.55; } .now .q img:first-child { opacity:1; box-shadow:0 0 0 2px var(--tomato); }
+  .now strong { display:block; font:600 italic 1.08rem/1.12 var(--display); }
+  .now small { display:block; font:400 .7rem/1.3 var(--text); color:#7b7566; margin-top:.25rem; }
+  .bars { display:flex; align-items:flex-end; gap:3px; height:1.5rem; flex:none; margin-left:auto; }
+  .bars i { width:3px; height:100%; background:var(--tomato); transform-origin:50% 100%; transform:scaleY(.3); animation:bar 1.1s ease-in-out infinite; animation-play-state:paused; }
+  .bars i:nth-child(2) { animation-delay:-.4s; } .bars i:nth-child(3) { animation-delay:-.75s; } .bars i:nth-child(4) { animation-delay:-.2s; } .bars i:nth-child(5) { animation-delay:-.9s; }
+  @keyframes bar { 0%,100% { transform:scaleY(.25); } 50% { transform:scaleY(1); } }
+  .drape { position:absolute; z-index:7; top:0; bottom:0; width:51%; background:
+           repeating-linear-gradient(90deg, rgba(0,0,0,0) 0 5.5vw, rgba(0,0,0,.07) 5.5vw 5.9vw, rgba(255,255,255,.05) 5.9vw 6.3vw), var(--paint) center/cover, var(--red); background-blend-mode:normal,multiply;
+           will-change:transform; box-shadow:0 0 30px rgba(8,12,30,.5); }
+  .drape.l { left:0; transform:translateX(-101%); } .drape.r { right:0; transform:translateX(101%); }
+  .final { position:absolute; z-index:8; inset:0; display:grid; place-content:center; justify-items:center; text-align:center; padding:0 1.5rem; color:var(--cream); opacity:0; }
+  .final h2 { font:600 clamp(2.2rem,5vw,4rem)/1.04 var(--display); letter-spacing:-.018em; max-width:16ch; text-wrap:balance; }
+  .final p { font:400 1.05rem/1.6 var(--text); max-width:29rem; margin:1.1rem 0 1.8rem; color:#f4dcd2; }
+  .final .cta { background:var(--cream); color:var(--navy); }
+  .final small { margin-top:2.4rem; font:400 .76rem/1.5 var(--text); color:#f0c9c0; max-width:30rem; }
+
+  @media (min-width:761px) {
+    .cabinet { --cols:4; --bw:clamp(74px,13.2vh,152px); top:61.5%; }
+    .bedtime { left:50%; height:52vh; margin-left:-22vh; }
+    /* devices: a row to the right of the bed whose size follows the room there, so the last one can never leave the screen */
+    .devs { left:calc(50% + 37vh); right:2.5vw; bottom:6vh; gap:0; justify-content:space-between; align-items:flex-start; --dh:min(10vh, calc((50vw - 41vh) / 4.4)); }
+    .dev img { height:var(--dh); } .dev.ph img { height:var(--dh); } .dev b { top:calc(var(--dh) / 2); width:calc(var(--dh) * .8); height:calc(var(--dh) * .8); margin:calc(var(--dh) * -.4) 0 0 calc(var(--dh) * -.4); }
+    .dev span { white-space:normal; max-width:5.6rem; text-align:center; line-height:1.5; font-size:.58rem; }
+    /* tonight's queue: large, above the bed's right-hand side */
+    .now { left:calc(50% + 2vh); right:2.5vw; bottom:54vh; width:auto; max-width:38rem; padding:.9rem 1.2rem 1rem; }
+    .now .caps { font-size:.72rem; } .now .q { gap:.8rem; margin:.9rem 0 .8rem; } .now .q img { width:clamp(2.6rem,5.6vh,3.8rem); }
+    .now strong { font-size:clamp(1.3rem,2.9vh,1.8rem); } .now small { font-size:.85rem; } .bars { height:2.4rem; gap:4px; } .bars i { width:4px; }
+  }
+  @media (max-width:760px) {
+    /* a finger moves the page about one screen per swipe, so the acts are much shorter here */
+    #hero { height:520vh; } #curtain { height:340vh; }
+    #hero .stage { --sw:178vw; --sh:100vw; }
+    .fig { bottom:var(--bm, var(--b,12vh)); } .fig.pot, .fig.trouble { z-index:4; }
+    .fig .chip { display:block; }
+    .inv-foot { bottom:clamp(1rem,3.5vh,2.4rem); } .inv-foot p { font-size:1.42rem; line-height:1.2; margin-bottom:1rem; } .inv-foot small { font-size:.68rem; margin-top:.6rem; }
+    /* the badger waits in the bottom-left corner on phones, its tag lying beside it along the bottom edge */
+    .fig.extra .tagwrap { left:58%; bottom:.4vh; transform:none; } .fig.extra .tagwrap::after { display:none; } .fig.extra .tagcard { width:136px; min-height:0; } .fig.extra .chip { display:none; }
+    .curtain { width:15vw; }
+    .hero-copy { top:clamp(92px,13.5vh,124px); width:88vw; }
+    .hero-copy h1 { font-size:clamp(2.4rem,11.6vw,3.3rem); }
+    .hero-copy p { font-size:1.14rem; line-height:1.5; margin:1rem auto 1.3rem; }
+    .cta { padding:.95rem 1.1rem; letter-spacing:.14em; font-size:.74rem; }
+    .fig { left:var(--xm); height:var(--hm); } .scn.cottage, .scn.steps { left:var(--xm); } .scn.cottage { height:40vh; bottom:21vh; } .scn.birch.m { left:calc(var(--xm) - 6vh); height:52vh; }
+    .scn.steps { height:8vh; bottom:10.5vh; } .scn.mush.b { left:calc(var(--xm) + 17vh); } .scn.birch { height:74vh; }
+    .scn.birch.l { left:-36vw; } .scn.birch.r { right:-36vw; } .scn.birch.m { display:none; } .scn.birchrow { height:50vh; bottom:22vh; margin-left:-36vh; } .scn.birchrow.b2 { margin-left:-108vh; } .scn.birchrow.b3 { margin-left:36vh; }
+    .inv-head { top:calc(clamp(58px,10vh,92px) + 1.1rem); } .inv-head h2 { margin-top:.55rem; }
+    .tagcard { width:154px; min-height:3.6rem; padding:.5rem .5rem .5rem 1.4rem; } .tagcard span { font-size:.74rem; }
+    .fig { --td:var(--tx,0px) !important; }
+    .programme { display:none; }
+    .cabinet { --bw:min(21vw,8.5vh); --cg:1.8vh; --cp:2vh; top:60%; }
+    .bedtime { left:50%; height:33vh; margin-left:-17.4vh; }
+    .devs { left:0; right:0; bottom:35.5vh; justify-content:center; align-items:flex-start; gap:5vw; } .dev img { height:6.6vh; } .dev.ph img { height:6.6vh; } .dev span { font-size:.54rem; margin-top:.45rem; white-space:normal; max-width:4.4rem; text-align:center; line-height:1.5; } .dev b { top:3.2vh; width:5vh; height:5vh; margin:-2.5vh 0 0 -2.5vh; }
+    .now { left:50%; top:27vh; bottom:auto; width:min(20.5rem,92vw); margin-left:calc(min(20.5rem,92vw) / -2); padding:.65rem .8rem .7rem; } .now .q { margin:.4rem 0; } .now .q img { width:1.7rem; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    #hero, #curtain { height:auto; } .stage { position:relative; } .cue { display:none; }
+  }
+
+  /* ---------- no closing curtain: the lights-out scene hands on to the rest of the page ---------- */
+  .drape, .final { display:none !important; }
+  .more { position:absolute; z-index:6; left:0; right:0; bottom:clamp(.7rem,2.2vh,1.4rem); text-align:center; color:#f3ead6; opacity:0; pointer-events:none; font-size:.8rem; font-weight:600; letter-spacing:.2em; }
+  .more i { display:block; width:.8rem; height:.8rem; margin:.4rem auto 0; border-right:2.5px solid #f2c14e; border-bottom:2.5px solid #f2c14e; animation:cue 1.25s ease-in-out infinite; }
+
+  /* ---------- the rest of the page: calm, mostly still ---------- */
+  .low { position:relative; padding:clamp(4.5rem,11vh,8rem) clamp(1.2rem,5vw,4rem); background:var(--paper) var(--paint) center/cover; color:var(--ink); }
+  .low.dark { background:var(--navy-deep) var(--paint) center/cover; background-blend-mode:multiply; color:var(--cream); }
+  .low.tint { background:#e8cdbf var(--paint) center/cover; background-blend-mode:multiply; }
+  .low-in { max-width:68rem; margin:0 auto; }
+  .low .caps { color:#8a6a4a; } .low.dark .caps { color:#aab0d6; }
+  .low h2 { font:600 clamp(2.1rem,4.4vw,3.6rem)/1.04 var(--display); letter-spacing:-.016em; margin-top:.8rem; max-width:18ch; text-wrap:balance; }
+  .low .lede { font:400 clamp(1.05rem,1.4vw,1.25rem)/1.55 var(--text); max-width:36rem; margin-top:1.2rem; color:#4d5167; text-wrap:pretty; } .low.dark .lede { color:#cfd2e6; }
+  .low.center { text-align:center; } .low.center h2, .low.center .lede { margin-left:auto; margin-right:auto; }
+  .two { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(2rem,5vw,4.5rem); align-items:center; }
+  /* 1. you are in charge: a manuscript slip with one line struck out in red pencil */
+  .slip { position:relative; background:var(--cream) var(--paint) center/cover; color:#3a3027; padding:1.6rem 1.5rem 1.8rem; transform:rotate(-1.5deg); box-shadow:0 5px 0 rgba(8,12,30,.35);
+          font:400 clamp(.95rem,1.25vw,1.12rem)/1.75 var(--tag); clip-path:polygon(0 2%,5% 0,34% 1.5%,62% 0,100% 1%,99% 50%,100% 98%,68% 100%,40% 98.5%,12% 100%,0 99%,1% 48%); }
+  .slip s { text-decoration:none; background:linear-gradient(transparent 46%, var(--tomato) 46% 58%, transparent 58%); background-size:0% 100%; background-repeat:no-repeat; transition:background-size 1s ease .3s; }
+  .slip ins { text-decoration:none; color:var(--tomato); opacity:0; transition:opacity .5s ease 1.2s; }
+  .seen .slip s { background-size:100% 100%; } .seen .slip ins { opacity:1; }
+  .slip-wrap { position:relative; } .slip-wrap img { position:absolute; right:-4%; bottom:-22%; width:46%; transform:rotate(-14deg); filter:drop-shadow(0 4px 3px rgba(8,12,30,.5)); }
+  .ticks { list-style:none; margin:1.6rem 0 0; padding:0; display:grid; gap:.7rem; font:400 1.05rem/1.4 var(--text); }
+  .ticks li { padding-left:1.7rem; position:relative; } .ticks li::before { content:""; position:absolute; left:.1rem; top:.25rem; width:.4rem; height:.75rem; border-right:2.5px solid #f2c14e; border-bottom:2.5px solid #f2c14e; transform:rotate(40deg); }
+  /* 2 and 3: numbered cards and the rules list */
+  .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); margin-top:clamp(2rem,5vh,3.4rem); }
+  .card { background:var(--cream) var(--paint) center/cover; padding:1.5rem 1.4rem 1.6rem; box-shadow:0 4px 0 rgba(60,40,20,.2); } .card:nth-child(odd) { transform:rotate(-.7deg); } .card:nth-child(even) { transform:rotate(.6deg); }
+  .card b { display:block; font:400 .82rem/1 var(--tag); letter-spacing:.14em; color:var(--tomato); }
+  .card h3 { font:600 1.5rem/1.1 var(--display); margin:.7rem 0 .5rem; } .card p { font:400 .98rem/1.55 var(--text); color:#4d5167; }
+  .notes { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem clamp(1.5rem,4vw,3rem); margin-top:clamp(1.6rem,4vh,2.6rem); font:400 1.02rem/1.55 var(--text); color:#4d5167; }
+  .rules { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1.3rem,3vh,2rem) clamp(2rem,5vw,4.5rem); margin-top:clamp(2rem,5vh,3.4rem); counter-reset:r; }
+  .rules div { counter-increment:r; padding-left:3.4rem; position:relative; } .rules div::before { content:counter(r); position:absolute; left:0; top:-.1rem; font:600 italic clamp(2.2rem,2.8vw,2.7rem)/1 var(--display); color:var(--tomato); }
+  .rules h3 { font:600 clamp(1.6rem,2.1vw,1.95rem)/1.15 var(--display); } .rules p { font:400 clamp(1.08rem,1.35vw,1.22rem)/1.55 var(--text); color:#4d4a52; margin-top:.45rem; }
+  /* 4. languages */
+  .langs { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.8rem; }
+  .langs button { font:500 .8rem/1 var(--text); letter-spacing:.14em; text-transform:uppercase; padding:.75rem 1rem; border:1.5px solid #6d74a6; background:none; color:var(--cream); border-radius:2px; cursor:pointer; }
+  .langs button[aria-pressed="true"] { background:var(--cream); color:var(--navy); border-color:var(--cream); } .langs button:focus-visible { outline:2px solid #f2c14e; outline-offset:3px; }
+  .lang-show { display:grid; grid-template-columns:auto minmax(0,1fr); gap:1.4rem; align-items:center; }
+  .lang-show img { width:clamp(120px,16vw,200px); aspect-ratio:2/3; object-fit:cover; border-radius:2px 5px 5px 2px; box-shadow:0 8px 14px rgba(0,0,0,.4); transform:rotate(-2deg); }
+  .lang-show q { display:block; quotes:none; font:500 italic clamp(1.3rem,2.2vw,1.9rem)/1.25 var(--display); } .lang-show small { display:block; margin-top:.8rem; font:400 .8rem/1.4 var(--text); color:#aab0d6; }
+  /* 5. hear more */
+  .tracks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); margin-top:clamp(2rem,5vh,3.4rem); text-align:left; }
+  .track { display:flex; flex-direction:column; align-items:flex-start; gap:.9rem; background:var(--cream) var(--paint) center/cover; padding:1.1rem; border:0; cursor:pointer; color:var(--ink); box-shadow:0 4px 0 rgba(60,40,20,.2); text-align:left; }
+  .track:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
+  .track img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:2px; }
+  .track strong { font:600 1.3rem/1.12 var(--display); } .track small { font:400 .8rem/1.4 var(--text); color:#6b6558; }
+  .track .play { pointer-events:none; padding:.4rem 1rem .4rem .4rem; } .track .play .pi { width:2.3rem; height:2.3rem; } .track .play .pt b { font-size:.86rem; }
+  /* 6. the end */
+  .low.end { background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply; color:var(--cream); text-align:center; padding-bottom:2.4rem; }
+  .low.end h2 { margin-left:auto; margin-right:auto; } .low.end .lede { color:#f4dcd2; margin-left:auto; margin-right:auto; }
+  .low.end .cta { background:var(--cream); color:var(--navy); margin-top:2rem; font-size:.95rem; padding:1.2rem 2rem; }
+  .foot { margin-top:clamp(4rem,10vh,6.5rem); padding-top:1.4rem; border-top:1px solid rgba(239,228,207,.3); display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; font:400 .86rem/1.4 var(--text); color:#f0c9c0; }
+  .foot a { color:var(--cream); text-decoration:none; } .foot a:hover { text-decoration:underline; } .foot span { flex-basis:100%; }
+  @media (max-width:760px) {
+    .two { grid-template-columns:1fr; } .cards, .tracks { grid-template-columns:1fr; } .notes, .rules { grid-template-columns:1fr; }
+    .slip-wrap { margin:0 .4rem 2.6rem; } .tracks { max-width:19rem; margin-left:auto; margin-right:auto; } .lang-show { grid-template-columns:1fr; } .lang-show img { width:44vw; }
+    .card:nth-child(n) { transform:none; }
+  }
+  @media (prefers-reduced-motion:reduce) { .slip s, .slip ins { transition:none; } .more i { animation:none; transform:rotate(45deg); } }
+
+  /* dark blue sections: brushed texture like the other backgrounds (a boosted copy of the paint, blended in) */
+  .low.dark { background:#1a1f4b; isolation:isolate; overflow:hidden; }
+  .low.dark::before { content:""; position:absolute; inset:0; z-index:-1; background:var(--paint) center/cover; filter:grayscale(1) brightness(.56) contrast(8); mix-blend-mode:overlay; opacity:.55; pointer-events:none; }
+  /* app screenshots, shown as phones */
+  .shot { display:block; width:min(100%,19rem); height:auto; border-radius:1.5rem; border:.4rem solid #10132e; box-shadow:0 14px 26px rgba(8,12,30,.38); }
+  .shots { position:relative; display:flex; justify-content:center; align-items:flex-start; gap:0; padding:1rem 0 2rem; }
+  .shots .shot { width:min(56%,15rem); } .shots .shot.a { transform:rotate(-3deg); position:relative; z-index:1; } .shots .shot.b { transform:rotate(3.5deg) translateY(2.4rem); margin-left:-14%; }
+  .steps { list-style:none; margin:clamp(1.6rem,4vh,2.4rem) 0 0; padding:0; display:grid; gap:1.2rem; }
+  .steps li { display:grid; grid-template-columns:2.6rem minmax(0,1fr); align-items:start; } .steps b { font:400 .9rem/1.9 var(--tag); letter-spacing:.14em; color:var(--tomato); }
+  .steps h3 { font:600 1.5rem/1.1 var(--display); } .steps p { font:400 1rem/1.5 var(--text); color:#4d5167; margin-top:.3rem; }
+  #make .notes { grid-template-columns:1fr; gap:.8rem; font-size:.96rem; }
+  /* you are in charge: the review screen, the summary Namesake gives you, and the pencil */
+  .review { position:relative; display:flex; justify-content:center; padding:0 0 4.5rem; }
+  .review .shot { width:min(62%,15.5rem); transform:rotate(2.5deg); border-color:#0b0e24; }
+  .sum { position:absolute; left:0; bottom:1.2rem; width:min(74%,21rem); background:#12163a; border:1px solid #2c3270; border-radius:.9rem; padding:.9rem 1rem; box-shadow:0 12px 22px rgba(0,0,0,.5); transform:rotate(-2deg); }
+  .sum p { display:grid; grid-template-columns:1.25rem minmax(0,1fr); gap:.6rem; align-items:start; font:400 .95rem/1.4 var(--text); color:#8f95bd; } .sum p + p { margin-top:.5rem; }
+  .sum svg { width:1.15rem; height:1.15rem; margin-top:.12rem; } .sum b { font-weight:500; color:#eef0fb; }
+  .sum u { text-decoration:none; background:linear-gradient(var(--tomato),var(--tomato)) 0 100%/0% 2.5px no-repeat; padding-bottom:2px; transition:background-size .7s ease .4s; } .sum p:nth-child(3) u { transition-delay:1s; }
+  .seen .sum u { background-size:100% 2.5px; }
+  .review .pen { position:absolute; right:2%; bottom:-.6rem; width:42%; transform:rotate(-16deg); filter:drop-shadow(0 4px 3px rgba(8,12,30,.5)); }
+  @media (max-width:760px) {
+    .shots { padding:0 0 3rem; } .review { padding-bottom:6.5rem; margin-top:.5rem; } .sum { width:86%; } .sum p { font-size:.9rem; }
+  }
+  @media (prefers-reduced-motion:reduce) { .sum u { transition:none; } }
+
+  /* read along: the story's words under the books, the sentence being spoken picked out */
+  .readalong { margin-top:clamp(1.6rem,4vh,2.6rem); background:#fdf8ec; box-shadow:0 4px 0 rgba(60,40,20,.2); padding:1.3rem clamp(1.1rem,3vw,2.4rem) 1.6rem; text-align:left; }
+  .readalong .caps { color:var(--tomato); font-size:.7rem; }
+  .ra-box { position:relative; height:clamp(11rem,34vh,17rem); overflow:hidden; margin-top:.9rem; scroll-behavior:smooth;
+            -webkit-mask-image:linear-gradient(transparent 0, #000 12%, #000 90%, transparent 100%); mask-image:linear-gradient(transparent 0, #000 12%, #000 90%, transparent 100%); }
+  .ra-box p { font:500 clamp(1.25rem,2.1vw,1.7rem)/1.4 var(--display); color:#3f3d4a; margin:0 0 .9em; text-wrap:pretty; } .ra-box p:first-child { margin-top:3.2rem; } .ra-box p:last-child { margin-bottom:9rem; }
+  .ra-box span { transition:color .25s ease, background-color .25s ease; border-radius:2px; padding:.05em 0; } .ra-box span.ra-done { color:#9c958a; }
+  .ra-box span.ra-now { color:#14182f; background:#f6cf6a; box-shadow:0 0 0 .18em #f6cf6a; }
+  .track.live { outline:3px solid var(--tomato); outline-offset:3px; }
+
+  /* the three books stand at an angle with real thickness and lift a little under the pointer (carried over from the live site) */
+  .track { padding:1.4rem 1.1rem 1.1rem; }
+  .bko { --h:.55rem; position:relative; display:block; width:84%; margin:0 auto .5rem 6%; aspect-ratio:2/3; transform-style:preserve-3d;
+         transform:perspective(1400px) rotateY(-19deg) rotateX(2deg); transition:transform .3s ease; }
+  .track .bko img { position:absolute; inset:0; width:100%; height:100%; aspect-ratio:auto; object-fit:cover; border-radius:2px 4px 4px 2px; transform:translateZ(var(--h));
+                    box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
+  .bko::before { content:""; position:absolute; inset:0; border-radius:2px 4px 4px 2px; background:#3a2f26; transform:translateZ(calc(var(--h) * -1)); box-shadow:-1.1rem 1.3rem 1.6rem rgba(60,40,20,.38); }
+  .bko::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:2px 4px 4px 2px; transform:translateZ(calc(var(--h) + .5px));
+                background:linear-gradient(90deg, rgba(0,0,0,.28) 0, rgba(255,255,255,.2) 2.2%, rgba(0,0,0,.12) 4.6%, rgba(0,0,0,0) 9%, rgba(0,0,0,0) 90%, rgba(255,255,255,.1) 100%); }
+  .bko .pg { position:absolute; right:calc(var(--h) * -1); top:3px; bottom:3px; width:calc(var(--h) * 2); transform:rotateY(90deg);
+             background:repeating-linear-gradient(90deg, #f6eedc 0 1px, #d4c8ae 1px 2.3px); box-shadow:inset 0 0 5px rgba(90,70,40,.4); }
+  .track:hover .bko, .track:focus-visible .bko, .track.live .bko { transform:perspective(1400px) rotateY(-12deg) rotateX(2deg) translateY(-7px); }
+  @media (prefers-reduced-motion:reduce) { .bko { transition:none; } }
+
+  /* callouts on the finished cover */
+  .callouts { position:absolute; inset:0; z-index:5; pointer-events:none; opacity:0; }
+  .callouts svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .co-arrow { fill:none; stroke:var(--tomato); stroke-width:2.4; stroke-linecap:round; marker-end:url(#coHead); }
+  .co { position:absolute; margin:0; font:600 italic clamp(1.15rem,1.7vw,1.5rem)/1.08 var(--display); color:var(--ink); text-wrap:balance; }
+  .co[data-k="face"] { transform:rotate(2deg); } .co[data-k="name"] { transform:rotate(-3deg); } .co[data-k="baddy"] { transform:rotate(2deg); } .co[data-k="fox"] { transform:rotate(-2deg); }
+  @media (min-width:761px) { .inv-foot { left:60%; width:min(33vw,27rem); } .inv-foot p { font:400 clamp(1.1rem,1.5vw,1.3rem)/1.5 var(--text); color:#4d5167; } }
+  @media (max-width:760px) { .co { font-size:1.02rem; } .inv-foot p { font:400 1rem/1.45 var(--text); color:#4d5167; } }
+
+  /* round 22: you are in charge (the corrected slip, then the summary card), how you make one (one real screen, three mocked steps), devices */
+  .review { display:grid; gap:1.8rem; padding:0; justify-items:start; } .review .slip-wrap { width:min(100%,25rem); margin-bottom:2.2rem; }
+  .sum { position:relative; left:auto; bottom:auto; width:min(100%,23rem); justify-self:end; transform:rotate(1.2deg); }
+  .sum-wrap { justify-self:end; width:min(100%,23rem); } .sum-wrap .sum { width:100%; }
+  /* the age-check line is our note about the card, not something on the app's screen: handwritten beside it, with an arrow to the row */
+  .sum-note { position:relative; margin:1rem 0 0; padding-left:3.5rem; font:600 italic 1.22rem/1.2 var(--display); color:#f3e9d2; transform:rotate(-1.5deg); text-wrap:balance; }
+  .sum-note svg { position:absolute; left:.55rem; top:-1.5rem; width:2.6rem; height:3.1rem; overflow:visible; fill:none; stroke:var(--tomato); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .makegrid { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:clamp(2rem,5vw,4.5rem); align-items:center; margin-top:clamp(2rem,5vh,3.2rem); }
+  .shotwrap { justify-self:center; width:min(100%,21rem); } .shot.big { width:100%; transform:rotate(-2.5deg); }
+  .shot-note { color:var(--ink); margin:1.5rem 0 0 1.2rem; transform:rotate(-2deg); }
+  .mocks { list-style:none; margin:0; padding:0; display:grid; gap:1.4rem; }
+  .mocks li { display:grid; grid-template-columns:minmax(0,15.5rem) minmax(0,1fr); gap:1.4rem; align-items:center; }
+  .mock { background:#12163a; border:1px solid #2c3270; border-radius:1.1rem; padding:1rem 1rem 1.1rem; color:#eef0fb; box-shadow:0 10px 18px rgba(8,12,30,.3); } .mocks li:nth-child(odd) .mock { transform:rotate(-1.2deg); } .mocks li:nth-child(even) .mock { transform:rotate(1deg); }
+  .mk-h { margin:0 0 .8rem; font:600 .64rem/1 var(--text); letter-spacing:.2em; text-transform:uppercase; color:#e8a838; text-align:center; }
+  .avs { display:flex; justify-content:space-between; gap:.4rem; } .avs span { display:grid; justify-items:center; gap:.35rem; font:500 .7rem/1 var(--text); color:#d9dcf0; }
+  .avs i { --S:3.7rem; --W:calc(var(--S) / .245); display:block; width:var(--S); height:var(--S); border-radius:50%; box-shadow:0 0 0 2px #e8a838;
+           background:url(../../public/home-optimized/choose-story-zoomed-out.webp) calc(var(--S) / 2 - var(--W) * var(--cx)) calc(var(--S) / 2 - var(--W) * 1.778 * var(--cy,.283)) / var(--W) auto no-repeat; }
+  .avs span { flex:1; text-align:center; line-height:1.15; } .avs span:not(.on) i { box-shadow:0 0 0 1.5px #3a4188; } .mk-2 { margin-top:1rem; }
+  .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; } .tiles img, .worlds img { display:block; width:100%; height:auto; border-radius:.55rem; }
+  .tiles img { box-shadow:0 0 0 1px #2c3270; } .tiles img.on { box-shadow:0 0 0 2.5px #e8a838; }
+  .worlds { display:grid; grid-template-columns:repeat(4,1fr); gap:.4rem; margin-top:.8rem; } .worlds img.on { filter:drop-shadow(0 0 0 #e8a838) drop-shadow(0 0 3px #e8a838); }
+  .mk-t { margin:0; font:600 1.3rem/1.1 var(--display); color:#f3e9d2; text-align:center; } .mk-s { margin:.2rem 0 0; font:400 .74rem/1.3 var(--text); color:#a9aed0; text-align:center; }
+  .nar { display:flex; align-items:center; gap:.6rem; margin:0; padding:.6rem .7rem; border:1px solid #3a4188; border-radius:.6rem; font:500 .84rem/1 var(--text); color:#d9dcf0; } .nar + .nar { margin-top:.45rem; }
+  .nar i { width:.95rem; height:.95rem; border-radius:50%; border:1.5px solid #6a71b4; flex:none; } .nar.on { border-color:#e8a838; background:#1c2150; color:#fff; } .nar.on i { border-color:#e8a838; background:radial-gradient(#e8a838 0 45%, transparent 50%); }
+  .nar.rec { border-style:dashed; color:#e8a838; } .nar svg { width:1rem; height:1rem; flex:none; }
+  .wave { margin-left:auto; display:flex; align-items:center; gap:2px; height:1.1rem; } .wave b { width:2.5px; border-radius:2px; background:#e8a838; height:40%; } .wave b:nth-child(2) { height:80%; } .wave b:nth-child(3) { height:55%; } .wave b:nth-child(4) { height:100%; } .wave b:nth-child(5) { height:65%; } .wave b:nth-child(6) { height:35%; } .wave b:nth-child(7) { height:70%; }
+  .extras-h { margin-top:clamp(2.4rem,6vh,3.6rem); color:#8a6a4a; } .mocks.extras { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.6rem clamp(1.5rem,4vw,3rem); margin-top:1.2rem; } .mocks.extras { grid-template-rows:auto auto; } .mocks.extras li { grid-row:span 2; grid-template-columns:1fr; grid-template-rows:subgrid; gap:1.1rem; } .mocks.extras .mock { width:min(100%,21rem); align-self:center; }
+  .mocks.extras .cap { grid-template-columns:1.6rem minmax(0,1fr); } .mocks.extras .cap b { font:600 1.5rem/1.1 var(--display); letter-spacing:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center; } .chips span { font:500 .74rem/1 var(--text); padding:.5rem .7rem; border:1px solid #4a5196; border-radius:999px; color:#cfd2e6; }
+  .chips span.on { background:#e8a838; border-color:#e8a838; color:#12163a; font-weight:600; }
+  .field { margin:0 0 .8rem; padding:.7rem .8rem; background:#1c2150; border:1px solid #3a4188; border-radius:.6rem; font:400 .84rem/1.35 var(--text); color:#eef0fb; } .field i { display:inline-block; width:1.5px; height:1em; margin-left:2px; background:#e8a838; vertical-align:-.12em; animation:caret 1s steps(1) infinite; }
+  @keyframes caret { 50% { opacity:0; } }
+  .acts { display:flex; gap:.5rem; } .acts span { flex:1; display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.55rem .4rem; border:1px solid #4a5196; border-radius:.6rem; font:600 .7rem/1 var(--text); color:#eef0fb; white-space:nowrap; }
+  .acts svg { width:.95rem; height:.95rem; } .acts span.gold { background:#e8a838; border-color:#e8a838; color:#12163a; }
+  .cap { display:grid; grid-template-columns:2.4rem minmax(0,1fr); } .cap b { grid-row:1 / 3; font:400 .9rem/1.9 var(--tag); letter-spacing:.14em; color:var(--tomato); }
+  .cap h3 { font:600 1.5rem/1.1 var(--display); } .cap p { font:400 1rem/1.5 var(--text); color:#4d5167; margin-top:.3rem; }
+  #make .notes { grid-template-columns:repeat(2,minmax(0,1fr)); font-size:1rem; margin-top:clamp(2rem,5vh,3rem); }
+  .devgrid { list-style:none; margin:clamp(2rem,5vh,3.2rem) 0 0; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); }
+  .devgrid li { background:var(--cream) var(--paint) center/cover; padding:1.5rem 1.3rem 1.4rem; box-shadow:0 4px 0 rgba(60,40,20,.2); } .devgrid li:nth-child(odd) { transform:rotate(-.6deg); } .devgrid li:nth-child(even) { transform:rotate(.5deg); }
+  .devgrid img { display:block; height:6.5rem; width:auto; max-width:100%; object-fit:contain; margin-bottom:1rem; filter:drop-shadow(0 4px 3px rgba(60,40,20,.3)); } .devgrid img.wide { height:auto; width:100%; max-height:6.5rem; object-position:left; }
+  .devgrid h3 { font:600 1.45rem/1.1 var(--display); } .devgrid h3 em { font:400 .62rem/1 var(--tag); font-style:normal; letter-spacing:.12em; text-transform:uppercase; color:var(--cream); background:var(--tomato); padding:.3rem .45rem .22rem; margin-left:.4rem; vertical-align:.25em; white-space:nowrap; }
+  .devgrid p { font:400 .98rem/1.5 var(--text); color:#4d5167; margin-top:.4rem; }
+  @media (max-width:760px) {
+    .makegrid { grid-template-columns:1fr; } .shotwrap { width:min(74%,17rem); } .mocks li, .mocks.extras li { grid-template-columns:1fr; gap:.9rem; } .mocks.extras { grid-template-columns:1fr; } .mock { max-width:19rem; } #make .notes { grid-template-columns:1fr; }
+    .devgrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; } .devgrid li { padding:1.1rem .9rem 1rem; } .devgrid li:nth-child(n) { transform:none; } .devgrid img { height:4.6rem; } .devgrid img.wide { max-height:4.6rem; } .devgrid h3 { font-size:1.2rem; } .devgrid p { font-size:.9rem; }
+    .review .slip-wrap { margin:0 .4rem 2.6rem; } .sum-wrap { justify-self:stretch; width:auto; }
+  }
+  @media (prefers-reduced-motion:reduce) { .field i { animation:none; } }
+
+  /* header links, on the valance either side of the wordmark */
+  .nav-l, .nav-r { position:absolute; z-index:2; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
+  .nav-l { left:clamp(.9rem,3vw,2.2rem); } .nav-r { right:clamp(.9rem,3vw,2.2rem); }
+  .nav-l a { color:#efe4cf; font:500 .76rem/1 "Jost",system-ui,sans-serif; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; padding:.7rem 0; }
+  .nav-l a:hover { text-decoration:underline; text-underline-offset:.35em; }
+  .nav-r a { background:#efe4cf; color:#1f2a55; font:600 .72rem/1 "Jost",system-ui,sans-serif; letter-spacing:.16em; text-transform:uppercase; text-decoration:none; padding:.68rem .95rem; border-radius:2px; }
+  .nav-l a:focus-visible, .nav-r a:focus-visible { outline:2px solid #f2c14e; outline-offset:3px; }
+  @media (max-width:760px) {
+    .nav-l { left:.7rem; gap:.85rem; } .nav-l a { font-size:.62rem; letter-spacing:.12em; }
+    .nav-r { right:.6rem; } .nav-r a { font-size:.58rem; letter-spacing:.08em; padding:.55rem .55rem; }
+  }
+  /* Lithographed card frame and two folded-paper leaves on the original scroll tracks. */
+  .valance {
+    position:relative;
+    height:clamp(58px,10vh,92px);
+    background:
+      url(assets-toy-theatre/frieze.svg) left clamp(10rem,19vw,24rem) center / clamp(6rem,15vw,13rem) auto no-repeat,
+      url(assets-toy-theatre/frieze.svg) right clamp(10rem,19vw,24rem) center / clamp(6rem,15vw,13rem) auto no-repeat,
+      repeating-linear-gradient(126deg,transparent 0 3px,#ba88660e 3px 4px),
+      linear-gradient(to bottom,#2f2335 0 6px,#c59160 6px 8px,#483446 8px calc(100% - 9px),#c99866 calc(100% - 9px) calc(100% - 7px),#2f2335 calc(100% - 7px) calc(100% - 4px),#e0ba84 calc(100% - 4px));
+    background-blend-mode:normal;
+    -webkit-mask:none;
+    mask:none;
+    clip-path:polygon(0 0,100% 0,100% 100%,86% 98%,66% 100%,49% 98%,29% 100%,14% 98%,0 100%);
+  }
+  .topwrap { filter:drop-shadow(0 4px 2px #2b1e3070); }
+  #heroStage::before,#heroStage::after {
+    content:"";
+    position:absolute;
+    z-index:9;
+    inset:0 auto 0 0;
+    width:clamp(24px,4.35vw,62px);
+    background:url(assets-toy-theatre/pilaster.svg) 0 0 / 100% 100% no-repeat;
+    filter:drop-shadow(2px 2px 2px #2b1e3060);
+    pointer-events:none;
+  }
+  #heroStage::after { left:auto; right:0; transform:scaleX(-1); }
+  .house {
+    background:#81343c;
+    box-shadow:0 0 17px #321b2d65;
+  }
+  .house::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url(assets-toy-theatre/paper-folds.svg) right center / clamp(4.5rem,13vw,13rem) 100% repeat-x;
+  }
+  .house.r::before { transform:scaleX(-1); }
+  .house::after {
+    content:"";
+    position:absolute;
+    inset:0 0 0 auto;
+    width:4px;
+    background:linear-gradient(90deg,#e4b38340,#e3b390a0 50%,#402336a0 55%,#40233675);
+  }
+  .house.r::after { inset:0 auto 0 0; transform:scaleX(-1); }
+  @media (max-width:760px) {
+    .valance {
+      background-position:left .1rem bottom 1px,right .1rem bottom 1px,center,center;
+      background-size:clamp(3.5rem,19vw,7rem) auto,clamp(3.5rem,19vw,7rem) auto,auto,auto;
+    }
+    #heroStage::before,#heroStage::after { width:clamp(13px,4.3vw,27px); }
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="handcut" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+
+<!-- header: fixed for the whole page -->
+<div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
+      <a class="wordmark" href="#"><img src="../../public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
+      <div class="nav-l"><a href="../../blog.html">Blog</a><a href="../../faq.html">FAQ</a></div><div class="nav-r"><a href="../../download.html">Get the App</a></div>
+</div>
+
+<!-- 1. THE STORY IS CAST -->
+<section class="act" id="hero">
+  <div class="stage" id="heroStage">
+    <div class="hero-copy" id="copy">
+      <h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
+      <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
+      <span class="ln"><a class="cta" href="../../download.html">Try the Namesake Beta</a></span>
+    </div>
+    <div class="inv-head a"><p class="caps">Tonight&rsquo;s story</p><h2>First, the cast.</h2></div>
+    <div class="inv-head b"><p class="caps">Made in about a minute</p><h2>Then we craft the story and a cover.</h2></div>
+
+    <div class="scene" id="scene" style="--cx:79%; --cxm:74%;">
+      <div class="scn birchrow b2"><img src="assets-v3/birchrow.webp" alt=""></div><div class="scn birchrow"><img src="assets-v3/birchrow.webp" alt=""></div><div class="scn birchrow b3"><img src="assets-v3/birchrow.webp" alt=""></div>
+      <div class="scn birch m" style="--x:88%; --xm:74%"><img src="assets-v3/birch.webp" alt=""></div>
+      <div class="scn cottage" style="--x:80%; --xm:56%"><img src="assets-v3/cottage.webp" alt=""></div>
+      <div class="scn grass"><img src="assets-v3/grass.webp" alt=""></div>
+      <div class="scn mush a"><img src="assets-v3/mushrooms.webp" alt=""></div><div class="scn mush b" style="--x:80%; --xm:56%"><img src="assets-v3/mushrooms.webp" alt=""></div>
+
+      <div class="fig" data-name="Rose" style="--x:22%; --xm:20%; --h:25vh; --hm:23vh; --tx:22px; --td:-5.4rem"><img src="assets-v3/rose.webp" alt="Paper figure of Rose in striped pyjamas"><div class="tagwrap"><div class="tagcard"><span data-t="The hero|Rose, aged 5. In her pyjamas, obviously."></span></div></div></div>
+      <div class="fig" data-name="Shosh" style="--x:30%; --xm:33%; --h:13vh; --hm:12vh; --b:11vh; --td:1.2rem"><img src="assets-v3/fox.webp" alt="Shosh, a plush toy fox with stitched eyes"><div class="tagwrap"><div class="tagcard"><span data-t="Her cuddly fox|Shosh. Always by her side."></span></div></div></div>
+      <div class="fig" data-name="Daddy" style="--x:42%; --xm:47%; --h:33vh; --hm:30vh; --lift:1.2rem"><img src="assets-v3/daddy.webp" alt="Paper figure of Daddy in odd socks"><div class="tagwrap"><div class="tagcard"><span data-t="The sidekick|Daddy. Curly hair, odd socks. Brave-ish."></span></div></div></div>
+      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:62%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:6vh"><img src="assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The plot|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
+      <div class="fig pot" style="--x:62%; --xm:83%; --h:15vh; --hm:12vh; --b:13vh; --bm:9.5vh"><img src="assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
+      <div class="fig" data-name="Bad Man Matt" style="--x:69%; --xm:81%; --h:34vh; --hm:31vh; --b:14vh; --bm:15vh; --lift:.4rem; --tx:-34px"><img src="assets-v3/matt.webp" alt="Paper figure of a tired villain in a doctor's coat smeared with pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|Bad Man Matt. Exceptionally greedy."></span></div></div></div>
+      <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:9%; --h:13vh; --hm:9.5vh; --b:11vh; --bm:1.2vh; --tx:26px"><img class="happy" src="assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
+      <div class="scn birch l"><img src="assets-v3/birch.webp" alt=""></div><div class="scn birch r"><img src="assets-v3/birch.webp" alt=""></div>
+    </div>
+
+    <div class="magic" id="magic" aria-hidden="true"><i class="halo" id="halo"></i>
+      <span class="wsp">Once upon a time&hellip;</span><span class="wsp">a stolen supper</span><span class="wsp">Rose had a plan.</span><span class="wsp">&ldquo;Not the pesto!&rdquo;</span>
+      <span class="wsp">a brave-ish daddy</span><span class="wsp">one enormous spoon</span><span class="wsp">Shosh kept watch.</span><span class="wsp">The End.</span>
+    </div>
+    <div class="burst" id="burst" aria-hidden="true"><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""><img src="assets-v3/star.webp" alt=""></div>
+    <div class="book" id="book" aria-hidden="true">
+      <div class="book-in" id="bookIn">
+        <div class="b-edge" aria-hidden="true"></div><div class="b-spine" aria-hidden="true"></div>
+        <div class="face front"><img class="b-mark" src="../../public/namesake-wordmark.webp" alt="Namesake"><div class="plate"><i>starring</i><strong id="names"></strong></div><p class="caps b-foot">A bedtime story</p></div>
+        <div class="face back"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt=""></div>
+      </div>
+    </div>
+    <!-- callouts on the finished cover: labels beside the book, curved arrows drawn to the spot each one is about -->
+    <div class="callouts" id="callouts" aria-hidden="true">
+      <svg id="coSvg"><defs><marker id="coHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#c8452c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/></svg>
+      <p class="co" data-k="name">Her name in the title</p>
+      <p class="co" data-k="baddy">A baddy she made up</p>
+      <p class="co" data-k="fox">Her fox at her side</p>
+      <p class="co" data-k="face">Her face on the cover</p>
+    </div>
+    <div class="inv-foot" id="invFoot">
+      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where Bad Man Matt is stirring one enormous pot and planning to eat the lot for dessert. Rose has a plan, and it starts with making a baddy wash his hands.</p>
+      <button class="play" id="listen" type="button" aria-label="Play the story Rose and the Stolen Supper Spell, read aloud, five minutes">
+        <span class="pi" aria-hidden="true"></span><span class="pt"><b id="listenLabel">Play this story</b><small>Read aloud &middot; 5:05</small></span>
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      </button>
+      <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story, shared with permission.</small>
+      <audio id="audio" preload="none" src="../../public/stories/rose-stolen-supper-spell.mp3"></audio>
+    </div>
+
+    <div class="house l" aria-hidden="true"></div><div class="house r" aria-hidden="true"></div>
+    <div class="onc l" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
+      <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
+      <span class="ln"><a class="cta" href="../../download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div><div class="onc r" aria-hidden="true"><div class="hero-copy"><h1><span class="ln">Audio stories</span> <span class="ln">where <em>they&rsquo;re</em> the hero.</span></h1>
+      <p class="ln">Bedtime stories about your child and the people they love. Their faces on the cover. You approve each one. They listen after lights out.</p>
+      <span class="ln"><a class="cta" href="../../download.html" tabindex="-1">Try the Namesake Beta</a></span></div></div>
+    <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<i></i><i></i></p>
+  </div>
+</section>
+
+<!-- 9. THE LIBRARY, THEN LIGHTS OUT -->
+<section class="act" id="curtain">
+  <div class="stage" id="libStage">
+    <div class="lib-head a"><p class="caps">Night after night</p><h2>Each new adventure finds a home on their shelf.</h2></div>
+    <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
+    <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
+      <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
+      <div class="cgrid"><div class="bk"><img src="assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="../../public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="../../public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
+    </div>
+    <div class="night" id="night"></div>
+    <div class="bedtime" id="bedtime"><img src="assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="assets-v3/cattail2.webp" alt=""></div>
+    <div class="devs" id="spk">
+      <div class="dev"><b></b><b></b><b></b><img src="assets-v3/dev-player.webp" alt=""><span>Yoto</span></div>
+      <div class="dev"><b></b><b></b><b></b><img src="assets-v3/dev-speaker.webp" alt=""><span>Alexa</span></div>
+      <div class="dev"><b></b><b></b><b></b><img src="assets-v3/dev-nest.webp" alt=""><span>Google Nest</span></div>
+      <div class="dev ph"><b></b><b></b><b></b><img src="assets-v3/dev-phone-off.webp" alt=""><span>Phone, screen off</span></div>
+    </div>
+    <button class="now" id="now" type="button" aria-label="Tonight's queue: four stories, about fifteen minutes. Play or pause the first story, Rose and the Stolen Supper Spell">
+      <span class="caps">Tonight&rsquo;s queue &middot; 4 stories &middot; about 15 minutes</span>
+      <span class="q"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt=""><img src="assets-v3/shelf-runaway-pumpkin.webp" alt=""><img src="assets-v3/shelf-over-the-top-swing.webp" alt=""><img src="assets-v3/shelf-toy-grabber.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
+      <strong>1. Rose and the Stolen Supper Spell</strong><small id="nowHint">Tap to hear it</small>
+    </button>
+    <p class="more caps" id="more" aria-hidden="true">And here is how it works<i></i></p>
+    <div class="drape l" aria-hidden="true"></div><div class="drape r" aria-hidden="true"></div>
+    <div class="final" id="final">
+      <h2>A library of stories, starring them.</h2>
+      <p>You make each one in about a minute. They listen as they drift off to sleep, night after night.</p>
+      <a class="cta" href="../../download.html">Try the Namesake Beta</a>
+      <small>Demo only. The full page also has the audio player, the red pencil, lights out, and the calmer sections below (how you make one, how a story is built, languages, listening).</small>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== THE REST OF THE PAGE: calm sections, wording carried from the current site ===== -->
+<section class="low dark" id="charge"><div class="low-in two">
+  <div>
+    <p class="caps">Made for parents</p>
+    <h2>You&rsquo;re in charge.</h2>
+    <p class="lede">Every story comes to you first. Before you read a word, Namesake tells you the scary bit, if there is one, what happens to the villain and how it ends. Change anything you don&rsquo;t like, then approve it, or don&rsquo;t.</p>
+    <ul class="ticks"><li>You approve every story before they hear it.</li><li>No surprises, no autoplay, no ads.</li><li>One story or a queue of favourites. It plays what you chose, then stops.</li></ul>
+  </div>
+  <div class="review watch">
+    <div class="slip-wrap"><p class="slip">Bad Man Matt tiptoed into the kitchen with <s>a very sharp fork</s> <ins>one enormous spoon</ins> and a sack for the pesto. &ldquo;Mine,&rdquo; he whispered. &ldquo;All mine.&rdquo;</p><img src="assets-v3/redpencil.webp" alt="" loading="lazy"></div>
+    <div class="sum-wrap"><div class="sum" role="group" aria-label="What Namesake shows you before you approve">
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>Bad Man Matt tries to steal Rose&rsquo;s food</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span>Ends: <b>Calm</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
+    </div>
+    <p class="sum-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>We run a second, separate check that every story suits your child&rsquo;s age.</p></div>
+  </div>
+</div></section>
+
+<section class="low" id="make"><div class="low-in">
+  <p class="caps">Made together, before bedtime</p>
+  <h2>How you make one.</h2>
+  <p class="lede">Three quick choices make the story unmistakably theirs. Namesake already knows their name, age, interests and who lives in their world, so it takes a moment, not a questionnaire.</p>
+  <div class="makegrid">
+    <div class="shotwrap"><img class="shot big" src="../../public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen: A new story for Rose, with rows for who is in it, a little mischief and their world" loading="lazy"><p class="sum-note shot-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>More than one child? Give each their own profile, or put two heroes in one story.</p></div>
+    <ol class="mocks">
+      <li><div class="mock" aria-hidden="true"><p class="mk-h">Choose who&rsquo;s in it</p><div class="avs"><span class="on"><i style="--cx:.257"></i>Rose</span><span><i style="--cx:.5"></i>Mr Bitey</span><span class="on"><i style="--cx:.738"></i>Shosh</span></div>
+            <p class="mk-h mk-2">A little mischief</p><div class="avs"><span class="on"><i style="--cx:.249;--cy:.524"></i>Bad Man Matt</span><span><i style="--cx:.5;--cy:.524"></i>Big Bad Wolf</span><span><i style="--cx:.745;--cy:.524"></i>Medium Bad Mungo</span></div></div>
+          <div class="cap"><b>01</b><h3>Who&rsquo;s in it</h3><p>Their favourite people, pets and toys, and a baddy if they like a little mischief. Mummy or Daddy, bunny or bear, and a villain of their own invention.</p></div></li>
+      <li><div class="mock" aria-hidden="true"><p class="mk-h">The theme or mood</p><div class="tiles"><img class="on" src="assets-v3/mood-magical.webp" alt="Magical" loading="lazy"><img src="assets-v3/mood-silly.webp" alt="Funny" loading="lazy"><img src="assets-v3/mood-quest.webp" alt="Quest" loading="lazy"><img src="assets-v3/mood-fairy-tale.webp" alt="Fairy Tale" loading="lazy"><img src="assets-v3/mood-pirates.webp" alt="Pirates" loading="lazy"><img src="assets-v3/mood-dinosaurs.webp" alt="Dinosaurs" loading="lazy"></div></div>
+          <div class="cap"><b>02</b><h3>The theme or mood</h3><p>Magical, funny, a quest, pirates, dinosaurs. Tap a picture, or add a theme of your own.</p></div></li>
+      <li><div class="mock" aria-hidden="true"><p class="mk-h">Any idea for tonight?</p><p class="field">All the pasta pesto has been stolen<i></i></p><div class="acts"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Say it aloud</span><span class="gold"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z" fill="#12163a"/></svg>Inspire me</span></div></div>
+          <div class="cap"><b>03</b><h3>A specific idea</h3><p>Type it, let them say it out loud, or tap Inspire me and Namesake will suggest one.</p></div></li>
+    </ol>
+  </div>
+  <p class="caps extras-h">And if you like</p>
+  <ul class="mocks extras">
+    <li><div class="mock" aria-hidden="true"><p class="mk-t">Choose a classic tale</p><p class="mk-s">Set the story in a world you already know</p><div class="worlds"><img class="on" src="assets-v3/world-peter-pan.webp" alt="Peter Pan" loading="lazy"><img src="assets-v3/world-alice-in-wonderland.webp" alt="Alice in Wonderland" loading="lazy"><img src="assets-v3/world-the-jungle-book.webp" alt="The Jungle Book" loading="lazy"><img src="assets-v3/world-the-wind-in-the-willows.webp" alt="The Wind in the Willows" loading="lazy"></div></div>
+        <div class="cap"><b>+</b><h3>Set it in a classic world</h3><p>Peter Pan, Alice in Wonderland, The Jungle Book and more. Their own adventure, in a world you already know.</p></div></li>
+    <li><div class="mock" aria-hidden="true"><p class="mk-h">Narrator</p><div class="chips"><span>Default</span><span class="on">Female</span><span>Male</span></div>
+          <p class="mk-h mk-2">Accent</p><div class="chips"><span class="on">British</span><span>American</span><span>Irish</span><span>Australian</span><span>Indian</span></div>
+          <p class="mk-h mk-2">Your voices</p><p class="nar rec"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Record a voice</p></div>
+        <div class="cap"><b>+</b><h3>Narrated in a voice you choose</h3><p>A natural voice of your choice: male or female, British, American, Irish, Australian or Indian. Or even your own, from a small sample.</p></div></li>
+  </ul>
+</div></section>
+
+<section class="low dark" id="languages"><div class="low-in two">
+  <div>
+    <p class="caps">Made for home languages</p>
+    <h2>Their adventure, in the language they know best.</h2>
+    <p class="lede">Every new story can be created in the language they hear at home, with narration and vocabulary made for them.</p>
+    <div class="langs" id="langs" role="group" aria-label="Choose a language to see a sample line"></div>
+  </div>
+  <div class="lang-show" aria-live="polite"><img id="langCover" src="../../public/covers/cover-fr-lanterne.webp" alt="" loading="lazy"><div><q id="langLine"></q><small id="langTitle"></small></div></div>
+</div></section>
+
+<section class="low" id="devices"><div class="low-in">
+  <p class="caps">Screen stays off</p>
+  <h2>Plays wherever bedtime happens.</h2>
+  <p class="lede">Choose tonight&rsquo;s stories on your phone, then put it down. Namesake plays through the speaker they already have, at home or on the way there.</p>
+  <ul class="devgrid">
+    <li><img src="assets-v3/dev-phone-off.webp" alt="" loading="lazy"><h3>Your phone, screen off</h3><p>Lock it and turn it face down. The queue keeps playing, then stops.</p></li>
+    <li><img src="assets-v3/dev-player.webp" alt="" loading="lazy"><h3>Yoto</h3><p>Their stories on the player they already love.</p></li>
+    <li><img src="assets-v3/dev-speaker.webp" alt="" loading="lazy"><h3>Alexa</h3><p>Ask Alexa for tonight&rsquo;s story.</p></li>
+    <li><img src="assets-v3/dev-nest.webp" alt="" loading="lazy"><h3>Google Cast</h3><p>Send it to a Nest or any Cast speaker.</p></li>
+    <li><img src="assets-v3/dev-box.webp" alt="" loading="lazy"><h3>Tonies <em>Coming soon</em></h3><p>Their stories on a Creative Tonie.</p></li>
+    <li><img class="wide" src="assets-v3/dev-car.webp" alt="" loading="lazy"><h3>In the car</h3><p>Android Auto and Apple CarPlay. An alternative to a screen in the headrest, or the same album for the fortieth time.</p></li>
+  </ul>
+</div></section>
+
+<section class="low tint" id="craft"><div class="low-in">
+  <p class="caps">Rules the AI can&rsquo;t break</p>
+  <h2>How a Namesake story is built.</h2>
+  <p class="lede">Every story is built to a written specification, shaped to a child of exactly their age: easy enough to follow, surprising enough to be worth hearing twice.</p>
+  <div class="rules">
+    <div><h3>You set the brief.</h3><p>Choose the theme and the characters, and add the idea itself if they have given you one. A narwhal who is also a firefighter, for instance. And unicorns. Always unicorns.</p></div>
+    <div><h3>Nine story shapes.</h3><p>Every story is built on one of nine named shapes, from a quiet wander to a small quest, with a gentler set kept for two to five year olds.</p></div>
+    <div><h3>How much goes wrong is a choice.</h3><p>Every story needs something to go a little wrong. How much, and how frightening, is set by age, and for the under-threes it is turned right down.</p></div>
+    <div><h3>It resolves before it ends.</h3><p>The ending has to settle the story&rsquo;s central problem before the final beat. No cliffhangers at bedtime.</p></div>
+    <div><h3>Vocabulary and pacing by age.</h3><p>Sentence length and word choice shift by age band, rather than one reading level for everyone.</p></div>
+    <div><h3>Villains stay silly.</h3><p>If a young child&rsquo;s story has a villain at all, they are bumbling rather than frightening.</p></div>
+    <div><h3>Finished before it plays.</h3><p>The story is written and finished in advance, never generated live while they listen. Nothing changes once you have approved it.</p></div>
+  </div>
+</div></section>
+
+
+<section class="low center" id="hear"><div class="low-in">
+  <p class="caps">A little of their world</p>
+  <h2>Hear one of their adventures.</h2>
+  <p class="lede">Real stories made with Namesake, shared with their creators&rsquo; permission. Choose a book to play it.</p>
+  <div class="tracks" id="tracks">
+    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="../../public/stories/rose-stolen-supper-spell.mp3"><span class="bko"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:05</small></span></span></button>
+    <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="../../public/stories/santosh-3-racing-tiger.mp3"><span class="bko"><img src="../../public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
+    <button class="track" type="button" data-id="rose-pencil-draws-real-things" data-src="../../public/stories/rose-pencil-draws-real-things.mp3"><span class="bko"><img src="../../public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
+  </div>
+  <div class="readalong" id="readalong" hidden>
+    <p class="caps"><span id="raTitle"></span> &middot; read along</p>
+    <div class="ra-box" id="raBox" aria-live="off"></div>
+  </div>
+  <audio id="audio2" preload="none"></audio>
+</div></section>
+
+<section class="low end" id="end"><div class="low-in">
+  <p class="caps" style="color:#f0c9c0">Small preview, real families</p>
+  <h2>Make their first story tonight.</h2>
+  <p class="lede">We&rsquo;re inviting a small group of families to help shape Namesake before launch.</p>
+  <a class="cta" href="../../download.html">Get the App</a>
+  <div class="foot"><a href="../../blog.html">Blog</a><a href="../../faq.html">FAQ</a><a href="../../compare/index.html">Compare</a><a href="../../privacy.html">Privacy</a><a href="../../terms.html">Terms</a><a href="../../delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></div>
+</div></section>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v){ return v < 0 ? 0 : v > 1 ? 1 : v; };
+  var seg = function(p,a,b){ return clamp((p - a) / (b - a)); };          // progress of p inside [a,b]
+  var ease = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; };
+  var out = function(t){ return 1 - Math.pow(1 - t, 3); };
+  function prog(el){ var r = el.getBoundingClientRect(), travel = r.height - innerHeight; return travel > 4 ? clamp(-r.top / travel) : 0; }
+
+  /* ----- the story is cast -----
+     SCROLL drives all of it. In order: the house curtains part; the headline lifts away; the forest builds; the
+     cast arrive one at a time, each with a typed tag; the scene folds into the book; the book turns over to the
+     real cover. Time only adds idle life (curtain sway, headline rise on load). */
+  var back = function(t){ var c = 1.9; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };   // overshoot
+  var hero = document.getElementById('hero'), stage = document.getElementById('heroStage'), scene = document.getElementById('scene'),
+      copy = document.getElementById('copy'), lines = [].slice.call(hero.querySelectorAll('.ln')), cue = document.getElementById('cue'), onc = [].slice.call(hero.querySelectorAll('.onc')),
+      hl = hero.querySelector('.house.l'), hr = hero.querySelector('.house.r'),
+      Q = function(q){ return scene.querySelector(q); }, QA = function(q){ return [].slice.call(scene.querySelectorAll(q)); },
+      grass = Q('.grass'), rows = QA('.birchrow'), cottage = Q('.cottage'), birchL = Q('.birch.l'), birchR = Q('.birch.r'), birchM = Q('.birch.m'), mush = QA('.mush'),
+      figs = QA('.fig'), book = document.getElementById('book'), bookIn = document.getElementById('bookIn'), names = document.getElementById('names'),
+      headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot'), coBox = document.getElementById('callouts'), cos = [].slice.call(coBox.querySelectorAll('.co')), coArrows = [].slice.call(coBox.querySelectorAll('.co-arrow'));
+  var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
+  // when each member of the cast arrives (act progress), in scene order: Rose, Shosh, Daddy, the trouble, the pot, Matt, the badger
+  var ATd = [.25, .30, .36, .43, .49, .52, .585], ATm = [.25, .31, .37, .43, .47, .50, .57], AT = ATd;   // phones: spaced so each tag finishes typing before the next arrives
+  var halo = document.getElementById('halo'), magicEl = document.getElementById('magic'), burstEl = document.getElementById('burst'), wsps = [].slice.call(hero.querySelectorAll('.wsp')), bstars = [].slice.call(burstEl.querySelectorAll('img'));
+  var cast = figs.filter(function(f){ return f.dataset.name; });
+  cast.forEach(function(f, k){ var sp = document.createElement('span'); sp.textContent = (k === cast.length - 1 ? 'and ' : '') + f.dataset.name + (k < cast.length - 1 ? ', ' : ''); names.appendChild(sp); f._name = sp; });
+  figs.forEach(function(f, k){ f._tag = f.querySelector('.tagwrap'); var cn = f.dataset.chip || f.dataset.name; if (cn) { f._chip = document.createElement('span'); f._chip.className = 'chip'; f._chip.textContent = cn; f.appendChild(f._chip); } var sp = f.querySelector('[data-t]');
+    if (sp) { var parts = sp.dataset.t.split('|'); f._label = parts[0]; f._text = parts[1]; f._span = sp; f._shown = -1; f._who = f.querySelector('.who'); } });
+  var home = [];
+  function castGeo(){ figs.forEach(function(f){ f.style.transform = ''; }); var W = stage.offsetWidth, H = stage.offsetHeight;
+    home = figs.map(function(f){ return { dx: W / 2 - f.offsetLeft, dy: H * .56 - (f.offsetTop + f.offsetHeight / 2) }; }); }
+  function typeTag(f, t){ var n = Math.round(t * f._text.length); if (n === f._shown) return; f._shown = n;
+    f._span.innerHTML = t > 0 ? '<b>' + f._label + '</b>' + f._text.slice(0, n) : ''; if (f._who) f._who.classList.toggle('on', t >= 1); }
+  function arr(t, at, dur){ return clamp((t - at) / dur); }
+  lines.forEach(function(l){ l._i = [].indexOf.call(l.closest('.hero-copy').querySelectorAll('.ln'), l); });
+  var START = window.NS_START || 0;   // variant B's full page starts this act part-way through (at the book)
+  function castFrame(now){
+    var t = (now - T0) / 1000, p = reduced ? 1 : START + (1 - START) * prog(hero), W = stage.offsetWidth, H = stage.offsetHeight, k, i, wide = !narrow.matches;
+    if (!(t > 0)) t = 0;
+    var P = function(x, y){ return seg(p, x, y); };
+    AT = wide ? ATd : ATm;
+
+    // 0 to .1: house curtains part; the headline stays put and changes colour exactly at the curtain edge
+    var open = ease(P(0, .1)), th = Math.sin(open * Math.PI) * 3 * Math.min(1, W / H * .8), tan = Math.tan(th * Math.PI / 180) * H, xl = (.51 - open * 1.03 * .51) * W, xr = W - xl;
+    hl.style.transform = 'translate3d(' + (-open * 103) + '%,0,0) skewX(' + th + 'deg)';
+    hr.style.transform = 'translate3d(' + (open * 103) + '%,0,0) skewX(' + (-th) + 'deg)';
+    onc[0].style.clipPath = 'polygon(0 0,' + xl + 'px 0,' + (xl + tan) + 'px ' + H + 'px,0 ' + H + 'px)';
+    onc[1].style.clipPath = 'polygon(' + xr + 'px 0,' + W + 'px 0,' + W + 'px ' + H + 'px,' + (xr - tan) + 'px ' + H + 'px)';
+    cue.style.opacity = 1 - P(0, .025);
+
+    // headline: lines rise once on load (time), then the whole block lifts away for good as the forest arrives
+    for (i = 0; i < lines.length; i++) { k = reduced ? 1 : out(arr(t, .15 + lines[i]._i * .14, .7)); lines[i].style.opacity = k; lines[i].style.transform = 'translate3d(0,' + ((1 - k) * 26) + 'px,0)'; }
+    var gone = P(.17, .23); copy.style.opacity = 1 - gone; copy.style.transform = 'translateX(-50%) translateY(' + (-ease(gone) * 60) + 'px)'; copy.style.pointerEvents = gone > .5 ? 'none' : 'auto';
+    headA.style.opacity = P(.23, .27) * (1 - P(.74, .78)); headB.style.opacity = P(.83, .87) * (1 - P(.925, .955));
+
+    // .11 to .26: the forest builds, back to front; .7 onward it clears for the book
+    var clear = ease(P(.75, .86)), px = function(d){ return mx * d * -14; };
+    k = out(P(.11, .18)); grass.style.transform = 'translate3d(' + px(1) + 'px,' + ((1 - k) * 46 + clear * 50) + 'vh,0)';
+    rows.forEach(function(r, n){ k = out(P(.12 + n * .012, .2 + n * .012)); r.style.transform = 'translate3d(' + px(.2) + 'px,' + ((1 - k) * 70 + clear * 90) + 'vh,0)'; });
+    k = back(P(.15, .24)); cottage.style.transform = 'translate3d(calc(-50% + ' + px(.5) + 'px),' + (clear * 80) + 'vh,0) scale(' + (.01 + k * .99) + ') rotate(' + ((1 - k) * 7 + (reduced ? 0 : Math.sin(t * .6) * .25)) + 'deg)';
+    k = out(P(.14, .22)); birchM.style.transform = 'translate3d(' + px(.4) + 'px,' + ((1 - k) * 90 + clear * 100) + 'vh,0)';
+    k = out(P(.13, .22)); birchL.style.transform = 'translate3d(calc(' + ((1 - k) * -40 - clear * 50) + 'vw + ' + px(1.3) + 'px),0,0)';
+    k = out(P(.15, .24)); birchR.style.transform = 'translate3d(calc(' + ((1 - k) * 40 + clear * 50) + 'vw + ' + px(1.3) + 'px),0,0)';
+    mush.forEach(function(m, n){ k = back(P(.21 + n * .02, .26 + n * .02)) * (1 - clear); m.style.transform = 'translate3d(' + (n ? '-50%' : '0') + ',0,0) scale(' + Math.max(k, 0) + ')'; });
+
+    // the cast: each hops in, its tag types itself, and at the end everyone but the badger folds into the book
+    var bump = 0;
+    figs.forEach(function(f, n){
+      var a = AT[n], inn = back(P(a, a + .045)), vis = P(a, a + .012), extra = f.classList.contains('extra'), g = extra ? 0 : ease(P(.75 + n * .011, .82 + n * .011)), h = home[n] || { dx:0, dy:0 };
+      var gone = 1 - P(.73, .76), swap = 0;
+      if (f._span) { typeTag(f, wide ? P(a + .03, a + .075) : P(a + .012, a + .045));
+        var nxt = AT[n + 1] === undefined ? .76 : (n === 3 ? AT[5] : AT[n + 1]);            // phone: one tag at a time
+        swap = wide ? 0 : P(nxt - .005, nxt + .01);
+        f._tag.style.opacity = (wide ? P(a + .02, a + .035) : P(a + .006, a + .016)) * gone * (1 - swap); }
+      if (f._chip) f._chip.style.opacity = swap * gone;
+      if (extra) { var glum = P(.855, .875); f.classList.toggle('sad', p > .86); f.style.opacity = vis * (1 - P(.888, .908)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
+      f.style.opacity = vis * (g < .93 ? 1 : 0);
+      f.style.transform = 'translate3d(' + (h.dx * g + px(1) * (1 - g)) + 'px,calc(' + (h.dy * g) + 'px + ' + ((1 - inn) * 20 - Math.sin(g * Math.PI) * 16) + 'vh),0) scale(' + (1 - g * .62) + ') rotate(' + ((1 - Math.min(inn, 1)) * (n % 2 ? 7 : -7) + g * (n % 2 ? 200 : -200)) + 'deg)';
+      if (!extra) bump += Math.sin(seg(g, .8, 1) * Math.PI);
+      if (f._name) f._name.classList.toggle('on', g > .9);
+    });
+
+    // the book rises, then turns over to the real cover; on desktop it grows and the words sit beside it
+    var rise = back(P(.745, .8)), flip = ease(P(.925, .975)), mg = P(.865, .925), brew = Math.sin(mg * Math.PI);
+    book.style.opacity = clamp(P(.745, .765));
+    var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 17);
+    // once the turn is done and the book is enlarged, it is laid out at that size instead of being a stretched small copy, so the cover stays sharp
+    var bsc = .7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1), big = flip >= 1 && bsc > 1;
+    if (big) { book.style.setProperty('--bwd', 'calc(clamp(150px,27vh,270px) * ' + bsc + ')'); book.style.perspective = (1400 * bsc) + 'px'; bsc = 1; } else { book.style.removeProperty('--bwd'); book.style.perspective = ''; }
+    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + bsc + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
+    // the story is written: typed scraps spiral in behind the book, it glows and trembles, then stars fly as it turns over
+    magicEl.style.transform = burstEl.style.transform = 'translate(' + (-bx) + 'vw,' + (-by) + 'vh)';
+    wsps.forEach(function(w, n){ var sgm = seg(mg, n * .085, .4 + n * .085), e = ease(sgm), ang = n * 2.3 + e * 3.4, R = (1 - e) * (wide ? 56 : 46);
+      w.style.opacity = seg(sgm, 0, .14) * (1 - seg(sgm, .82, 1));
+      w.style.transform = 'translate(-50%,-50%) translate3d(' + (Math.cos(ang) * R * (wide ? 1.5 : .62)) + 'vh,' + (Math.sin(ang) * R) + 'vh,0) rotate(' + ((1 - e) * (n % 2 ? 26 : -26)) + 'deg) scale(' + (1 - e * .55) + ')'; });
+    var glow = P(.875, .925) * (1 - P(.95, .985)), bs = P(.925, .97);
+    halo.style.opacity = glow * (reduced ? 1 : .82 + Math.sin(t * 7) * .18); halo.style.transform = 'scale(' + (.45 + glow * .45 + P(.925, .96) * .45) + ')';
+    bstars.forEach(function(st, n){ var e = out(bs), ang = n / bstars.length * 6.283 + .3, R = e * (wide ? 34 + (n % 3) * 10 : 22 + (n % 3) * 7);
+      st.style.opacity = seg(bs, 0, .08) * (1 - seg(bs, .55, 1)); st.style.transform = 'translate3d(' + (Math.cos(ang) * R) + 'vh,' + (Math.sin(ang) * R + e * e * 9) + 'vh,0) rotate(' + (e * 320 + n * 40) + 'deg) scale(' + (.6 + (n % 4) * .32) + ')'; });
+    bookIn.style.transform = 'rotateX(' + ((1 - flip) * 7 + flip * 2) + 'deg) rotateY(' + (24 * (1 - flip) * rise + flip * 167) + 'deg)';   // rests turned a little, before and after the turn, so its thickness shows
+    bookIn.classList.toggle('turned', flip > .5);
+    // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
+    var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
+    var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
+    // callouts: placed from the cover's actual position on screen, so they follow it at every size
+    coBox.style.opacity = f2;
+    if (f2 > 0) { var br = book.getBoundingClientRect(), sr2 = stage.getBoundingClientRect(), L = br.left - sr2.left, T = br.top - sr2.top, bw = br.width, bh = br.height, R = L + bw;
+      // spec per label: [left, top, width, target x, target y (fractions of the cover), side the label sits on, curve control x, y (fractions)].
+      // Tuned to this cover: Bad Man Matt stands on the left, Rose in the middle holding Shosh, Daddy on the right. Each arrow keeps clear of the faces:
+      // "face" runs through the blank cloud left of "Spell" and drops between Matt's hair and Daddy's; "fox" dips under the cart wheel to the tail.
+      var lw = wide ? Math.min(150, L - 18) : L - 14, lx = wide ? L - lw - 12 : 6, rx = wide ? R + bw * .08 : R + 8, rw = wide ? Math.min(bw * .42, 150) : W - R - 14, showL = lw >= 62;
+      var spec = { name:[lx, T + bh * (wide ? .02 : -.02), lw, .22, .115, 'r', .05, .1], face:[lx, T + bh * (wide ? .21 : .2), lw, .42, .455, 'r', .34, .265],
+                   baddy:[lx, T + bh * (wide ? .47 : .46), lw, .09, .5, 'r', -.02, .47], fox:[rx, T + bh * (wide ? .84 : .7), rw, .535, .79, 'l', .85, 1.25] };
+      cos.forEach(function(c, n){ var sp = spec[c.dataset.k], hide = sp[5] === 'r' && !showL; c.style.visibility = coArrows[n].style.visibility = hide ? 'hidden' : '';
+        c.style.left = sp[0] + 'px'; c.style.top = sp[1] + 'px'; c.style.width = Math.max(sp[2], 60) + 'px'; c.style.textAlign = sp[5] === 'r' ? 'right' : 'left';
+        var cr = c.getBoundingClientRect(), tx = L + bw * sp[3], ty = T + bh * sp[4], sx = sp[5] === 'r' ? cr.right - sr2.left + 5 : cr.left - sr2.left - 5, sy = cr.top - sr2.top + cr.height * (c.dataset.k === 'fox' ? .7 : .55);
+        coArrows[n].setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' Q' + (L + bw * sp[6]).toFixed(1) + ' ' + (T + bh * sp[7]).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1)); }); }
+  }
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
+    addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, { passive:true });
+
+  /* ----- library, then lights out ----- */
+  var cur = document.getElementById('curtain'), dl = cur.querySelector('.drape.l'), dr = cur.querySelector('.drape.r'), fin = document.getElementById('final'),
+      libStage = document.getElementById('libStage'), shelves = document.getElementById('shelves'), bks = [].slice.call(shelves.querySelectorAll('.bk')), 
+      night = document.getElementById('night'), devs = [].slice.call(cur.querySelectorAll('.dev')), bedtime = document.getElementById('bedtime'), spk = document.getElementById('spk'),
+      now = document.getElementById('now'), picks = bks.filter(function(b){ return b.dataset.n; }).map(function(b){ var d = document.createElement('div'); d.className = 'picklit';
+        d.innerHTML = '<img src="' + b.querySelector('img').getAttribute('src') + '" alt=""><b>' + b.dataset.n + '</b>'; libStage.insertBefore(d, bedtime); return { el:b, lit:d, n:+b.dataset.n }; }),
+      moreCue = document.getElementById('more'), libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
+
+  var bookSettled = false;
+  function frame(){
+    mx += (tx - mx) * .06; my += (ty - my) * .06;
+
+    castFrame(performance.now());
+    var wide = !narrow.matches;
+
+    // the library fills, the lights go out, one story plays, the curtains close
+    var c = reduced ? .7 : prog(cur);
+    var dark = ease(wide ? seg(c, .42, .56) : seg(c, .36, .46)), up = ease(seg(c, .42, .6)), leave = wide ? 0 : ease(seg(c, .6, .67)), bo = wide ? .027 : .02;   // phones: the cabinet leaves before the bed arrives
+    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(c, o, o + .1), k = back(fly), e = out(fly), rest = -16 * (1 - dark);
+      b.style.opacity = seg(c, o, o + .008); b.style.zIndex = fly < 1 ? 6 : 1;
+      b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
+    shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
+    shelves.style.opacity = 1 - leave;
+    night.style.opacity = dark * .88;
+    var sr = libStage.getBoundingClientRect();
+    picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = wide ? seg(c, .5 + pk.n * .025, .54 + pk.n * .025) : seg(c, .44 + pk.n * .025, .48 + pk.n * .025) * (1 - leave);
+      pk.lit.style.left = (r.left - sr.left) + 'px'; pk.lit.style.top = (r.top - sr.top) + 'px'; pk.lit.style.width = r.width + 'px'; pk.lit.style.height = r.height + 'px'; pk.lit.style.opacity = on; });
+    var act = Math.floor(performance.now() / 2600) % devs.length; devs.forEach(function(d, n){ d.classList.toggle('on', reduced ? n === 0 : n === act); });
+    libA.style.opacity = wide ? 1 - seg(c, .38, .46) : 1 - seg(c, .34, .4); libB.style.opacity = wide ? seg(c, .5, .58) : seg(c, .42, .5);
+    var bedIn = out(wide ? seg(c, .5, .66) : seg(c, .64, .76)), nowIn = out(wide ? seg(c, .64, .72) : seg(c, .7, .77)), dv = wide ? seg(c, .56, .68) : seg(c, .68, .78);
+    bedtime.style.transform = 'translate3d(0,' + ((1 - bedIn) * 110) + '%,0)'; spk.style.transform = 'translate3d(0,' + ((1 - back(dv)) * 30) + 'vh,0)'; spk.style.opacity = seg(dv, 0, .35);
+    now.style.opacity = nowIn; now.style.transform = 'translate3d(0,' + ((1 - nowIn) * 14) + 'px,0)'; now.style.pointerEvents = nowIn > .5 ? 'auto' : 'none';
+    libStage.classList.toggle('playing', c > (wide ? .64 : .7));
+    moreCue.style.opacity = wide ? seg(c, .8, .88) : seg(c, .84, .92);
+    var close = 0;
+    dl.style.transform = 'translate3d(' + (-101 + close * 101) + '%,0,0)';
+    dr.style.transform = 'translate3d(' + (101 - close * 101) + '%,0,0)';
+    fin.style.opacity = wide ? seg(c, .93, .99) : seg(c, .95, .995); fin.style.pointerEvents = c > .95 ? 'auto' : 'none';
+
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize', castGeo); addEventListener('load', function(){ castGeo(); if (T0 === Infinity) T0 = performance.now(); });
+  setTimeout(function(){ if (T0 === Infinity) T0 = performance.now(); }, 2500);   // slow connection: do not hold the headline forever
+  castGeo();
+  requestAnimationFrame(frame);
+
+  var audio = document.getElementById('audio'), btn = document.getElementById('listen'), hint = document.getElementById('nowHint');
+  var listenLabel = document.getElementById('listenLabel');
+  function label(){ btn.classList.toggle('on', !audio.paused); listenLabel.textContent = audio.paused ? 'Play this story' : 'Pause'; hint.textContent = audio.paused ? 'Tap to hear it' : 'Playing. Tap to pause'; }
+  function toggle(){ if (audio.paused) audio.play(); else audio.pause(); }
+  btn.addEventListener('click', toggle); now.addEventListener('click', toggle); audio.addEventListener('play', label); audio.addEventListener('pause', label);
+
+  /* ----- the rest of the page ----- */
+  // red-pencil strike plays once when the slip scrolls into view
+  if ('IntersectionObserver' in window) { var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { threshold:.6 });
+    [].forEach.call(document.querySelectorAll('.watch'), function(el){ io.observe(el); }); } else { [].forEach.call(document.querySelectorAll('.watch'), function(el){ el.classList.add('seen'); }); }
+  // languages: one sample line and cover per language (same data as the current site)
+  var LANGS = [
+    { n:'English', t:'Rose and the Moonlit Map', c:'../../public/covers/cover-en-moonlit-map.webp', l:'Rose traced the moonlit path on her map and listened for the owl’s soft hoot…' },
+    { n:'Français', t:'Rose et la Lanterne Perdue', c:'../../public/covers/cover-fr-lanterne.webp', l:'Rose suivit la lueur de la lanterne, tout droit dans la forêt endormie…' },
+    { n:'Deutsch', t:'Rose und die Sternenbrücke', c:'../../public/covers/cover-de-sternenbruecke.webp', l:'Rose setzte einen Fuß auf die Sternenbrücke, die leise über den Bach glitzerte…' },
+    { n:'Español', t:'Rose y el Jardín de las Luciérnagas', c:'../../public/covers/cover-es-luciernagas.webp', l:'Rose siguió a las luciérnagas hasta el jardín secreto que brillaba en la noche…' },
+    { n:'Italiano', t:'Rose e la Chiave delle Nuvole', c:'../../public/covers/cover-it-nuvole.webp', l:'Rose girò la chiave dorata e le nuvole si aprirono come un cancello di sogno…' },
+    { n:'Nederlands', t:'Rose en het Fluisterbos', c:'../../public/covers/cover-nl-fluisterbos.webp', l:'Rose luisterde naar het fluisterbos, waar elk blad haar de weg naar huis wees…' } ];
+  var langBox = document.getElementById('langs'), langCover = document.getElementById('langCover'), langLine = document.getElementById('langLine'), langTitle = document.getElementById('langTitle');
+  function setLang(k){ var L = LANGS[k]; langCover.src = L.c; langCover.alt = L.t + ' story cover'; langLine.textContent = L.l; langTitle.textContent = L.t;
+    [].forEach.call(langBox.children, function(b, n){ b.setAttribute('aria-pressed', n === k ? 'true' : 'false'); }); }
+  LANGS.forEach(function(L, k){ var b = document.createElement('button'); b.type = 'button'; b.textContent = L.n; b.addEventListener('click', function(){ setLang(k); }); langBox.appendChild(b); });
+  setLang(1);
+  // hear more: one shared player; starting one story stops the other players on the page
+  var audio2 = document.getElementById('audio2'), tracks = [].slice.call(document.querySelectorAll('.track')), curTrack = null;
+  function markTracks(){ tracks.forEach(function(t){ var on = t === curTrack && !audio2.paused; t.querySelector('.play').classList.toggle('on', on); t.querySelector('.pt b').textContent = on ? 'Pause' : 'Play'; }); }
+  tracks.forEach(function(t){ t.addEventListener('click', function(){ if (curTrack === t && !audio2.paused) { audio2.pause(); return; }
+    if (curTrack !== t) { audio2.src = t.dataset.src; curTrack = t; } audio.pause(); audio2.play(); }); });
+  audio2.addEventListener('play', markTracks); audio2.addEventListener('pause', markTracks); audio2.addEventListener('ended', markTracks);
+  audio.addEventListener('play', function(){ audio2.pause(); });
+
+  // read along: transcripts with timings (the same data the current site uses), loaded the first time a story is played
+  var raEl = document.getElementById('readalong'), raBox = document.getElementById('raBox'), raTitle = document.getElementById('raTitle'), raData = null, raSpans = [], raNow = -1;
+  function raShow(id){ var st = (raData || []).filter(function(x){ return x.id === id; })[0]; if (!st) { raEl.hidden = true; return; }
+    raTitle.textContent = st.title; raBox.innerHTML = ''; raSpans = []; raNow = -1;
+    st.paragraphs.forEach(function(par){ var pEl = document.createElement('p'); par.forEach(function(sn){ var sp = document.createElement('span'); sp.textContent = sn[0]; sp._a = sn[1]; sp._b = sn[2]; pEl.appendChild(sp); pEl.appendChild(document.createTextNode(' ')); raSpans.push(sp); }); raBox.appendChild(pEl); });
+    raEl.hidden = false; raBox.scrollTop = 0;
+    setTimeout(function(){ if (raEl.scrollIntoView) raEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block:'nearest' }); }, 60); }   // the panel sits below the books, so bring it into view
+  function raTick(){ if (!raSpans.length) return; var t = audio2.currentTime, k = -1; for (var n = 0; n < raSpans.length; n++) { if (raSpans[n]._a <= t) k = n; else break; }
+    if (k === raNow) return; raNow = k; raSpans.forEach(function(sp, n){ sp.classList.toggle('ra-now', n === k); sp.classList.toggle('ra-done', n < k); });
+    if (k >= 0) raBox.scrollTop = Math.max(0, raSpans[k].offsetTop - raBox.clientHeight * .32); }
+  audio2.addEventListener('timeupdate', raTick); audio2.addEventListener('seeked', raTick);
+  tracks.forEach(function(t){ t.addEventListener('click', function(){ tracks.forEach(function(x){ x.classList.toggle('live', x === t); });
+    if (raData) raShow(t.dataset.id); else fetch('assets-v3/readalong.json').then(function(r){ return r.json(); }).then(function(d){ raData = d; raShow(curTrack ? curTrack.dataset.id : t.dataset.id); }).catch(function(){ raEl.hidden = true; }); }); });
+})();
+</script>
+</body>
+</html>
