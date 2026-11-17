@@ -375,13 +375,13 @@
   @media (prefers-reduced-motion:reduce) { .sum u { transition:none; } }
 
   /* read along: the story's words under the books, the sentence being spoken picked out */
-  .readalong { margin-top:clamp(1.6rem,4vh,2.6rem); background:var(--cream) var(--paint) center/cover; box-shadow:0 4px 0 rgba(60,40,20,.2); padding:1.3rem clamp(1.1rem,3vw,2.4rem) 1.6rem; text-align:left; }
+  .readalong { margin-top:clamp(1.6rem,4vh,2.6rem); background:#fdf8ec; box-shadow:0 4px 0 rgba(60,40,20,.2); padding:1.3rem clamp(1.1rem,3vw,2.4rem) 1.6rem; text-align:left; }
   .readalong .caps { color:var(--tomato); font-size:.7rem; }
   .ra-box { position:relative; height:clamp(11rem,34vh,17rem); overflow:hidden; margin-top:.9rem; scroll-behavior:smooth;
-            -webkit-mask-image:linear-gradient(transparent 0, #000 16%, #000 80%, transparent 100%); mask-image:linear-gradient(transparent 0, #000 16%, #000 80%, transparent 100%); }
-  .ra-box p { font:500 clamp(1.25rem,2.1vw,1.7rem)/1.4 var(--display); color:#a79f8d; margin:0 0 .9em; text-wrap:pretty; } .ra-box p:first-child { margin-top:3.2rem; } .ra-box p:last-child { margin-bottom:9rem; }
-  .ra-box span { transition:color .25s ease, background-color .25s ease; border-radius:2px; padding:.05em 0; } .ra-box span.ra-done { color:#5d5a55; }
-  .ra-box span.ra-now { color:var(--ink); background:rgba(242,193,78,.45); box-shadow:0 0 0 .18em rgba(242,193,78,.45); }
+            -webkit-mask-image:linear-gradient(transparent 0, #000 12%, #000 90%, transparent 100%); mask-image:linear-gradient(transparent 0, #000 12%, #000 90%, transparent 100%); }
+  .ra-box p { font:500 clamp(1.25rem,2.1vw,1.7rem)/1.4 var(--display); color:#3f3d4a; margin:0 0 .9em; text-wrap:pretty; } .ra-box p:first-child { margin-top:3.2rem; } .ra-box p:last-child { margin-bottom:9rem; }
+  .ra-box span { transition:color .25s ease, background-color .25s ease; border-radius:2px; padding:.05em 0; } .ra-box span.ra-done { color:#9c958a; }
+  .ra-box span.ra-now { color:#14182f; background:#f6cf6a; box-shadow:0 0 0 .18em #f6cf6a; }
   .track.live { outline:3px solid var(--tomato); outline-offset:3px; }
 
   /* the three books stand at an angle with real thickness and lift a little under the pointer (carried over from the live site) */
@@ -397,6 +397,63 @@
              background:repeating-linear-gradient(90deg, #f6eedc 0 1px, #d4c8ae 1px 2.3px); box-shadow:inset 0 0 5px rgba(90,70,40,.4); }
   .track:hover .bko, .track:focus-visible .bko, .track.live .bko { transform:perspective(1400px) rotateY(-12deg) rotateX(2deg) translateY(-7px); }
   @media (prefers-reduced-motion:reduce) { .bko { transition:none; } }
+
+  /* callouts on the finished cover */
+  .callouts { position:absolute; inset:0; z-index:5; pointer-events:none; opacity:0; }
+  .callouts svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .co-arrow { fill:none; stroke:var(--tomato); stroke-width:2.4; stroke-linecap:round; marker-end:url(#coHead); }
+  .co { position:absolute; margin:0; font:600 italic clamp(1.15rem,1.7vw,1.5rem)/1.08 var(--display); color:var(--ink); text-wrap:balance; }
+  .co[data-k="face"] { transform:rotate(2deg); } .co[data-k="name"] { transform:rotate(-3deg); } .co[data-k="baddy"] { transform:rotate(2deg); } .co[data-k="fox"] { transform:rotate(-2deg); }
+  @media (min-width:761px) { .inv-foot { left:60%; width:min(33vw,27rem); } .inv-foot p { font:400 clamp(1.1rem,1.5vw,1.3rem)/1.5 var(--text); color:#4d5167; } }
+  @media (max-width:760px) { .co { font-size:1.02rem; } .inv-foot p { font:400 1rem/1.45 var(--text); color:#4d5167; } }
+
+  /* round 22: you are in charge (the corrected slip, then the summary card), how you make one (one real screen, three mocked steps), devices */
+  .review { display:grid; gap:1.8rem; padding:0; justify-items:start; } .review .slip-wrap { width:min(100%,25rem); margin-bottom:2.2rem; }
+  .sum { position:relative; left:auto; bottom:auto; width:min(100%,23rem); justify-self:end; transform:rotate(1.2deg); }
+  .sum-wrap { justify-self:end; width:min(100%,23rem); } .sum-wrap .sum { width:100%; }
+  /* the age-check line is our note about the card, not something on the app's screen: handwritten beside it, with an arrow to the row */
+  .sum-note { position:relative; margin:1rem 0 0; padding-left:3.5rem; font:600 italic 1.22rem/1.2 var(--display); color:#f3e9d2; transform:rotate(-1.5deg); text-wrap:balance; }
+  .sum-note svg { position:absolute; left:.55rem; top:-1.5rem; width:2.6rem; height:3.1rem; overflow:visible; fill:none; stroke:var(--tomato); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+  .makegrid { display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:clamp(2rem,5vw,4.5rem); align-items:center; margin-top:clamp(2rem,5vh,3.2rem); }
+  .shot.big { width:min(100%,21rem); justify-self:center; transform:rotate(-2.5deg); }
+  .mocks { list-style:none; margin:0; padding:0; display:grid; gap:1.4rem; }
+  .mocks li { display:grid; grid-template-columns:minmax(0,15.5rem) minmax(0,1fr); gap:1.4rem; align-items:center; }
+  .mock { background:#12163a; border:1px solid #2c3270; border-radius:1.1rem; padding:1rem 1rem 1.1rem; color:#eef0fb; box-shadow:0 10px 18px rgba(8,12,30,.3); } .mocks li:nth-child(odd) .mock { transform:rotate(-1.2deg); } .mocks li:nth-child(even) .mock { transform:rotate(1deg); }
+  .mk-h { margin:0 0 .8rem; font:600 .64rem/1 var(--text); letter-spacing:.2em; text-transform:uppercase; color:#e8a838; text-align:center; }
+  .avs { display:flex; justify-content:space-between; gap:.4rem; } .avs span { display:grid; justify-items:center; gap:.35rem; font:500 .7rem/1 var(--text); color:#d9dcf0; }
+  .avs i { --S:3.7rem; --W:calc(var(--S) / .245); display:block; width:var(--S); height:var(--S); border-radius:50%; box-shadow:0 0 0 2px #e8a838;
+           background:url(/public/home-optimized/choose-story-zoomed-out.webp) calc(var(--S) / 2 - var(--W) * var(--cx)) calc(var(--S) / 2 - var(--W) * 1.778 * var(--cy,.283)) / var(--W) auto no-repeat; }
+  .avs span { flex:1; text-align:center; line-height:1.15; } .avs span:not(.on) i { box-shadow:0 0 0 1.5px #3a4188; } .mk-2 { margin-top:1rem; }
+  .tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; } .tiles img, .worlds img { display:block; width:100%; height:auto; border-radius:.55rem; }
+  .tiles img { box-shadow:0 0 0 1px #2c3270; } .tiles img.on { box-shadow:0 0 0 2.5px #e8a838; }
+  .worlds { display:grid; grid-template-columns:repeat(4,1fr); gap:.4rem; margin-top:.8rem; } .worlds img.on { filter:drop-shadow(0 0 0 #e8a838) drop-shadow(0 0 3px #e8a838); }
+  .mk-t { margin:0; font:600 1.3rem/1.1 var(--display); color:#f3e9d2; text-align:center; } .mk-s { margin:.2rem 0 0; font:400 .74rem/1.3 var(--text); color:#a9aed0; text-align:center; }
+  .nar { display:flex; align-items:center; gap:.6rem; margin:0; padding:.6rem .7rem; border:1px solid #3a4188; border-radius:.6rem; font:500 .84rem/1 var(--text); color:#d9dcf0; } .nar + .nar { margin-top:.45rem; }
+  .nar i { width:.95rem; height:.95rem; border-radius:50%; border:1.5px solid #6a71b4; flex:none; } .nar.on { border-color:#e8a838; background:#1c2150; color:#fff; } .nar.on i { border-color:#e8a838; background:radial-gradient(#e8a838 0 45%, transparent 50%); }
+  .nar.rec { border-style:dashed; color:#e8a838; } .nar svg { width:1rem; height:1rem; flex:none; }
+  .wave { margin-left:auto; display:flex; align-items:center; gap:2px; height:1.1rem; } .wave b { width:2.5px; border-radius:2px; background:#e8a838; height:40%; } .wave b:nth-child(2) { height:80%; } .wave b:nth-child(3) { height:55%; } .wave b:nth-child(4) { height:100%; } .wave b:nth-child(5) { height:65%; } .wave b:nth-child(6) { height:35%; } .wave b:nth-child(7) { height:70%; }
+  .extras-h { margin-top:clamp(2.4rem,6vh,3.6rem); color:#8a6a4a; } .mocks.extras { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.6rem clamp(1.5rem,4vw,3rem); margin-top:1.2rem; } .mocks.extras li { grid-template-columns:1fr; gap:1.1rem; align-content:start; } .mocks.extras .mock { width:min(100%,21rem); }
+  .mocks.extras .cap { grid-template-columns:1.6rem minmax(0,1fr); } .mocks.extras .cap b { font:600 1.5rem/1.1 var(--display); letter-spacing:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:.4rem; justify-content:center; } .chips span { font:500 .74rem/1 var(--text); padding:.5rem .7rem; border:1px solid #4a5196; border-radius:999px; color:#cfd2e6; }
+  .chips span.on { background:#e8a838; border-color:#e8a838; color:#12163a; font-weight:600; }
+  .field { margin:0 0 .8rem; padding:.7rem .8rem; background:#1c2150; border:1px solid #3a4188; border-radius:.6rem; font:400 .84rem/1.35 var(--text); color:#eef0fb; } .field i { display:inline-block; width:1.5px; height:1em; margin-left:2px; background:#e8a838; vertical-align:-.12em; animation:caret 1s steps(1) infinite; }
+  @keyframes caret { 50% { opacity:0; } }
+  .acts { display:flex; gap:.5rem; } .acts span { flex:1; display:flex; align-items:center; justify-content:center; gap:.35rem; padding:.55rem .4rem; border:1px solid #4a5196; border-radius:.6rem; font:600 .7rem/1 var(--text); color:#eef0fb; white-space:nowrap; }
+  .acts svg { width:.95rem; height:.95rem; } .acts span.gold { background:#e8a838; border-color:#e8a838; color:#12163a; }
+  .cap { display:grid; grid-template-columns:2.4rem minmax(0,1fr); } .cap b { grid-row:1 / 3; font:400 .9rem/1.9 var(--tag); letter-spacing:.14em; color:var(--tomato); }
+  .cap h3 { font:600 1.5rem/1.1 var(--display); } .cap p { font:400 1rem/1.5 var(--text); color:#4d5167; margin-top:.3rem; }
+  #make .notes { grid-template-columns:repeat(2,minmax(0,1fr)); font-size:1rem; margin-top:clamp(2rem,5vh,3rem); }
+  .devgrid { list-style:none; margin:clamp(2rem,5vh,3.2rem) 0 0; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); }
+  .devgrid li { background:var(--cream) var(--paint) center/cover; padding:1.5rem 1.3rem 1.4rem; box-shadow:0 4px 0 rgba(60,40,20,.2); } .devgrid li:nth-child(odd) { transform:rotate(-.6deg); } .devgrid li:nth-child(even) { transform:rotate(.5deg); }
+  .devgrid img { display:block; height:6.5rem; width:auto; max-width:100%; object-fit:contain; margin-bottom:1rem; filter:drop-shadow(0 4px 3px rgba(60,40,20,.3)); } .devgrid img.wide { height:auto; width:100%; max-height:6.5rem; object-position:left; }
+  .devgrid h3 { font:600 1.45rem/1.1 var(--display); } .devgrid h3 em { font:400 .62rem/1 var(--tag); font-style:normal; letter-spacing:.12em; text-transform:uppercase; color:var(--cream); background:var(--tomato); padding:.3rem .45rem .22rem; margin-left:.4rem; vertical-align:.25em; white-space:nowrap; }
+  .devgrid p { font:400 .98rem/1.5 var(--text); color:#4d5167; margin-top:.4rem; }
+  @media (max-width:760px) {
+    .makegrid { grid-template-columns:1fr; } .shot.big { width:min(74%,17rem); } .mocks li, .mocks.extras li { grid-template-columns:1fr; gap:.9rem; } .mocks.extras { grid-template-columns:1fr; } .mock { max-width:19rem; } #make .notes { grid-template-columns:1fr; }
+    .devgrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; } .devgrid li { padding:1.1rem .9rem 1rem; } .devgrid li:nth-child(n) { transform:none; } .devgrid img { height:4.6rem; } .devgrid img.wide { max-height:4.6rem; } .devgrid h3 { font-size:1.2rem; } .devgrid p { font-size:.9rem; }
+    .review .slip-wrap { margin:0 .4rem 2.6rem; } .sum-wrap { justify-self:stretch; width:auto; }
+  }
+  @media (prefers-reduced-motion:reduce) { .field i { animation:none; } }
 
   /* header links, on the valance either side of the wordmark */
   .nav-l, .nav-r { position:absolute; z-index:2; top:.55rem; height:clamp(2rem,5.4vh,2.9rem); display:flex; align-items:center; gap:1.5rem; }
@@ -629,8 +686,17 @@
         <div class="face back"><img src="/test/assets-v3/cover-supper-spell-cutpaper.jpg" alt=""></div>
       </div>
     </div>
+    <!-- callouts on the finished cover: labels beside the book, curved arrows drawn to the spot each one is about -->
+    <div class="callouts" id="callouts" aria-hidden="true">
+      <svg id="coSvg"><defs><marker id="coHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#c8452c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/></svg>
+      <p class="co" data-k="name">Her name in the title</p>
+      <p class="co" data-k="baddy">A baddy she made up</p>
+      <p class="co" data-k="fox">Her fox at her side</p>
+      <p class="co" data-k="face">Her face on the cover</p>
+    </div>
     <div class="inv-foot" id="invFoot">
-      <p>Her name in the title. Her fox at her side. A baddy and a plot she made up. And a story she will ask for again and again.</p>
+      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where Bad Man Matt is stirring one enormous pot and planning to eat the lot for dessert. Rose has a plan, and it starts with making a baddy wash his hands.</p>
       <button class="play" id="listen" type="button" aria-label="Play the story Rose and the Stolen Supper Spell, read aloud, five minutes">
         <span class="pi" aria-hidden="true"></span><span class="pt"><b id="listenLabel">Play this story</b><small>Read aloud &middot; 5:05</small></span>
         <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
@@ -688,37 +754,45 @@
   <div>
     <p class="caps">Made for parents</p>
     <h2>You&rsquo;re in charge.</h2>
-    <p class="lede">Every story comes to you first. Before you read a word, Namesake tells you the scary bit, what happens to the villain and how it ends. Then you approve it, or you don&rsquo;t.</p>
+    <p class="lede">Every story comes to you first. Before you read a word, Namesake tells you the scary bit, if there is one, what happens to the villain and how it ends. Change anything you don&rsquo;t like, then approve it, or don&rsquo;t.</p>
     <ul class="ticks"><li>You approve every story before they hear it.</li><li>No surprises, no autoplay, no ads.</li><li>One story or a queue of favourites. It plays what you chose, then stops.</li></ul>
   </div>
   <div class="review watch">
-    <img class="shot" src="/public/home-optimized/review-story.webp" alt="Namesake review screen: a story's cover, a three-line summary and the Approve and add to shelf button" loading="lazy">
-    <div class="sum" role="group" aria-label="What Namesake shows you before you approve">
-      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span><u>Scary bit:</u> <b>Bad Man Matt steals Rose&rsquo;s food</b></span></p>
+    <div class="slip-wrap"><p class="slip">Bad Man Matt tiptoed into the kitchen with <s>a very sharp fork</s> <ins>one enormous spoon</ins> and a sack for the pesto. &ldquo;Mine,&rdquo; he whispered. &ldquo;All mine.&rdquo;</p><img src="/test/assets-v3/redpencil.webp" alt="" loading="lazy"></div>
+    <div class="sum-wrap"><div class="sum" role="group" aria-label="What Namesake shows you before you approve">
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>Bad Man Matt tries to steal Rose&rsquo;s food</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
-      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span><u>Ends:</u> <b>Calm</b></span></p>
-      <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Checked for age 5</span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span>Ends: <b>Calm</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
     </div>
-    <img class="pen" src="/test/assets-v3/redpencil.webp" alt="" loading="lazy">
+    <p class="sum-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>We run a second, separate check that every story suits your child&rsquo;s age.</p></div>
   </div>
 </div></section>
 
-<section class="low" id="make"><div class="low-in two">
-  <div>
-    <p class="caps">Made together, before bedtime</p>
-    <h2>How you make one.</h2>
-    <p class="lede">Choose a few ingredients that make the story unmistakably theirs. It takes a moment, not a questionnaire.</p>
-    <ol class="steps">
-      <li><b>01</b><div><h3>Pick companions</h3><p>Bunny or bear, Mummy or Daddy. Their adventure begins with someone they love.</p></div></li>
-      <li><b>02</b><div><h3>Add a little mischief</h3><p>A tiny twist to make the adventure exciting, always gentle enough for bedtime.</p></div></li>
-      <li><b>03</b><div><h3>Choose a world</h3><p>A moon garden, pirate ship or train to the stars. Tonight&rsquo;s story goes somewhere new.</p></div></li>
+<section class="low" id="make"><div class="low-in">
+  <p class="caps">Made together, before bedtime</p>
+  <h2>How you make one.</h2>
+  <p class="lede">Three quick choices make the story unmistakably theirs. It takes a moment, not a questionnaire.</p>
+  <div class="makegrid">
+    <img class="shot big" src="/public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen: A new story for Rose, with rows for who is in it, a little mischief and their world" loading="lazy">
+    <ol class="mocks">
+      <li><div class="mock" aria-hidden="true"><p class="mk-h">Choose who&rsquo;s in it</p><div class="avs"><span class="on"><i style="--cx:.257"></i>Rose</span><span><i style="--cx:.5"></i>Mr Bitey</span><span class="on"><i style="--cx:.738"></i>Shosh</span></div>
+            <p class="mk-h mk-2">A little mischief</p><div class="avs"><span class="on"><i style="--cx:.249;--cy:.524"></i>Bad Man Matt</span><span><i style="--cx:.5;--cy:.524"></i>Big Bad Wolf</span><span><i style="--cx:.745;--cy:.524"></i>Medium Bad Mungo</span></div></div>
+          <div class="cap"><b>01</b><h3>Who&rsquo;s in it</h3><p>Their favourite people, pets and toys, and a baddy if they like a little mischief. Mummy or Daddy, bunny or bear, and a villain of their own invention.</p></div></li>
+      <li><div class="mock" aria-hidden="true"><p class="mk-h">The theme or mood</p><div class="tiles"><img class="on" src="/test/assets-v3/mood-magical.webp" alt="Magical" loading="lazy"><img src="/test/assets-v3/mood-silly.webp" alt="Funny" loading="lazy"><img src="/test/assets-v3/mood-quest.webp" alt="Quest" loading="lazy"><img src="/test/assets-v3/mood-fairy-tale.webp" alt="Fairy Tale" loading="lazy"><img src="/test/assets-v3/mood-pirates.webp" alt="Pirates" loading="lazy"><img src="/test/assets-v3/mood-dinosaurs.webp" alt="Dinosaurs" loading="lazy"></div></div>
+          <div class="cap"><b>02</b><h3>The theme or mood</h3><p>Magical, funny, a quest, pirates, dinosaurs. Tap a picture, or add a theme of your own.</p></div></li>
+      <li><div class="mock" aria-hidden="true"><p class="mk-h">Any idea for tonight?</p><p class="field">All the pasta pesto has been stolen<i></i></p><div class="acts"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Say it aloud</span><span class="gold"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 6.3L21 10l-6.8 1.7L12 18l-2.2-6.3L3 10l6.8-1.7z" fill="#12163a"/></svg>Inspire me</span></div></div>
+          <div class="cap"><b>03</b><h3>A specific idea</h3><p>Type it, let them say it out loud, or tap Inspire me and Namesake will suggest one.</p></div></li>
     </ol>
-    <div class="notes"><p>Namesake already knows them. Their name, age, interests and who lives in their world are saved once, so you are not setting it all up again every night.</p><p>More than one child? Give each their own profile, or choose two heroes for a story together.</p></div>
   </div>
-  <div class="shots">
-    <img class="shot a" src="/public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen for choosing who is in Rose's story, a little mischief and a world" loading="lazy">
-    <img class="shot b" src="/public/home-optimized/rose-library.webp" alt="Namesake phone screen showing the approved stories on Rose's shelf" loading="lazy">
-  </div>
+  <p class="caps extras-h">And if you like</p>
+  <ul class="mocks extras">
+    <li><div class="mock" aria-hidden="true"><p class="mk-t">Choose a classic tale</p><p class="mk-s">Set the story in a world you already know</p><div class="worlds"><img class="on" src="/test/assets-v3/world-peter-pan.webp" alt="Peter Pan" loading="lazy"><img src="/test/assets-v3/world-alice-in-wonderland.webp" alt="Alice in Wonderland" loading="lazy"><img src="/test/assets-v3/world-the-jungle-book.webp" alt="The Jungle Book" loading="lazy"><img src="/test/assets-v3/world-the-wind-in-the-willows.webp" alt="The Wind in the Willows" loading="lazy"></div></div>
+        <div class="cap"><b>+</b><h3>Set it in a classic world</h3><p>Peter Pan, Alice in Wonderland, The Jungle Book and more. Their own adventure, in a world you already know.</p></div></li>
+    <li><div class="mock" aria-hidden="true"><p class="mk-h">Narrator</p><p class="nar"><i></i>Standard narrator</p><p class="mk-h mk-2">Your voices</p><p class="nar on"><i></i>Daddy<span class="wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span></p><p class="nar rec"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Record a voice</p></div>
+        <div class="cap"><b>+</b><h3>Told in your own voice</h3><p>Record a short sample once, and Namesake can narrate their stories in your voice. Available on paid plans.</p></div></li>
+  </ul>
+  <div class="notes"><p>Namesake already knows them. Their name, age, interests and who lives in their world are saved once, so you are not setting it all up again every night.</p><p>More than one child? Give each their own profile, or choose two heroes for a story together.</p></div>
 </div></section>
 
 <section class="low dark" id="languages"><div class="low-in two">
@@ -729,6 +803,20 @@
     <div class="langs" id="langs" role="group" aria-label="Choose a language to see a sample line"></div>
   </div>
   <div class="lang-show" aria-live="polite"><img id="langCover" src="/public/covers/cover-fr-lanterne.webp" alt="" loading="lazy"><div><q id="langLine"></q><small id="langTitle"></small></div></div>
+</div></section>
+
+<section class="low" id="devices"><div class="low-in">
+  <p class="caps">Screen stays off</p>
+  <h2>Plays wherever bedtime happens.</h2>
+  <p class="lede">Choose tonight&rsquo;s stories on your phone, then put it down. Namesake plays through the speaker they already have, at home or on the way there.</p>
+  <ul class="devgrid">
+    <li><img src="/test/assets-v3/dev-phone-off.webp" alt="" loading="lazy"><h3>Your phone, screen off</h3><p>Lock it and turn it face down. The queue keeps playing, then stops.</p></li>
+    <li><img src="/test/assets-v3/dev-player.webp" alt="" loading="lazy"><h3>Yoto</h3><p>Their stories on the player they already love.</p></li>
+    <li><img src="/test/assets-v3/dev-speaker.webp" alt="" loading="lazy"><h3>Alexa</h3><p>Ask Alexa for tonight&rsquo;s story.</p></li>
+    <li><img src="/test/assets-v3/dev-nest.webp" alt="" loading="lazy"><h3>Google Cast</h3><p>Send it to a Nest or any Cast speaker.</p></li>
+    <li><img src="/test/assets-v3/dev-box.webp" alt="" loading="lazy"><h3>Tonies <em>Coming soon</em></h3><p>Their stories on a Creative Tonie.</p></li>
+    <li><img class="wide" src="/test/assets-v3/dev-car.webp" alt="" loading="lazy"><h3>In the car</h3><p>Android Auto and Apple CarPlay. An alternative to a screen in the headrest, or the same album for the fortieth time.</p></li>
+  </ul>
 </div></section>
 
 <section class="low tint" id="craft"><div class="low-in">
@@ -766,7 +854,7 @@
 <section class="low end" id="end"><div class="low-in">
   <p class="caps" style="color:#f0c9c0">Small preview, real families</p>
   <h2>Make their first story tonight.</h2>
-  <p class="lede">We&rsquo;re inviting a small group of families to help shape Namesake before launch. It works just as well in the car: an alternative to a screen in the headrest, or the same album for the fortieth time.</p>
+  <p class="lede">We&rsquo;re inviting a small group of families to help shape Namesake before launch.</p>
   <a class="cta" href="/test/download">Get the App</a>
   <div class="foot"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a><a href="/compare/index.html">Compare</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></div>
 </div></section>
@@ -792,7 +880,7 @@
       Q = function(q){ return scene.querySelector(q); }, QA = function(q){ return [].slice.call(scene.querySelectorAll(q)); },
       grass = Q('.grass'), rows = QA('.birchrow'), cottage = Q('.cottage'), birchL = Q('.birch.l'), birchR = Q('.birch.r'), birchM = Q('.birch.m'), mush = QA('.mush'),
       figs = QA('.fig'), book = document.getElementById('book'), bookIn = document.getElementById('bookIn'), names = document.getElementById('names'),
-      headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot');
+      headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot'), coBox = document.getElementById('callouts'), cos = [].slice.call(coBox.querySelectorAll('.co')), coArrows = [].slice.call(coBox.querySelectorAll('.co-arrow'));
   var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
   // when each member of the cast arrives (act progress), in scene order: Rose, Shosh, Daddy, the trouble, the pot, Matt, the badger
   var ATd = [.25, .30, .36, .43, .49, .52, .585], ATm = [.25, .31, .37, .43, .47, .50, .57], AT = ATd;   // phones: spaced so each tag finishes typing before the next arrives
@@ -877,6 +965,17 @@
     // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
     var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
     var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
+    // callouts: placed from the cover's actual position on screen, so they follow it at every size
+    coBox.style.opacity = f2;
+    if (f2 > 0) { var br = book.getBoundingClientRect(), sr2 = stage.getBoundingClientRect(), L = br.left - sr2.left, T = br.top - sr2.top, bw = br.width, bh = br.height, R = L + bw;
+      var spec = wide ? { name:[R + bw * .1, T + bh * .03, null, .8, .2, 'l'], baddy:[R + bw * .1, T + bh * .5, null, .9, .6, 'l'], fox:[R + bw * .08, T + bh * .88, null, .21, .84, 'l'],
+                       face: L > 190 ? [L - 164, T + bh * .4, 150, .2, .6, 'r'] : [R + bw * .1, T + bh * .26, null, .24, .58, 'l'] }
+                      : { name:[R + 8, T + bh * .02, W - R - 14, .86, .22, 'l'], baddy:[R + 8, T + bh * .5, W - R - 14, .88, .62, 'l'], fox:[6, T + bh * .7, L - 14, .16, .84, 'r'], face:[6, T + bh * .3, L - 14, .2, .6, 'r'] };
+      cos.forEach(function(c, n){ var sp = spec[c.dataset.k]; c.style.left = sp[0] + 'px'; c.style.top = sp[1] + 'px'; c.style.width = sp[2] ? Math.max(sp[2], 60) + 'px' : (wide ? Math.min(bw * .42, 150) + 'px' : ''); c.style.textAlign = sp[5] === 'r' ? 'right' : 'left';
+        var cr = c.getBoundingClientRect(), tx = L + bw * sp[3], ty = T + bh * sp[4], sx = sp[5] === 'r' ? cr.right - sr2.left + 4 : cr.left - sr2.left - 4, sy = cr.top - sr2.top + cr.height * (c.dataset.k === 'name' ? .9 : .55);
+        if (!wide) { sx = sp[5] === 'r' ? cr.right - sr2.left - cr.width * .3 : cr.left - sr2.left + cr.width * .3; sy = cr.bottom - sr2.top + 3; }
+        var mxp = (sx + tx) / 2, myp = (sy + ty) / 2, bend = c.dataset.k === 'fox' && wide ? bh * .16 : (wide ? -bh * .07 : bh * .06);
+        coArrows[n].setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' Q' + mxp.toFixed(1) + ' ' + (myp + bend).toFixed(1) + ' ' + tx.toFixed(1) + ' ' + ty.toFixed(1)); }); }
   }
   if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
     addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, { passive:true });
@@ -1002,9 +1101,11 @@
   rot.mummy = 2.5; rot.rose = -2; rot.shosh = 2;
 
   var curW = -1, billInEl = document.getElementById('billIn');
+  var underEl = hero.querySelector('.under');
   function frame(now){
     var t = reduced ? 0 : (now - T0) / 1000, p = reduced ? 1 : prog(), P = function(a, b){ return seg(p, a, b); }, k;
     cue.style.opacity = 1 - P(0, .03);
+    if (underEl) { underEl.style.opacity = 1 - P(.025, .055); underEl.style.pointerEvents = p > .04 ? 'none' : 'auto'; }
     var sway = Math.sin(t * .9) * .5;
 var drop = reduced ? 1 : clamp((t - .15) / 1.3), settle = Math.sin(drop * Math.PI * 3) * (1 - drop) * 4;
     rig.style.transform = 'translateY(' + ((1 - back(drop)) * -75) + 'vh) rotate(' + (sway * .35 + settle + Math.sin(P(.62, .8) * Math.PI * 3) * (1 - P(.62, .8)) * 1.6) + 'deg)';
