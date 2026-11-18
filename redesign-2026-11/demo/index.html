@@ -656,6 +656,28 @@
     .beta-full { display:none; }
     .beta-short { display:inline; }
   }
+
+  .story-review { text-align:left; color:var(--ink); }
+  .age-card { margin:.65rem 0 .45rem; padding:.85rem 1rem; border:1px solid #303866; border-radius:.9rem; background:#151936; }
+  .age-card p, .inv-foot .age-card p { display:flex; align-items:baseline; gap:.55rem; margin:0; color:#bac0dd; font:400 .94rem/1.35 var(--text); text-wrap:initial; }
+  .age-card p + p { padding-top:.35rem; }
+  .age-card svg { width:1em; height:1em; flex:none; align-self:flex-start; margin-top:.15em; }
+  .age-card b { color:#f6f3ed; font-weight:600; }
+  .age-note, .inv-foot .age-note { display:flex; align-items:start; gap:.45rem; margin:.25rem 0 .8rem; font:italic 500 1.05rem/1.24 var(--display); color:var(--ink); }
+  .age-note svg { width:1.4rem; height:1.7rem; flex:none; fill:none; stroke:var(--tomato); stroke-width:3; }
+  .review-actions { display:flex; flex-wrap:wrap; align-items:center; gap:.55rem; }
+  .review-actions button { min-height:44px; padding:.5rem .9rem; border:1px solid #444565; border-radius:.45rem; color:#1a2343; background:transparent; font:600 .96rem var(--text); cursor:pointer; }
+  .review-actions button:first-child { background:#f2bd52; border-color:#b48535; }
+  #review-status:not(:empty) { display:block; font:600 .88rem/1.4 var(--text); margin:.5rem 0; }
+  .story-review > small { display:block; margin-top:.5rem; font:400 .78rem/1.4 var(--text); color:#675845; }
+  .story-review [hidden] { display:none !important; }
+  #review-below:not(:empty) { padding:1rem max(1.25rem,calc((100% - 33rem)/2)) 2.2rem; background:var(--paper) var(--paint) center/cover; }
+  #sample-editor { margin:auto; padding:1.4rem; width:min(92vw,27rem); border:1px solid #b3a48d; border-radius:.8rem; color:var(--ink); background:#fff3da; }
+  #sample-editor::backdrop { background:#121530a8; }
+  #sample-editor h2 { font:600 2rem var(--display); }
+  #sample-editor label, #sample-editor p { display:block; margin:.65rem 0; font:400 1rem/1.4 var(--text); }
+  #sample-line { display:block; width:100%; padding:.65rem; font:400 1.02rem/1.35 var(--text); }
+  @media (min-width:1000px) and (min-height:680px) { .inv-foot > p { font-size:clamp(1rem,1.45vw,1.18rem); margin-bottom:.55rem; } }
 </style>
 </head>
 <body>
@@ -730,11 +752,25 @@
     </div>
     <div class="inv-foot" id="invFoot">
       <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where Bad Man Matt is stirring one enormous pot and planning to eat the lot for dessert. Rose has a plan, and it starts with making a baddy wash his hands.</p>
-      <button class="play" id="listen" type="button" aria-label="Play the story Rose and the Stolen Supper Spell, read aloud, five minutes">
+      <div id="story-review" class="story-review">
+      <div class="age-card" role="group" aria-label="What Namesake shows you before you approve">
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>Bad Man Matt tries to steal Rose&rsquo;s food</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span>Ends: <b>Calm</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
+    </div>
+    <p class="age-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>We run a second, separate check that every story suits your child&rsquo;s age.</p>
+      <div class="review-actions">
+        <button type="button" id="approve-demo">Approve Story</button>
+        <button type="button" id="edit-demo">Make edits</button>
+      </div>
+      <span id="review-status" role="status"></span>
+      <button hidden class="play" id="listen" type="button" aria-label="Play the story Rose and the Stolen Supper Spell, read aloud, five minutes">
         <span class="pi" aria-hidden="true"></span><span class="pt"><b id="listenLabel">Play this story</b><small>Read aloud &middot; 5:05</small></span>
         <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </button>
       <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story, shared with permission.</small>
+      </div>
       <audio id="audio" preload="none" src="../../public/stories/rose-stolen-supper-spell.mp3"></audio>
     </div>
 
@@ -743,6 +779,16 @@
   </div>
 </section>
 
+<div id="review-below"></div>
+<dialog id="sample-editor" aria-labelledby="editor-title">
+  <form method="dialog">
+    <h2 id="editor-title">Make edits</h2>
+    <label for="sample-line">Try editing the opening line</label>
+    <textarea id="sample-line" rows="3" required maxlength="500">“Daddy, the pasta pesto is GONE,” said Rose.</textarea>
+    <p>Your edit stays in this preview. The sample plays the original recording.</p>
+    <div class="review-actions"><button value="save">Save edit</button><button value="cancel" formnovalidate>Cancel</button></div>
+  </form>
+</dialog>
 <!-- 9. THE LIBRARY, THEN LIGHTS OUT -->
 <section class="act" id="curtain">
   <div class="stage" id="libStage">
@@ -994,6 +1040,7 @@
     // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
     var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
     var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
+    foot.inert = f2 < .5;
     coBox.style.opacity = f2;
     if (f2 > 0) {
       var br = coverImage.getBoundingClientRect(), sr2 = stage.getBoundingClientRect();
@@ -1072,6 +1119,36 @@
 
   var audio = document.getElementById('audio'), btn = document.getElementById('listen'), hint = document.getElementById('nowHint');
   var listenLabel = document.getElementById('listenLabel');
+  var review = document.getElementById('story-review'), below = document.getElementById('review-below');
+  var beside = matchMedia('(min-width:1000px) and (min-height:680px) and (prefers-reduced-motion:no-preference)');
+  function placeReview() { (beside.matches ? foot : below).appendChild(review); }
+  placeReview();
+  beside.addEventListener('change', placeReview);
+  function jumpToReview() {
+    if (location.hash !== '#review-story') return;
+    if (beside.matches) scrollTo(0, hero.offsetTop + hero.offsetHeight - innerHeight);
+    else review.scrollIntoView({block:'center'});
+  }
+  addEventListener('load', function(){ requestAnimationFrame(jumpToReview); });
+  addEventListener('hashchange', jumpToReview);
+  var approve = document.getElementById('approve-demo'), edit = document.getElementById('edit-demo');
+  var editor = document.getElementById('sample-editor'), line = document.getElementById('sample-line');
+  var status = document.getElementById('review-status'), savedLine = line.value;
+  approve.addEventListener('click', function(){
+    approve.parentElement.hidden = true;
+    btn.hidden = false;
+    status.textContent = savedLine === line.defaultValue ? 'Story approved' : 'Edit approved. Hear the original recording below.';
+    btn.focus({preventScroll:true});
+  });
+  edit.addEventListener('click', function(){
+    line.value = savedLine; editor.returnValue = ''; editor.showModal(); line.focus();
+  });
+  editor.addEventListener('close', function(){
+    if (editor.returnValue !== 'save') return;
+    savedLine = line.value.trim() || savedLine;
+    status.textContent = 'Opening line saved for this preview.';
+    edit.focus({preventScroll:true});
+  });
   function label(){ btn.classList.toggle('on', !audio.paused); listenLabel.textContent = audio.paused ? 'Play this story' : 'Pause'; hint.textContent = audio.paused ? 'Tap to hear it' : 'Playing. Tap to pause'; }
   function playStory(player, message) {
     player.play().catch(function(error) {
