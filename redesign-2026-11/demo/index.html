@@ -338,11 +338,11 @@
   .track strong { font:600 1.3rem/1.12 var(--display); } .track small { font:400 .8rem/1.4 var(--text); color:#6b6558; }
   .track .play { pointer-events:none; padding:.4rem 1rem .4rem .4rem; } .track .play .pi { width:2.3rem; height:2.3rem; } .track .play .pt b { font-size:.86rem; }
   /* 6. the end */
-  .low.end { background:var(--rose-deep) var(--paint) center/cover; background-blend-mode:multiply; color:var(--cream); text-align:center; padding-bottom:2.4rem; }
-  .low.end h2 { margin-left:auto; margin-right:auto; } .low.end .lede { color:#f4dcd2; margin-left:auto; margin-right:auto; }
-  .low.end .cta { background:var(--cream); color:var(--navy); margin-top:2rem; font-size:.95rem; padding:1.2rem 2rem; }
-  .foot { margin-top:clamp(4rem,10vh,6.5rem); padding-top:1.4rem; border-top:1px solid rgba(239,228,207,.3); display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; font:400 .86rem/1.4 var(--text); color:#f0c9c0; }
-  .foot a { color:var(--cream); text-decoration:none; } .foot a:hover { text-decoration:underline; } .foot span { flex-basis:100%; }
+  .low.end { background:var(--paper) var(--paint) center/cover; color:var(--navy-deep); text-align:center; padding-bottom:2.4rem; }
+  .low.end h2 { margin-left:auto; margin-right:auto; } .low.end .lede { color:var(--ink); margin-left:auto; margin-right:auto; }
+  .low.end .cta { background:var(--navy); color:var(--cream); margin-top:2rem; font-size:.95rem; padding:1.2rem 2rem; }
+  .foot { margin-top:clamp(4rem,10vh,6.5rem); padding-top:1.4rem; border-top:1px solid #c8bda5; display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; font:400 .86rem/1.4 var(--text); color:#585444; }
+  .foot a { color:var(--navy); text-decoration:none; } .foot a:hover { text-decoration:underline; } .foot span { flex-basis:100%; }
   @media (max-width:760px) {
     .two { grid-template-columns:1fr; } .cards, .tracks { grid-template-columns:1fr; } .notes, .rules { grid-template-columns:1fr; }
     .slip-wrap { margin:0 .4rem 2.6rem; } .tracks { max-width:19rem; margin-left:auto; margin-right:auto; } .lang-show { grid-template-columns:1fr; } .lang-show img { width:44vw; }
@@ -538,29 +538,75 @@
   #copy { z-index:8; padding-inline:.4rem; }
   #copy h1 { color:var(--cream); }
   #copy h1 em { color:#f2c14e; }
-  #copy .cta { margin-top:clamp(1rem,3vh,1.75rem); background:var(--cream); color:var(--navy); }
   .story-copy { z-index:4; width:min(92vw,57rem); }
   .story-copy p { font:600 clamp(2rem,4.25vw,4rem)/1.08 var(--display); color:var(--ink); max-width:none; margin:0; text-wrap:balance; }
   .story-copy .ln + .ln { margin-top:.26em; }
+  #hero .scn { opacity:var(--scenery,1); }
+  .creation { position:absolute; inset:0; z-index:4; pointer-events:none; }
+  .creation [hidden] { display:none; }
+  .creation h2 { position:absolute; inset:clamp(94px,15.5vh,128px) 1rem auto; text-align:center;
+    font:600 clamp(2.65rem,6vw,5.1rem)/.97 var(--display); text-wrap:balance; }
+  .creation .once { top:25%; max-width:18ch; margin-inline:auto; }
+  .create-form { position:absolute; left:62%; top:50%; width:min(30vw,22rem); min-height:18.75rem;
+    transform:translateY(-44%); padding:1.05rem 1.1rem; border:1px solid #c7bed5; border-radius:14px;
+    background:#f6eff8; box-shadow:0 4px 18px #34243c20; color:#25213b; }
+  .create-row { display:grid; grid-template-columns:1fr 1.5fr; gap:.65rem; }
+  .create-field { margin:0 0 .55rem; font:500 .8rem/1.25 var(--text); }
+  .create-field > span { display:block; margin-bottom:.23rem; }
+  .create-field > b { min-height:2.15rem; padding:.38rem .57rem; display:block; border-radius:7px;
+    background:#fffafc; border:1px solid #d7ccdf; font-size:1rem; font-weight:500; }
+  .create-field .choice { display:inline-block; border-color:#bba5d7; background:#eadaf3; }
+  .create-name i { display:inline-block; width:1px; height:1em; margin-left:2px; background:#5a4380; vertical-align:-.12em; }
+  .hero-detail { background:#e4ebae; color:#314312; box-shadow:0 0 .52em #a9ba52b3; border-radius:.2em; padding:0 .13em; }
+  .paper-rose { position:absolute; left:47%; bottom:23%; width:clamp(145px,25vh,235px); margin:0;
+    text-align:center; transform:translateX(-50%); }
+  .paper-rose svg { display:block; overflow:visible; width:100%; height:clamp(176px,36vh,335px);
+    filter:drop-shadow(0 5px 3px #412b2538); }
+  .paper-rose figcaption { display:inline-block; margin-top:.35rem; color:var(--ink); background:var(--cream);
+    padding:.3rem .83rem; font:500 1.2rem/1 var(--tag); transform:rotate(-3deg); box-shadow:0 2px 3px #412b252a; }
+  @media (max-width:760px) {
+    .creation h2 { top:clamp(86px,12vh,112px); }
+    .creation .once { top:23%; font-size:clamp(2.35rem,11vw,4rem); }
+    .paper-rose { left:50%; width:156px; bottom:calc(17rem + 9vh); }
+    .paper-rose svg { height:clamp(130px,25vh,214px); }
+    .create-form { inset:auto max(1rem, calc((100% - 23rem) / 2)) 1.45rem; width:auto;
+      transform:none; min-height:16.5rem; padding:.82rem .92rem; }
+    .create-field { margin-bottom:.45rem; }
+    .create-field > b { min-height:1.8rem; padding:.25rem .48rem; font-size:.92rem; }
+    .create-form .create-field:last-child { margin-bottom:0; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    #heroStage.creation-static { height:calc(100svh + 64rem); }
+    .creation { inset:39rem 0 auto; height:28rem; }
+    .creation h2 { top:0; font-size:clamp(2.55rem,6vw,4rem); }
+    .creation .once { top:auto; bottom:0; font-size:clamp(2rem,4.7vw,3.55rem); }
+    .creation .paper-rose { bottom:6rem; }
+    .creation .paper-rose svg { height:clamp(155px,25vh,230px); }
+    .creation .create-name i { display:none; }
+    #heroStage.creation-static .story-copy { top:clamp(19rem,40vh,23rem); }
+    #heroStage.creation-static .inv-foot { top:auto; bottom:clamp(1.6rem,6vh,4rem); transform:none; }
+    @media (min-width:761px) {
+      .creation { top:46rem; height:32rem; }
+      .creation .paper-rose { bottom:10rem; }
+      .creation .create-form { top:45%; }
+      #heroStage.creation-static { height:calc(100svh + 82rem); }
+      #heroStage.creation-static .book,
+      #heroStage.creation-static .inv-foot { top:calc(56% + 25rem); bottom:auto; transform:translateY(-50%); }
+    }
+    @media (max-width:760px) {
+      .creation { height:36rem; }
+      .creation .paper-rose { bottom:21rem; }
+      .creation .paper-rose svg { height:clamp(145px,21vh,190px); }
+      .creation .create-form { bottom:4.3rem; }
+      #heroStage.creation-static .book { top:calc(56% + 34rem); }
+      #heroStage.creation-static .inv-foot { bottom:1rem; }
+    }
+  }
   #curtain::after {
     content:""; position:absolute; inset:auto 0 0; height:clamp(3rem,13vh,7rem);
     z-index:7; pointer-events:none; background:linear-gradient(transparent,var(--navy-deep));
   }
-  @media (prefers-reduced-motion:reduce) {
-    #heroStage:has(#copy:not([inert])) { height:calc(100svh + 32rem); }
-    #heroStage:has(#copy:not([inert])) .story-copy { top:clamp(20.5rem,45vh,25rem); }
-    #heroStage:has(#copy:not([inert])) .book { top:calc(56% + 10rem); }
-    #heroStage:has(#copy:not([inert])) .inv-foot { top:auto; bottom:clamp(1.6rem,6vh,4rem); transform:none; }
-    @media (min-width:761px) {
-      #heroStage:has(#copy:not([inert])) { height:calc(100svh + 41rem); }
-      #heroStage:has(#copy:not([inert])) .story-copy { top:clamp(23rem,48vh,27rem); }
-      #heroStage:has(#copy:not([inert])) .book,
-      #heroStage:has(#copy:not([inert])) .inv-foot { top:calc(56% + 17.5rem); }
-      #heroStage:has(#copy:not([inert])) .inv-foot { bottom:auto; transform:translateY(-50%); }
-    }
-  }
   @media (max-width:760px) {
-    #copy .cta { letter-spacing:.105em; line-height:1.2; }
     .story-copy p { font-size:clamp(1.8rem,8.15vw,2.8rem); }
   }
 
@@ -678,6 +724,11 @@
   #sample-editor label, #sample-editor p { display:block; margin:.65rem 0; font:400 1rem/1.4 var(--text); }
   #sample-line { display:block; width:100%; padding:.65rem; font:400 1.02rem/1.35 var(--text); }
   @media (min-width:1000px) and (min-height:680px) { .inv-foot > p { font-size:clamp(1rem,1.45vw,1.18rem); margin-bottom:.55rem; } }
+  .approval-hint { display:flex; align-items:center; gap:.4rem; margin:.45rem 0 .35rem; color:#782e28; font:italic 600 1.05rem/1.2 var(--display); }
+  .approval-hint svg { width:1.45rem; height:1.45rem; transform:rotate(52deg); fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+  .approval-hint[hidden] { display:none; }
+  .unicorn-book img { outline:3px solid rgb(255 211 114 / var(--unicorn-glow,0)); }
+  .unicorn-title { position:absolute; left:50%; bottom:4%; width:max-content; max-width:160%; padding:.25rem .45rem; transform:translateX(-50%) translateZ(2px) rotate(-3deg); opacity:var(--unicorn-glow,0); background:#fff0bd; color:#382820; font:600 clamp(.77rem,1.4vh,1rem)/1.12 var(--display); text-align:center; box-shadow:0 2px 3px #38282055; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -695,7 +746,6 @@
   <div class="stage" id="heroStage">
     <div class="hero-copy" id="copy">
       <h1>Audio stories<br>where <em>they&rsquo;re</em> the hero.</h1>
-      <a class="cta" href="../../download.html">Download the Namesake app (beta)</a>
     </div>
     <div class="hero-copy story-copy" id="storyCopy">
       <p><span class="ln">Bedtime stories about your child and the people they love.</span>
@@ -703,6 +753,44 @@
         <span class="ln">You approve each one.</span>
         <span class="ln">They listen after lights out.</span></p>
     </div>
+    <section class="creation" id="createHero" aria-labelledby="createTitle" hidden>
+      <h2 id="createTitle">First, your hero.</h2>
+      <figure class="paper-rose">
+        <!-- Temporary cut-paper figure. Replace with the approved Rose layers. -->
+        <svg viewBox="0 0 140 235" role="img" aria-label="Temporary paper illustration of Rose in day clothes">
+          <g data-rose-layer="body" hidden stroke="#6a4941" stroke-width="1.4" stroke-linejoin="round">
+            <path fill="#bd7860" d="M45 121 29 158l7 6 16-22m42-21 21 34-9 7-19-25"/>
+            <path fill="#edd6b7" d="M49 174l-3 41h13l11-36m16-5 7 41H81l-13-37"/>
+            <path fill="#9b533e" d="M51 109h35l19 74-31 6-39-6z"/>
+            <path fill="#b96d4a" d="m52 133-10 43 29 6 27-5-11-44z"/>
+            <path fill="#333d55" d="M45 210h15v14l-27 1 1-8zm34 0h15l12 8v7l-28-2z"/>
+            <path fill="none" d="M59 139h19l-1 15-13 5-7-7z"/>
+          </g>
+          <g data-rose-layer="head" hidden>
+            <path fill="#eec0a0" stroke="#825b4c" stroke-width="1.4" d="M62 94h18v22l-9 7-9-7zm-25-38c0-23 17-36 35-36s34 13 34 35l-4 17c-1 19-16 32-32 32S43 91 39 73z"/>
+            <path fill="#8d5a4b" d="M62 79q10 6 19-3-3 13-12 11z"/>
+            <path fill="#a65e58" opacity=".5" d="M46 72q3-5 9-2t-3 7q-6 1-6-5m47 0q4-5 8-1t-1 7q-6 1-7-6"/>
+            <path stroke="#3f3634" stroke-linecap="round" stroke-width="4" d="M55 62v1m29-3v1"/>
+          </g>
+          <g data-rose-layer="hair" hidden stroke="#987045" stroke-width="1.4" stroke-linejoin="round">
+            <path fill="#d6ac66" d="M37 72c-12-17-8-46 6-55 17-15 41-15 57 1 13 12 16 39 6 56l-7-27-20-18-22 21-13 1z"/>
+            <path fill="#b68b50" d="m40 57 4 24-9 13-8-6 5-20m72-15 4 20 7 17-11 7-6-19z"/>
+            <path fill="none" d="M39 52q6-21 28-32m32 24Q95 24 82 19"/>
+          </g>
+        </svg>
+        <figcaption id="roseName" hidden>Rose</figcaption>
+      </figure>
+      <div class="create-form">
+        <p class="create-field"><span>Name</span><b class="create-name"><span id="typedRose">Rose</span><i aria-hidden="true"></i></b></p>
+        <div class="create-row" data-create-details hidden>
+          <p class="create-field"><span>Age</span><b class="choice">5</b></p>
+          <p class="create-field"><span>Pronouns</span><b class="choice">she/her</b></p>
+        </div>
+        <p class="create-field" data-create-details hidden><span>What do they look like?</span><b>blonde hair, cheeky smile</b></p>
+        <p class="create-field" id="createInterests" hidden><span>Tell us about them. What do they love?</span><b>Loves <mark class="hero-detail">pasta pesto</mark>, obsessed with <mark class="hero-detail">unicorns</mark></b></p>
+      </div>
+      <h2 class="once" id="createOnce" hidden>You do this once.<br>Then, every night&hellip;</h2>
+    </section>
     <div class="inv-head a"><p class="caps">Tonight&rsquo;s story</p><h2>First, the cast.</h2></div>
     <div class="inv-head b"><p class="caps">Made in about a minute</p><h2>Then we craft the story and a cover.</h2></div>
 
@@ -760,8 +848,9 @@
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
     </div>
     <p class="age-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>We run a second, separate check that every story suits your child&rsquo;s age.</p>
+      <div class="approval-hint" id="approve-hint"><svg viewBox="0 0 38 28" aria-hidden="true"><path d="M3 3c0 13 9 18 27 18m-7-7 9 7-8 5"/></svg>Try it. Approve to reveal the player.</div>
       <div class="review-actions">
-        <button type="button" id="approve-demo">Approve Story</button>
+        <button type="button" id="approve-demo" aria-describedby="approve-hint">Approve Story</button>
         <button type="button" id="edit-demo">Make edits</button>
       </div>
       <span id="review-status" role="status"></span>
@@ -796,7 +885,7 @@
     <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
     <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
       <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
-      <div class="cgrid"><div class="bk"><img src="assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="../../public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="../../public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
+      <div class="cgrid"><div class="bk"><img src="assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="assets-v3/cover-supper-spell-gentle.jpg" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk unicorn-book"><img src="../../public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"><span class="unicorn-title" aria-hidden="true">Rose and the Unicorn Mystery</span></div><div class="bk"><img src="assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="../../public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
     </div>
     <div class="night" id="night"></div>
     <div class="bedtime" id="bedtime"><img src="assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="assets-v3/cattail2.webp" alt=""></div>
@@ -947,38 +1036,81 @@
     if (sp) {
       var parts = sp.dataset.t.split('|'), label = document.createElement('b');
       label.textContent = parts[0];
-      sp.replaceChildren(label, document.createTextNode(parts[1]));
+      var plot = parts[1].split('pasta pesto');
+      if (f.classList.contains('trouble') && plot.length === 2) {
+        var pesto = document.createElement('mark');
+        pesto.className = 'hero-detail';
+        pesto.textContent = 'pasta pesto';
+        sp.replaceChildren(label, plot[0], pesto, plot[1]);
+      } else {
+        sp.replaceChildren(label, document.createTextNode(parts[1]));
+      }
       f._who = f._tag.querySelector('.who');
     }
   });
   var home = [];
   function castGeo(){ figs.forEach(function(f){ f.style.transform = ''; }); var W = stage.offsetWidth, H = stage.offsetHeight;
     home = figs.map(function(f){ return { dx: W / 2 - f.offsetLeft, dy: H * .56 - (f.offsetTop + f.offsetHeight / 2) }; }); }
-  var START = window.NS_START || 0;   // variant B's full page starts this act part-way through (at the book)
+  var START = window.NS_START || 0;   // variant B begins with the cast already in the forest
+  var creation = document.getElementById('createHero'), createTitle = document.getElementById('createTitle'),
+      createOnce = document.getElementById('createOnce'), createForm = creation.querySelector('.create-form'),
+      createDetails = creation.querySelectorAll('[data-create-details]'), createInterests = document.getElementById('createInterests'),
+      typedRose = document.getElementById('typedRose'), roseName = document.getElementById('roseName'),
+      paperRose = creation.querySelector('.paper-rose'), roseLayers = creation.querySelectorAll('[data-rose-layer]');
+  var staticCreation = reduced && !START;
+  stage.classList.toggle('creation-static', staticCreation);
+  function creationFrame(progress) {
+    var active = !START && (staticCreation || (progress >= .18 && progress < .434));
+    creation.hidden = !active;
+    if (!active) return;
+    var ending = !staticCreation && progress >= .365;
+    var length = staticCreation ? 4 : Math.floor(seg(progress, .193, .237) * 4);
+    var name = 'Rose'.slice(0, length);
+    if (typedRose.textContent !== name) typedRose.textContent = name;
+    createTitle.hidden = createForm.hidden = ending;
+    var dayExit = staticCreation ? 0 : ease(seg(progress, .355, .375));
+    paperRose.hidden = dayExit >= 1;
+    paperRose.style.opacity = 1 - dayExit;
+    paperRose.style.transform = 'translate3d(-50%,' + (-dayExit * 28) + 'vh,0)';
+    roseName.hidden = length < 4;
+    var nameLand = staticCreation ? 1 : out(seg(progress, .237, .252));
+    roseName.style.transform = 'translateY(' + ((nameLand - 1) * 24) + 'px) rotate(-3deg)';
+    createDetails.forEach(function(field){ field.hidden = !staticCreation && progress < .256; });
+    createInterests.hidden = !staticCreation && progress < .318;
+    roseLayers.forEach(function(layer, n){
+      layer.toggleAttribute('hidden', !staticCreation && progress < (n === 0 ? .256 : .277));
+    });
+    createOnce.hidden = !staticCreation && !ending;
+  }
   function castFrame(now){
-    var t = (now - T0) / 1000, p = reduced ? 1 : START + (1 - START) * prog(hero), W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
+    var progress = prog(hero), t = (now - T0) / 1000, W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
+    var p = reduced ? 1 : START ? START + (1 - START) * progress : seg(progress, .39, 1);
+    var intro = START || reduced ? 1 : seg(progress, 0, .18) * .223;
+    var I = function(x, y){ return seg(intro, x, y); };
+    creationFrame(progress);
     if (!(t > 0)) t = 0;
     var P = function(x, y){ return seg(p, x, y); };
     AT = wide ? ATd : ATm;
 
     // The opening sign leaves as the panels part. The stage copy arrives in complete sentences.
-    var opening = ease(P(0, .1)), th = Math.sin(opening * Math.PI) * 3 * Math.min(1, W / H * .8);
+    var opening = ease(I(0, .1)), th = Math.sin(opening * Math.PI) * 3 * Math.min(1, W / H * .8);
     hl.style.transform = 'translate3d(' + (-opening * 103) + '%,0,0) skewX(' + th + 'deg)';
     hr.style.transform = 'translate3d(' + (opening * 103) + '%,0,0) skewX(' + (-th) + 'deg)';
-    cue.style.opacity = 1 - P(0, .025);
+    cue.style.opacity = 1 - I(0, .025);
 
-    var sign = reduced && !START ? 1 : 1 - P(.025, .065);
+    var sign = reduced && !START ? 1 : 1 - I(.025, .065);
     copy.style.opacity = sign;
     copy.style.visibility = sign > 0 ? 'visible' : 'hidden';
     copy.inert = sign <= .55;
-    var staticIntro = reduced && !START, leaveCopy = staticIntro ? 0 : P(.185, .223);
+    var staticIntro = reduced && !START, leaveCopy = staticIntro ? 0 : I(.185, .223);
     storyCopy.style.opacity = 1 - leaveCopy;
-    storyCopy.style.visibility = p > .075 && leaveCopy < 1 ? 'visible' : 'hidden';
+    storyCopy.style.visibility = intro > .075 && leaveCopy < 1 ? 'visible' : 'hidden';
     lines.forEach(function(line, n){
-      var show = P(.075 + n * .016, .099 + n * .016);
+      var show = I(.075 + n * .016, .099 + n * .016);
       line.style.opacity = show;
       line.style.transform = 'translate3d(0,' + ((1 - show) * 8 - leaveCopy * 18) + 'px,0)';
     });
+    scene.style.setProperty('--scenery', P(.1, .15));
     headA.style.opacity = P(.23, .27) * (1 - P(.74, .78)); headB.style.opacity = P(.83, .87) * (1 - P(.925, .955));
 
     // .11 to .26: the forest builds, back to front; .7 onward it clears for the book
@@ -1004,6 +1136,14 @@
       }
       if (f._chip) f._chip.style.opacity = swap * gone;
       if (extra) { var glum = P(.855, .875); f.classList.toggle('sad', p > .86); f.style.opacity = vis * (1 - P(.888, .908)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
+      if (!START && !reduced && n === 0 && p < a + .045) {
+        var landing = out(seg(progress, .404, .466));
+        var center = W * (wide ? .47 : .5) - f.offsetLeft;
+        var toCast = 1 - ease(seg(progress, .466, .553));
+        f.style.opacity = seg(progress, .403, .417);
+        f.style.transform = 'translate3d(' + (center * toCast) + 'px,' + ((landing - 1) * 66) + 'vh,0)';
+        return;
+      }
       f.style.opacity = vis * (g < .93 ? 1 : 0);
       f.style.transform = 'translate3d(' + (h.dx * g + px(1) * (1 - g)) + 'px,calc(' + (h.dy * g) + 'px + ' + ((1 - inn) * 20 - Math.sin(g * Math.PI) * 16) + 'vh),0) scale(' + (1 - g * .62) + ') rotate(' + ((1 - Math.min(inn, 1)) * (n % 2 ? 7 : -7) + g * (n % 2 ? 200 : -200)) + 'deg)';
       if (!extra) bump += Math.sin(seg(g, .8, 1) * Math.PI);
@@ -1095,6 +1235,8 @@
       b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
     shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
     shelves.style.opacity = 1 - leave;
+    var unicornGlow = seg(c, wide ? .26 : .19, wide ? .3 : .235) * (1 - seg(c, wide ? .4 : .35, wide ? .46 : .41));
+    shelves.style.setProperty('--unicorn-glow', unicornGlow);
     night.style.opacity = dark * .88;
     var sr = libStage.getBoundingClientRect();
     picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = wide ? seg(c, .5 + pk.n * .025, .54 + pk.n * .025) : seg(c, .44 + pk.n * .025, .48 + pk.n * .025) * (1 - leave);
@@ -1125,6 +1267,11 @@
   placeReview();
   beside.addEventListener('change', placeReview);
   function jumpToReview() {
+    if (location.hash === '#create-hero' && !START) {
+      if (reduced) creation.scrollIntoView({block:'center'});
+      else scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .182);
+      return;
+    }
     if (location.hash !== '#review-story') return;
     if (beside.matches) scrollTo(0, hero.offsetTop + hero.offsetHeight - innerHeight);
     else review.scrollIntoView({block:'center'});
@@ -1135,6 +1282,7 @@
   var editor = document.getElementById('sample-editor'), line = document.getElementById('sample-line');
   var status = document.getElementById('review-status'), savedLine = line.value;
   approve.addEventListener('click', function(){
+    document.getElementById('approve-hint').hidden = true;
     approve.parentElement.hidden = true;
     btn.hidden = false;
     status.textContent = savedLine === line.defaultValue ? 'Story approved' : 'Edit approved. Hear the original recording below.';
