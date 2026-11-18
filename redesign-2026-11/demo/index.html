@@ -96,7 +96,6 @@
   .fig[data-name="Daddy"] { --silhouette-top:.025; }
   .fig:has(> img[src$="/fox.webp"]) { --silhouette-top:.125; }
   .fig.trouble { --silhouette-top:.185; }
-  .fig[data-name="Bad Man Matt"] { --silhouette-top:.055; }
   .fig[data-name="Wicked Witch"], .fig.extra { --silhouette-top:.015; }
   .fig .tagwrap::after { left:calc(50% - var(--td,0px)); top:auto; bottom:calc(-1.9rem - var(--lift,0rem) - var(--string-inset)); height:calc(1.9rem + var(--lift,0rem) + var(--string-inset)); transform:none; }
   .fig .tagwrap::before { top:calc(50% - .25rem); }
@@ -788,9 +787,9 @@
       <div class="fig" data-name="Rose" style="--x:22%; --xm:20%; --h:25vh; --hm:23vh; --tx:22px; --td:-5.4rem"><img src="assets-v3/rose.webp" alt="Paper figure of Rose in striped pyjamas"><div class="tagwrap"><div class="tagcard"><span data-t="The hero|Rose, aged 5. In her pyjamas, obviously."></span></div></div></div>
       <div class="fig" data-name="Foxy" style="--x:30%; --xm:33%; --h:13vh; --hm:12vh; --b:11vh; --td:1.2rem"><img src="assets-v3/fox.webp" alt="Foxy, a plush toy fox with stitched eyes"><div class="tagwrap"><div class="tagcard"><span data-t="Her cuddly fox|Foxy. Always by her side."></span></div></div></div>
       <div class="fig" data-name="Daddy" style="--x:42%; --xm:47%; --h:33vh; --hm:30vh; --lift:1.2rem"><img src="assets-v3/daddy.webp" alt="Paper figure of Daddy in odd socks"><div class="tagwrap"><div class="tagcard"><span data-t="The sidekick|Daddy. Curly hair, odd socks. Brave-ish."></span></div></div></div>
-      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:62%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:6vh"><img src="assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The plot|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
-      <div class="fig pot" style="--x:62%; --xm:83%; --h:15vh; --hm:12vh; --b:13vh; --bm:9.5vh"><img src="assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
-      <div class="fig" data-name="Bad Man Matt" style="--x:69%; --xm:81%; --h:34vh; --hm:31vh; --b:14vh; --bm:15vh; --lift:.4rem; --tx:-34px"><img src="assets-v3/matt.webp" alt="Paper figure of a tired villain in a doctor's coat smeared with pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|Bad Man Matt. Exceptionally greedy."></span></div></div></div>
+      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:61%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:1vh"><img src="assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The plot|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
+      <div class="fig pot" style="--x:62%; --xm:63%; --h:15vh; --hm:min(10vh, 20vw); --b:13vh; --bm:8vh"><img src="assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
+      <div class="fig" data-name="Wicked Witch" style="--x:max(74%, calc(62% + 16vh)); --xm:87%; --h:36vh; --hm:min(32vh, 69vw); --b:14vh; --bm:14vh; --lift:.4rem; --tx:min(-20px, calc(13vw - 84px))"><img src="assets-v3/wicked-witch-front.webp" alt="Front-facing paper figure of the Wicked Witch in a plum dress, holding a green potion"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|The Wicked Witch. Prime suspect in pesto pinching."></span></div></div></div>
       <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:9%; --h:13vh; --hm:9.5vh; --b:11vh; --bm:1.2vh; --tx:26px"><img class="happy" src="assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
       <div class="scn birch l"><img src="assets-v3/birch.webp" alt=""></div><div class="scn birch r"><img src="assets-v3/birch.webp" alt=""></div>
     </div>
@@ -1011,7 +1010,7 @@
   var coverImage = book.querySelector('.face.back img'), coverTargets = {};
   book.querySelectorAll('.cover-target').forEach(function(target){ coverTargets[target.dataset.k] = target; });
   var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
-  // when each member of the cast arrives (act progress), in scene order: Rose, Foxy, Daddy, the trouble, the pot, Matt, the badger
+  // when each member of the cast arrives (act progress), in scene order: Rose, Foxy, Daddy, the trouble, the pot, the Witch, the badger
   var ATd = [.25, .30, .36, .43, .49, .52, .585], ATm = [.25, .31, .37, .43, .47, .50, .57], AT = ATd;   // phones: spaced so each tag finishes typing before the next arrives
   var halo = document.getElementById('halo'), magicEl = document.getElementById('magic'), burstEl = document.getElementById('burst'), wsps = [].slice.call(hero.querySelectorAll('.wsp')), bstars = [].slice.call(burstEl.querySelectorAll('img'));
   var cast = figs.filter(function(f){ return f.dataset.name; });
@@ -1252,6 +1251,10 @@
   placeReview();
   beside.addEventListener('change', placeReview);
   function jumpToReview() {
+    if (location.hash === '#cast' && !START && !reduced) {
+      scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .755);
+      return;
+    }
     if (location.hash === '#create-hero' && !START) {
       if (reduced) creation.scrollIntoView({block:'center'});
       else scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .182);
