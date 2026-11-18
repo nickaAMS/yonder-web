@@ -807,9 +807,9 @@
         <div class="face back">
           <img src="assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="">
           <i class="cover-target" data-k="name" style="left:35%;top:8%"></i>
-          <i class="cover-target" data-k="baddy" style="left:84%;top:52%"></i>
-          <i class="cover-target" data-k="fox" style="left:28%;top:65%"></i>
-          <i class="cover-target" data-k="face" style="left:14%;top:59%"></i>
+          <i class="cover-target" data-k="baddy" style="left:95%;top:49%"></i>
+          <i class="cover-target" data-k="fox" style="left:32%;top:73.5%"></i>
+          <i class="cover-target" data-k="face" style="left:6%;top:58%"></i>
         </div>
       </div>
     </div>
@@ -1180,7 +1180,7 @@
       var rx = wide ? R + bw * .08 : R + 8, rw = wide ? Math.min(bw * .42, 150) : W - R - 14;
       // Label height on the cover and the curve's control point, expressed as fractions of the image bounds.
       var layout = { name:[wide ? .02 : -.02, .05, .1], face:[.42, .03, .46],
-                     baddy:[wide ? .82 : .5, 1.04, .72], fox:[.74, .09, .76] };
+                     baddy:[wide ? .82 : .5, 1.04, .72], fox:[.81, .12, .82] };
       cos.forEach(function(c, n){
         var key = c.dataset.k, guide = layout[key], onRight = key === 'baddy', arrow = coArrows[n];
         var available = onRight ? rw : lw;
