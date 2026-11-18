@@ -560,15 +560,16 @@
   .hero-detail { background:#e4ebae; color:#314312; box-shadow:0 0 .52em #a9ba52b3; border-radius:.2em; padding:0 .13em; }
   .paper-rose { position:absolute; left:47%; bottom:23%; width:clamp(145px,25vh,235px); margin:0;
     text-align:center; transform:translateX(-50%); }
-  .paper-rose svg { display:block; overflow:visible; width:100%; height:clamp(176px,36vh,335px);
+  .paper-rose .portrait { position:relative; width:100%; height:clamp(176px,36vh,335px);
     filter:drop-shadow(0 5px 3px #412b2538); }
+  .portrait img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
   .paper-rose figcaption { display:inline-block; margin-top:.35rem; color:var(--ink); background:var(--cream);
     padding:.3rem .83rem; font:500 1.2rem/1 var(--tag); transform:rotate(-3deg); box-shadow:0 2px 3px #412b252a; }
   @media (max-width:760px) {
     .creation h2 { top:clamp(86px,12vh,112px); }
     .creation .once { top:23%; font-size:clamp(2.35rem,11vw,4rem); }
     .paper-rose { left:50%; width:156px; bottom:calc(17rem + 9vh); }
-    .paper-rose svg { height:clamp(130px,25vh,214px); }
+    .paper-rose .portrait { height:clamp(130px,25vh,214px); }
     .create-form { inset:auto max(1rem, calc((100% - 23rem) / 2)) 1.45rem; width:auto;
       transform:none; min-height:16.5rem; padding:.82rem .92rem; }
     .create-field { margin-bottom:.45rem; }
@@ -581,7 +582,7 @@
     .creation h2 { top:0; font-size:clamp(2.55rem,6vw,4rem); }
     .creation .once { top:auto; bottom:0; font-size:clamp(2rem,4.7vw,3.55rem); }
     .creation .paper-rose { bottom:6rem; }
-    .creation .paper-rose svg { height:clamp(155px,25vh,230px); }
+    .creation .paper-rose .portrait { height:clamp(155px,25vh,230px); }
     .creation .create-name i { display:none; }
     #heroStage.creation-static .story-copy { top:clamp(19rem,40vh,23rem); }
     #heroStage.creation-static .inv-foot { top:auto; bottom:clamp(1.6rem,6vh,4rem); transform:none; }
@@ -596,7 +597,7 @@
     @media (max-width:760px) {
       .creation { height:36rem; }
       .creation .paper-rose { bottom:21rem; }
-      .creation .paper-rose svg { height:clamp(145px,21vh,190px); }
+      .creation .paper-rose .portrait { height:clamp(145px,21vh,190px); }
       .creation .create-form { bottom:4.3rem; }
       #heroStage.creation-static .book { top:calc(56% + 34rem); }
       #heroStage.creation-static .inv-foot { bottom:1rem; }
@@ -756,28 +757,11 @@
     <section class="creation" id="createHero" aria-labelledby="createTitle" hidden>
       <h2 id="createTitle">First, your hero.</h2>
       <figure class="paper-rose">
-        <!-- Temporary cut-paper figure. Replace with the approved Rose layers. -->
-        <svg viewBox="0 0 140 235" role="img" aria-label="Temporary paper illustration of Rose in day clothes">
-          <g data-rose-layer="body" hidden stroke="#6a4941" stroke-width="1.4" stroke-linejoin="round">
-            <path fill="#bd7860" d="M45 121 29 158l7 6 16-22m42-21 21 34-9 7-19-25"/>
-            <path fill="#edd6b7" d="M49 174l-3 41h13l11-36m16-5 7 41H81l-13-37"/>
-            <path fill="#9b533e" d="M51 109h35l19 74-31 6-39-6z"/>
-            <path fill="#b96d4a" d="m52 133-10 43 29 6 27-5-11-44z"/>
-            <path fill="#333d55" d="M45 210h15v14l-27 1 1-8zm34 0h15l12 8v7l-28-2z"/>
-            <path fill="none" d="M59 139h19l-1 15-13 5-7-7z"/>
-          </g>
-          <g data-rose-layer="head" hidden>
-            <path fill="#eec0a0" stroke="#825b4c" stroke-width="1.4" d="M62 94h18v22l-9 7-9-7zm-25-38c0-23 17-36 35-36s34 13 34 35l-4 17c-1 19-16 32-32 32S43 91 39 73z"/>
-            <path fill="#8d5a4b" d="M62 79q10 6 19-3-3 13-12 11z"/>
-            <path fill="#a65e58" opacity=".5" d="M46 72q3-5 9-2t-3 7q-6 1-6-5m47 0q4-5 8-1t-1 7q-6 1-7-6"/>
-            <path stroke="#3f3634" stroke-linecap="round" stroke-width="4" d="M55 62v1m29-3v1"/>
-          </g>
-          <g data-rose-layer="hair" hidden stroke="#987045" stroke-width="1.4" stroke-linejoin="round">
-            <path fill="#d6ac66" d="M37 72c-12-17-8-46 6-55 17-15 41-15 57 1 13 12 16 39 6 56l-7-27-20-18-22 21-13 1z"/>
-            <path fill="#b68b50" d="m40 57 4 24-9 13-8-6 5-20m72-15 4 20 7 17-11 7-6-19z"/>
-            <path fill="none" d="M39 52q6-21 28-32m32 24Q95 24 82 19"/>
-          </g>
-        </svg>
+        <div class="portrait" role="img" aria-label="Rose in terracotta dungarees, with a blonde bob and a cheeky smile">
+          <img data-rose-layer="head" src="assets-hero-rose/rose-head.webp" width="520" height="1500" alt="" hidden>
+          <img data-rose-layer="body" src="assets-hero-rose/rose-body.webp" width="520" height="1500" alt="" hidden>
+          <img data-rose-layer="smile" src="assets-hero-rose/rose-smile.webp" width="520" height="1500" alt="" hidden>
+        </div>
         <figcaption id="roseName" hidden>Rose</figcaption>
       </figure>
       <div class="create-form">
@@ -1077,8 +1061,9 @@
     roseName.style.transform = 'translateY(' + ((nameLand - 1) * 24) + 'px) rotate(-3deg)';
     createDetails.forEach(function(field){ field.hidden = !staticCreation && progress < .256; });
     createInterests.hidden = !staticCreation && progress < .318;
-    roseLayers.forEach(function(layer, n){
-      layer.toggleAttribute('hidden', !staticCreation && progress < (n === 0 ? .256 : .277));
+    roseLayers.forEach(function(layer){
+      var appearsAt = layer.dataset.roseLayer === 'smile' ? .287 : .256;
+      layer.hidden = !staticCreation && progress < appearsAt;
     });
     createOnce.hidden = !staticCreation && !ending;
   }
