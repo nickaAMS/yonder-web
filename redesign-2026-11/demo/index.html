@@ -757,6 +757,7 @@
       <h2 id="createTitle">First, your hero.</h2>
       <figure class="paper-rose">
         <div class="portrait" role="img" aria-label="Rose in terracotta dungarees, with a blonde bob and a cheeky smile">
+          <img data-rose-layer="brown" src="assets-hero-rose/rose-head-brown.webp" width="520" height="1500" alt="" hidden>
           <img data-rose-layer="head" src="assets-hero-rose/rose-head.webp" width="520" height="1500" alt="" hidden>
           <img data-rose-layer="body" src="assets-hero-rose/rose-body.webp" width="520" height="1500" alt="" hidden>
           <img data-rose-layer="smile" src="assets-hero-rose/rose-smile.webp" width="520" height="1500" alt="" hidden>
@@ -769,7 +770,7 @@
           <p class="create-field"><span>Age</span><b class="choice">5</b></p>
           <p class="create-field"><span>Pronouns</span><b class="choice">she/her</b></p>
         </div>
-        <p class="create-field" data-create-details hidden><span>What do they look like?</span><b>blonde hair, cheeky smile</b></p>
+        <p class="create-field" id="createLook" hidden><span>What do they look like?</span><b>blonde hair, cheeky smile</b></p>
         <p class="create-field" id="createInterests" hidden><span>Tell us about them. What do they love?</span><b>Loves <mark class="hero-detail">pasta pesto</mark>, obsessed with <mark class="hero-detail">unicorns</mark></b></p>
       </div>
       <h2 class="once" id="createOnce" hidden>You do this once.<br>Then, every night&hellip;</h2>
@@ -822,10 +823,10 @@
       <p class="co" data-k="face">Her face on the cover</p>
     </div>
     <div class="inv-foot" id="invFoot">
-      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where Bad Man Matt is stirring one enormous pot and planning to eat the lot for dessert. Rose has a plan, and it starts with making a baddy wash his hands.</p>
+      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where the Wicked Witch is stirring an enormous cauldron and planning to eat the lot for dessert. Rose has a plan, and it starts with getting the witch to wash her hands.</p>
       <div id="story-review" class="story-review">
       <div class="age-card" role="group" aria-label="What Namesake shows you before you approve">
-      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>Bad Man Matt tries to steal Rose&rsquo;s food</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>The Wicked Witch tries to steal Rose&rsquo;s food</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span>Ends: <b>Calm</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
@@ -1037,6 +1038,7 @@
   var START = window.NS_START || 0;   // variant B begins with the cast already in the forest
   var creation = document.getElementById('createHero'), createTitle = document.getElementById('createTitle'),
       createOnce = document.getElementById('createOnce'), createForm = creation.querySelector('.create-form'),
+      createLook = document.getElementById('createLook'), blondeHead = creation.querySelector('[data-rose-layer="head"]'),
       createDetails = creation.querySelectorAll('[data-create-details]'), createInterests = document.getElementById('createInterests'),
       typedRose = document.getElementById('typedRose'), roseName = document.getElementById('roseName'),
       paperRose = creation.querySelector('.paper-rose'), roseLayers = creation.querySelectorAll('[data-rose-layer]');
@@ -1059,10 +1061,15 @@
     var nameLand = staticCreation ? 1 : out(seg(progress, .237, .252));
     roseName.style.transform = 'translateY(' + ((nameLand - 1) * 24) + 'px) rotate(-3deg)';
     createDetails.forEach(function(field){ field.hidden = !staticCreation && progress < .256; });
+    createLook.hidden = !staticCreation && progress < .269;
     createInterests.hidden = !staticCreation && progress < .318;
+    var blonde = staticCreation ? 1 : ease(seg(progress, .269, .294));
+    // The bob occupies the upper third of the registered full-body image.
+    blondeHead.style.clipPath = blonde === 1 ? 'none' : 'inset(0 0 ' + (100 - 35 * blonde) + '% 0)';
     roseLayers.forEach(function(layer){
-      var appearsAt = layer.dataset.roseLayer === 'smile' ? .287 : .256;
-      layer.hidden = !staticCreation && progress < appearsAt;
+      var part = layer.dataset.roseLayer;
+      var appearsAt = part === 'smile' ? .30 : .256;
+      layer.hidden = (!staticCreation && progress < appearsAt) || (part === 'brown' && blonde === 1);
     });
     createOnce.hidden = !staticCreation && !ending;
   }
