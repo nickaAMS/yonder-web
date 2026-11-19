@@ -575,6 +575,17 @@
         d.innerHTML = '<img src="' + b.querySelector('img').getAttribute('src') + '" alt=""><b>' + b.dataset.n + '</b>'; libStage.insertBefore(d, bedtime); return { el:b, lit:d, n:+b.dataset.n }; }),
       libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
 
+  function placeCastLabels() {
+    figs.forEach(function(figure) {
+      if (!figure._tag) return;
+      var mobile = narrow.matches;
+      figure._tag.classList.toggle('mobile-cast-label', mobile);
+      (mobile ? stage : figure).appendChild(figure._tag);
+    });
+  }
+  placeCastLabels();
+  narrow.addEventListener('change', placeCastLabels);
+
   var bookSettled = false;
   function frame(){
     mx += (tx - mx) * .06; my += (ty - my) * .06;
@@ -585,8 +596,12 @@
     // the library fills, the lights go out, and one story plays
     var c = reduced ? .7 : prog(cur);
     var dark = ease(wide ? seg(c, .42, .56) : seg(c, .36, .46)), up = ease(seg(c, .42, .6)), leave = wide ? 0 : ease(seg(c, .6, .67)), bo = wide ? .027 : .02;   // phones: the cabinet leaves before the bed arrives
-    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(c, o, o + .1), k = back(fly), e = out(fly), rest = -16 * (1 - dark);
-      b.style.opacity = seg(c, o, o + .008); b.style.zIndex = fly < 1 ? 6 : 1;
+    var arrival = clamp((innerHeight - cur.getBoundingClientRect().top) / innerHeight);
+    var bookProgress = wide ? c : c + arrival * .12;
+    if (!wide) shelves.style.top = Math.max(libStage.offsetHeight * .6, libA.offsetTop + libA.offsetHeight + 24 + shelves.offsetHeight / 2) + 'px';
+    else shelves.style.top = '';
+    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(bookProgress, o, o + .1), k = back(fly), e = out(fly), rest = -16 * (1 - dark);
+      b.style.opacity = seg(bookProgress, o, o + .008); b.style.zIndex = fly < 1 ? 6 : 1;
       b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
     shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
     shelves.style.opacity = 1 - leave;
