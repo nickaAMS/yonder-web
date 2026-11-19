@@ -331,11 +331,11 @@
   .lang-show q { display:block; quotes:none; font:500 italic clamp(1.3rem,2.2vw,1.9rem)/1.25 var(--display); } .lang-show small { display:block; margin-top:.8rem; font:400 .8rem/1.4 var(--text); color:#aab0d6; }
   /* 5. hear more */
   .tracks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,2.4vw,2rem); margin-top:clamp(2rem,5vh,3.4rem); text-align:left; }
-  .track { display:flex; flex-direction:column; align-items:flex-start; gap:.9rem; background:var(--cream) var(--paint) center/cover; padding:1.1rem; border:0; cursor:pointer; color:var(--ink); box-shadow:0 4px 0 rgba(60,40,20,.2); text-align:left; }
+  .track { display:flex; flex-direction:column; align-items:flex-start; gap:.9rem; background:transparent; border:0; cursor:pointer; color:var(--cream); text-align:center; }
   .track:focus-visible { outline:2px solid var(--tomato); outline-offset:4px; }
   .track img { width:100%; aspect-ratio:2/3; object-fit:cover; border-radius:2px; }
-  .track strong { font:600 1.3rem/1.12 var(--display); } .track small { font:400 .8rem/1.4 var(--text); color:#6b6558; }
-  .track .play { pointer-events:none; padding:.4rem 1rem .4rem .4rem; } .track .play .pi { width:2.3rem; height:2.3rem; } .track .play .pt b { font-size:.86rem; }
+  .track strong { font:600 1.3rem/1.12 var(--display); } .track > small { font:400 .9rem/1.4 var(--text); color:#d5d3e2; }
+  .track .play { margin-top:auto; border:1px solid #9393af; pointer-events:none; padding:.4rem 1rem .4rem .4rem; } .track .play .pi { width:2.3rem; height:2.3rem; } .track .play .pt b { font-size:.86rem; }
   /* 6. the end */
   .low.end { color:var(--cream); text-align:center; padding-bottom:2.4rem; }
   .low.end h2 { margin-left:auto; margin-right:auto; } .low.end .lede { color:var(--ink); margin-left:auto; margin-right:auto; }
@@ -385,8 +385,8 @@
   .track.live { outline:3px solid var(--tomato); outline-offset:3px; }
 
   /* the three books stand at an angle with real thickness and lift a little under the pointer (carried over from the live site) */
-  .track { padding:1.4rem 1.1rem 1.1rem; }
-  .bko { --h:.55rem; position:relative; display:block; width:84%; margin:0 auto .5rem 6%; aspect-ratio:2/3; transform-style:preserve-3d;
+  .track { align-items:center; padding:1.4rem 1.1rem 1.1rem; }
+  .bko { --h:.55rem; position:relative; display:block; width:84%; margin:0 auto .5rem; aspect-ratio:2/3; transform-style:preserve-3d;
          transform:perspective(1400px) rotateY(-19deg) rotateX(2deg); transition:transform .3s ease; }
   .track .bko img { position:absolute; inset:0; width:100%; height:100%; aspect-ratio:auto; object-fit:cover; border-radius:2px 4px 4px 2px; transform:translateZ(var(--h));
                     box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
@@ -616,20 +616,28 @@
       var(--paper) var(--paint) center/cover;
     padding-top:clamp(11rem,30vh,17rem);
   }
-  #make h2 { margin:0 auto; text-align:center; max-width:22ch; }
+  #make .caps { text-align:center; }
+  #make h2 { margin:.8rem auto 0; text-align:center; max-width:22ch; }
   .phone-steps {
     display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(1rem,3.2vw,3rem);
     padding:0; margin:clamp(2rem,5vw,3.6rem) auto 0; list-style:none;
   }
   .phone-step {
     min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 3; gap:.9rem;
-    opacity:var(--step-visible,1); transform:translateY(var(--step-offset,0px));
   }
   .phone-step h3 { margin:0; font:600 clamp(1.4rem,2.4vw,1.85rem)/1.1 var(--display); }
   .iphone-crop { align-self:start; position:relative; isolation:isolate; margin:0; padding:clamp(5px,.52vw,8px) clamp(5px,.52vw,8px) 0; border:2px solid #797773; border-bottom:0; border-radius:13% 13% 0 0 / 11% 11% 0 0; background:#161615; box-shadow:inset 0 0 0 1px #bbb7b1, inset 0 0 0 3px #393937; overflow:hidden; }
   .iphone-crop img { width:100%; height:auto; border-radius:11.8% 11.8% 0 0 / 9.8% 9.8% 0 0; }
   .iphone-crop::after { content:""; position:absolute; left:50%; top:3.1%; transform:translateX(-50%); width:23%; height:4.8%; border-radius:999px; background:#080808; pointer-events:none; }
-  .phone-caption { margin-top:.2rem; font:500 clamp(1.15rem,1.6vw,1.35rem)/1.34 var(--text); color:var(--ink); text-wrap:pretty; }
+  .phone-caption { margin-top:.2rem; font:400 clamp(1.05rem,1.35vw,1.15rem)/1.48 var(--text); color:#40445b; text-wrap:pretty; }
+  @media (prefers-reduced-motion:no-preference) {
+    .entry-ready { opacity:0; translate:0 28px; }
+    .entry-ready.entry-visible {
+      opacity:1; translate:0 0;
+      transition:opacity .85s ease-out var(--entry-delay,0ms), translate 1s cubic-bezier(.2,.7,.2,1) var(--entry-delay,0ms);
+    }
+    .entry-ready:focus-within { opacity:1; translate:none; transition:none; }
+  }
   .make-details { display:inline-block; margin-top:1.75rem; color:var(--navy); text-underline-offset:.2rem; }
   #languages { text-align:center; padding-block:clamp(2.8rem,6vw,5rem); }
   #languages h2 { max-width:26ch; }
@@ -955,25 +963,26 @@
 <!-- ===== THE REST OF THE PAGE ===== -->
 <section class="low" id="make" aria-labelledby="make-title">
   <div class="low-in">
-    <h2 id="make-title">How you make tonight&rsquo;s story</h2>
+    <p class="caps">Real screens</p>
+    <h2 id="make-title">From idea to bedtime story, in the app.</h2>
     <ol class="phone-steps">
       <li class="phone-step">
-        <h3>Choose the cast</h3>
-        <div class="iphone-crop"><img src="assets-product/screen-cast.webp" width="1170" height="1372" alt="Cast picker showing Rose, Daddy, Foxy and the Wicked Witch." loading="lazy"></div>
-        <p class="phone-caption">Their favourite people and toys can star alongside them.</p>
+        <h3>Pick who&rsquo;s in it</h3>
+        <div class="iphone-crop"><img src="assets-product/screen-cast.webp?v=1d" width="1170" height="1372" alt="Rose, Daddy and Foxy are selected, with the Sock Monster chosen as the villain." loading="lazy"></div>
+        <p class="phone-caption">Rose stars, with Daddy and Foxy beside her. The Sock Monster is up to no good.</p>
       </li>
       <li class="phone-step">
-        <h3>Choose a mood and an idea</h3>
+        <h3>Give it a mood and an idea</h3>
         <div class="iphone-crop"><img src="assets-product/screen-idea.webp" width="1170" height="1372" alt="Magical is selected. The idea field describes Rose entering a unicorn in a pony show." loading="lazy"></div>
-        <p class="phone-caption">A unicorn at a pony show? Start with their idea.</p>
+        <p class="phone-caption">Tap &ldquo;Magical&rdquo;, then type or get your child to say the idea. Stuck? Tap Inspire me.</p>
       </li>
       <li class="phone-step">
-        <h3>Review, edit and approve</h3>
+        <h3>Read it, then say yes</h3>
         <div class="iphone-crop"><img src="assets-product/screen-review.webp" width="1170" height="1372" alt="The illustrated cover of A Sock for the Unicorn Show above the button to approve Rose’s story." loading="lazy"></div>
-        <p class="phone-caption">You get the final say before they listen.</p>
+        <p class="phone-caption">You see the cover and the whole story first. Nothing plays until you approve it.</p>
       </li>
     </ol>
-    <a class="make-details" href="how-it-works.html">More about how stories are made</a>
+    <a class="make-details" href="how-it-works.html">See how a story comes together &rarr;</a>
   </div>
 </section>
 
@@ -1003,7 +1012,7 @@
     <li><figure lang="it"><img src="../../public/covers/cover-it-nuvole.webp" width="832" height="1248" alt="Rose e la Chiave delle Nuvole" loading="lazy"><figcaption>Italiano</figcaption></figure></li>
     <li><figure lang="nl"><img src="../../public/covers/cover-nl-fluisterbos.webp" width="832" height="1248" alt="Rose en het Fluisterbos" loading="lazy"><figcaption>Nederlands</figcaption></figure></li>
   </ul>
-  <p class="lede">Every story is read aloud in a natural-sounding voice, in the language you choose.</p>
+  <p class="lede">Read aloud by a narrator who sounds at home in every language. Warm, unhurried, never robotic.</p>
 </div></section>
 
 <section class="low dark end" id="end"><div class="low-in">
@@ -1177,6 +1186,11 @@
     var naturalWidth = Math.max(150, Math.min(innerHeight * .27, 270));
     var coverLimit = (wide ? .62 * W - 164 : W - 152) / naturalWidth;
     bsc = Math.min(bsc, bsc + (coverLimit - bsc) * flip);
+    if (!wide && flip > 0) {
+      // Rest the cover just above the synopsis, allowing room for its painted shadow.
+      var restingCentre = foot.offsetTop - 32 - naturalWidth * 1.5 * bsc / 2;
+      by = flip * (book.offsetTop - restingCentre) * 100 / innerHeight;
+    }
     var big = flip >= 1 && bsc > 1;
     if (big) { book.style.setProperty('--bwd', 'calc(clamp(150px,27vh,270px) * ' + bsc + ')'); book.style.perspective = (1400 * bsc) + 'px'; bsc = 1; } else { book.style.removeProperty('--bwd'); book.style.perspective = ''; }
     book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + bsc + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
@@ -1336,27 +1350,30 @@
   function toggle(){ if (audio.paused) playStory(audio, listenLabel); else audio.pause(); }
   btn.addEventListener('click', toggle); now.addEventListener('click', toggle); audio.addEventListener('play', label); audio.addEventListener('pause', label);
 
-  /* Reveal each phone and its caption together, following the scroll in both directions. */
-  var phoneSteps = [].slice.call(document.querySelectorAll('.phone-step'));
-  var phoneFramePending = false;
-  function revealPhones() {
-    phoneFramePending = false;
-    var height = innerHeight;
-    phoneSteps.forEach(function(step) {
-      var p = out(clamp((height * .96 - step.getBoundingClientRect().top) / (height * .28)));
-      step.style.setProperty('--step-visible', p);
-      step.style.setProperty('--step-offset', (1 - p) * 30 + 'px');
+  // Start when enough of the item is on screen to see it move.
+  if ('IntersectionObserver' in window) {
+    var entryObserver = new IntersectionObserver(function(entries) {
+      var groupCounts = new Map();
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting || entry.intersectionRatio < .18) return;
+        var item = entry.target;
+        var group = item.parentElement;
+        var index = groupCounts.get(group) || 0;
+        item.style.setProperty('--entry-delay', index * 150 + 'ms');
+        item.classList.add('entry-visible');
+        groupCounts.set(group, index + 1);
+      });
+    }, { threshold:.18, rootMargin:'0px 0px -8% 0px' });
+    var exitObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) entry.target.classList.remove('entry-visible');
+      });
     });
-  }
-  function schedulePhoneReveal() {
-    if (phoneFramePending) return;
-    phoneFramePending = true;
-    requestAnimationFrame(revealPhones);
-  }
-  if (!reduced) {
-    addEventListener('scroll', schedulePhoneReveal, { passive:true });
-    addEventListener('resize', schedulePhoneReveal);
-    schedulePhoneReveal();
+    document.querySelectorAll('.phone-step, #hear .track, .language-gallery > li, #languages .lede').forEach(function(item) {
+      item.classList.add('entry-ready');
+      entryObserver.observe(item);
+      exitObserver.observe(item);
+    });
   }
 
   // hear more: one shared player; starting one story stops the other players on the page
