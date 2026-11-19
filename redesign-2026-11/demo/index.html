@@ -727,8 +727,16 @@
   .approval-hint { display:flex; align-items:center; gap:.4rem; margin:.45rem 0 .35rem; color:#782e28; font:italic 600 1.05rem/1.2 var(--display); }
   .approval-hint svg { width:1.45rem; height:1.45rem; transform:rotate(52deg); fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
   .approval-hint[hidden] { display:none; }
-  .unicorn-book img { outline:3px solid rgb(255 211 114 / var(--unicorn-glow,0)); }
-  .unicorn-title { position:absolute; left:50%; bottom:4%; width:max-content; max-width:160%; padding:.25rem .45rem; transform:translateX(-50%) translateZ(2px) rotate(-3deg); opacity:var(--unicorn-glow,0); background:#fff0bd; color:#382820; font:600 clamp(.77rem,1.4vh,1rem)/1.12 var(--display); text-align:center; box-shadow:0 2px 3px #38282055; pointer-events:none; }
+  #story-reader { width:min(42rem,94vw); max-height:86vh; max-height:86dvh; margin:auto; padding:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; border:1px solid #baad93; border-radius:.6rem; background:#fff6e5; color:#352d28; box-shadow:0 12px 48px #15172855; }
+  #story-reader::backdrop { background:#171d389e; }
+  #story-reader form { position:sticky; top:0; padding:.4rem .75rem; display:flex; justify-content:flex-end; background:#fff6e5; border-bottom:1px solid #ded2bb; }
+  #story-reader button { font:500 .95rem var(--text); min-height:44px; padding:0 .8rem; color:var(--navy); background:transparent; border:none; cursor:pointer; }
+  #story-reader article { padding:1.5rem clamp(1.15rem,5vw,3.75rem) 3rem; font:400 clamp(1.05rem,2vw,1.2rem)/1.62 Georgia,serif; }
+  #story-reader h2 { margin:0 0 1.4rem; text-wrap:balance; font:600 clamp(2rem,5vw,3.1rem)/1.02 var(--display); }
+  #story-reader p + p { margin-top:.72em; }
+  #story-reader article > p:first-of-type::first-letter { float:left; font:600 3.3em/.82 var(--display); margin:.075em .085em 0 0; color:#7d492c; }
+  .story-review .review-actions { gap:.4rem; }
+  .story-review .review-actions button { padding-inline:.65rem; }
 </style>
 </head>
 <body>
@@ -770,7 +778,7 @@
           <p class="create-field"><span>Age</span><b class="choice">5</b></p>
           <p class="create-field"><span>Pronouns</span><b class="choice">she/her</b></p>
         </div>
-        <p class="create-field" id="createLook" hidden><span>What do they look like?</span><b>blonde hair, cheeky smile</b></p>
+        <p class="create-field" id="createLook" hidden><span>What do they look like?</span><b>blonde hair<span id="look-smile" hidden>, cheeky smile</span></b></p>
         <p class="create-field" id="createInterests" hidden><span>Tell us about them. What do they love?</span><b>Likes <mark class="hero-detail">pasta pesto</mark>, loves unicorns, lives in <mark class="hero-detail">Amsterdam</mark></b></p>
       </div>
       <h2 class="once" id="createOnce" hidden>You do this once.<br>Then, every night&hellip;</h2>
@@ -835,6 +843,7 @@
       <div class="approval-hint" id="approve-hint"><svg viewBox="0 0 38 28" aria-hidden="true"><path d="M3 3c0 13 9 18 27 18m-7-7 9 7-8 5"/></svg>Try it. Approve to reveal the player.</div>
       <div class="review-actions">
         <button type="button" id="approve-demo" aria-describedby="approve-hint">Approve Story</button>
+        <button type="button" id="read-demo" aria-haspopup="dialog">Read full text</button>
         <button type="button" id="edit-demo">Make edits</button>
       </div>
       <span id="review-status" role="status"></span>
@@ -853,11 +862,80 @@
 </section>
 
 <div id="review-below"></div>
+<dialog id="story-reader" aria-labelledby="reader-title">
+  <form method="dialog"><button autofocus>Close</button></form>
+  <article>
+    <h2 id="reader-title">Rose and the Stolen Supper Spell</h2>
+    <p>It was pasta pesto night in Amsterdam, and pasta pesto night was the best night of the week.</p>
+    <p>Rose sat at the kitchen table with Foxy on her lap. Foxy was her cuddly fox, soft and orange, and he came everywhere.</p>
+    <p>Daddy opened the cupboard. Then he stopped.</p>
+    <p>"Rose," he said slowly. "The pesto jar is empty."</p>
+    <p>"Empty?"</p>
+    <p>"Empty. Not a scrape. Not a smear."</p>
+    <p>Outside, the lady next door shouted, "My pesto's gone!"</p>
+    <p>"Mine too!" called the man on the houseboat.</p>
+    <p>Rose looked out of the window. A line of footprints ran along the street. Small, pointy, and bright, bright green.</p>
+    <p>"Pesto footprints," said Rose.</p>
+    <p>Daddy sniffed. "They smell of basil. Someone has pinched the pesto."</p>
+    <p>Rose tucked Foxy under her arm. "Then we'll follow them."</p>
+    <p>They followed the green footprints along the canal and into the Enchanted Forest, where the leaves whispered as Rose went by.</p>
+    <p>Deep in the forest, the footprints led to a little stream.</p>
+    <p>Rose bent down and touched one of the green footprints. Some of the green came off on her finger. It glowed, and it tingled.</p>
+    <p>"Magic," said Daddy.</p>
+    <p>Rose dipped her finger in the stream. The green fizzed and went pop, like a bubble. Her finger was clean.</p>
+    <p>"Look, Daddy," said Rose. "Water washes the magic off."</p>
+    <p>She whispered to Foxy, "Let's remember that."</p>
+    <p>Across the stream, in a clearing, stood a cauldron bigger than a bath. It was full to the top with pesto.</p>
+    <p>Stirring it with a long wooden spoon was a witch. She had a patched red hat, wild white hair, and long green fingers that glowed.</p>
+    <p>"Hee hee hee," said the witch. "All the pesto in Amsterdam. And all of it mine."</p>
+    <p>"Excuse me," said Rose. "That's our pesto."</p>
+    <p>The witch peered down at her. "Not any more. I did a Supper Spell. I wiggled my magic green fingers, and every drop came to me. And tonight I'm eating the lot. For dessert."</p>
+    <p>"Pesto isn't pudding," said Rose.</p>
+    <p>"It is if I say it is," said the witch.</p>
+    <p>Rose looked at those glowing green fingers. Green, just like the magic on the footprints. She thought about the stream.</p>
+    <p>Daddy stepped forward in his most polite grown-up voice. "Now, madam. That pesto belongs to Amsterdam, and I must ask..."</p>
+    <p>"Boring!" said the witch, and she wiggled one finger at him.</p>
+    <p>Daddy opened his mouth. "Pesto," he said, very surprised. "Pesto. Pesto pesto pesto!"</p>
+    <p>Rose clapped a hand over her mouth. Daddy could only say one word.</p>
+    <p>"Much better," cackled the witch. "And because you interrupted, I'm not waiting. I'm eating it all right now."</p>
+    <p>Rose held Foxy up to her ear. Foxy was very good at ideas.</p>
+    <p>"Foxy says," said Rose, nice and loud, "that you can't eat with hands like those."</p>
+    <p>The witch stopped. "Like what?"</p>
+    <p>"Dirty ones. Everybody knows you wash your hands before you eat."</p>
+    <p>"Witches never wash," said the witch. "I haven't washed my hands for three hundred years."</p>
+    <p>Rose wrinkled her nose. "Then your pesto will taste of three hundred years of dirty hands. Toad slime. Mud. Old socks."</p>
+    <p>The witch sniffed her fingers. She pulled a face. "Bleurgh. Old socks."</p>
+    <p>"But if you wash them," said Rose, "Daddy says food tastes ten times better."</p>
+    <p>Daddy nodded very hard. "Pesto!"</p>
+    <p>The witch looked at her fingers. "Ten times better? Well. Just this once. Where does a witch wash?"</p>
+    <p>Rose pointed at the stream.</p>
+    <p>The witch put her hands in the stream. "Now what?"</p>
+    <p>"Scrub the fronts," said Rose.</p>
+    <p>The witch scrubbed. Her fingers began to fizz.</p>
+    <p>"Now the backs."</p>
+    <p>They went pop, pop, pop, like bubbles.</p>
+    <p>"And in between."</p>
+    <p>The last of the green fizzed away. Her hands were clean. And with the magic washed off, all her spells came undone.</p>
+    <p>Behind them, the cauldron gave an enormous gurgle. All at once, it was empty. Every drop of pesto had gone back home, to the jars of Amsterdam.</p>
+    <p>"My dessert!" cried the witch.</p>
+    <p>"Our dinner!" cried Daddy. Then he gasped. "Rose! I can say other words! Cupboard! Custard! Hooray!"</p>
+    <p>The witch sat down on the grass with a bump. "You tricked me," she said.</p>
+    <p>"A little bit," said Rose. "Sorry."</p>
+    <p>The witch sniffed. "I only wanted something nice for pudding."</p>
+    <p>Rose whispered to Foxy. Then she said, "You can come to our house on pasta night. We'll share. And afterwards there's proper pudding."</p>
+    <p>The witch's eyes went wide. "Proper pudding?"</p>
+    <p>"Strawberries," said Rose. "But you have to wash your hands first."</p>
+    <p>The witch held up her clean pink fingers, and she smiled a wobbly, crooked, very nearly kind smile.</p>
+    <p>Rose and Daddy walked home as the sun went down.</p>
+    <p>In every kitchen in Amsterdam, the pesto jars were full again. Daddy stirred some into the pasta, and Rose ate every last bit, with Foxy beside her bowl.</p>
+    <p>And for pudding, they had strawberries. Because pesto isn't pudding. Everybody knows that.</p>
+  </article>
+</dialog>
 <dialog id="sample-editor" aria-labelledby="editor-title">
   <form method="dialog">
     <h2 id="editor-title">Make edits</h2>
     <label for="sample-line">Try editing the opening line</label>
-    <textarea id="sample-line" rows="3" required maxlength="500">“Daddy, the pasta pesto is GONE,” said Rose.</textarea>
+    <textarea id="sample-line" rows="3" required maxlength="500">It was pasta pesto night in Amsterdam, and pasta pesto night was the best night of the week.</textarea>
     <p>Your edit stays in this preview. The sample plays the original recording.</p>
     <div class="review-actions"><button value="save">Save edit</button><button value="cancel" formnovalidate>Cancel</button></div>
   </form>
@@ -869,7 +947,7 @@
     <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
     <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
       <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
-      <div class="cgrid"><div class="bk"><img src="assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk unicorn-book"><img src="../../public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"><span class="unicorn-title" aria-hidden="true">Rose and the Unicorn Mystery</span></div><div class="bk"><img src="assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="../../public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
+      <div class="cgrid"><div class="bk"><img src="assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="../../public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="../../public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
     </div>
     <div class="night" id="night"></div>
     <div class="bedtime" id="bedtime"><img src="assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="assets-v3/cattail2.webp" alt=""></div>
@@ -1038,7 +1116,7 @@
   var START = window.NS_START || 0;   // variant B begins with the cast already in the forest
   var creation = document.getElementById('createHero'), createTitle = document.getElementById('createTitle'),
       createOnce = document.getElementById('createOnce'), createForm = creation.querySelector('.create-form'),
-      createLook = document.getElementById('createLook'), blondeHead = creation.querySelector('[data-rose-layer="head"]'),
+      createLook = document.getElementById('createLook'), smileWords = document.getElementById('look-smile'), blondeHead = creation.querySelector('[data-rose-layer="head"]'),
       createDetails = creation.querySelectorAll('[data-create-details]'), createInterests = document.getElementById('createInterests'),
       typedRose = document.getElementById('typedRose'), roseName = document.getElementById('roseName'),
       paperRose = creation.querySelector('.paper-rose'), roseLayers = creation.querySelectorAll('[data-rose-layer]');
@@ -1063,13 +1141,14 @@
     createDetails.forEach(function(field){ field.hidden = !staticCreation && progress < .256; });
     createLook.hidden = !staticCreation && progress < .269;
     createInterests.hidden = !staticCreation && progress < .318;
+    var smiling = staticCreation || progress >= .30;
+    smileWords.hidden = !smiling;
     var blonde = staticCreation ? 1 : ease(seg(progress, .269, .294));
     // The bob occupies the upper third of the registered full-body image.
     blondeHead.style.clipPath = blonde === 1 ? 'none' : 'inset(0 0 ' + (100 - 35 * blonde) + '% 0)';
     roseLayers.forEach(function(layer){
       var part = layer.dataset.roseLayer;
-      var appearsAt = part === 'smile' ? .30 : .256;
-      layer.hidden = (!staticCreation && progress < appearsAt) || (part === 'brown' && blonde === 1);
+      layer.hidden = (!staticCreation && progress < .256) || (part === 'smile' && !smiling) || (part === 'brown' && blonde === 1);
     });
     createOnce.hidden = !staticCreation && !ending;
   }
@@ -1226,8 +1305,6 @@
       b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
     shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
     shelves.style.opacity = 1 - leave;
-    var unicornGlow = seg(c, wide ? .26 : .19, wide ? .3 : .235) * (1 - seg(c, wide ? .4 : .35, wide ? .46 : .41));
-    shelves.style.setProperty('--unicorn-glow', unicornGlow);
     night.style.opacity = dark * .88;
     var sr = libStage.getBoundingClientRect();
     picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = wide ? seg(c, .5 + pk.n * .025, .54 + pk.n * .025) : seg(c, .44 + pk.n * .025, .48 + pk.n * .025) * (1 - leave);
@@ -1282,6 +1359,12 @@
     btn.hidden = false;
     status.textContent = savedLine === line.defaultValue ? 'Story approved' : 'Edit approved. Hear the original recording below.';
     btn.focus({preventScroll:true});
+  });
+  var reader = document.getElementById('story-reader');
+  document.getElementById('read-demo').addEventListener('click', function(){
+    reader.querySelector('article p').textContent = savedLine;
+    reader.showModal();
+    reader.scrollTop = 0;
   });
   edit.addEventListener('click', function(){
     line.value = savedLine; editor.returnValue = ''; editor.showModal(); line.focus();
