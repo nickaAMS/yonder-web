@@ -305,7 +305,7 @@
   <div class="tracks" id="tracks">
     <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="/public/stories/santosh-3-racing-tiger.mp3"><span class="bko"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
     <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/test/v1/assets-product/rose-and-the-stolen-supper-spell-sulafat-cackly-witch.mp3?v=repaired-v4"><span class="bko"><img src="/test/v1/assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>7:30</small></span></span></button>
-    <button class="track" type="button" data-id="rose-pencil-draws-real-things" data-src="/public/stories/rose-pencil-draws-real-things.mp3"><span class="bko"><img src="/public/stories/rose-pencil-draws-real-things.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Pencil That Draws Real Things</strong><small>For Rose &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:51</small></span></span></button>
+    <button class="track" type="button" data-id="martin-sofia-very-bad-hiders" data-src="/test/v1/assets-product/martin-sofia-and-the-very-bad-hiders-puck.mp3"><span class="bko"><img src="/test/v1/assets-product/martin-sofia-very-bad-hiders.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Martin, Sofia and the Very Bad Hiders</strong><small>For Martin and Sofia &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:52</small></span></span></button>
   </div>
   <div class="readalong" id="readalong" hidden>
     <p class="caps"><span id="raTitle"></span> &middot; read along</p>
@@ -720,7 +720,7 @@
     if (k >= 0) raBox.scrollTop = Math.max(0, raSpans[k].offsetTop - raBox.clientHeight * .32); }
   audio2.addEventListener('timeupdate', raTick); audio2.addEventListener('seeked', raTick);
   tracks.forEach(function(t){ t.addEventListener('click', function(){ tracks.forEach(function(x){ x.classList.toggle('live', x === t); });
-    if (raData) raShow(t.dataset.id); else fetch('/test/v1/assets-product/readalong.json?v=cackly-witch').then(function(r){ return r.json(); }).then(function(d){ raData = d; raShow(curTrack ? curTrack.dataset.id : t.dataset.id); }).catch(function(){ raEl.hidden = true; }); }); });
+    if (raData) raShow(t.dataset.id); else fetch('/test/v1/assets-product/readalong.json?v=martin-sofia').then(function(r){ return r.json(); }).then(function(d){ raData = d; raShow(curTrack ? curTrack.dataset.id : t.dataset.id); }).catch(function(){ raEl.hidden = true; }); }); });
 })();
 </script>
 </body>
