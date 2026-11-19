@@ -622,81 +622,37 @@
     padding:0; margin:clamp(2rem,5vw,3.6rem) auto 0; list-style:none;
   }
   .phone-step {
-    min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 4; gap:.9rem;
+    min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 3; gap:.9rem;
     opacity:var(--step-visible,1); transform:translateY(var(--step-offset,0px));
   }
   .phone-step h3 { margin:0; font:600 clamp(1.4rem,2.4vw,1.85rem)/1.1 var(--display); }
-  .story-phone {
-    position:relative; display:flex; flex-direction:column; max-width:none; min-height:24.5rem;
-    border:.38rem solid #10132e; border-radius:1.55rem; padding:.65rem .9rem 1.25rem;
-    background:#0f1230; color:#fff8f0; box-shadow:0 8px 20px #1e192d36, inset 0 0 0 1px #3c3c57;
-  }
-  .story-phone::after {
-    content:""; position:absolute; width:30%; height:3px; bottom:6px; left:35%; border-radius:3px; background:#b2b0c5;
-  }
-  .phone-bar {
-    display:grid; grid-template-columns:1rem 1fr 1rem; align-items:center; gap:.3rem; min-height:2.1rem;
-    border-bottom:1px solid #36385c; padding-bottom:.35rem; margin-bottom:.65rem; color:#fff8f0; text-align:center;
-  }
-  .phone-bar p { font:600 1.16rem/1.1 var(--display); }
-  .phone-bar span { font:500 1.6rem/.7 var(--text); color:#e8a838; }
-  .phone-eyebrow { margin:.35rem 0 .4rem; font:600 .68rem/1.1 var(--text); letter-spacing:.13em; text-transform:uppercase; color:#d7c8e7; }
-  .phone-cast { display:flex; gap:clamp(.4rem,2vw,1rem); margin:0 0 .7rem; }
-  .phone-character { display:grid; justify-items:center; align-content:start; gap:.3rem; width:3.5rem; font:500 .8rem/1.2 var(--text); text-align:center; }
-  .phone-character > span:first-child {
-    position:relative; display:grid; place-items:center; width:3rem; height:3rem;
-    background:#272959; border:1px solid #5c5c82; border-radius:100%;
-  }
-  .phone-character.is-selected > span:first-child { border:2px solid #e8a838; }
-  .phone-character img {
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center top; border-radius:inherit;
-  }
-  .phone-character img.rose-crop { object-position:center 27%; }
-  .phone-character i {
-    position:absolute; right:-.08rem; bottom:-.08rem; width:1rem; height:1rem; text-align:center;
-    background:#e8a838; color:#0f1230; border-radius:50%; font:700 .73rem/1rem var(--text);
-  }
-  .sr-text { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-  .phone-title { margin:.35rem 0 .55rem; font:600 1.55rem/1.05 var(--display); }
-  .phone-idea { margin-block:auto 1.25rem; }
-  .story-phone .field {
-    min-height:6.8rem; margin:0 0 .7rem; padding:.82rem; font-size:1.02rem; line-height:1.45;
-    background:#1a1f4b; color:#fff8f0;
-  }
-  .phone-actions { display:flex; gap:.55rem; }
-  .phone-actions span {
-    display:flex; flex:1; gap:.35rem; align-items:center; justify-content:center; min-height:2.3rem;
-    border:1px solid #585a84; border-radius:.7rem; font:600 .86rem/1.12 var(--text); text-align:center;
-  }
-  .phone-actions svg { width:1rem; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; }
-  .phone-actions b, .phone-actions .phone-inspire { color:#f3b950; }
-  .phone-actions .phone-back { flex:0 0 2.3rem; color:#a7a9ca; }
-  .phone-summary, .phone-excerpt { font:400 .86rem/1.43 var(--text); color:#f1e7ed; }
-  .phone-excerpt { margin:.65rem 0; padding:.62rem .68rem; background:#1a1f4b; border:1px solid #454770; border-radius:.7rem; }
-  .phone-excerpt b { display:inline-block; color:#eec681; margin-bottom:.18rem; }
-  .phone-primary {
-    display:grid; place-items:center; min-height:2.55rem; margin-top:auto; padding:.35rem .4rem;
-    border-radius:.8rem; background:#e8a838; color:#0f1230; font:700 .92rem/1.2 var(--text); text-align:center;
-  }
-  .phone-primary + .phone-actions { margin-top:.55rem; }
-  .phone-caption, .phone-edit-copy p { font:400 1.03rem/1.47 var(--text); color:#41465e; }
-  .phone-edit { display:grid; gap:.65rem; margin-top:.65rem; }
-  .phone-edit-note { display:block; color:#9f392a; font:600 italic 1.5rem/1.1 var(--display); margin-bottom:.35rem; }
-  .phone-edit .slip { padding:1rem 1.1rem; background:#f6e8cc; transform:rotate(-1deg); }
-  .phone-edit .slip s { background:none; text-decoration:line-through .12em #ae3e31; }
-  .phone-edit .slip ins { color:#9f392a; opacity:1; }
+  .iphone-crop { align-self:start; position:relative; isolation:isolate; margin:0; padding:clamp(5px,.52vw,8px) clamp(5px,.52vw,8px) 0; border:2px solid #797773; border-bottom:0; border-radius:13% 13% 0 0 / 11% 11% 0 0; background:#161615; box-shadow:inset 0 0 0 1px #bbb7b1, inset 0 0 0 3px #393937; overflow:hidden; }
+  .iphone-crop img { width:100%; height:auto; border-radius:11.8% 11.8% 0 0 / 9.8% 9.8% 0 0; }
+  .iphone-crop::after { content:""; position:absolute; left:50%; top:3.1%; transform:translateX(-50%); width:23%; height:4.8%; border-radius:999px; background:#080808; pointer-events:none; }
+  .phone-caption { font:400 1.03rem/1.47 var(--text); color:#41465e; }
   .make-details { display:inline-block; margin-top:1.75rem; color:var(--navy); text-underline-offset:.2rem; }
   #languages { text-align:center; padding-block:clamp(2.8rem,6vw,5rem); }
   #languages h2 { max-width:26ch; }
-  #languages .language-list { color:#dcc7a2; margin:1rem auto 0; font-size:.94rem; text-wrap:balance; }
+  #languages .language-gallery {
+    display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(.75rem,2.1vw,1.6rem);
+    max-width:60rem; margin:clamp(1.7rem,4vw,3rem) auto 0; padding:0; list-style:none;
+  }
+  #languages .language-gallery figure { margin:0; }
+  #languages .language-gallery img {
+    width:100%; height:auto; aspect-ratio:2/3; object-fit:contain;
+    border-radius:2px 5px 5px 2px; box-shadow:0 6px 12px #090b2490, -1px 0 #efe4cf70;
+  }
+  #languages .language-gallery figcaption {
+    margin-top:.65rem; color:var(--cream); font:500 clamp(.86rem,1.7vw,1rem)/1.3 var(--text);
+  }
+  @media (max-width:700px) {
+    #languages .language-gallery { grid-template-columns:repeat(3,minmax(0,1fr)); max-width:28rem; row-gap:1.15rem; }
+  }
   #languages .lede { margin-inline:auto; }
   .beta-short { display:none; }
   @media (max-width:760px) {
     .phone-steps { grid-template-columns:minmax(0,1fr); max-width:22rem; gap:2.25rem; }
     .phone-step { grid-row:auto; grid-template-rows:auto; gap:.75rem; }
-    .story-phone { width:100%; min-height:23rem; padding-inline:1.05rem; }
-    .idea-phone { min-height:21rem; }
-    .phone-summary, .phone-excerpt { font-size:.92rem; }
   }
   @media (max-width:460px) {
     .beta-full { display:none; }
@@ -1003,58 +959,18 @@
     <ol class="phone-steps">
       <li class="phone-step">
         <h3>Choose the cast</h3>
-        <div class="mock story-phone" role="group" aria-label="Example cast picker">
-          <div class="phone-bar"><span aria-hidden="true">&lsaquo;</span><p>A new story for Rose</p></div>
-          <p class="phone-eyebrow">Starring</p>
-          <div class="phone-cast">
-            <div class="phone-character is-selected"><span><img class="rose-crop" src="assets-v3/rosebust.webp" alt="" loading="lazy"><i aria-hidden="true">&#10003;</i></span>Rose<span class="sr-text">, selected</span></div>
-          </div>
-          <p class="phone-eyebrow">Companions</p>
-          <div class="phone-cast">
-            <div class="phone-character is-selected"><span><img src="assets-v3/daddy.webp" alt="" loading="lazy"><i aria-hidden="true">&#10003;</i></span>Daddy<span class="sr-text">, selected</span></div>
-            <div class="phone-character is-selected"><span><img src="assets-v3/fox.webp" alt="" loading="lazy"><i aria-hidden="true">&#10003;</i></span>Foxy<span class="sr-text">, selected</span></div>
-            <div class="phone-character"><span><img src="assets-product/biscuit.webp" alt="" loading="lazy"></span>Biscuit<span class="sr-text">, unselected</span></div>
-          </div>
-          <p class="phone-eyebrow">Villains</p>
-          <div class="phone-cast">
-            <div class="phone-character is-selected"><span><img src="assets-v3/wicked-witch-front.webp" alt="" loading="lazy"><i aria-hidden="true">&#10003;</i></span>Wicked Witch<span class="sr-text">, selected</span></div>
-            <div class="phone-character"><span><img src="assets-product/wolf.webp" alt="" loading="lazy"></span>Big Bad Wolf<span class="sr-text">, unselected</span></div>
-          </div>
-        </div>
+        <div class="iphone-crop"><img src="assets-product/screen-cast.webp" width="1170" height="1330" alt="Cast picker showing Rose, Daddy, Foxy and the Wicked Witch." loading="lazy"></div>
         <p class="phone-caption">Pick who&rsquo;s in it, from their favourite people to the toys on their pillow.</p>
       </li>
       <li class="phone-step">
-        <h3>Pick or add an idea</h3>
-        <div class="mock story-phone idea-phone" role="group" aria-label="Example story idea">
-          <div class="phone-bar"><span aria-hidden="true">&lsaquo;</span><p>A new story for Rose</p></div>
-          <div class="phone-idea">
-            <p class="phone-title">What&rsquo;s it about?</p>
-            <p class="field">All the pasta pesto has been stolen</p>
-            <div class="phone-actions"><span class="phone-back" aria-hidden="true">&larr;</span><span class="phone-inspire"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18v-2a6 6 0 1 1 6 0v2M9 19h6m-5 3h4"/></svg>Inspire me</span></div>
-          </div>
-          <p class="phone-primary">Write Rose&rsquo;s story</p>
-        </div>
-        <p class="phone-caption">Start with their idea, or tap Inspire me for a suggestion.</p>
+        <h3>Choose a mood and an idea</h3>
+        <div class="iphone-crop"><img src="assets-product/screen-idea.webp" width="1170" height="1420" alt="Magical is selected. The idea field describes Rose entering a unicorn in a pony show." loading="lazy"></div>
+        <p class="phone-caption">Set the mood, then add their idea or tap Inspire me.</p>
       </li>
-      <li class="phone-step phone-review">
+      <li class="phone-step">
         <h3>Review, edit and approve</h3>
-        <div class="mock story-phone" role="group" aria-label="Example story review">
-          <div class="phone-bar"><span aria-hidden="true">&lsaquo;</span><p>Review story</p></div>
-          <p class="phone-title">Rose and the Stolen Supper Spell</p>
-          <p class="phone-eyebrow">Story summary</p>
-          <p class="phone-summary">When all the pesto in Amsterdam goes missing, Rose, Daddy and Foxy follow green footprints to the Wicked Witch&rsquo;s cauldron.</p>
-          <p class="phone-excerpt"><b>Read full story</b><br>&ldquo;Wait,&rdquo; whispered Rose. &ldquo;Do you smell basil?&rdquo; Foxy raised his nose. From inside the cottage came a deep, gloopy bubble.</p>
-          <p class="phone-primary">Approve Story</p>
-          <div class="phone-actions"><span><b aria-hidden="true">&#8635;</b> Rewrite</span><span><b aria-hidden="true">&#9998;</b> Edit text</span></div>
-        </div>
+        <div class="iphone-crop"><img src="assets-product/screen-review.webp" width="1170" height="1242" alt="Story summary with controls to approve Rose’s story, rewrite it or edit the text." loading="lazy"></div>
         <p class="phone-caption">Change anything you like before your child hears it.</p>
-        <aside class="phone-edit" aria-label="Example parent edit">
-          <div class="phone-edit-copy">
-            <span class="phone-edit-note">A quick edit</span>
-            <p><strong>Scary bit</strong><br>The Wicked Witch catches Rose and Daddy by the cauldron. They talk their way out.</p>
-          </div>
-          <p class="slip">The witch stirred her cauldron of pesto with <s>a very sharp fork</s> <ins>one enormous spoon</ins>.</p>
-        </aside>
       </li>
     </ol>
     <a class="make-details" href="how-it-works.html">More about how stories are made</a>
@@ -1079,7 +995,14 @@
 <section class="low dark center" id="languages"><div class="low-in">
   <p class="caps">In six languages</p>
   <h2>Their adventure, in the language they know best.</h2>
-  <p class="language-list">English, French, German, Spanish, Italian and Dutch</p>
+  <ul class="language-gallery" role="list">
+    <li><figure lang="en"><img src="../../public/covers/cover-en-moonlit-map.webp" width="832" height="1248" alt="Rose and the Moonlit Map" loading="lazy"><figcaption>English</figcaption></figure></li>
+    <li><figure lang="fr"><img src="../../public/covers/cover-fr-lanterne.webp" width="832" height="1248" alt="Rose et la Lanterne Perdue" loading="lazy"><figcaption>Français</figcaption></figure></li>
+    <li><figure lang="de"><img src="../../public/covers/cover-de-sternenbruecke.webp" width="832" height="1248" alt="Rose und die Sternenbrücke" loading="lazy"><figcaption>Deutsch</figcaption></figure></li>
+    <li><figure lang="es"><img src="../../public/covers/cover-es-luciernagas.webp" width="832" height="1248" alt="Rose y el Jardín de las Luciérnagas" loading="lazy"><figcaption>Español</figcaption></figure></li>
+    <li><figure lang="it"><img src="../../public/covers/cover-it-nuvole.webp" width="832" height="1248" alt="Rose e la Chiave delle Nuvole" loading="lazy"><figcaption>Italiano</figcaption></figure></li>
+    <li><figure lang="nl"><img src="../../public/covers/cover-nl-fluisterbos.webp" width="832" height="1248" alt="Rose en het Fluisterbos" loading="lazy"><figcaption>Nederlands</figcaption></figure></li>
+  </ul>
   <p class="lede">Listen on a phone with the screen off, on Yoto, or through a compatible speaker.</p>
 </div></section>
 
