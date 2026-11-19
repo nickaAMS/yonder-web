@@ -1,79 +1,57 @@
 <!doctype html>
+<!--
+  Namesake website redesign: STYLE AND MOTION DEMO (2026-11-15). Not the site.
+  Shows three things for sign-off before the full build: the layered paper hero,
+  the inventory-to-book assembly, and the curtain close. Self-contained scroll
+  driver; the full build moves this onto the scroll-craft engine.
+  Serve from the yonder-web root so /public/ resolves.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How every story is made | Namesake</title>
 <meta name="robots" content="noindex">
-<title>How it works | Namesake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/test/v1/craft-site.css?v=painted-programme">
 <style>
-  :root { color:#252640; background:#f6edde; font:1rem/1.55 system-ui,sans-serif; }
-  body { max-width:64rem; padding:1rem clamp(1rem,5vw,4rem) 3rem; margin:auto; }
-  a { color:#263664; text-underline-offset:.18em; }
-  header { padding-block:1rem; }
-  h1,h2,h3 { color:#252640; font-family:Georgia,serif; line-height:1.2; }
-  section { border-top:1px solid #ccbaa4; padding-block:1rem; }
-  .caps,.cap b { display:none; }
-  .low h2 { margin-bottom:.55rem; }
-  .low p { max-width:65ch; }
-  .mocks, .devgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr)); gap:1rem; padding:0; list-style:none; }
-  .mocks li,.devgrid li { padding:1rem; border:1px solid #d8c9b4; background:#fff9ee; }
-  .mock { padding:.85rem; background:#171d38; color:#fff8f0; border-radius:.5rem; font-size:.86rem; }
-  .mock p { margin:.3rem 0; }
-  .tiles,.worlds { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.35rem; margin-top:.6rem; }
-  .tiles img,.worlds img { width:100%; border-radius:.3rem; }
-  .chips { display:flex; flex-wrap:wrap; gap:.35rem; margin-bottom:.7rem; }
-  .chips span { border:1px solid #8b8ca6; border-radius:1rem; padding:.2rem .5rem; }
-  .chips .on { color:#171d38; background:#e8a838; }
-  .nar svg { height:1em; vertical-align:-.1em; }
-  .rules { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr)); gap:0 1.5rem; }
-  .devgrid img { max-width:100%; height:5rem; object-fit:contain; object-position:left; }
-  .devgrid em { display:block; margin-top:.25rem; font:500 .85rem/1.3 system-ui,sans-serif; }
+body { background:var(--paper); }
+.craft-surface { padding:0; }
+.craft-page { padding:8rem clamp(1.2rem,5vw,4rem) 4.5rem; max-width:70rem; margin:auto; }
+.craft-page > header { max-width:44rem; margin:0 auto 3rem; text-align:center; }
+.craft-page .caps { color:#c6bad7; font-family:var(--tag); }
+.craft-page h1 { font:600 clamp(2.8rem,6vw,5rem)/1 var(--display); margin:.8rem 0 1.25rem; text-wrap:balance; }
+.craft-page .intro { font:400 1.18rem/1.55 var(--text); color:#d9d7e4; }
+.craft-page-cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.6rem; }
+.craft-page .card h2 { font:600 1.9rem/1.05 var(--display); margin:0 0 .75rem; }
+.craft-page .card { padding:2rem; color:var(--ink); }
+.craft-page .card p { font-size:1.1rem; }
+.craft-page .card:last-child { grid-column:1/-1; }
+@media(max-width:600px) { .craft-page-cards { grid-template-columns:1fr; } .craft-page .card { padding:1.4rem; transform:none; } }
 </style>
-</head>
-<body>
-<header><a href="/test/v1">Back to Namesake</a><h1>How it works</h1></header>
-<main>
-<section id="story-options">
-  <h2>More ways to make it their story</h2>
-  <ul class="mocks"><li><div class="mock"><p class="mk-h">The theme or mood</p><div class="tiles"><img class="on" src="/test/assets-v3/mood-magical.webp" alt="Magical" loading="lazy"><img src="/test/assets-v3/mood-silly.webp" alt="Funny" loading="lazy"><img src="/test/assets-v3/mood-quest.webp" alt="Quest" loading="lazy"><img src="/test/assets-v3/mood-fairy-tale.webp" alt="Fairy Tale" loading="lazy"><img src="/test/assets-v3/mood-pirates.webp" alt="Pirates" loading="lazy"><img src="/test/assets-v3/mood-dinosaurs.webp" alt="Dinosaurs" loading="lazy"></div></div>
-          <div class="cap"><h3>The theme or mood</h3><p>Magical, funny, a quest, pirates, dinosaurs. Tap a picture, or add a theme of your own.</p></div></li>
-    <li><div class="mock"><p class="mk-t">Choose a classic tale</p><p class="mk-s">Set the story in a world you already know</p><div class="worlds"><img class="on" src="/test/assets-v3/world-peter-pan.webp" alt="Peter Pan" loading="lazy"><img src="/test/assets-v3/world-alice-in-wonderland.webp" alt="Alice in Wonderland" loading="lazy"><img src="/test/assets-v3/world-the-jungle-book.webp" alt="The Jungle Book" loading="lazy"><img src="/test/assets-v3/world-the-wind-in-the-willows.webp" alt="The Wind in the Willows" loading="lazy"></div></div>
-        <div class="cap"><h3>Set it in a classic world</h3><p>Peter Pan, Alice in Wonderland, The Jungle Book and more. Their own adventure, in a world you already know.</p></div></li>
-    <li><div class="mock"><p class="mk-h">Narrator</p><div class="chips"><span>Default</span><span class="on">Female</span><span>Male</span></div>
-          <p class="mk-h mk-2">Accent</p><div class="chips"><span class="on">British</span><span>American</span><span>Irish</span><span>Australian</span><span>Indian</span></div>
-          <p class="mk-h mk-2">Your voices</p><p class="nar rec"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#f2b33d"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linecap="round"/></svg>Record a voice</p></div>
-        <div class="cap"><h3>Narrated in a voice you choose</h3><p>A natural voice of your choice: male or female, British, American, Irish, Australian or Indian. Or even your own, from a small sample.</p></div></li>
-
-  </ul>
-</section>
-<section class="low tint" id="craft"><div class="low-in">
-  <p class="caps">Rules the AI can&rsquo;t break</p>
-  <h2>How a Namesake story is built.</h2>
-  <p class="lede">Every story is built to a written specification, shaped to a child of exactly their age: easy enough to follow, surprising enough to be worth hearing twice.</p>
-  <div class="rules">
-    <div><h3>You set the brief.</h3><p>Choose the theme and the characters, and add the idea itself if they have given you one. A narwhal who is also a firefighter, for instance. And unicorns. Always unicorns.</p></div>
-    <div><h3>Nine story shapes.</h3><p>Every story is built on one of nine named shapes, from a quiet wander to a small quest, with a gentler set kept for two to five year olds.</p></div>
-    <div><h3>How much goes wrong is a choice.</h3><p>Every story needs something to go a little wrong. How much, and how frightening, is set by age, and for the under-threes it is turned right down.</p></div>
-    <div><h3>It resolves before it ends.</h3><p>The ending has to settle the story&rsquo;s central problem before the final beat. No cliffhangers at bedtime.</p></div>
-    <div><h3>Vocabulary and pacing by age.</h3><p>Sentence length and word choice shift by age band, rather than one reading level for everyone.</p></div>
-    <div><h3>Villains stay silly.</h3><p>If a young child&rsquo;s story has a villain at all, they are bumbling rather than frightening.</p></div>
-    <div><h3>Finished before it plays.</h3><p>The story is written and finished in advance, never generated live while they listen. Nothing changes once you have approved it.</p></div>
-  </div>
-</div></section>
-
-<section class="low" id="devices"><div class="low-in">
-  <p class="caps">Screen stays off</p>
-  <h2>Plays wherever bedtime happens.</h2>
-  <p class="lede">Choose tonight&rsquo;s stories on your phone, then put it down. Namesake plays through the speaker they already have, at home or on the way there.</p>
-  <ul class="devgrid">
-    <li><img src="/test/assets-v3/dev-phone-off.webp" alt="" loading="lazy"><h3>Your phone, screen off</h3><p>Lock it and turn it face down. The queue keeps playing, then stops.</p></li>
-    <li><img src="/test/assets-v3/dev-player.webp" alt="" loading="lazy"><h3>Yoto</h3><p>Their stories on the player they already love.</p></li>
-    <li><img src="/test/assets-v3/dev-speaker.webp" alt="" loading="lazy"><h3>Alexa</h3><p>Ask Alexa for tonight&rsquo;s story.</p></li>
-    <li><img src="/test/assets-v3/dev-nest.webp" alt="" loading="lazy"><h3>Google Cast</h3><p>Send it to a Nest or any Cast speaker.</p></li>
-    <li><img src="/test/assets-v3/dev-box.webp" alt="" loading="lazy"><h3>Tonies <em>Coming soon</em></h3><p>Their stories on a Creative Tonie.</p></li>
-    <li><img class="wide" src="/test/assets-v3/dev-car.webp" alt="" loading="lazy"><h3>In the car</h3><p>Android Auto and Apple CarPlay. An alternative to a screen in the headrest, or the same album for the fortieth time.</p></li>
-  </ul>
-</div></section>
-</main>
-</body>
-</html>
+</head><body>
+<div class="grain" aria-hidden="true"></div>
+<div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
+      <a class="wordmark" href="/test/v1"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
+      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/test/download">Get the App</a></div>
+</div>
+<div class="low dark craft-surface">
+<!-- 1. THE STORY IS CAST -->
+<main id="craft" class="craft-page">
+<header><p class="caps">The programme</p><h1>How every story is made</h1><p class="intro">Every story is shaped for your child&rsquo;s age, with words they can follow, a little adventure and a settled ending. You read and approve it before they listen.</p></header>
+<div class="craft-page-cards">
+<div class="card"><h2>Vocabulary and pacing by age.</h2><p>Sentence length and word choice shift by age band, rather than one reading level for everyone.</p></div>
+<div class="card"><h2>How much goes wrong is a choice.</h2><p>Every story needs something to go a little wrong. How much, and how frightening, is set by age, and for the under-threes it is turned right down.</p></div>
+<div class="card"><h2>It resolves before it ends.</h2><p>The ending has to settle the story&rsquo;s central problem before the final beat. No cliffhangers at bedtime.</p></div>
+<div class="card"><h2>Finished before it plays.</h2><p>The story is written and finished in advance, never generated live while they listen. Nothing changes once you have approved it.</p></div>
+<div class="card"><h2>Villains stay silly.</h2><p>If a young child&rsquo;s story has a villain at all, they are bumbling rather than frightening.</p></div>
+<div class="card"><h2>You set the brief.</h2><p>Choose the theme and the characters, and add the idea itself if they have given you one. A narwhal who is also a firefighter, for instance. And unicorns. Always unicorns.</p></div>
+<div class="card"><h2>Nine story shapes.</h2><p>Every story is built on one of nine named shapes, from a quiet wander to a small quest, with a gentler set kept for two to five year olds.</p></div></div></main>
+</div>
+<section class="low end" id="end"><div class="low-in">
+  <h2>Make their first story tonight.</h2>
+  <a class="cta" href="/test/download"><span class="beta-full">Download the Namesake app (beta)</span><span class="beta-short">Download the app (beta)</span></a>
+  <footer class="foot"><a href="/test/v1/how-it-works.html">How we shape their stories</a><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></footer>
+</div></section></body></html>
