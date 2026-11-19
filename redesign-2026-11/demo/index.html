@@ -537,9 +537,32 @@
   #copy { z-index:8; padding-inline:.4rem; }
   #copy h1 { color:var(--cream); }
   #copy h1 em { color:#f2c14e; }
-  .story-copy { z-index:4; width:min(92vw,57rem); }
-  .story-copy p { font:600 clamp(2rem,4.25vw,4rem)/1.08 var(--display); color:var(--ink); max-width:none; margin:0; text-wrap:balance; }
-  .story-copy .ln + .ln { margin-top:.26em; }
+  .story-copy { --th:clamp(4rem,5.2vw,4.6rem); z-index:4; width:min(92vw,57rem); }
+  .story-copy h2 { font:600 clamp(2.4rem,4.8vw,4.4rem)/1.04 var(--display); max-width:20ch; margin:0 auto clamp(1.5rem,4vh,3rem); text-wrap:balance; }
+  .story-beats { width:fit-content; max-width:100%; list-style:none; margin:0 auto; padding:0; display:grid; gap:clamp(.9rem,2.2vh,1.4rem); justify-items:start; text-align:left; }
+  .story-beats .story-beat { display:grid; grid-template-columns:var(--th) auto; align-items:center; gap:clamp(.9rem,1.6vw,1.3rem); }
+  .story-beat p { margin:0; color:inherit; font:600 clamp(1.7rem,2.9vw,2.6rem)/1.05 var(--display); }
+  .story-th { width:var(--th); height:var(--th); position:relative; display:grid; place-items:center; }
+
+  /* 1. the child's face, cropped from a real cover */
+  .story-face { width:78%; height:100%; border-radius:2px 3px 3px 2px; transform:rotate(-4deg);
+          background:url(assets-v3/cover-supper-spell-cutpaper.jpg) 12% 54% / 420% auto no-repeat;
+          box-shadow:inset 2px 0 0 rgba(0,0,0,.2), 0 3px 0 rgba(60,40,20,.22); }
+
+  /* 2. a rubber "Approved" stamp, the word in green, in the page's typewriter face */
+  .story-stamp { padding:.36rem .3rem .28rem; border:2.5px solid #4c7a47; border-radius:4px; color:#4c7a47;
+           font:400 calc(var(--th) * .16)/1 var(--tag); letter-spacing:.02em; text-transform:uppercase;
+           transform:rotate(-10deg); box-shadow:inset 0 0 0 2px var(--paper), inset 0 0 0 3.5px #4c7a47; }
+
+  /* 3. lights out, with the speaker playing */
+  .story-night { width:100%; height:100%; border-radius:6px; overflow:hidden; position:relative;
+           background:var(--navy-deep) var(--paint) center/cover; background-blend-mode:multiply; box-shadow:0 3px 0 rgba(8,12,30,.28); }
+  .story-night .moon { position:absolute; width:26%; top:9%; left:11%; }
+  .story-night .spk { position:absolute; width:36%; left:22%; bottom:9%; filter:brightness(.88); }
+  .story-night svg { position:absolute; width:34%; right:8%; bottom:22%; }
+  .story-night .star { position:absolute; width:2px; height:2px; border-radius:50%; background:#f2e6c9; opacity:.8; }
+
+
   #hero .scn { opacity:var(--scenery,1); }
   .creation { position:absolute; inset:0; z-index:4; pointer-events:none; }
   .creation [hidden] { display:none; }
@@ -577,16 +600,16 @@
   }
   @media (prefers-reduced-motion:reduce) {
     #heroStage.creation-static { height:calc(100svh + 64rem); }
-    .creation { inset:39rem 0 auto; height:28rem; }
+    .creation { inset:42rem 0 auto; height:28rem; }
     .creation h2 { top:0; font-size:clamp(2.55rem,6vw,4rem); }
     .creation .once { top:auto; bottom:0; font-size:clamp(2rem,4.7vw,3.55rem); }
     .creation .paper-rose { bottom:6rem; }
     .creation .paper-rose .portrait { height:clamp(155px,25vh,230px); }
     .creation .create-name i { display:none; }
-    #heroStage.creation-static .story-copy { top:clamp(19rem,40vh,23rem); }
+    #heroStage.creation-static .story-copy { top:15rem; }
     #heroStage.creation-static .inv-foot { top:auto; bottom:clamp(1.6rem,6vh,4rem); transform:none; }
     @media (min-width:761px) {
-      .creation { top:46rem; height:32rem; }
+      .creation { top:51rem; height:32rem; }
       .creation .paper-rose { bottom:10rem; }
       .creation .create-form { top:45%; }
       #heroStage.creation-static { height:calc(100svh + 82rem); }
@@ -607,7 +630,7 @@
     z-index:7; pointer-events:none; background:linear-gradient(transparent,var(--navy-deep));
   }
   @media (max-width:760px) {
-    .story-copy p { font-size:clamp(1.8rem,8.15vw,2.8rem); }
+    .story-beat p { font-size:1.55rem; }
   }
 
   #make {
@@ -720,10 +743,26 @@
       <h1>Audio stories<br>where <em>they&rsquo;re</em> the hero.</h1>
     </div>
     <div class="hero-copy story-copy" id="storyCopy">
-      <p><span class="ln">Bedtime stories about your child and the people they love.</span>
-        <span class="ln">Their faces on the cover.</span>
-        <span class="ln">You approve each one.</span>
-        <span class="ln">They listen after lights out.</span></p>
+      <h2 class="ln">Bedtime stories about your child and the people they love.</h2>
+      <ul class="story-beats">
+        <li class="story-beat ln">
+          <span class="story-th" aria-hidden="true"><span class="story-face"></span></span>
+          <p>Their faces on the cover.</p>
+        </li>
+        <li class="story-beat ln">
+          <span class="story-th" aria-hidden="true"><span class="story-stamp">Approved</span></span>
+          <p>You approve each one.</p>
+        </li>
+        <li class="story-beat ln">
+          <span class="story-th" aria-hidden="true"><span class="story-night" aria-hidden="true">
+            <span class="star" style="left:52%;top:14%"></span><span class="star" style="left:74%;top:26%"></span><span class="star" style="left:86%;top:10%"></span>
+            <img class="moon" src="assets-v3/moon.webp" alt="">
+            <img class="spk" src="assets-v3/spk-cube.png" alt="">
+            <svg viewBox="0 0 20 24" fill="none" stroke="#f2c14e" stroke-width="1.8" stroke-linecap="round"><path d="M3 8a6 6 0 0 1 0 8"/><path d="M8 4.5a11 11 0 0 1 0 15"/><path d="M13 1.5a15 15 0 0 1 0 21" opacity=".6"/></svg>
+          </span></span>
+          <p>They listen after lights out.</p>
+        </li>
+      </ul>
     </div>
     <section class="creation" id="createHero" aria-labelledby="createTitle" hidden>
       <h2 id="createTitle">First, your hero.</h2>
