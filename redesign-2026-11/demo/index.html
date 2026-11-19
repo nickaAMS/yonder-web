@@ -207,10 +207,6 @@
                       repeating-linear-gradient(to bottom, rgba(0,0,0,.5) 0, rgba(0,0,0,.12) calc(var(--rh) * .3), rgba(0,0,0,0) calc(var(--rh) * .6), rgba(0,0,0,.18) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) calc(var(--rh) - 1.4vh), rgba(0,0,0,0) var(--rh)),
                       #3f4d3d var(--paint) center/50vh auto; background-blend-mode:normal,normal,multiply; }
   .cgrid .bk { margin:1.9vh 0 1.9vh; }
-  .bedtime img.tail { position:absolute; z-index:2; left:81%; top:56.5%; width:19%; height:auto; transform-origin:4% 50%; animation:tail 7.5s ease-in-out infinite; filter:drop-shadow(0 2px 2px rgba(8,12,30,.3));
-                      -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 22%); mask-image:linear-gradient(90deg, transparent 0, #000 22%); }
-  @keyframes tail { 0%,100% { transform:rotate(-3deg); } 50% { transform:rotate(6deg); } }
-  @media (prefers-reduced-motion:reduce) { .bedtime img.tail { animation:none; } }
   .night { position:absolute; inset:0; z-index:3; background:var(--navy-deep) var(--paint) center/cover; background-blend-mode:multiply; opacity:0; pointer-events:none; }
   .picklit { position:absolute; z-index:4; opacity:0; pointer-events:none; border-radius:1px 3px 3px 1px; box-shadow:0 0 0 2px #f2c14e, 0 0 18px 4px rgba(255,214,120,.45); }
   .picklit img { width:100%; height:100%; object-fit:cover; border-radius:inherit; }
@@ -950,7 +946,7 @@
       <div class="cgrid"><div class="bk"><img src="assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="../../public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="../../public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
     </div>
     <div class="night" id="night"></div>
-    <div class="bedtime" id="bedtime"><img src="assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"><img class="tail" src="assets-v3/cattail2.webp" alt=""></div>
+    <div class="bedtime" id="bedtime"><img src="assets-v3/bedasleep.webp" alt="Rose asleep in bed, with her fox and the cat" loading="lazy"></div>
     <div class="devs" id="spk">
       <div class="dev"><b></b><b></b><b></b><img src="assets-v3/dev-player.webp" alt=""><span>Yoto</span></div>
       <div class="dev"><b></b><b></b><b></b><img src="assets-v3/dev-speaker.webp" alt=""><span>Alexa</span></div>
