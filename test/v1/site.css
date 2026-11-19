@@ -688,7 +688,7 @@
 #devices > .low-in > .caps, #devices > .low-in > h2, #devices > .low-in > .lede { text-align:center; margin-inline:auto; }
 
 @media (max-width:760px) {
-  .fig.trouble { --lift:9vh; --td:18vw; }
+  .fig.trouble { --lift:9vh; --td:18vw !important; }
   .fig.trouble .tagcard { width:142px; }
   .fig[data-name="Foxy"] { --td:30vw !important; }
   .fig[data-name="Foxy"] .tagwrap::after { display:none; }
