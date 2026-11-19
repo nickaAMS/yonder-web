@@ -337,11 +337,11 @@
   .track strong { font:600 1.3rem/1.12 var(--display); } .track small { font:400 .8rem/1.4 var(--text); color:#6b6558; }
   .track .play { pointer-events:none; padding:.4rem 1rem .4rem .4rem; } .track .play .pi { width:2.3rem; height:2.3rem; } .track .play .pt b { font-size:.86rem; }
   /* 6. the end */
-  .low.end { background:var(--paper) var(--paint) center/cover; color:var(--navy-deep); text-align:center; padding-bottom:2.4rem; }
+  .low.end { color:var(--cream); text-align:center; padding-bottom:2.4rem; }
   .low.end h2 { margin-left:auto; margin-right:auto; } .low.end .lede { color:var(--ink); margin-left:auto; margin-right:auto; }
-  .low.end .cta { background:var(--navy); color:var(--cream); margin-top:2rem; font-size:.95rem; padding:1.2rem 2rem; }
-  .foot { margin-top:clamp(4rem,10vh,6.5rem); padding-top:1.4rem; border-top:1px solid #c8bda5; display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; font:400 .86rem/1.4 var(--text); color:#585444; }
-  .foot a { color:var(--navy); text-decoration:none; } .foot a:hover { text-decoration:underline; } .foot span { flex-basis:100%; }
+  .low.end .cta { background:var(--cream); color:var(--navy); margin-top:2rem; font-size:.95rem; padding:1.2rem 2rem; }
+  .foot { margin-top:clamp(4rem,10vh,6.5rem); padding-top:1.4rem; border-top:1px solid #c8bda5; display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem 1.6rem; font:400 .86rem/1.4 var(--text); color:#cdc7b9; }
+  .foot a { color:var(--cream); text-decoration:none; } .foot a:hover { text-decoration:underline; } .foot span { flex-basis:100%; }
   @media (max-width:760px) {
     .two { grid-template-columns:1fr; } .cards, .tracks { grid-template-columns:1fr; } .notes, .rules { grid-template-columns:1fr; }
     .slip-wrap { margin:0 .4rem 2.6rem; } .tracks { max-width:19rem; margin-left:auto; margin-right:auto; } .lang-show { grid-template-columns:1fr; } .lang-show img { width:44vw; }
@@ -376,7 +376,7 @@
 
   /* read along: the story's words under the books, the sentence being spoken picked out */
   .readalong { margin-top:clamp(1.6rem,4vh,2.6rem); background:#fdf8ec; box-shadow:0 4px 0 rgba(60,40,20,.2); padding:1.3rem clamp(1.1rem,3vw,2.4rem) 1.6rem; text-align:left; }
-  .readalong .caps { color:var(--tomato); font-size:.7rem; }
+  .low.dark .readalong .caps { color:var(--tomato); font-size:.7rem; }
   .ra-box { position:relative; height:clamp(11rem,34vh,17rem); overflow:hidden; margin-top:.9rem; scroll-behavior:smooth;
             -webkit-mask-image:linear-gradient(transparent 0, #000 12%, #000 90%, transparent 100%); mask-image:linear-gradient(transparent 0, #000 12%, #000 90%, transparent 100%); }
   .ra-box p { font:500 clamp(1.25rem,2.1vw,1.7rem)/1.4 var(--display); color:#3f3d4a; margin:0 0 .9em; text-wrap:pretty; } .ra-box p:first-child { margin-top:3.2rem; } .ra-box p:last-child { margin-bottom:9rem; }
@@ -629,7 +629,7 @@
   .iphone-crop { align-self:start; position:relative; isolation:isolate; margin:0; padding:clamp(5px,.52vw,8px) clamp(5px,.52vw,8px) 0; border:2px solid #797773; border-bottom:0; border-radius:13% 13% 0 0 / 11% 11% 0 0; background:#161615; box-shadow:inset 0 0 0 1px #bbb7b1, inset 0 0 0 3px #393937; overflow:hidden; }
   .iphone-crop img { width:100%; height:auto; border-radius:11.8% 11.8% 0 0 / 9.8% 9.8% 0 0; }
   .iphone-crop::after { content:""; position:absolute; left:50%; top:3.1%; transform:translateX(-50%); width:23%; height:4.8%; border-radius:999px; background:#080808; pointer-events:none; }
-  .phone-caption { font:400 1.03rem/1.47 var(--text); color:#41465e; }
+  .phone-caption { margin-top:.2rem; font:500 clamp(1.15rem,1.6vw,1.35rem)/1.34 var(--text); color:var(--ink); text-wrap:pretty; }
   .make-details { display:inline-block; margin-top:1.75rem; color:var(--navy); text-underline-offset:.2rem; }
   #languages { text-align:center; padding-block:clamp(2.8rem,6vw,5rem); }
   #languages h2 { max-width:26ch; }
@@ -643,7 +643,7 @@
     border-radius:2px 5px 5px 2px; box-shadow:0 6px 12px #090b2490, -1px 0 #efe4cf70;
   }
   #languages .language-gallery figcaption {
-    margin-top:.65rem; color:var(--cream); font:500 clamp(.86rem,1.7vw,1rem)/1.3 var(--text);
+    margin-top:.65rem; color:var(--ink); font:500 clamp(.86rem,1.7vw,1rem)/1.3 var(--text);
   }
   @media (max-width:700px) {
     #languages .language-gallery { grid-template-columns:repeat(3,minmax(0,1fr)); max-width:28rem; row-gap:1.15rem; }
@@ -959,25 +959,25 @@
     <ol class="phone-steps">
       <li class="phone-step">
         <h3>Choose the cast</h3>
-        <div class="iphone-crop"><img src="assets-product/screen-cast.webp" width="1170" height="1330" alt="Cast picker showing Rose, Daddy, Foxy and the Wicked Witch." loading="lazy"></div>
-        <p class="phone-caption">Pick who&rsquo;s in it, from their favourite people to the toys on their pillow.</p>
+        <div class="iphone-crop"><img src="assets-product/screen-cast.webp" width="1170" height="1372" alt="Cast picker showing Rose, Daddy, Foxy and the Wicked Witch." loading="lazy"></div>
+        <p class="phone-caption">Their favourite people and toys can star alongside them.</p>
       </li>
       <li class="phone-step">
         <h3>Choose a mood and an idea</h3>
-        <div class="iphone-crop"><img src="assets-product/screen-idea.webp" width="1170" height="1420" alt="Magical is selected. The idea field describes Rose entering a unicorn in a pony show." loading="lazy"></div>
-        <p class="phone-caption">Set the mood, then add their idea or tap Inspire me.</p>
+        <div class="iphone-crop"><img src="assets-product/screen-idea.webp" width="1170" height="1372" alt="Magical is selected. The idea field describes Rose entering a unicorn in a pony show." loading="lazy"></div>
+        <p class="phone-caption">A unicorn at a pony show? Start with their idea.</p>
       </li>
       <li class="phone-step">
         <h3>Review, edit and approve</h3>
-        <div class="iphone-crop"><img src="assets-product/screen-review.webp" width="1170" height="1242" alt="Story summary with controls to approve Rose’s story, rewrite it or edit the text." loading="lazy"></div>
-        <p class="phone-caption">Change anything you like before your child hears it.</p>
+        <div class="iphone-crop"><img src="assets-product/screen-review.webp" width="1170" height="1372" alt="The illustrated cover of A Sock for the Unicorn Show above the button to approve Rose’s story." loading="lazy"></div>
+        <p class="phone-caption">You get the final say before they listen.</p>
       </li>
     </ol>
     <a class="make-details" href="how-it-works.html">More about how stories are made</a>
   </div>
 </section>
 
-<section class="low center" id="hear"><div class="low-in">
+<section class="low dark center" id="hear"><div class="low-in">
   <h2>Hear more stories</h2>
   <p class="lede">Choose a book to hear a story made with Namesake.</p>
   <div class="tracks" id="tracks">
@@ -992,7 +992,7 @@
   <audio id="audio2" preload="none"></audio>
 </div></section>
 
-<section class="low dark center" id="languages"><div class="low-in">
+<section class="low center" id="languages"><div class="low-in">
   <p class="caps">In six languages</p>
   <h2>Their adventure, in the language they know best.</h2>
   <ul class="language-gallery" role="list">
@@ -1006,7 +1006,7 @@
   <p class="lede">Every story is read aloud in a natural-sounding voice, in the language you choose.</p>
 </div></section>
 
-<section class="low end" id="end"><div class="low-in">
+<section class="low dark end" id="end"><div class="low-in">
   <h2>Make their first story tonight.</h2>
   <a class="cta" href="../../download.html"><span class="beta-full">Download the Namesake app (beta)</span><span class="beta-short">Download the app (beta)</span></a>
   <footer class="foot"><a href="how-it-works.html">How it works</a><a href="../../blog.html">Blog</a><a href="../../faq.html">FAQ</a><a href="../../privacy.html">Privacy</a><a href="../../terms.html">Terms</a><a href="../../delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></footer>
