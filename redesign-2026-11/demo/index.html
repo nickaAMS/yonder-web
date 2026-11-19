@@ -955,11 +955,22 @@
         <defs>
           <!-- Only the fur below the haunch is visible; the tail root sits behind it. -->
           <clipPath id="belowHaunch"><path d="M620 481 Q680 523 746 524 Q824 548 893 541 L921 536 L921 554 Q938 539 946 517 L1022 500 V969 H620Z"/></clipPath>
+          <image id="bedtime-scene-art" href="assets-v3/bedasleep.webp" width="1022" height="969"/>
+          <!-- Sample the flank at its original scale; mirror the second half at the seam. -->
+          <svg id="cat-felt" width="96" height="59" viewBox="813 424 96 59">
+            <use href="#bedtime-scene-art"/>
+          </svg>
+          <mask id="tail-shape" maskUnits="userSpaceOnUse" x="-6" y="-16" width="192" height="59" style="mask-type:alpha">
+            <image href="assets-v3/cattail2.webp" x="-6" y="-16" width="192" height="58.7"/>
+          </mask>
         </defs>
-        <image href="assets-v3/bedasleep.webp" width="1022" height="969"/>
+        <use href="#bedtime-scene-art"/>
         <g clip-path="url(#belowHaunch)">
           <g transform="translate(920 515)"><g class="cat-swish"><g transform="scale(-1 1)">
-            <image href="assets-v3/cattail2.webp" x="-6" y="-16" width="192" height="58.7"/>
+            <g mask="url(#tail-shape)">
+              <use href="#cat-felt" x="-6" y="-16"/>
+              <use href="#cat-felt" transform="translate(186 -16) scale(-1 1)"/>
+            </g>
           </g></g></g>
         </g>
       </svg>
