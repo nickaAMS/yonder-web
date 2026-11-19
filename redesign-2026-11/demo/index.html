@@ -554,13 +554,7 @@
            font:400 calc(var(--th) * .16)/1 var(--tag); letter-spacing:.02em; text-transform:uppercase;
            transform:rotate(-10deg); box-shadow:inset 0 0 0 2px var(--paper), inset 0 0 0 3.5px #4c7a47; }
 
-  /* 3. lights out, with the speaker playing */
-  .story-night { width:100%; height:100%; border-radius:6px; overflow:hidden; position:relative;
-           background:var(--navy-deep) var(--paint) center/cover; background-blend-mode:multiply; box-shadow:0 3px 0 rgba(8,12,30,.28); }
-  .story-night .moon { position:absolute; width:26%; top:9%; left:11%; }
-  .story-night .spk { position:absolute; width:36%; left:22%; bottom:9%; filter:brightness(.88); }
-  .story-night svg { position:absolute; width:34%; right:8%; bottom:22%; }
-  .story-night .star { position:absolute; width:2px; height:2px; border-radius:50%; background:#f2e6c9; opacity:.8; }
+  .story-night { width:100%; height:100%; border-radius:5px; }
 
 
   #hero .scn { opacity:var(--scenery,1); }
@@ -754,12 +748,7 @@
           <p>You approve each one.</p>
         </li>
         <li class="story-beat ln">
-          <span class="story-th" aria-hidden="true"><span class="story-night" aria-hidden="true">
-            <span class="star" style="left:52%;top:14%"></span><span class="star" style="left:74%;top:26%"></span><span class="star" style="left:86%;top:10%"></span>
-            <img class="moon" src="assets-v3/moon.webp" alt="">
-            <img class="spk" src="assets-v3/spk-cube.png" alt="">
-            <svg viewBox="0 0 20 24" fill="none" stroke="#f2c14e" stroke-width="1.8" stroke-linecap="round"><path d="M3 8a6 6 0 0 1 0 8"/><path d="M8 4.5a11 11 0 0 1 0 15"/><path d="M13 1.5a15 15 0 0 1 0 21" opacity=".6"/></svg>
-          </span></span>
+          <span class="story-th" aria-hidden="true"><img class="story-night" src="assets-product/lights-out-paper-book.webp" alt=""></span>
           <p>They listen after lights out.</p>
         </li>
       </ul>
