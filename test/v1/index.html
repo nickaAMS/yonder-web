@@ -575,17 +575,26 @@
         d.innerHTML = '<img src="' + b.querySelector('img').getAttribute('src') + '" alt=""><b>' + b.dataset.n + '</b>'; libStage.insertBefore(d, bedtime); return { el:b, lit:d, n:+b.dataset.n }; }),
       libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
 
-  function placeCastLabels() {
-    figs.forEach(function(figure) {
-      if (!figure._tag) return;
-      var mobile = narrow.matches;
-      figure._tag.classList.toggle('mobile-cast-label', mobile);
-      (mobile ? stage : figure).appendChild(figure._tag);
-    });
+  var foxFigure = figs.filter(function(f){ return f.dataset.name === 'Foxy'; })[0];
+  var foxString = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  foxString.classList.add('fox-label-string');
+  foxString.setAttribute('aria-hidden', 'true');
+  var foxLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  foxString.appendChild(foxLine);
+  foxFigure._tag.appendChild(foxString);
+  function placeFoxString() {
+    var tagWidth = foxFigure._tag.offsetWidth;
+    var dx = innerWidth * .30;
+    foxString.setAttribute('width', innerWidth);
+    foxString.setAttribute('height', 80);
+    foxLine.setAttribute('x1', innerWidth / 2 + 12);
+    foxLine.setAttribute('y1', 0);
+    foxLine.setAttribute('x2', innerWidth / 2 + tagWidth / 2 - dx);
+    foxLine.setAttribute('y2', 30.4 + foxFigure.offsetHeight * .125);
   }
-  placeCastLabels();
-  narrow.addEventListener('change', placeCastLabels);
-
+  addEventListener('resize', placeFoxString);
+  addEventListener('load', placeFoxString);
+  placeFoxString();
   var bookSettled = false;
   function frame(){
     mx += (tx - mx) * .06; my += (ty - my) * .06;

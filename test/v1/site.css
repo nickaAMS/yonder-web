@@ -688,8 +688,15 @@
 #devices > .low-in > .caps, #devices > .low-in > h2, #devices > .low-in > .lede { text-align:center; margin-inline:auto; }
 
 @media (max-width:760px) {
-  .mobile-cast-label { position:absolute; z-index:7; left:50%; top:28%; width:154px; transform:translateX(-50%); pointer-events:none; }
-  .mobile-cast-label .tagcard { margin:0; }
-  .mobile-cast-label::before, .mobile-cast-label::after { display:none; }
+  .fig.trouble { --lift:9vh; --td:18vw; }
+  .fig.trouble .tagcard { width:142px; }
+  .fig[data-name="Foxy"] { --td:30vw !important; }
+  .fig[data-name="Foxy"] .tagwrap::after { display:none; }
   #make { padding-top:3.5rem; background-size:100% 3rem,cover; }
+}
+
+.fox-label-string { display:none; }
+@media(max-width:760px) {
+  .fox-label-string { display:block; position:absolute; left:0; top:100%; overflow:visible; transform:translateX(-50%); pointer-events:none; }
+  .fox-label-string line { stroke:var(--tomato); stroke-width:1.5; }
 }
