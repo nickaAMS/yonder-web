@@ -17,7 +17,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&family=Special+Elite&family=Young+Serif&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/test/v1/site.css?v=devices-craft">
 </head>
 <body>
@@ -37,7 +37,7 @@
       <h1>Audio stories<br>where <em>they&rsquo;re</em> the hero.</h1>
     </div>
     <section class="creation" id="createHero" aria-labelledby="createTitle" hidden>
-      <h2 id="createTitle"><span class="caps">How it works</span>First, your child. <span class="hero-subtitle">The hero of every story.</span></h2>
+      <h2 id="createTitle">How it works<span class="hero-subtitle">First, your child. The hero of every story.</span></h2>
       <figure class="paper-rose">
         <div class="portrait" role="img" aria-label="Rose in terracotta dungarees, with a blonde bob and a cheeky smile">
           <img data-rose-layer="brown" src="/test/v1/assets-hero-rose/rose-head-brown.webp" width="520" height="1500" alt="" hidden>
@@ -48,13 +48,14 @@
         <figcaption id="roseName" hidden>Rose</figcaption>
       </figure>
       <div class="create-form">
-        <p class="create-field"><span>Name</span><b class="create-name"><span id="typedRose">Rose</span><i aria-hidden="true"></i></b></p>
+        <p class="create-field character-name"><span>Meet</span><b class="create-name"><span id="typedRose">Rose</span></b></p>
         <div class="create-row" data-create-details hidden>
           <p class="create-field"><span>Age</span><b class="choice">5</b></p>
           <p class="create-field"><span>Pronouns</span><b class="choice">she/her</b></p>
         </div>
-        <p class="create-field" id="createLook" hidden><span>What do they look like?</span><b>blonde hair<span id="look-smile" hidden>, cheeky smile</span></b></p>
-        <p class="create-field" id="createInterests" hidden><span>Tell us about them. What do they love?</span><b>Likes <mark class="hero-detail">pasta pesto</mark>, loves unicorns, lives in <mark class="hero-detail">Amsterdam</mark></b></p>
+        <p class="create-field" id="createLook" hidden><span>Her look</span><b>blonde hair<span id="look-smile" hidden>, cheeky smile</span></b></p>
+        <p class="create-field" id="createInterests" hidden><span>Her world</span><b>Likes <mark class="hero-detail">pasta pesto</mark>, loves unicorns, lives in <mark class="hero-detail">Amsterdam</mark></b></p>
+        <p class="creation-scroll">Keep scrolling to meet Rose <span aria-hidden="true">↓</span></p>
       </div>
       <h2 class="once" id="createOnce" hidden>You do this once.<br>Then, every night&hellip;</h2>
     </section>
@@ -106,16 +107,17 @@
       <p class="co" data-k="face">Her face on the cover</p>
     </div>
     <div class="inv-foot" id="invFoot">
-      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where the Wicked Witch is stirring an enormous cauldron and planning to eat the lot for dessert. Rose has a plan, and it starts with getting the witch to wash her hands.</p>
+      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where the Wicked Witch is stirring an enormous cauldron and planning to eat the lot for dessert. <span class="summary-ending">Rose has a plan, and it starts with getting the witch to wash her hands.</span></p>
       <div id="story-review" class="story-review">
-      <div class="age-card" role="group" aria-label="What Namesake shows you before you approve">
+      <div id="review-check"><div class="age-card" role="group" aria-label="What Namesake shows you before you approve">
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>The Wicked Witch tries to steal Rose&rsquo;s food</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span>Ends: <b>Calm</b></span></p>
       <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
     </div>
     <p class="age-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>We run a second, separate check that every story suits your child&rsquo;s age.</p>
-      <div class="approval-hint" id="approve-hint"><svg viewBox="0 0 38 28" aria-hidden="true"><path d="M3 3c0 13 9 18 27 18m-7-7 9 7-8 5"/></svg>Try it. Approve to reveal the player.</div>
+    </div>
+      <div id="review-approval"><div class="approval-hint" id="approve-hint"><svg viewBox="0 0 38 28" aria-hidden="true"><path d="M3 3c0 13 9 18 27 18m-7-7 9 7-8 5"/></svg>Try it. Approve to reveal the player.</div>
       <div class="review-actions">
         <button type="button" id="approve-demo" aria-describedby="approve-hint">Approve Story</button>
         <button type="button" id="read-demo" aria-haspopup="dialog">Read full text</button>
@@ -127,12 +129,12 @@
         <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </button>
       <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story, shared with permission.</small>
-      </div>
+      </div></div>
       <audio id="audio" preload="none" src="/test/v1/assets-product/rose-and-the-stolen-supper-spell-sulafat-cackly-witch.mp3?v=repaired-v4"></audio>
     </div>
 
     <div class="house l" aria-hidden="true"></div><div class="house r" aria-hidden="true"></div>
-    <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<i></i><i></i></p>
+    <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<br>and see how it works<i></i><i></i></p>
   </div>
 </section>
 
@@ -410,7 +412,7 @@
     creation.hidden = !active;
     if (!active) return;
     var ending = !staticCreation && progress >= .365;
-    var length = staticCreation ? 4 : Math.floor(seg(progress, .208, .237) * 4);
+    var length = 4;
     var name = 'Rose'.slice(0, length);
     if (typedRose.textContent !== name) typedRose.textContent = name;
     createTitle.hidden = ending;
@@ -421,12 +423,24 @@
     paperRose.hidden = dayExit >= 1;
     paperRose.style.opacity = 1 - dayExit;
     paperRose.style.transform = 'translate3d(-50%,' + (-dayExit * 28) + 'vh,0)';
-    roseName.hidden = length < 4;
+    var portrait = paperRose.querySelector('.portrait');
+    if (narrow.matches && !staticCreation && !ending) {
+      var portraitTop = createTitle.offsetTop + createTitle.offsetHeight + 20;
+      var portraitSpace = createForm.offsetTop - portraitTop - 48;
+      paperRose.style.top = portraitTop + 'px';
+      paperRose.style.bottom = 'auto';
+      portrait.style.height = Math.max(80, Math.min(214, stage.offsetHeight * .25, portraitSpace)) + 'px';
+    } else if (!narrow.matches || staticCreation) {
+      paperRose.style.top = paperRose.style.bottom = portrait.style.height = '';
+    }
+
+    roseName.hidden = !staticCreation && progress < .256;
     var nameLand = staticCreation ? 1 : out(seg(progress, .237, .252));
     roseName.style.transform = 'translateY(' + ((nameLand - 1) * 24) + 'px) rotate(-3deg)';
     createDetails.forEach(function(field){ field.hidden = !staticCreation && progress < .256; });
     createLook.hidden = !staticCreation && progress < .269;
     createInterests.hidden = !staticCreation && progress < .318;
+    creation.querySelector('.creation-scroll').hidden = staticCreation || progress >= .318;
     var smiling = staticCreation || progress >= .30;
     smileWords.hidden = !smiling;
     var blonde = staticCreation ? 1 : ease(seg(progress, .269, .294));
@@ -439,7 +453,7 @@
     createOnce.hidden = !staticCreation && !ending;
   }
   function castFrame(now){
-    var scrollProgress = prog(hero), t = (now - T0) / 1000, W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
+    var actualScroll = prog(hero), scrollProgress = Math.min(actualScroll / .82, 1), t = (now - T0) / 1000, W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
     // Keep the later cues on their original timeline after cutting the introductory beats.
     var progress = START ? scrollProgress : .12 + .88 * scrollProgress;
     var p = reduced ? 1 : START ? START + (1 - START) * progress : seg(progress, .39, 1);
@@ -510,10 +524,18 @@
     var naturalWidth = Math.max(150, Math.min(innerHeight * .27, 270));
     var coverLimit = (wide ? .62 * W - 164 : W - 152) / naturalWidth;
     bsc = Math.min(bsc, bsc + (coverLimit - bsc) * flip);
-    if (!wide && flip > 0) {
-      // Rest the cover just above the synopsis, allowing room for its painted shadow.
-      var restingCentre = foot.offsetTop - 32 - naturalWidth * 1.5 * bsc / 2;
+    if (!wide && !staticCreation && flip > 0) {
+      var coverHeight = naturalWidth * 1.5 * bsc;
+      var liftCover = ease(seg(actualScroll, .82, .85));
+      var highCentre = document.getElementById('top').offsetHeight + 24 + coverHeight / 2;
+      var restingCentre = H * .56 + (highCentre - H * .56) * liftCover;
       by = flip * (book.offsetTop - restingCentre) * 100 / innerHeight;
+      foot.style.top = (restingCentre + coverHeight / 2 + 32) + 'px';
+      foot.style.bottom = 'auto';
+      below.style.marginTop = -Math.max(0, H - foot.offsetTop - foot.offsetHeight - 24) * liftCover + 'px';
+    } else {
+      foot.style.top = foot.style.bottom = '';
+      below.style.marginTop = '';
     }
     var big = flip >= 1 && bsc > 1;
     if (big) { book.style.setProperty('--bwd', 'calc(clamp(150px,27vh,270px) * ' + bsc + ')'); book.style.perspective = (1400 * bsc) + 'px'; bsc = 1; } else { book.style.removeProperty('--bwd'); book.style.perspective = ''; }
@@ -534,8 +556,20 @@
     bookIn.classList.toggle('turned', flip > .5);
     // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
     var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
-    var f2 = P(.975, .995); foot.style.opacity = f2; foot.style.pointerEvents = f2 > .5 ? 'auto' : 'none';
-    foot.inert = f2 < .5;
+    var f2 = P(.975, .995);
+    var reveal = reduced ? 1 : seg(actualScroll, .82, 1);
+    var summaryReveal = reduced ? 1 : ease(seg(reveal, .12, .32));
+    foot.style.opacity = 1;
+    foot.querySelector(':scope > p').style.opacity = summaryReveal;
+    foot.style.pointerEvents = summaryReveal > .5 ? 'auto' : 'none';
+    foot.inert = summaryReveal < .5;
+    if (review.parentElement === foot) {
+      [document.getElementById('review-check'), document.getElementById('review-approval')].forEach(function(group, n) {
+        var shown = reduced ? 1 : ease(seg(reveal, n ? .68 : .36, n ? .9 : .6));
+        group.style.opacity = shown;
+        group.inert = shown < .5;
+      });
+    }
     coBox.style.opacity = f2;
     if (f2 > 0) {
       var br = coverImage.getBoundingClientRect(), sr2 = stage.getBoundingClientRect();
@@ -640,7 +674,13 @@
   var listenLabel = document.getElementById('listenLabel');
   var review = document.getElementById('story-review'), below = document.getElementById('review-below');
   var beside = matchMedia('(min-width:1000px) and (min-height:680px) and (prefers-reduced-motion:no-preference)');
-  function placeReview() { (beside.matches ? foot : below).appendChild(review); }
+  function placeReview() {
+    (beside.matches ? foot : below).appendChild(review);
+    review.querySelectorAll('#review-check, #review-approval').forEach(function(group) {
+      group.style.opacity = '';
+      group.inert = false;
+    });
+  }
   placeReview();
   beside.addEventListener('change', placeReview);
   function jumpToReview() {
@@ -649,12 +689,12 @@
       return;
     }
     if (location.hash === '#cast' && !START && !reduced) {
-      scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * ((.755 - .12) / .88));
+      scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * ((.755 - .12) / .88) * .82);
       return;
     }
     if (location.hash === '#create-hero' && !START) {
       if (reduced) creation.scrollIntoView({block:'center'});
-      else scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .088);
+      else scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .088 * .82);
       return;
     }
     if (location.hash !== '#review-story') return;
@@ -717,7 +757,7 @@
         if (!entry.isIntersecting) entry.target.classList.remove('entry-visible');
       });
     });
-    document.querySelectorAll('.phone-step, #hear .track, #devices .devgrid li, .language-gallery > li, #languages .lede').forEach(function(item) {
+    document.querySelectorAll('.phone-step, #hear .track, #devices .devgrid li, .language-gallery > li, #languages .lede, #review-below #review-check, #review-below #review-approval').forEach(function(item) {
       item.classList.add('entry-ready');
       entryObserver.observe(item);
       exitObserver.observe(item);
