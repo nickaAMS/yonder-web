@@ -765,3 +765,11 @@
 @media(max-width:760px) {
   .inv-foot > p { font-size:1.04rem; line-height:1.5; margin-bottom:.5rem; }
 }
+
+@media(max-width:760px) {
+  .create-form {
+    background:linear-gradient(#fff8e8e8,#fff8e8e8),var(--paint) center/cover;
+    border:1px solid #b39a72;
+    box-shadow:0 3px 0 #d1bc99,0 9px 18px #59432c38,inset 0 0 0 4px #fffaf040;
+  }
+}
