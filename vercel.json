@@ -21,6 +21,10 @@
       "destination": "/download.html"
     },
     {
+      "source": "/redeem",
+      "destination": "/redeem.html"
+    },
+    {
       "source": "/terms",
       "destination": "/terms.html"
     },

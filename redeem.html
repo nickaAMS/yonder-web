@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#213957">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Redeem a Namesake membership code.">
+  <title>Redeem a code | Namesake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=Jost:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#1f2a55; --cream:#efe4cf; --tomato:#a5322a; --ink:#232842; --green:#2f6b4a;
+            --display:"Cormorant Garamond",Georgia,serif; --text:"Jost",system-ui,sans-serif; }
+    * { box-sizing:border-box; }
+    html { -webkit-text-size-adjust:100%; }
+    body { min-width:320px; margin:0; background:var(--cream); color:var(--ink); font:400 1rem/1.6 var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden; isolation:isolate; }
+    body::before { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; background:url(/public/download-paper.webp) center/cover no-repeat; }
+    a { color:inherit; } h1,h2,p { margin-top:0; }
+    .top { position:fixed; z-index:40; top:0; left:0; right:0; }
+    .topwrap { filter:drop-shadow(0 2px 2px #16284956); }
+    .valance { --scallop-width:clamp(44px,5vw,76px); --scallop-depth:8px; height:56px;
+      background: repeating-linear-gradient(0deg,#fae6bc11 0 1px,transparent 1px 3px), repeating-linear-gradient(90deg,#161d2b14 0 1px,transparent 1px 4px), #213957;
+      mask: radial-gradient(ellipse 50% 100% at 50% 0%,#171014 96%,transparent) center bottom / var(--scallop-width) var(--scallop-depth) repeat-x, linear-gradient(#171014,#171014) center top / 100% calc(100% - var(--scallop-depth) + 1px) no-repeat; }
+    .wordmark { position:absolute; top:6px; left:50%; transform:translateX(-50%); }
+    .wordmark img { height:36px; width:auto; display:block; }
+    .top a:focus-visible, .page a:focus-visible, .page button:focus-visible, .page input:focus-visible { outline:2px solid #f2c14e; outline-offset:3px; }
+
+    .page { max-width:30rem; margin:0 auto; padding:calc(56px + clamp(2rem,6vh,4rem)) 1.25rem 4rem; }
+    .eyebrow { margin:0 0 1rem; color:#674a34; font:500 .74rem/1 var(--text); letter-spacing:.24em; text-transform:uppercase; }
+    h1 { margin-bottom:1rem; font:600 clamp(2.6rem,9vw,3.6rem)/1 var(--display); letter-spacing:-.02em; text-wrap:balance; }
+    h1 em { color:var(--tomato); font-style:italic; }
+    .intro { margin-bottom:1.75rem; color:#4d5167; font-size:1.08rem; line-height:1.55; text-wrap:pretty; }
+    .panel { margin:0 0 1.25rem; }
+    .panel[hidden] { display:none; }
+    .who { display:flex; flex-wrap:wrap; gap:.25rem .75rem; align-items:baseline; margin-bottom:1.25rem; color:#4d5167; }
+    .who strong { color:var(--ink); font-weight:600; overflow-wrap:anywhere; }
+    .linkbtn { background:none; border:0; padding:0; font:inherit; color:var(--tomato); text-decoration:underline; text-underline-offset:.2em; cursor:pointer; }
+    label { display:block; margin-bottom:.4rem; font:600 .74rem/1.2 var(--text); letter-spacing:.16em; text-transform:uppercase; color:#674a34; }
+    input[type=text], input[type=email] { width:100%; min-height:3.4rem; padding:.8rem 1rem; border:2px solid var(--navy); border-radius:2px; background:#fbf6ea; color:var(--ink); font:500 1.1rem/1.2 var(--text); }
+    input#code { letter-spacing:.18em; text-transform:uppercase; }
+    .hint { margin:.5rem 0 1.1rem; color:#6b6e80; font-size:.9rem; }
+    .btn { display:flex; width:100%; align-items:center; justify-content:center; min-height:3.4rem; padding:.9rem 1rem; border:0; border-radius:2px; background:var(--navy); color:var(--cream);
+           font:600 .82rem/1.2 var(--text); letter-spacing:.16em; text-transform:uppercase; text-align:center; text-decoration:none; cursor:pointer; }
+    .btn + .btn { margin-top:.7rem; }
+    .btn.secondary { background:transparent; color:var(--navy); box-shadow:inset 0 0 0 2px var(--navy); }
+    .btn.apple { background:#111; color:#fff; }
+    .btn[disabled] { opacity:.55; cursor:not-allowed; }
+    .or { display:flex; align-items:center; gap:.9rem; margin:1.4rem 0; color:#6b6e80; font-size:.85rem; letter-spacing:.12em; text-transform:uppercase; }
+    .or::before, .or::after { content:""; flex:1; border-top:1px solid #23284233; }
+    .msg { margin:1.1rem 0 0; padding:.9rem 1rem; border-left:4px solid var(--tomato); background:#fbf6ea; font-size:1rem; }
+    .msg.ok { border-left-color:var(--green); }
+    .msg.warn { border-left-color:#b9861b; }
+    .msg:empty { display:none; }
+    .done h2 { margin-bottom:.6rem; font:600 2.2rem/1.05 var(--display); }
+    .done p { color:#4d5167; }
+    .small { margin-top:2.5rem; color:#6b6e80; font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <nav class="top" aria-label="Primary navigation"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div><a class="wordmark" href="/" aria-label="Namesake home"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a></nav>
+
+  <main class="page">
+    <p class="eyebrow">Membership code</p>
+    <h1>Redeem your <em>code</em>.</h1>
+    <p class="intro" id="intro">Sign in with the account you use in the Namesake app, then enter your code. You will need to have opened the app and signed in at least once.</p>
+
+    <!-- 0. Checking who is signed in -->
+    <section class="panel" id="p-loading"><p class="intro">One moment&hellip;</p></section>
+
+    <!-- 1. Signed out -->
+    <section class="panel" id="p-signin" hidden>
+      <button class="btn secondary" id="btn-google" type="button">Continue with Google</button>
+      <button class="btn apple" id="btn-apple" type="button" hidden>Continue with Apple</button>
+      <div class="or" aria-hidden="true">or</div>
+      <form id="form-email" novalidate>
+        <label for="email">Email address</label>
+        <input id="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="you@example.com">
+        <p class="hint">We will email you a link. No password needed.</p>
+        <button class="btn" id="btn-email" type="submit">Email me a link</button>
+      </form>
+    </section>
+
+    <!-- 1b. Opened the emailed link on a device that has not got the address saved -->
+    <section class="panel" id="p-confirm-email" hidden>
+      <form id="form-confirm">
+        <label for="confirm-email">Confirm your email address</label>
+        <input id="confirm-email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false">
+        <p class="hint">Type the address the link was sent to, to finish signing in.</p>
+        <button class="btn" type="submit">Finish signing in</button>
+      </form>
+    </section>
+
+    <!-- 2. Signed in, but this looks like a brand new account -->
+    <section class="panel" id="p-new" hidden>
+      <div class="msg warn">We could not find an existing Namesake account for this sign-in. If you carry on, your membership will be added to a new, empty account instead of the one in your app.</div>
+      <p class="hint">Switch to the account you use in the app. Apple&rsquo;s &ldquo;Hide my email&rdquo; and a different Google account are the usual causes.</p>
+      <button class="btn" id="btn-new-switch" type="button">Use a different account</button>
+      <button class="btn secondary" id="btn-new-continue" type="button">Carry on anyway</button>
+    </section>
+
+    <!-- 3. Signed in: enter the code -->
+    <section class="panel" id="p-code" hidden>
+      <p class="who">Redeeming for <strong id="who"></strong> <button class="linkbtn" id="btn-switch" type="button">Not you? Switch account</button></p>
+      <form id="form-code" novalidate>
+        <label for="code">Your code</label>
+        <input id="code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text" maxlength="40" placeholder="ABC123">
+        <p class="hint">Letters and numbers. It does not matter if you type it in capitals or leave out the dashes.</p>
+        <button class="btn" id="btn-redeem" type="submit">Redeem code</button>
+      </form>
+    </section>
+
+    <!-- 4. Done -->
+    <section class="panel done" id="p-done" hidden>
+      <h2>You&rsquo;re in.</h2>
+      <p id="done-line"></p>
+      <p>Open the Namesake app. It picks up your membership the next time you open it.</p>
+      <div class="msg warn" id="done-billing" hidden>You also have a subscription through the App Store or Google Play. It keeps billing until you cancel it there, so cancel it in your store account if you no longer want it.</div>
+    </section>
+
+    <div class="msg" id="msg" role="status" aria-live="polite"></div>
+
+    <p class="small">Trouble with a code? Email <a href="mailto:hello@trynamesake.com">hello@trynamesake.com</a>.</p>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+    import {
+      getAuth, onAuthStateChanged, signOut, signInWithPopup, GoogleAuthProvider, OAuthProvider,
+      sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, getAdditionalUserInfo,
+    } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+
+    // Public web config (safe to ship; access is governed by Auth and server checks).
+    const app = initializeApp({
+      apiKey: 'AIzaSyDT2JOWCts2Q5GIQv8_uDaBkIxts-OlO1c',
+      authDomain: 'storytime-app-cf2d0.firebaseapp.com',
+      projectId: 'storytime-app-cf2d0',
+      appId: '1:495819915748:web:8ff3b0cf72eec998e5c7f1',
+    });
+    const auth = getAuth(app);
+
+    const API = 'https://yonder-tts-495819915748.europe-west4.run.app/membership/redeem';
+    // Flip to true once Sign in with Apple has been tested with a real Apple account that already uses the
+    // app (the uid must match). Until then it is only shown with ?apple=1.
+    const APPLE_ENABLED = false;
+    const TIER_NAME = { level1: 'Namesake membership', level2: 'Namesake membership with advanced features' };
+
+    const $ = (id) => document.getElementById(id);
+    const params = new URLSearchParams(location.search);
+    const panels = ['p-loading', 'p-signin', 'p-confirm-email', 'p-new', 'p-code', 'p-done'];
+    const store = {
+      get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch { /* private mode */ } },
+      del(k) { try { localStorage.removeItem(k); } catch { /* private mode */ } },
+    };
+    const flag = {
+      get(k) { try { return sessionStorage.getItem(k); } catch { return null; } },
+      set(k, v) { try { sessionStorage.setItem(k, v); } catch { /* private mode */ } },
+      del(k) { try { sessionStorage.removeItem(k); } catch { /* private mode */ } },
+    };
+
+    function show(id) { panels.forEach((p) => { $(p).hidden = p !== id; }); }
+    function say(text, kind) { const m = $('msg'); m.textContent = text || ''; m.className = 'msg' + (kind ? ' ' + kind : ''); }
+    function prettyDate(iso) { return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); }
+    function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    if (params.get('apple') === '1' || APPLE_ENABLED) $('btn-apple').hidden = false;
+    if (params.get('code')) $('code').value = params.get('code');
+
+    function authError(error) {
+      const code = error && error.code;
+      if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return '';
+      if (code === 'auth/popup-blocked') return 'Your browser blocked the sign-in window. Allow pop-ups for this page and try again.';
+      if (code === 'auth/invalid-action-code' || code === 'auth/expired-action-code') return 'That sign-in link has expired or was already used. Ask for a new one.';
+      if (code === 'auth/invalid-email') return 'That email address does not look right.';
+      if (code === 'auth/network-request-failed') return 'We could not reach the sign-in service. Check your connection and try again.';
+      return 'Sign-in did not work. Please try again.';
+    }
+
+    async function providerSignIn(provider) {
+      say('');
+      try {
+        const result = await signInWithPopup(auth, provider);
+        if (getAdditionalUserInfo(result)?.isNewUser) flag.set('redeemNewUser', '1');
+      } catch (error) { say(authError(error)); }
+    }
+    $('btn-google').addEventListener('click', () => providerSignIn(new GoogleAuthProvider()));
+    $('btn-apple').addEventListener('click', () => {
+      const apple = new OAuthProvider('apple.com');
+      apple.addScope('email');
+      providerSignIn(apple);
+    });
+
+    function continueUrl() {
+      const url = new URL(location.origin + '/redeem');
+      if (params.get('code')) url.searchParams.set('code', params.get('code'));
+      return url.toString();
+    }
+
+    $('form-email').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = $('email').value.trim();
+      if (!validEmail(email)) { say('Please enter a valid email address.'); return; }
+      const button = $('btn-email');
+      button.disabled = true; say('');
+      try {
+        // No app identifiers on purpose: the link must open in the browser, not the app.
+        await sendSignInLinkToEmail(auth, email, { url: continueUrl(), handleCodeInApp: true });
+        store.set('redeemEmail', email);
+        say('Check your inbox. We have sent a sign-in link to ' + email + '. Open it on this device to carry on.', 'ok');
+      } catch (error) { say(authError(error)); }
+      button.disabled = false;
+    });
+
+    async function finishEmailLink(email) {
+      try {
+        const result = await signInWithEmailLink(auth, email, location.href);
+        store.del('redeemEmail');
+        if (getAdditionalUserInfo(result)?.isNewUser) flag.set('redeemNewUser', '1');
+        history.replaceState(null, '', continueUrl());
+      } catch (error) { say(authError(error)); show('p-signin'); }
+    }
+    $('form-confirm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = $('confirm-email').value.trim();
+      if (!validEmail(email)) { say('Please enter a valid email address.'); return; }
+      say(''); show('p-loading');
+      finishEmailLink(email);
+    });
+
+    async function doSignOut() { flag.del('redeemNewUser'); say(''); await signOut(auth); }
+    $('btn-switch').addEventListener('click', doSignOut);
+    $('btn-new-switch').addEventListener('click', doSignOut);
+    $('btn-new-continue').addEventListener('click', () => { flag.del('redeemNewUser'); show('p-code'); });
+
+    const FAILURES = {
+      invalid: () => 'That code is not right. Check it and try again.',
+      already_used: () => 'That code has already been used.',
+      expired: () => 'That code has expired. Email hello@trynamesake.com and we will sort it out.',
+      already_member: (r) => (r.grantEndsAtIso
+        ? 'You already have Namesake membership until ' + prettyDate(r.grantEndsAtIso) + '. This code is still unused, so you can keep it.'
+        : 'You already have lifetime Namesake membership. This code is still unused, so you can keep it.'),
+      too_many_attempts: () => 'Too many tries. Please wait an hour and try again.',
+      sign_in_required: () => 'Please sign in with Google, Apple or email first.',
+    };
+
+    $('form-code').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = $('code').value.trim();
+      if (!code) { say('Please enter your code.'); return; }
+      const user = auth.currentUser;
+      if (!user) { show('p-signin'); return; }
+      const button = $('btn-redeem');
+      button.disabled = true; say('');
+      try {
+        const token = await user.getIdToken();
+        const res = await fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+          body: JSON.stringify({ code }),
+        });
+        let body = {};
+        try { body = await res.json(); } catch { /* non-JSON error page */ }
+        if (res.ok && body.ok) {
+          const name = TIER_NAME[body.grantTier] || 'Namesake membership';
+          $('done-line').textContent = body.grantEndsAtIso
+            ? 'Your ' + name + ' is active until ' + prettyDate(body.grantEndsAtIso) + '.'
+            : 'Your ' + name + ' is active for life.';
+          $('done-billing').hidden = !body.hasStoreSubscription;
+          $('intro').hidden = true;
+          show('p-done');
+        } else {
+          const make = FAILURES[body.error || body.reason];
+          say(make ? make(body) : 'Something went wrong on our side. Please try again in a moment.');
+        }
+      } catch {
+        say('We could not reach Namesake. Check your connection and try again.');
+      }
+      button.disabled = false;
+    });
+
+    // Opened from the emailed link?
+    let finishing = false;
+    if (isSignInWithEmailLink(auth, location.href)) {
+      finishing = true;
+      const saved = store.get('redeemEmail');
+      if (saved) finishEmailLink(saved);
+      else { show('p-confirm-email'); }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // While an emailed link is being finished, finishEmailLink / the confirm form own the panel.
+        if (!finishing) show('p-signin');
+        return;
+      }
+      finishing = false;
+      if ($('p-done').hidden === false) return;
+      $('who').textContent = user.email || 'this account';
+      if (flag.get('redeemNewUser') === '1') show('p-new'); else show('p-code');
+    });
+  </script>
+</body>
+</html>
