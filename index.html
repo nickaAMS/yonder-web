@@ -1,235 +1,790 @@
 <!doctype html>
+<!--
+  Namesake website redesign: STYLE AND MOTION DEMO (2026-11-15). Not the site.
+  Shows three things for sign-off before the full build: the layered paper hero,
+  the inventory-to-book assembly, and the curtain close. Self-contained scroll
+  driver; the full build moves this onto the scroll-craft engine.
+  Serve from the yonder-web root so /public/ resolves.
+-->
 <html lang="en">
 <head>
 <link rel="icon" href="/favicon.ico?v=namesake" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=namesake">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=namesake">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Namesake | Personalised audio stories for bedtime</title>
-  <meta name="description" content="Personalised audio stories for bedtime. Choose together before bedtime, then leave the screens out of the bedroom.">
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{--ink:oklch(16% .035 275);--night:oklch(21% .045 275);--paper:oklch(95% .025 77);--cream:oklch(88% .04 72);--honey:oklch(76% .13 72);--rose:oklch(59% .09 25);--mist:oklch(82% .018 72);--line:oklch(90% .03 75/.18);--serif:"Cormorant Garamond",Georgia,serif;--sans:"Plus Jakarta Sans",Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;font-size:clamp(16px,calc(.714vw + 5.71px),23px)}body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:1rem;line-height:1.6}a{color:inherit}button,a{font:inherit}.skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;z-index:9;background:var(--paper);color:var(--ink);padding:.7rem 1rem;border-radius:.5rem}.nav{position:absolute;z-index:4;inset:0 0 auto;display:flex;justify-content:space-between;align-items:center;padding:1.25rem clamp(1.25rem,4vw,4rem)}.wordmark{font:600 2rem/1 var(--serif);text-decoration:none;letter-spacing:-.04em}.nav-links{display:flex;align-items:center;gap:1.25rem}.nav-link{color:var(--paper);text-decoration:none;font-weight:600;font-size:.85rem}.nav-link:hover{text-decoration:underline}.nav .button,.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--honey);border-radius:999px;padding:.65rem 1.1rem;text-decoration:none;font-weight:700;font-size:.82rem;color:var(--honey);background:transparent}.hero-actions{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}.store-badges{display:flex;gap:.45rem}.store-badge{display:flex;align-items:center;gap:.4rem;min-height:44px;padding:.42rem .65rem;border:1px solid oklch(90% .03 75/.32);border-radius:.45rem;background:oklch(11% .025 275/.86);color:var(--paper);font-size:.54rem;line-height:1.05;text-decoration:none;pointer-events:none}.store-badge svg{width:16px;height:20px;fill:currentColor}.store-badge b{display:block;font-size:.72rem;font-weight:700}
-    .eyebrow{color:var(--honey);font-weight:700;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 1.25rem}.section-title{font:500 clamp(3rem,6vw,5.8rem)/.9 var(--serif);letter-spacing:-.055em;margin:0;text-wrap:balance}.button{background:var(--honey);color:var(--ink);transition:transform .2s var(--ease),background .2s,box-shadow .2s}.button:hover{transform:translateY(-2px);background:var(--paper);box-shadow:0 12px 26px oklch(10% .02 275/.22)}
-    .hero{position:relative;overflow:hidden;padding:0}.hero-inner{position:relative;min-height:clamp(680px,42vw,1040px);display:flex;align-items:center}.hero-art-stage{position:absolute;inset:0;z-index:0;overflow:hidden}.hero-art-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 32%,oklch(16% .035 275/.75) 54%,transparent 76%)}.hero-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;filter:brightness(1.05) saturate(1.03);animation:art-arrive 1.2s var(--ease) both}.hero-art-video{display:none}.hero-copy{position:relative;z-index:1;max-width:47rem;padding:6rem 0 6rem clamp(1.25rem,8vw,9rem)}.hero-copy>*{opacity:0;transform:translateY(18px);animation:hero-in .75s var(--ease) both}.hero-copy .eyebrow{animation-delay:.12s}.hero-copy h1{animation-delay:.22s}.hero-copy>p:not(.eyebrow){animation-delay:.32s}.hero-copy .button{animation-delay:.42s}.hero-copy .note{animation-delay:.52s}.hero h1{font:500 clamp(3.6rem,7.2vw,6.8rem)/.86 var(--serif);letter-spacing:-.06em;margin:0;text-wrap:balance}.hero h1 em{color:var(--honey);font-style:italic}.hero p{max-width:48ch;color:var(--mist);margin:1.6rem 0 2rem}.note{display:block;font-size:.76rem;color:var(--mist);margin-top:.8rem}
-    main{overflow:hidden}.proof{background:var(--paper);color:var(--ink);padding:clamp(5rem,11vw,10rem) clamp(1.25rem,8vw,9rem)}.split{max-width:77.5rem;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,10vw,10rem);align-items:center}.copy .eyebrow{color:var(--rose)}.copy p{max-width:45ch;color:oklch(35% .025 275);margin:1.4rem 0 0}
-    .story-stack{height:clamp(470px,50vw,630px);max-width:35.625rem;margin:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:clamp(.6rem,1.6vw,1.05rem);padding:.8rem;position:relative}.story-book{position:relative;width:100%;height:100%;aspect-ratio:2/3;align-self:center;border-radius:3px 8px 8px 3px;overflow:hidden;background-image:url('public/illustrations/namesake-cover-collection.png');background-size:300% 100%;box-shadow:12px 22px 38px oklch(22% .04 275/.23),inset 4px 0 0 oklch(100% 0 0/.18);transform-origin:50% 70%;will-change:transform,opacity;opacity:0;transition:transform 980ms var(--ease),opacity 620ms var(--ease)}.story-book::after{content:"";position:absolute;inset:43% 0 0;background:linear-gradient(transparent,oklch(13% .035 275/.8))}.story-book::after{display:none!important}.story-book h3{position:absolute;z-index:1;inset:auto 9% 8%;margin:0;color:var(--paper);font:600 clamp(.9rem,1.65vw,1.3rem)/.9 var(--serif);letter-spacing:-.035em;text-align:center}.story-book b{display:block;color:var(--honey);font:700 clamp(.34rem,.48vw,.46rem) var(--sans);letter-spacing:.13em;text-transform:uppercase;margin-bottom:.35rem}.story-book:nth-child(1){z-index:1;background-position:0 0;transform:translate(-46px,68px) scale(.88) rotate(-13deg)}.story-book:nth-child(2){z-index:2;background-image:url('public/illustrations/jack-and-the-sleepy-giant.png');background-size:cover;background-position:center;transform:translate(0,82px) scale(.88) rotate(-4deg);transition-delay:110ms}.story-book:nth-child(3){z-index:3;background-position:100% 0;transform:translate(46px,68px) scale(.88) rotate(13deg);transition-delay:220ms}.story-book:nth-child(4){z-index:4;background-image:url('public/illustrations/pierre-wins-the-world-cup.webp');background-size:cover;background-position:center;transform:translate(-46px,84px) scale(.88) rotate(-10deg);transition-delay:330ms}.story-book:nth-child(5){z-index:5;background-image:url('public/illustrations/riya-and-the-unicorn-parade.webp');background-size:cover;background-position:center;transform:translate(0,96px) scale(.88) rotate(5deg);transition-delay:440ms}.story-book:nth-child(6){z-index:6;background-image:url('public/illustrations/thomas-and-the-dinosaur-race.webp');background-size:cover;background-position:center;transform:translate(46px,84px) scale(.88) rotate(10deg);transition-delay:550ms}.proof.is-visible .story-book{opacity:1}.proof.is-visible .story-book:nth-child(1){transform:translate(0,0) rotate(-5deg)}.proof.is-visible .story-book:nth-child(2){transform:translate(0,0) rotate(2deg)}.proof.is-visible .story-book:nth-child(3){transform:translate(0,0) rotate(5deg)}.proof.is-visible .story-book:nth-child(4){transform:translate(0,0) rotate(4deg)}.proof.is-visible .story-book:nth-child(5){transform:translate(0,0) rotate(-2deg)}.proof.is-visible .story-book:nth-child(6){transform:translate(0,0) rotate(-4deg)}
-    .craft{padding:clamp(5rem,12vw,11rem) clamp(1.25rem,8vw,9rem);background:var(--cream);color:var(--ink)}.craft .eyebrow{color:var(--rose)}.craft .make-head p:last-child{max-width:52ch}.craft-detail{color:oklch(35% .025 275)!important;font:500 1rem/1.62 var(--sans);letter-spacing:0}.craft-list{max-width:66.25rem;margin:clamp(2.5rem,6vw,4.5rem) auto 0;padding:0;list-style:none;display:grid;gap:0 clamp(2.5rem,6vw,5.5rem)}.craft-list li{padding:1.75rem 0 1.65rem;border-top:1px solid oklch(20% .03 275/.14);color:oklch(35% .025 275);font-size:.9rem;line-height:1.62}.craft-list li b{display:block;color:var(--ink);font:600 clamp(1.3rem,2.1vw,1.6rem)/1.12 var(--serif);letter-spacing:-.02em;margin-bottom:.5rem}.craft.is-visible .craft-list li{animation:craft-rule-in .72s var(--ease) both}.craft.is-visible .craft-list li:nth-child(1){animation-delay:.08s}.craft.is-visible .craft-list li:nth-child(2){animation-delay:.16s}.craft.is-visible .craft-list li:nth-child(3){animation-delay:.24s}.craft.is-visible .craft-list li:nth-child(4){animation-delay:.32s}.craft.is-visible .craft-list li:nth-child(5){animation-delay:.40s}.craft.is-visible .craft-list li:nth-child(6){animation-delay:.48s}.craft.is-visible .craft-list li:nth-child(7){animation-delay:.56s}.craft.is-visible .craft-list li:nth-child(8){animation-delay:.64s}@keyframes craft-rule-in{from{opacity:0;transform:translateY(18px);border-color:transparent}to{opacity:1;transform:none;border-color:oklch(20% .03 275/.14)}}@media(min-width:820px){.craft-list{grid-template-columns:1fr 1fr}}
-    .profile-scroll{position:relative;min-height:250vh;background:var(--cream);color:var(--ink)}.profile-pin{position:sticky;top:0;min-height:100svh;display:grid;place-items:center;padding:clamp(1rem,3vw,2.5rem) clamp(.4rem,3vw,3rem)}.profile-intro{position:absolute;z-index:2;left:clamp(1.25rem,6vw,7rem);top:clamp(1.5rem,5vw,4rem);max-width:23rem;pointer-events:none}.profile-intro .eyebrow{color:var(--rose);margin-bottom:.55rem}.profile-intro h2{font:500 clamp(2rem,3.7vw,4rem)/.91 var(--serif);letter-spacing:-.055em;margin:0}.profile-intro p{max-width:35ch;margin:.8rem 0 0;color:oklch(35% .025 275);font-size:clamp(.72rem,1vw,.92rem);line-height:1.45}.profile-canvas{position:relative;width:min(76vw,71rem);aspect-ratio:2/3;overflow:hidden;background:radial-gradient(circle at 12% 8%,oklch(98% .025 77/.9),transparent 27%),oklch(95% .025 77);border-radius:clamp(.55rem,1.2vw,1rem);box-shadow:0 1.5rem 4rem oklch(18% .035 275/.18)}.profile-canvas img{display:block;max-width:100%;height:auto}.profile-layer{position:absolute;opacity:0;transform:translateY(2.2%) scale(.97);filter:blur(3px);transition:opacity .7s var(--ease),transform .9s var(--ease),filter .7s var(--ease)}.profile-layer.is-formed{opacity:1;transform:none;filter:none}.profile-identity{left:2.4%;top:3.1%;width:92%;height:12%}.profile-title{position:absolute;left:0;top:0;width:27%}.profile-age{position:absolute;left:25%;top:48%;width:17%}.profile-interest{position:absolute;top:0;width:15%;text-align:center}.profile-interest img{width:100%}.profile-interest--unicorn{left:43%}.profile-interest--amsterdam{left:61%}.profile-interest--dogman{left:79%}.profile-views-title{left:3.5%;top:18%;width:25%}.profile-views{left:3%;top:25%;width:47%;height:36%;display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:1%}.profile-view{position:relative;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%}.profile-view>img:first-child{max-height:84%;width:auto}.profile-view>img:last-child{width:76%;margin-top:-1%}.profile-expressions-title{left:56%;top:18%;width:25%}.profile-expressions{left:55%;top:25%;width:43%;height:36%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:1.5% 1%;align-items:end}.profile-expression{display:flex;flex-direction:column;justify-content:end;align-items:center;min-width:0}.profile-expression>img:first-child{width:100%;max-height:75%;object-fit:contain}.profile-expression>img:last-child{width:88%;margin-top:-1%}.profile-companions-title{left:3.5%;top:65%;width:29%}.profile-companions{left:3%;top:73%;width:94%;height:21%;display:grid;grid-template-columns:.85fr 1.2fr .95fr;align-items:end;gap:1%}.profile-companion{display:flex;flex-direction:column;align-items:center;justify-content:end;height:100%}.profile-companion>img:first-child{max-height:84%;width:auto}.profile-companion>img:last-child{width:55%;margin-top:-1%}.profile-grass{left:0;bottom:0;width:100%;opacity:.85}.profile-flowers{left:2%;bottom:1.7%;width:22%}.profile-star{right:4%;top:65%;width:5%}.profile-progress{position:absolute;z-index:3;right:clamp(1.25rem,5vw,5rem);bottom:clamp(1.25rem,4vw,3rem);color:oklch(35% .025 275/.66);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.profile-scroll.is-complete .profile-progress{opacity:0;transition:opacity .3s}.make{padding:clamp(5rem,12vw,11rem) clamp(1.25rem,8vw,9rem);background:var(--night)}.make-head{max-width:47.5rem;margin:0 auto clamp(2.75rem,6vw,5rem);text-align:center}.make-head p:last-child{max-width:48ch;margin:1.4rem auto 0}.choice-scene{max-width:82.5rem;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:1.25rem;overflow:hidden}.choice{min-height:480px;position:relative;overflow:hidden;background-size:cover;background-position:center;background-repeat:no-repeat;isolation:isolate}.choice-scene.is-ready .choice{opacity:.32;filter:saturate(.72) brightness(.82);transition:opacity 1.45s var(--ease),filter 1.45s var(--ease)}.choice-scene.is-ready.is-visible .choice{opacity:1;filter:none}.choice-scene.is-ready.is-visible .choice:nth-child(2){transition-delay:.42s}.choice-scene.is-ready.is-visible .choice:nth-child(3){transition-delay:.84s}.choice:nth-child(1){background-image:url('public/home-optimized/choice-companions.webp')}.choice:nth-child(2){background-image:url('public/home-optimized/choice-mischief.webp')}.choice:nth-child(3){background-image:url('public/home-optimized/choice-world.webp')}.choice::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,oklch(15% .04 275/.9));z-index:-1}.choice-copy{position:absolute;inset:auto 1.35rem 1.35rem;display:grid;grid-template-rows:1.25rem 4.1rem auto;align-items:start}.choice-no{color:var(--honey);font:600 1rem var(--serif)}.choice h3{font:600 clamp(1.7rem,3vw,2.2rem)/.95 var(--serif);margin:.5rem 0 0}.choice p{margin:0;max-width:29ch;color:var(--mist);font-size:.84rem}
-    .listen{position:relative;min-height:clamp(700px,70vw,940px);overflow:hidden;background:var(--cream);color:var(--ink)}.listen .split{display:block;max-width:none;min-height:inherit;margin:0}.scene{position:absolute;inset:0;min-height:0;overflow:hidden;background:var(--ink)}.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 18%,oklch(95% .025 77/.14) 44%,var(--cream) 69%,var(--cream) 100%)}.scene::before{content:"";position:absolute;z-index:1;inset:50% 0 0;background:linear-gradient(0deg,oklch(12% .035 275/.48),transparent);pointer-events:none}.scene img{width:100%;height:100%;object-fit:cover;object-position:44% 54%;position:absolute;inset:0;left:-20%;right:auto;transition:transform 1.8s var(--ease)}.listen.is-visible .scene img{transform:scale(1)}.audio-status{position:absolute;z-index:2;inset:auto auto clamp(2rem,5vw,4rem) clamp(2rem,6vw,7rem);display:flex;align-items:center;gap:.65rem;color:var(--paper);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.audio-status i{display:block;width:9px;height:9px;border-radius:50%;background:var(--honey);box-shadow:0 0 0 0 oklch(76% .13 72/.5);animation:audio-pulse 2.2s ease-out infinite}.listen .copy{position:relative;z-index:3;width:min(44%,35.625rem);min-height:inherit;margin-left:auto;padding:clamp(4rem,10vw,9rem) clamp(2rem,7vw,7rem) clamp(4rem,8vw,7rem) 0;display:flex;flex-direction:column;justify-content:center}.listen .copy>p:not(.eyebrow){font-size:1.05rem;line-height:1.62}.queue-line{margin:1.4rem 0 0!important;max-width:48ch;font-size:1.05rem!important;line-height:1.62}.listen-list{padding:0;margin:2rem 0 0;list-style:none}.listen-list li{padding:1rem 0;border-bottom:1px solid oklch(35% .025 275/.18);font-weight:600;display:flex;align-items:center;gap:.8rem;opacity:0;transform:translateX(24px);transition:opacity .55s var(--ease),transform .65s var(--ease)}.listen.is-visible .listen-list li{opacity:1;transform:none}.listen.is-visible .listen-list li:nth-child(1){transition-delay:.22s}.listen.is-visible .listen-list li:nth-child(2){transition-delay:.32s}.listen.is-visible .listen-list li:nth-child(3){transition-delay:.42s}.listen.is-visible .listen-list li:nth-child(4){transition-delay:.52s}.device-icon{width:23px;height:23px;flex:0 0 23px;stroke:var(--rose);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}@keyframes audio-pulse{70%{box-shadow:0 0 0 9px oklch(76% .13 72/0)}}
-    .shelf{padding:clamp(5rem,10vw,9rem) 0;background:var(--cream);color:var(--ink);overflow:hidden}.shelf-head{max-width:47.5rem;padding:0 clamp(1.25rem,8vw,9rem);margin:0 auto 3rem;text-align:center}.shelf-head .eyebrow{color:var(--rose)}.shelf-sub{max-width:46ch;margin:1rem auto 0;color:oklch(35% .025 275)}.books-viewport{overflow:hidden;display:flex;flex-direction:column;gap:clamp(1.5rem,3vw,2.25rem)}.books{display:flex;gap:clamp(1rem,2vw,2rem);width:max-content;padding-left:4vw;animation:shelf-loop 72s linear infinite}.books-row-2{animation-name:shelf-loop-reverse}.book-card{flex:0 0 clamp(175px,18vw,245px)}.book{width:100%;aspect-ratio:2/3;position:relative;border-radius:3px 8px 8px 3px;overflow:hidden;background:#1a2543;box-shadow:8px 12px 24px #07091d}.book img{width:100%;height:100%;object-fit:cover}.book-caption{margin:.75rem 0 0;color:oklch(40% .03 275);font-size:.76rem;font-weight:700;text-align:center;letter-spacing:.01em;white-space:nowrap}@keyframes shelf-loop{to{transform:translateX(-50%)}}@keyframes shelf-loop-reverse{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-    .trust{padding:clamp(5rem,11vw,10rem) clamp(1.25rem,8vw,9rem);background:var(--night);color:var(--paper);overflow:hidden}.trust-grid{max-width:47.5rem;margin:auto;text-align:center}.trust-grid .eyebrow{margin-bottom:.9rem}.trust-grid .section-title{max-width:41.25rem;margin:auto}.trust-grid p:not(.eyebrow):not(.section-title){margin:1.1rem auto 0;max-width:56ch;color:var(--mist)}.app-flow{max-width:69.375rem;margin:clamp(3.5rem,8vw,7rem) auto 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,4vw,4rem);align-items:center}.flow-step{position:relative;margin:0;opacity:.38;filter:saturate(.78) brightness(.88);transform:translateY(38px) scale(.975);transition:opacity 1.25s var(--ease),filter 1.25s var(--ease),transform 1.25s var(--ease)}.flow-step:nth-child(1){transform:translateY(3rem) rotate(-4deg) scale(.95)}.flow-step:nth-child(2){z-index:1;transform:translateY(-.5rem) scale(1.04)}.flow-step:nth-child(3){transform:translateY(3rem) rotate(4deg) scale(.95)}.app-flow.is-visible .flow-step{opacity:1;filter:none;transform:none}.app-flow.is-visible .flow-step:nth-child(1){transform:translateY(3rem) rotate(-4deg) scale(.95)}.app-flow.is-visible .flow-step:nth-child(2){transition-delay:.52s;transform:translateY(-.5rem) scale(1.04)}.app-flow.is-visible .flow-step:nth-child(3){transition-delay:1.04s;transform:translateY(3rem) rotate(4deg) scale(.95)}.flow-step::before{content:"";position:absolute;z-index:2;top:1.7%;left:50%;width:34%;height:1.75%;transform:translateX(-50%);border-radius:999px;background:oklch(9% .018 275);box-shadow:0 1px 0 oklch(100% 0 0/.06)}.flow-step img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border:clamp(7px,1.1vw,12px) solid oklch(11% .02 275);border-radius:clamp(1.8rem,3vw,2.8rem);box-shadow:0 28px 54px oklch(8% .02 275/.52),0 0 0 1px oklch(88% .04 72/.2)}.flow-step figcaption{margin:.85rem 0 0;color:oklch(82% .018 72/.72);font:600 .72rem/1.3 var(--sans);letter-spacing:.05em;text-align:center}.preview{padding:clamp(5rem,12vw,11rem) clamp(1.25rem,8vw,9rem);background:var(--night)}.preview-grid{max-width:66.25rem;margin:auto;display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(2.5rem,8vw,8rem);align-items:center}.preview-copy p:not(.eyebrow){max-width:42ch;color:var(--mist);margin:1.4rem 0 0}.preview-note{font-size:.73rem;color:var(--mist);margin-top:1.25rem!important}.preview-form{background:oklch(27% .04 275);border:1px solid var(--line);border-radius:1.25rem;padding:clamp(1.25rem,3vw,2rem)}.form-label{display:block;color:var(--cream);font-weight:700;font-size:.75rem;margin:0 0 .55rem}.form-group{margin-bottom:1.25rem}.form-input,.form-select{width:100%;min-height:48px;border:1px solid oklch(82% .04 72/.28);border-radius:.7rem;background:oklch(20% .035 275);color:var(--paper);padding:.8rem .9rem;font:500 .9rem var(--sans)}.form-input:focus,.form-select:focus{outline:2px solid var(--honey);outline-offset:2px}.platforms{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}.platform-option{position:relative}.platform-option input{position:absolute;opacity:0}.platform-option span{display:grid;place-items:center;min-height:46px;border:1px solid oklch(82% .04 72/.28);border-radius:.7rem;color:var(--mist);font-size:.78rem;font-weight:700;cursor:pointer}.platform-option input:checked+span{background:var(--honey);color:var(--ink);border-color:var(--honey)}.preview-form .button{width:100%;border:0;cursor:pointer}.form-status{min-height:1.3rem;margin:.8rem 0 0;color:var(--honey);font-size:.76rem}.final{padding:clamp(5rem,12vw,11rem) 1.25rem;text-align:center;background:var(--night)}.final .section-title{max-width:47.5rem;margin:auto}.final p{color:var(--mist);max-width:46ch;margin:1.4rem auto 2rem}.footer{padding:1.5rem clamp(1.25rem,4vw,4rem);display:flex;justify-content:space-between;gap:1rem;color:var(--mist);font-size:.72rem;background:var(--night)}.footer a{text-decoration:none}.footer a:hover{text-decoration:underline}
-    .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s var(--ease),transform .8s var(--ease)}.reveal.is-visible{opacity:1;transform:none}.shelf.reveal .book{opacity:0;transform:translateY(70px) rotate(var(--book-tilt,0deg));transition:opacity .7s var(--ease),transform .9s var(--ease),box-shadow .3s}.shelf.reveal.is-visible .book{opacity:1;transform:translateY(0) rotate(var(--book-tilt,0deg))}.shelf.reveal.is-visible .book:nth-child(1){transition-delay:.05s}.shelf.reveal.is-visible .book:nth-child(2){transition-delay:.12s;--book-tilt:-2deg}.shelf.reveal.is-visible .book:nth-child(3){transition-delay:.19s;--book-tilt:1.5deg}.shelf.reveal.is-visible .book:nth-child(4){transition-delay:.26s;--book-tilt:-1deg}.shelf.reveal.is-visible .book:nth-child(5){transition-delay:.33s;--book-tilt:2deg}.shelf.reveal.is-visible .book:nth-child(6){transition-delay:.4s;--book-tilt:-1.5deg}@keyframes hero-in{to{opacity:1;transform:none}}@keyframes art-arrive{from{opacity:0;transform:scale(1.07)}to{opacity:1;transform:scale(1)}}@media(max-width:760px){.hero{padding:0}.hero-inner{position:relative;display:block;max-width:none;min-height:0;padding:0}.hero-art-stage{position:absolute;inset:0;width:100%;height:100%;border-radius:0;margin-top:0;overflow:hidden;z-index:0}.hero-art-stage::after{display:none}.hero-art{position:absolute;inset:0;width:100%;height:100%;object-position:center top;opacity:1;animation:none;filter:brightness(1.48) saturate(1.05)}.hero-art-stage picture{display:none}.hero-art-video{display:block;opacity:.82}.hero-fade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent 0%,transparent 22%,var(--night) 92%,var(--night) 100%)}.hero-copy{position:relative;z-index:2;padding:19rem clamp(1.25rem,8vw,9rem) 2rem}.hero-copy h1{margin:0 0 1.1rem;padding:0;font-size:clamp(3rem,6vw,5.8rem);line-height:.9}.hero-copy p:not(.eyebrow){margin:.6rem 0 0;padding:0;font-size:1.05rem}.hero-actions{margin-top:1.1rem;gap:.6rem;padding:0}.hero-actions .button{min-height:42px;padding:.58rem .95rem;font-size:.8rem}.hero .store-badges{display:none}.split,.trust-grid,.preview-grid{grid-template-columns:1fr}.choice-scene{grid-template-columns:1fr}.choice{min-height:360px;background-size:cover}.listen{min-height:0;padding:1.25rem 1.25rem 0}.scene{position:relative;min-height:clamp(320px,88vw,440px);border-radius:1.45rem;box-shadow:0 18px 38px oklch(18% .035 275/.22)}.scene::after{background:linear-gradient(0deg,oklch(12% .035 275/.76),transparent 62%)}.scene::before{display:none}.scene img{object-position:44% 50%;width:130%;left:-15%}.listen .copy{width:auto;min-height:0;margin:0;padding:3rem 0 4.25rem}.audio-status{inset:auto 1.35rem 1.35rem;font-size:.68rem}.platform-status{display:none}.nav-actions .button{font-size:.72rem;padding:.5rem .8rem}.app-flow{display:block;position:relative;height:min(142vw,590px);margin:2.75rem 0 0;padding:0;overflow:hidden}.flow-step,.app-flow.is-visible .flow-step,.app-flow.is-visible .flow-step:nth-child(1),.app-flow.is-visible .flow-step:nth-child(2),.app-flow.is-visible .flow-step:nth-child(3){position:absolute;inset:0 auto auto 50%;width:min(78vw,300px);margin:0!important;opacity:0;filter:none;pointer-events:none;transform:translate(-50%,30px) scale(.97)!important;transition:opacity .85s var(--ease),transform .95s var(--ease)}.app-flow[data-active="0"] .flow-step:nth-child(1),.app-flow[data-active="1"] .flow-step:nth-child(2),.app-flow[data-active="2"] .flow-step:nth-child(3){opacity:1;transform:translate(-50%,0) scale(1)!important;pointer-events:auto}.flow-step::before{top:1.7%}.flow-step figcaption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.footer{flex-direction:column}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal,.choice,.shelf.reveal .book,.flow-step{opacity:1;transform:none;filter:none}}
-    .home-languages{padding:clamp(5rem,11vw,10rem) clamp(1.25rem,8vw,9rem);overflow:hidden;background:radial-gradient(circle at 82% 48%,oklch(59% .09 25/.14),transparent 27rem),var(--night)}.language-layout{max-width:72.5rem;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.72fr);gap:clamp(2.5rem,10vw,9rem);align-items:start}.language-copy .eyebrow{color:var(--honey)}.language-copy .section-title{max-width:12ch}.language-copy>p:not(.eyebrow){max-width:45ch;margin:1.55rem 0 2rem;color:var(--mist);font-size:1.03rem}.language-list{display:flex;flex-wrap:wrap;gap:.3rem .55rem;max-width:36rem}.language-list button{appearance:none;padding:0;border:0;background:transparent;color:var(--mist);font:700 .82rem/1.5 var(--sans);cursor:pointer;transition:color 180ms ease}.language-list button:hover,.language-list button:focus-visible,.language-list button[aria-pressed="true"]{color:var(--paper)}.language-list button:focus-visible{outline:2px solid var(--honey);outline-offset:4px;border-radius:2px}.language-list button+button::before{content:"·";margin-right:.55rem;color:var(--honey)}.language-story{position:relative;width:min(100%,23.75rem);justify-self:center;padding-bottom:1.25rem}.language-story::after{content:"";position:absolute;z-index:0;right:-2.5rem;bottom:0;left:2.5rem;height:77%;border-radius:1.25rem;background:oklch(95% .025 77/.07);transform:rotate(4deg)}.language-cover-stage{position:relative;z-index:1;width:70%;aspect-ratio:2/3;margin:auto}.language-cover{position:absolute;inset:0;display:block;width:100%;height:100%;border-radius:4px 8px 8px 4px;object-fit:cover;box-shadow:14px 25px 42px oklch(5% .02 275/.42)}.language-cover--incoming{z-index:1;opacity:0;transition:opacity 520ms ease-in-out}.language-cover--incoming.is-visible{opacity:1}.language-cover--outgoing{opacity:0;transition:opacity 520ms ease-in-out}.language-quote{position:relative;z-index:1;width:92%;margin:1.2rem auto 0;padding:1.25rem 1.5rem 1.15rem;border-top:1px solid oklch(76% .13 72/.74);border-bottom:1px solid var(--line);transition:opacity 180ms ease}.language-quote.is-changing{opacity:0}.language-quote::before{content:"“";position:absolute;top:-.65rem;left:.25rem;color:var(--honey);font:500 3.2rem/.8 var(--serif)}.language-quote::after{content:"“";position:absolute;right:.25rem;bottom:-.65rem;color:var(--honey);font:500 3.2rem/.8 var(--serif);transform:rotate(180deg)}.language-quote p{margin:0;padding:.1rem .8rem;color:var(--paper);font:italic 500 1.48rem/1.08 var(--serif)}
-    @media(max-width:760px){.language-layout{grid-template-columns:1fr;gap:3.25rem}.language-story{justify-self:start;width:min(100%,300px)}}
-    @media (prefers-reduced-motion: reduce) {
-      .story-book { opacity: 1 !important; }
-      .story-book:nth-child(1) { transform: rotate(-5deg) !important; }
-      .story-book:nth-child(2) { transform: rotate(2deg) !important; }
-      .story-book:nth-child(3) { transform: rotate(5deg) !important; }
-      .story-book:nth-child(4) { transform: rotate(4deg) !important; }
-      .story-book:nth-child(5) { transform: rotate(-2deg) !important; }
-      .story-book:nth-child(6) { transform: rotate(-4deg) !important; }
-    }
-  .proof .split{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(2rem,5vw,4rem)}.proof .story-stack{max-width:40rem}.proof .story-book{height:auto;min-height:clamp(230px,22vw,290px)}.proof .story-book h3{font-size:clamp(1rem,1.75vw,1.4rem);line-height:.93}.proof .story-book b{font-size:clamp(.42rem,.58vw,.54rem)}@media(max-width:760px){.proof .split{display:block}.proof .story-stack{width:min(100%,390px);height:auto;margin:2.75rem auto 0;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,auto);gap:clamp(.85rem,3vw,1.15rem);padding:.35rem}.proof .story-book{width:100%;height:auto;min-height:0;aspect-ratio:2/3}.proof .story-book h3{font-size:clamp(.98rem,4vw,1.18rem)}.proof .story-book b{font-size:clamp(.4rem,1.6vw,.5rem)}} @media(max-width:760px){.nav{padding:1rem 1.1rem;gap:.75rem}.wordmark{font-size:1.8rem;flex:0 0 auto}.nav-links{margin-left:auto;gap:.7rem}.nav-link{font-size:.78rem}.nav .button{min-height:40px;padding:.55rem .8rem;font-size:.74rem;white-space:nowrap}}@media(min-width:761px){.nav-links{margin-left:auto;margin-right:1.25rem}}@media(max-width:760px){.nav{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand action" "links links";align-items:center;row-gap:.65rem;padding:1rem 1.1rem}.wordmark{grid-area:brand;font-size:1.8rem}.nav-links{grid-area:links;margin:0;gap:1.15rem}.nav-link{font-size:.78rem}.nav .nav-cta{grid-area:action;min-height:40px;padding:.55rem .8rem;font-size:.74rem;white-space:nowrap}}@media(max-width:760px){.profile-scroll{min-height:0;padding:4.5rem 0;background:var(--cream)}.profile-pin{position:relative;min-height:0;display:block;padding:0}.profile-intro{position:relative;left:auto;top:auto;max-width:31rem;margin:0 auto 2rem;padding:0 1.25rem;text-align:center}.profile-intro p{margin-left:auto;margin-right:auto}.profile-canvas{width:calc(100% - 1.25rem);margin:auto;border-radius:.65rem}.profile-progress{display:none}}@media(prefers-reduced-motion:reduce){.profile-layer{opacity:1;transform:none;filter:none;transition:none}.profile-scroll{min-height:0}.profile-pin{position:relative;min-height:0;padding:clamp(4rem,8vw,7rem) clamp(.75rem,3vw,3rem)}.profile-progress{display:none}}</style>
-  <style>
-    .profile-scroll{min-height:260vh;padding:0 clamp(1.25rem,7vw,8rem);background:var(--cream)}.profile-pin{position:sticky;top:0;min-height:100svh;max-width:76rem;margin:auto;padding:clamp(2rem,6vw,5rem) 0;display:grid;grid-template-columns:minmax(16rem,.6fr) minmax(0,1fr);gap:clamp(2.5rem,8vw,8rem);align-items:center}.profile-intro{position:relative;left:auto;top:auto;max-width:24rem}.profile-canvas{justify-self:end;position:relative;width:min(100%,calc((100svh - 5rem)*.666));aspect-ratio:2/3;overflow:hidden;background:radial-gradient(circle at 12% 8%,oklch(98% .025 77/.9),transparent 27%),oklch(95% .025 77);box-shadow:0 1.5rem 4rem oklch(18% .035 275/.18)}.profile-canvas>.profile-layer{display:block;inset:0;width:100%;height:100%;background:url('public/rose-profile/rose-profile-reference.png') center/100% 100% no-repeat}.profile-piece{clip-path:inset(0 0 100% 0)}.profile-piece--identity{clip-path:inset(0 0 79% 0)}.profile-piece--views{clip-path:inset(17% 48% 39% 0)}.profile-piece--expressions{clip-path:inset(17% 0 39% 48%)}.profile-piece--companions{clip-path:inset(61% 0 0 0)}.profile-progress{display:block}@media(max-width:760px){.profile-scroll{min-height:0;padding:4.5rem 1.25rem}.profile-pin{position:relative;min-height:0;display:block;padding:0}.profile-intro{margin:0 auto 2rem;padding:0;text-align:center}.profile-intro p{margin-left:auto;margin-right:auto}.profile-canvas{width:min(100%,34rem);margin:auto}.profile-progress{display:none}}@media(prefers-reduced-motion:reduce){.profile-scroll{min-height:0}.profile-pin{position:relative}.profile-layer{opacity:1;filter:none;transform:none;transition:none}}
-  </style>
-<style>
-.profile-scroll{min-height:0;padding:clamp(4rem,9vw,8rem) clamp(1.25rem,7vw,8rem);background:var(--cream)}
-.profile-pin{position:relative;top:auto;min-height:0;padding:0;max-width:76rem;margin:auto;display:grid;grid-template-columns:minmax(16rem,.6fr) minmax(0,1fr);gap:clamp(2rem,8vw,8rem);align-items:center}
-.profile-intro{position:relative;left:auto;top:auto;max-width:24rem;margin:0}
-.profile-canvas{justify-self:end;width:min(100%,26rem);aspect-ratio:768/1664;overflow:hidden;position:relative;border-radius:clamp(.55rem,1.2vw,1rem);box-shadow:0 1.5rem 4rem oklch(18% .035 275/.18);opacity:0;transform:translateY(1.5rem);transition:opacity 1s var(--ease),transform 1.1s var(--ease)}
-.profile-scroll.is-shown .profile-canvas{opacity:1;transform:none}
-.profile-sheet{display:block;width:100%;height:100%;object-fit:cover}
-.profile-progress{display:none}
-@media (max-width:760px){.profile-pin{grid-template-columns:1fr;text-align:center}.profile-intro{margin:0 auto}.profile-canvas{justify-self:center;width:100%}}
-@media (prefers-reduced-motion:reduce){.profile-canvas{opacity:1;transform:none;transition:none}}
-</style>
-<style id="book-depth">
-/* Real-book depth for the cover showcase (approved design preview, 2026-10-08). Artwork stays flat on the front; the spine, page block and binding crease are built around it. */
-.proof .story-book{overflow:visible!important;background:none!important;box-shadow:none!important;border-radius:0!important;--h:12px}
-.proof .story-book .book-object{--binding:inherit;position:absolute;inset:0;display:block;width:100%;height:100%;transform-style:preserve-3d;transform:perspective(1400px) rotateY(-19deg) rotateX(2deg)}
-.proof .story-book .book-object img{display:block;position:relative;width:100%;height:100%;object-fit:contain;border-radius:2px 4px 4px 2px;transform:translateZ(var(--h))}
-.proof .story-book .book-back{position:absolute;inset:0;background:var(--binding);border-radius:2px 4px 4px 2px;transform:translateZ(calc(var(--h)*-1));box-shadow:14px 21px 24px oklch(19% .035 275/.22)}
-.proof .story-book .book-spine{position:absolute;left:calc(var(--h)*-1);top:0;bottom:0;width:calc(var(--h)*2);transform:rotateY(90deg);background:var(--binding);border-radius:3px}
-.proof .story-book .book-pages{position:absolute;right:calc(var(--h)*-1);top:4px;bottom:4px;width:calc(var(--h)*2);transform:rotateY(90deg);background-color:oklch(88% .033 80);background-image:var(--page-grain),linear-gradient(90deg,oklch(48% .03 75/.22),transparent 22%,oklch(96% .03 80/.12) 58%,oklch(49% .03 75/.15)),repeating-linear-gradient(90deg,oklch(57% .026 77/.2) 0 .4px,transparent .4px 1.8px),repeating-linear-gradient(90deg,transparent 0 5.6px,oklch(59% .035 78/.13) 5.6px 6.1px,transparent 6.1px 8.5px);border:1px solid oklch(63% .035 77/.5);box-shadow:inset 0 2px 3px oklch(42% .025 75/.18),inset 0 -2px 2px oklch(42% .025 75/.15)}
-.proof .story-book .book-bottom{position:absolute;left:4px;right:0;bottom:-8px;height:calc(var(--h)*2);transform:rotateX(90deg);background-color:oklch(83% .033 80);background-image:var(--page-grain),linear-gradient(0deg,oklch(40% .027 77/.18),transparent 30%,oklch(95% .03 80/.08) 60%,oklch(42% .027 77/.14)),repeating-linear-gradient(0deg,oklch(54% .026 77/.18) 0 .4px,transparent .4px 1.8px);box-shadow:inset 2px 0 3px oklch(40% .03 77/.16)}
-.proof .story-book .book-binding{position:absolute;inset:0;transform:translateZ(calc(var(--h) + .5px));pointer-events:none;border-radius:2px 4px 4px 2px;background:linear-gradient(90deg,oklch(12% .02 75/.38),transparent 2%,oklch(98% .02 77/.18) 3%,oklch(15% .02 77/.22) 4%,transparent 6%);box-shadow:inset 0 0 0 1px oklch(98% .02 77/.15)}
-:root{--page-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E")}
-@media(max-width:640px){.proof .story-book{--h:7px}.proof .story-stack{padding-right:1.2rem}}
-</style>
-<style id="hear-css">
-/* Real-story listening: three real Namesake stories, real recordings, text that follows the audio. */
-.hear{--muted:oklch(43% .025 275);background:var(--paper);color:var(--ink);padding:clamp(4.5rem,10vw,9rem) clamp(1.25rem,6vw,6rem)}
-.hear-in{max-width:76rem;margin:auto}
-.hear-head{text-align:center;max-width:44rem;margin:0 auto clamp(2rem,5vw,3.2rem)}
-.hear-head .eyebrow{color:var(--rose)}
-.hear-head h2{margin:0 0 .9rem}
-.hear-perm{font-size:.82rem;color:var(--muted);margin:0}
-.hear-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
-.hear-shelf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.1rem,2.4vw,1.9rem);padding:.8rem .5rem .2rem}
-.hear-choice{background:none;border:0;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer;min-width:0}
-.hear-choice:focus-visible{outline:2px solid var(--rose);outline-offset:6px;border-radius:4px}
-.hear-cover{display:block;position:relative;padding:0 6px}
-.hear .book-object{--h:12px;--binding:oklch(30% .04 75);display:block;position:relative;width:100%;aspect-ratio:2/3;transform-style:preserve-3d;transform:perspective(1400px) rotateY(-19deg) rotateX(2deg);transition:transform .3s ease}
-.hear .hear-choice:hover .book-object,.hear .hear-choice[aria-pressed=true] .book-object{transform:perspective(1400px) rotateY(-14deg) rotateX(2deg) translateY(-5px)}
-.hear .book-object img{display:block;position:relative;width:100%;height:100%;object-fit:contain;border-radius:2px 4px 4px 2px;transform:translateZ(var(--h))}
-.hear .book-back{position:absolute;inset:0;background:var(--binding);border-radius:2px 4px 4px 2px;transform:translateZ(calc(var(--h)*-1));box-shadow:14px 21px 24px oklch(19% .035 275/.22)}
-.hear .book-spine{position:absolute;left:calc(var(--h)*-1);top:0;bottom:0;width:calc(var(--h)*2);transform:rotateY(90deg);background:var(--binding);border-radius:3px}
-.hear .book-pages{position:absolute;right:calc(var(--h)*-1);top:4px;bottom:4px;width:calc(var(--h)*2);transform:rotateY(90deg);background-color:oklch(88% .033 80);background-image:var(--page-grain),linear-gradient(90deg,oklch(48% .03 75/.22),transparent 22%,oklch(96% .03 80/.12) 58%,oklch(49% .03 75/.15)),repeating-linear-gradient(90deg,oklch(57% .026 77/.2) 0 .4px,transparent .4px 1.8px),repeating-linear-gradient(90deg,transparent 0 5.6px,oklch(59% .035 78/.13) 5.6px 6.1px,transparent 6.1px 8.5px);border:1px solid oklch(63% .035 77/.5);box-shadow:inset 0 2px 3px oklch(42% .025 75/.18),inset 0 -2px 2px oklch(42% .025 75/.15)}
-.hear .book-bottom{position:absolute;left:4px;right:0;bottom:-8px;height:calc(var(--h)*2);transform:rotateX(90deg);background-color:oklch(83% .033 80);background-image:var(--page-grain),linear-gradient(0deg,oklch(40% .027 77/.18),transparent 30%,oklch(95% .03 80/.08) 60%,oklch(42% .027 77/.14)),repeating-linear-gradient(0deg,oklch(54% .026 77/.18) 0 .4px,transparent .4px 1.8px)}
-.hear .book-binding{position:absolute;inset:0;transform:translateZ(calc(var(--h) + .5px));pointer-events:none;border-radius:2px 4px 4px 2px;background:linear-gradient(90deg,oklch(12% .02 75/.38),transparent 2%,oklch(98% .02 77/.18) 3%,oklch(15% .02 77/.22) 4%,transparent 6%);box-shadow:inset 0 0 0 1px oklch(98% .02 77/.15)}
-.hear-title{display:block;font:600 clamp(1rem,1.5vw,1.2rem)/1.1 var(--serif);margin-top:1.5rem;letter-spacing:-.01em}
-.hear-meta{display:block;font-size:.68rem;color:var(--muted);margin-top:.45rem;line-height:1.4}
-.hear-sel{display:block;margin-top:.55rem;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--rose);min-height:1em}
-.hear-hint{margin:1.4rem 0 0;color:var(--muted);font-size:.74rem}
-.hear-reader{background:oklch(98% .017 77);border:1px solid oklch(19% .035 275/.12);padding:clamp(1.3rem,2.6vw,2rem);min-width:0}
-.hear-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-.hear-follow{background:none;border:0;padding:.5rem 0;min-height:36px;font:inherit;font-size:.68rem;letter-spacing:.03em;text-transform:none;color:var(--rose);cursor:pointer}
-.hear-reader h3{font:500 clamp(1.7rem,3vw,2.1rem)/1.05 var(--serif);letter-spacing:-.025em;margin:.7rem 0 .3rem}
-.hear-voice{font-size:.72rem;color:var(--muted);margin:0 0 1.1rem}
-.hear-text{height:clamp(220px,32vh,290px);overflow:auto;scrollbar-width:thin;scroll-padding:25px;padding:0 .5rem 3rem 0;font:500 clamp(1.3rem,2.1vw,1.42rem)/1.55 var(--serif);position:relative;outline-offset:3px}
-.hear-text p{margin:0 0 1.2rem;color:oklch(44% .025 275)}
-.hear-text .sn{transition:color .2s,background .2s;cursor:pointer}
-.hear-text .sn.on{color:var(--ink);background:oklch(89% .07 80);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:2px 0}
-.hear-player{border-top:1px solid oklch(19% .035 275/.12);margin-top:.9rem;padding-top:1.1rem}
-.hear-row{display:flex;align-items:center;gap:.9rem}
-.hear-play{border:0;background:var(--ink);color:var(--paper);border-radius:50%;width:48px;height:48px;flex-shrink:0;font-size:.95rem;cursor:pointer;display:grid;place-items:center}
-.hear-play:focus-visible,.hear-follow:focus-visible,.hear-range:focus-visible,.hear-text:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
-.hear-now{font-size:.8rem;font-weight:600;line-height:1.3}
-.hear-sub{font-size:.68rem;color:var(--muted);margin-top:.1rem}
-.hear-time{margin-left:auto;font-size:.7rem;font-variant-numeric:tabular-nums;white-space:nowrap}
-.hear-range{display:block;width:100%;accent-color:var(--ink);margin:1rem 0 0;cursor:pointer}
-.hear-status{min-height:1.2em;margin:.6rem 0 0;font-size:.72rem;color:var(--rose)}
-.hear-after{text-align:center;max-width:40rem;margin:clamp(2.5rem,6vw,4rem) auto 0;border-top:1px solid oklch(19% .035 275/.14);padding-top:1.8rem}
-.hear-after p{font-size:.78rem;color:var(--muted);margin:0}
-.hear-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media(max-width:900px){.hear-grid{display:block}.hear-shelf{scrollbar-width:none}.hear-shelf::-webkit-scrollbar{display:none}.hear-shelf{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:1.6rem;padding:1rem 1rem 1.4rem;margin:0 -1rem 1.2rem;-webkit-overflow-scrolling:touch}.hear-choice{flex:0 0 min(54vw,215px);scroll-snap-align:start}.hear-title{font-size:1.1rem}.hear .book-object{--h:8px}}
-@media(max-width:520px){.hear-row{flex-wrap:wrap}.hear-time{margin-left:calc(48px + .9rem)}.hear-text{font-size:1.28rem}}
-@media(prefers-reduced-motion:reduce){.hear .book-object,.hear-text .sn{transition:none}}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Namesake - personalised bedtime stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Jost:wght@400;500;600&family=Special+Elite&family=Young+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/test/v1/site.css?v=devices-craft">
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <nav class="nav" aria-label="Main navigation"><a class="wordmark" href="#top"><img src="public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324" style="height:2.6rem;width:auto;display:block"></a><div class="nav-links"><a class="nav-link" href="blog.html">Blog</a><a class="nav-link" href="faq.html">FAQ</a></div><a class="button nav-cta" href="download.html">Try the Beta</a></nav>
-  <header class="hero" id="top"><div class="hero-inner"><div class="hero-copy"><h1>A bedtime story<br>starring <em>them.</em></h1><p>You still read real books together at bedtime, exactly as you do now.</p><p>Namesake is what plays after lights-out, in the same slot as an audiobook or Toniebox, once you've left the room.</p><div class="hero-actions"><a class="button" href="download.html">Try the Namesake Beta</a><div class="store-badges" aria-label="Coming soon for iOS and Android"><span class="store-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 12.6c0-2.7 2.2-4 2.3-4.1-1.2-1.8-3.1-2-3.8-2.1-1.6-.2-3.1 1-3.9 1s-2-1-3.4-1c-1.8 0-3.4 1-4.3 2.5-1.8 3.1-.5 7.7 1.3 10.3.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-2.9-.1 0-2.8-1.1-2.9-4.7zM14 4.9c.7-.9 1.2-2.1 1-3.4-1 .1-2.3.7-3 1.6-.6.7-1.2 1.9-1 3.1 1.1.1 2.2-.5 3-1.3z"/></svg><span>Coming soon<b>App Store</b></span></span><span class="store-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2.8 13.6 12 3 21.2V2.8Zm11.8 10.3 2.6-2.3 2.8 1.6c.8.5.8 1.4 0 1.9l-2.8 1.6-2.6-2.3ZM4.5 22l10-8.7 2.5 2.2L4.5 22Zm12.5-13.4L4.5 2 14.5 10.7 17 8.6Z"/></svg><span>Coming soon<b>Google Play</b></span></span></div></div></div><div class="hero-art-stage"><picture><source media="(min-width:761px)" srcset="public/illustrations/frame2-reading.webp"><img class="hero-art" src="public/illustrations/hero-carousel-2.webp" alt="Illustrated child reaching for one of her own personalised storybooks on a shelf"></picture><video class="hero-art hero-art-video" autoplay muted loop playsinline preload="auto" poster="public/illustrations/hero-carousel-2.webp"><source src="public/video/hero-mobile.mp4" type="video/mp4"></video></div><div class="hero-fade" aria-hidden="true"></div></div></header>
-  <main id="main">
-    <section class="proof reveal"><div class="split"><div class="copy"><p class="eyebrow">Their name. Their world.</p><h2 class="section-title">Tonight, <em>they’re</em> the hero.</h2><p>Rose&rsquo;s socks wake up. Lucas finds a very quiet dragon. Santosh escapes on a stegosaurus. Whatever your child is into, the story is built around them.</p></div><div class="story-stack" aria-label="Six example personalised Namesake story books"><article class="story-book" role="img" aria-label="Story cover: The Restless Unicorn" style="--binding:oklch(35% .045 295)"><span class="book-object"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="public/home-optimized/home-cover-1.webp" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span></article><article class="story-book" role="img" aria-label="Story cover: Lucas and the Very Quiet Dragon" style="--binding:oklch(36% .06 150)"><span class="book-object"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="public/home-optimized/home-cover-2.webp" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span></article><article class="story-book" role="img" aria-label="Story cover: The Midnight Map Mystery" style="--binding:oklch(28% .05 250)"><span class="book-object"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="public/home-optimized/home-cover-3.webp" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span></article><article class="story-book" role="img" aria-label="Story cover: The Stegosaurus Escape" style="--binding:oklch(44% .09 80)"><span class="book-object"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="public/home-optimized/home-cover-4.webp" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span></article><article class="story-book" role="img" aria-label="Story cover: Catching the Very Naughty Envelope" style="--binding:oklch(30% .06 270)"><span class="book-object"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="public/home-optimized/home-cover-5.webp" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span></article><article class="story-book" role="img" aria-label="Story cover: Rose&rsquo;s Socks Wake Up!" style="--binding:oklch(40% .12 25)"><span class="book-object"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="public/home-optimized/home-cover-6.webp" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span></article></div></div></section>
-    <section class="trust reveal"><div class="trust-grid"><div><p class="eyebrow">Made for parents</p><h2 class="section-title">You choose what they hear.</h2><p>You approve every story before they hear it. No surprises, no autoplay, no ads.</p><p>Choose one story or a queue of favourites. Namesake plays what you’ve chosen, then stops.</p></div></div><div class="app-flow" data-active="0" aria-label="Choose the cast, approve the story, then add it to their shelf"><figure class="flow-step"><img src="public/home-optimized/choose-story-zoomed-out.webp" alt="Namesake phone screen for choosing Rose, Shosh, a gentle villain and a magical world" loading="lazy"><figcaption>a. Create a story</figcaption></figure><figure class="flow-step"><img src="public/home-optimized/review-story.webp" alt="Namesake review screen for Rose and the Wobbly House, showing a three-line plot summary and approval button" loading="lazy"><figcaption>b. Review and approve</figcaption></figure><figure class="flow-step"><img src="public/home-optimized/rose-library.webp" alt="Namesake phone screen showing the approved stories on Rose's shelf" loading="lazy"><figcaption>c. Choose from their shelf</figcaption></figure></div></section>
-    <section class="shelf reveal"><div class="shelf-head"><p class="eyebrow">How they ask for it again</p><h2 class="section-title">The one with the fox and the lanterns.</h2><p class="shelf-sub">Every story you approve is saved to their shelf, ready to play again whenever they ask.</p></div><div class="books-viewport"><div class="books books-row-1" aria-label="Personalised story shelf"><article class="book-card"><div class="book"><img src="public/home-optimized/cover-01.webp" alt="Personalised story cover"></div><p class="book-caption">7 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-02.webp" alt="Personalised story cover"></div><p class="book-caption">5 min · Trains</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-03.webp" alt="Personalised story cover"></div><p class="book-caption">9 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-04.webp" alt="Personalised story cover"></div><p class="book-caption">4 min · Funny</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-05.webp" alt="Personalised story cover"></div><p class="book-caption">8 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-06.webp" alt="Personalised story cover"></div><p class="book-caption">6 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-07.webp" alt="Personalised story cover"></div><p class="book-caption">10 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-08.webp" alt="Personalised story cover"></div><p class="book-caption">3 min · Mischief</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-09.webp" alt="Personalised story cover"></div><p class="book-caption">7 min · Fairy tale</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-10.webp" alt="Personalised story cover"></div><p class="book-caption">5 min · Cosy</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-11.webp" alt="Personalised story cover"></div><p class="book-caption">9 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-12.webp" alt="Personalised story cover"></div><p class="book-caption">4 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-13.webp" alt="Personalised story cover"></div><p class="book-caption">8 min · Quest</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-14.webp" alt="Personalised story cover"></div><p class="book-caption">6 min · Magical</p></article></div><div class="books books-row-2" aria-label="More personalised story covers"><article class="book-card"><div class="book"><img src="public/home-optimized/cover-15.webp" alt="Personalised story cover"></div><p class="book-caption">6 min · Funny</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-16.webp" alt="Personalised story cover"></div><p class="book-caption">9 min · Quest</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-17.webp" alt="Personalised story cover"></div><p class="book-caption">5 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-18.webp" alt="Personalised story cover"></div><p class="book-caption">7 min · Cosy</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-19.webp" alt="Personalised story cover"></div><p class="book-caption">6 min · Magical</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-20.webp" alt="Personalised story cover"></div><p class="book-caption">8 min · Funny</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-21.webp" alt="Personalised story cover"></div><p class="book-caption">8 min · Mystery</p></article><article class="book-card"><div class="book"><img src="public/home-optimized/cover-09.webp" alt="Personalised story cover"></div><p class="book-caption">7 min · Fairy tale</p></article></div></div></section>
-    <section class="profile-scroll" aria-labelledby="profile-heading"><div class="profile-pin"><div class="profile-intro"><p class="eyebrow">Made around them</p><h2 id="profile-heading">Meet their world.</h2><p>We get to know the people, places and little details they love. Then every story can feel unmistakably theirs.</p></div><div class="profile-canvas" aria-label="Rose's story profile"><img class="profile-sheet" src="public/rose-profile/rose-sheet-live.webp" alt="Rose's profile in the Namesake app: age 5, loves unicorns and lives in Amsterdam, three views, six expressions, and her companions Mr Bitey, Mummy, Shosh, Anker and Daddy" width="768" height="1664" loading="lazy"></div><span class="profile-progress" aria-hidden="true">Scroll to form Rose’s world</span></div></section>
-    <section class="make"><div class="make-head reveal"><p class="eyebrow">Made together, before bedtime</p><h2 class="section-title">Make it theirs.</h2><p>Choose a few ingredients that make the story feel unmistakably theirs. It takes a moment, not a questionnaire.</p><p>Then it comes back to you first, to read properly or just skim the summary, and nothing reaches their shelf until you say yes.</p><p>Have more than one child? Give each their own profile, or choose two heroes for a story together.</p></div><div class="choice-scene"><article class="choice"><div class="choice-copy"><span class="choice-no">01</span><h3>Pick companions</h3><p>Bunny or bear, Mummy or Daddy. Their adventure begins with someone they love.</p></div></article><article class="choice"><div class="choice-copy"><span class="choice-no">02</span><h3>Add a little mischief</h3><p>A tiny twist to make the adventure feel exciting — always gentle enough for bedtime.</p></div></article><article class="choice"><div class="choice-copy"><span class="choice-no">03</span><h3>Choose a world</h3><p>A moon garden, pirate ship or train to the stars. Tonight’s story goes somewhere new.</p></div></article></div></section>
-    <section class="listen reveal"><div class="split"><div class="scene"><img src="public/illustrations/intro-frame-3.webp" alt="Illustrated child asleep beside a glowing bedside lamp while a phone rests face-down"><div class="audio-status"><i></i>Screen stays off</div></div><div class="copy"><p class="eyebrow">Audio that follows the routine</p><h2 class="section-title">Press play. Leave the phone behind.</h2><p>Choose their stories before bedtime, then keep your real-book routine just as it is.</p><p class="queue-line">After lights-out, it keeps playing from their approved shelf: one story, five favourites, or 45 minutes. Then it stops.</p><ul class="listen-list"><li><svg class="device-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 18.5h4"/></svg>Phone with the screen off</li><li><svg class="device-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/> <path d="M9 13.5h.01M12 13.5h.01M15 13.5h.01M8 5.5c2.2-1.7 5.8-1.7 8 0"/></svg>Bluetooth speaker</li><li><svg class="device-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5h6M8 15.5h8M6.5 12.5h11M9 4.5h6l1.5 8H7.5z"/></svg>Alexa and Google Home</li><li><svg class="device-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M8 7V5h8v2M9.5 13h5M12 10.5v5"/></svg>Yoto Player</li></ul></div></div></section>
-    <section class="hear" id="hear" aria-labelledby="hear-title"><div class="hear-in">
-<header class="hear-head"><p class="eyebrow">A little of their world</p><h2 class="section-title" id="hear-title">Hear one of <em>their adventures.</em></h2><p class="hear-perm">Real stories generated with Namesake, shared with their creators&rsquo; permission.</p></header>
-<div class="hear-grid"><div><div class="hear-shelf" id="hear-shelf" role="group" aria-label="Choose a story"></div><p class="hear-hint">Choose a book, then press play.</p></div>
-<article class="hear-reader" aria-live="off"><div class="hear-top"><span>Read along</span><button class="hear-follow" id="hear-follow" type="button">Following the story &check;</button></div>
-<h3 id="hear-name"></h3><p class="hear-voice" id="hear-voice"></p>
-<div class="hear-text" id="hear-text" tabindex="0" role="region" aria-label="Story text"></div>
-<div class="hear-player"><div class="hear-row"><button class="hear-play" id="hear-play" type="button" aria-label="Play story">&#9654;</button><div><div class="hear-now" id="hear-now">Press play</div><div class="hear-sub" id="hear-sub"></div></div><span class="hear-time" id="hear-time" aria-hidden="true">0:00 / 0:00</span></div>
-<label class="hear-sr" for="hear-range">Seek through the story</label><input class="hear-range" id="hear-range" type="range" min="0" max="100" step="0.1" value="0"><p class="hear-status" id="hear-status" role="status"></p></div></article></div>
-<div class="hear-after"><p>You choose what they hear. Every story comes to you first, before it reaches their shelf.</p></div>
-<audio id="hear-audio" preload="none"></audio>
+<div class="grain" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="handcut" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+
+<!-- header: fixed for the whole page -->
+<div class="top" id="top"><div class="topwrap"><div class="valance" aria-hidden="true"></div></div>
+      <a class="wordmark" href="#"><img src="/public/namesake-wordmark.webp" alt="Namesake" width="1004" height="324"></a>
+      <div class="nav-l"><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a></div><div class="nav-r"><a href="/test/download">Get the App</a></div>
+</div>
+
+<!-- 1. THE STORY IS CAST -->
+<section class="act" id="hero">
+  <div class="stage" id="heroStage">
+    <div class="hero-copy" id="copy">
+      <h1>Audio stories<br>where <em>they&rsquo;re</em> the hero.</h1>
+    </div>
+    <section class="creation" id="createHero" aria-labelledby="createTitle" hidden>
+      <h2 id="createTitle">How it works<span class="hero-subtitle">First, your child. The hero of every story.</span></h2>
+      <figure class="paper-rose">
+        <div class="portrait" role="img" aria-label="Rose in terracotta dungarees, with a blonde bob and a cheeky smile">
+          <img data-rose-layer="brown" src="/test/v1/assets-hero-rose/rose-head-brown.webp" width="520" height="1500" alt="" hidden>
+          <img data-rose-layer="head" src="/test/v1/assets-hero-rose/rose-head.webp" width="520" height="1500" alt="" hidden>
+          <img data-rose-layer="body" src="/test/v1/assets-hero-rose/rose-body.webp" width="520" height="1500" alt="" hidden>
+          <img data-rose-layer="smile" src="/test/v1/assets-hero-rose/rose-smile.webp" width="520" height="1500" alt="" hidden>
+        </div>
+        <figcaption id="roseName" hidden>Rose</figcaption>
+      </figure>
+      <div class="create-form">
+        <p class="create-field character-name"><span>Meet</span><b class="create-name"><span id="typedRose">Rose</span></b></p>
+        <div class="create-row" data-create-details hidden>
+          <p class="create-field"><span>Age</span><b class="choice">5</b></p>
+          <p class="create-field"><span>Pronouns</span><b class="choice">she/her</b></p>
+        </div>
+        <p class="create-field" id="createLook" hidden><span>Her look</span><b>blonde hair<span id="look-smile" hidden>, cheeky smile</span></b></p>
+        <p class="create-field" id="createInterests" hidden><span>Her world</span><b>Likes <mark class="hero-detail">pasta pesto</mark>, loves unicorns, lives in <mark class="hero-detail">Amsterdam</mark></b></p>
+        <p class="creation-scroll">Keep scrolling to meet Rose <span aria-hidden="true">↓</span></p>
+      </div>
+      <h2 class="once" id="createOnce" hidden>You do this once.<br>Then, every night&hellip;</h2>
+    </section>
+    <div class="inv-head a"><p class="caps">Tonight&rsquo;s story</p><h2>The cast</h2></div>
+    <div class="inv-head b"><p class="caps">Made in about a minute</p><h2>Then we craft the story and a cover.</h2></div>
+
+    <div class="scene" id="scene" style="--cx:79%; --cxm:74%;">
+      <div class="scn birchrow b2"><img src="/test/assets-v3/birchrow.webp" alt=""></div><div class="scn birchrow"><img src="/test/assets-v3/birchrow.webp" alt=""></div><div class="scn birchrow b3"><img src="/test/assets-v3/birchrow.webp" alt=""></div>
+      <div class="scn birch m" style="--x:88%; --xm:74%"><img src="/test/assets-v3/birch.webp" alt=""></div>
+      <div class="scn cottage" style="--x:80%; --xm:56%"><img src="/test/assets-v3/cottage.webp" alt=""></div>
+      <div class="scn grass"><img src="/test/assets-v3/grass.webp" alt=""></div>
+      <div class="scn mush a"><img src="/test/assets-v3/mushrooms.webp" alt=""></div><div class="scn mush b" style="--x:80%; --xm:56%"><img src="/test/assets-v3/mushrooms.webp" alt=""></div>
+
+      <div class="fig" data-name="Rose" style="--x:22%; --xm:20%; --h:25vh; --hm:23vh; --tx:22px; --td:-5.4rem"><img src="/test/assets-v3/rose.webp" alt="Paper figure of Rose in striped pyjamas"><div class="tagwrap"><div class="tagcard"><span data-t="The hero|Rose, aged 5. In her pyjamas, obviously."></span></div></div></div>
+      <div class="fig" data-name="Foxy" style="--x:30%; --xm:33%; --h:13vh; --hm:12vh; --b:11vh; --td:1.2rem"><img src="/test/assets-v3/fox.webp" alt="Foxy, a plush toy fox with stitched eyes"><div class="tagwrap"><div class="tagcard"><span data-t="Her cuddly fox|Foxy. Always by her side."></span></div></div></div>
+      <div class="fig" data-name="Daddy" style="--x:42%; --xm:47%; --h:33vh; --hm:30vh; --lift:1.2rem"><img src="/test/assets-v3/daddy.webp" alt="Paper figure of Daddy in odd socks"><div class="tagwrap"><div class="tagcard"><span data-t="The sidekick|Daddy. Curly hair, odd socks. Brave-ish."></span></div></div></div>
+      <div class="fig trouble" data-chip="The pesto" style="--x:54%; --xm:61%; --h:9vh; --hm:7.5vh; --b:15vh; --bm:1vh"><img src="/test/assets-v3/pestobowl.webp" alt="A bowl of pasta pesto"><div class="tagwrap"><div class="tagcard"><span data-t="The plot|All the pasta pesto in Amsterdam. Stolen."></span><span class="who"><b>Whose idea?</b><u class="x">Rose&rsquo;s</u><u>Yours</u><u>Namesake&rsquo;s</u></span></div></div></div>
+      <div class="fig pot" style="--x:62%; --xm:63%; --h:15vh; --hm:min(10vh, 20vw); --b:13vh; --bm:8vh"><img src="/test/assets-v3/cauldron.webp" alt="An enormous pot of stolen pesto"></div>
+      <div class="fig" data-name="Wicked Witch" style="--x:max(74%, calc(62% + 16vh)); --xm:87%; --h:36vh; --hm:min(32vh, 69vw); --b:14vh; --bm:14vh; --lift:.4rem; --tx:min(-20px, calc(13vw - 84px))"><img src="/test/v1/assets-v3/wicked-witch-front.webp" alt="Front-facing paper figure of the Wicked Witch in a plum dress, holding a green potion"><div class="tagwrap"><div class="tagcard"><span data-t="The baddy|The Wicked Witch. Prime suspect in pesto pinching."></span></div></div></div>
+      <div class="fig extra" data-chip="The badger" style="--x:13%; --xm:9%; --h:13vh; --hm:9.5vh; --b:11vh; --bm:1.2vh; --tx:26px"><img class="happy" src="/test/assets-v3/badger-happy.webp" alt="A hopeful badger with muddy knees"><img class="sad" src="/test/assets-v3/badger-sad.webp" alt=""><div class="tagwrap"><div class="tagcard"><span data-t="Not in the cast|A badger with muddy knees. Came anyway."></span></div></div></div>
+      <div class="scn birch l"><img src="/test/assets-v3/birch.webp" alt=""></div><div class="scn birch r"><img src="/test/assets-v3/birch.webp" alt=""></div>
+    </div>
+
+    <div class="magic" id="magic" aria-hidden="true"><i class="halo" id="halo"></i>
+      <span class="wsp">Once upon a time&hellip;</span><span class="wsp">a stolen supper</span><span class="wsp">Rose had a plan.</span><span class="wsp">&ldquo;Not the pesto!&rdquo;</span>
+      <span class="wsp">a brave-ish daddy</span><span class="wsp">one enormous spoon</span><span class="wsp">Foxy kept watch.</span><span class="wsp">The End.</span>
+    </div>
+    <div class="burst" id="burst" aria-hidden="true"><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""><img src="/test/assets-v3/star.webp" alt=""></div>
+    <div class="book" id="book" aria-hidden="true">
+      <div class="book-in" id="bookIn">
+        <div class="b-edge" aria-hidden="true"></div><div class="b-spine" aria-hidden="true"></div>
+        <div class="face front"><img class="b-mark" src="/public/namesake-wordmark.webp" alt="Namesake"><div class="plate"><i>starring</i><strong id="names"></strong></div><p class="caps b-foot">A bedtime story</p></div>
+        <div class="face back">
+          <img src="/test/v1/assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="">
+          <i class="cover-target" data-k="name" style="left:35%;top:8%"></i>
+          <i class="cover-target" data-k="baddy" style="left:95%;top:49%"></i>
+          <i class="cover-target" data-k="fox" style="left:32%;top:73.5%"></i>
+          <i class="cover-target" data-k="face" style="left:6%;top:58%"></i>
+        </div>
+      </div>
+    </div>
+    <!-- callouts on the finished cover: labels beside the book, curved arrows drawn to the spot each one is about -->
+    <div class="callouts" id="callouts" aria-hidden="true">
+      <svg id="coSvg"><defs><marker id="coHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#c8452c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/><path class="co-arrow"/></svg>
+      <p class="co" data-k="name">Her name in the title</p>
+      <p class="co" data-k="baddy">A baddy she made up</p>
+      <p class="co" data-k="fox">Her fox at her side</p>
+      <p class="co" data-k="face">Her face on the cover</p>
+    </div>
+    <div class="inv-foot" id="invFoot">
+      <p>All the pasta pesto in Amsterdam has vanished. A trail of green footprints leads Rose and Daddy into the Enchanted Forest, where the Wicked Witch is stirring an enormous cauldron and planning to eat the lot for dessert. <span class="summary-ending">Rose has a plan, and it starts with getting the witch to wash her hands.</span></p>
+      <div id="story-review" class="story-review">
+      <div id="review-check"><div class="age-card" role="group" aria-label="What Namesake shows you before you approve">
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="#f2b33d"/></svg><span>Scary bit: <b>The Wicked Witch tries to steal Rose&rsquo;s food</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5c6 2 12 2 18 0v6c0 5-4 9-9 9s-9-4-9-9z" fill="none" stroke="#f2b33d" stroke-width="2"/><circle cx="9" cy="11" r="1.4" fill="#f2b33d"/><circle cx="15" cy="11" r="1.4" fill="#f2b33d"/><path d="M9 15c2 1.5 4 1.5 6 0" fill="none" stroke="#f2b33d" stroke-width="1.8" stroke-linecap="round"/></svg><span>Villain: <b>Tricked into giving it back, nobody gets hurt</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="#f2b33d" stroke-width="2" stroke-linejoin="round"/></svg><span>Ends: <b>Calm</b></span></p>
+      <p><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#3fb86a"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Checked for age 5</b></span></p>
+    </div>
+    <p class="age-note"><svg viewBox="0 0 44 52" aria-hidden="true"><path d="M41 45C18 48 7 34 12 6"/><path d="M4 15 12 5l9 9"/></svg>We run a second, separate check that every story suits your child&rsquo;s age.</p>
+    </div>
+      <div id="review-approval"><div class="approval-hint" id="approve-hint"><svg viewBox="0 0 38 28" aria-hidden="true"><path d="M3 3c0 13 9 18 27 18m-7-7 9 7-8 5"/></svg>Try it. Approve to reveal the player.</div>
+      <div class="review-actions">
+        <button type="button" id="approve-demo" aria-describedby="approve-hint">Approve Story</button>
+        <button type="button" id="read-demo" aria-haspopup="dialog">Read full text</button>
+        <button type="button" id="edit-demo">Make edits</button>
+      </div>
+      <span id="review-status" role="status"></span>
+      <button hidden class="play" id="listen" type="button" aria-label="Play the story Rose and the Stolen Supper Spell, read aloud, seven minutes and thirty seconds">
+        <span class="pi" aria-hidden="true"></span><span class="pt"><b id="listenLabel">Play this story</b><small>Read aloud &middot; 7:30</small></span>
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      </button>
+      <small>&ldquo;Rose and the Stolen Supper Spell&rdquo;. A real Namesake story, shared with permission.</small>
+      </div></div>
+      <audio id="audio" preload="none" src="/test/v1/assets-product/rose-and-the-stolen-supper-spell-sulafat-cackly-witch.mp3?v=repaired-v4"></audio>
+    </div>
+
+    <div class="house l" aria-hidden="true"></div><div class="house r" aria-hidden="true"></div>
+    <p class="cue caps" id="cue" aria-hidden="true">Scroll to raise the curtain<br>and see how it works<i></i><i></i></p>
+  </div>
+</section>
+
+<div id="review-below"></div>
+<dialog id="story-reader" aria-labelledby="reader-title">
+  <form method="dialog"><button autofocus>Close</button></form>
+  <article tabindex="0" aria-labelledby="reader-title">
+    <img class="reader-vignette" src="/test/assets-v3/pestobowl.webp" alt="">
+    <h2 id="reader-title">Rose and the Stolen Supper Spell</h2>
+    <p>It was pasta pesto night in Amsterdam, and pasta pesto night was the best night of the week.</p>
+    <p>Rose sat at the kitchen table with Foxy on her lap. Foxy was her cuddly fox, soft and orange, and he came everywhere.</p>
+    <p>Daddy opened the cupboard. Then he stopped.</p>
+    <p>"Rose," he said slowly. "The pesto jar is empty."</p>
+    <p>"Empty?"</p>
+    <p>"Empty. Not a scrape. Not a smear."</p>
+    <p>Outside, the lady next door shouted, "My pesto's gone!"</p>
+    <p>"Mine too!" called the man on the houseboat.</p>
+    <p>Rose looked out of the window. A line of footprints ran along the street. Small, pointy, and bright, bright green.</p>
+    <p>"Pesto footprints," said Rose.</p>
+    <p>Daddy sniffed. "They smell of basil. Someone has pinched the pesto."</p>
+    <p>Rose tucked Foxy under her arm. "Then we'll follow them."</p>
+    <p>They followed the green footprints along the canal and into the Enchanted Forest, where the leaves whispered as Rose went by.</p>
+    <p>Deep in the forest, the footprints led to a little stream.</p>
+    <p>Rose bent down and touched one of the green footprints. Some of the green came off on her finger. It glowed, and it tingled.</p>
+    <p>"Magic," said Daddy.</p>
+    <p>Rose dipped her finger in the stream. The green fizzed and went pop, like a bubble. Her finger was clean.</p>
+    <p>"Look, Daddy," said Rose. "Water washes the magic off."</p>
+    <p>She whispered to Foxy, "Let's remember that."</p>
+    <p>Across the stream, in a clearing, stood a cauldron bigger than a bath. It was full to the top with pesto.</p>
+    <p>Stirring it with a long wooden spoon was a witch. She had a patched red hat, wild white hair, and long green fingers that glowed.</p>
+    <p>"Hee hee hee," said the witch. "All the pesto in Amsterdam. And all of it mine."</p>
+    <p>"Excuse me," said Rose. "That's our pesto."</p>
+    <p>The witch peered down at her. "Not any more. I did a Supper Spell. I wiggled my magic green fingers, and every drop came to me. And tonight I'm eating the lot. For dessert."</p>
+    <p>"Pesto isn't pudding," said Rose.</p>
+    <p>"It is if I say it is," said the witch.</p>
+    <p>Rose looked at those glowing green fingers. Green, just like the magic on the footprints. She thought about the stream.</p>
+    <p>Daddy stepped forward in his most polite grown-up voice. "Now, madam. That pesto belongs to Amsterdam, and I must ask..."</p>
+    <p>"Boring!" said the witch, and she wiggled one finger at him.</p>
+    <p>Daddy opened his mouth. "Pesto," he said, very surprised. "Pesto. Pesto pesto pesto!"</p>
+    <p>Rose clapped a hand over her mouth. Daddy could only say one word.</p>
+    <p>"Much better," cackled the witch. "And because you interrupted, I'm not waiting. I'm eating it all right now."</p>
+    <p>Rose held Foxy up to her ear. Foxy was very good at ideas.</p>
+    <p>"Foxy says," said Rose, nice and loud, "that you can't eat with hands like those."</p>
+    <p>The witch stopped. "Like what?"</p>
+    <p>"Dirty ones. Everybody knows you wash your hands before you eat."</p>
+    <p>"Witches never wash," said the witch. "I haven't washed my hands for three hundred years."</p>
+    <p>Rose wrinkled her nose. "Then your pesto will taste of three hundred years of dirty hands. Toad slime. Mud. Old socks."</p>
+    <p>The witch sniffed her fingers. She pulled a face. "Bleurgh. Old socks."</p>
+    <p>"But if you wash them," said Rose, "Daddy says food tastes ten times better."</p>
+    <p>Daddy nodded very hard. "Pesto!"</p>
+    <p>The witch looked at her fingers. "Ten times better? Well. Just this once. Where does a witch wash?"</p>
+    <p>Rose pointed at the stream.</p>
+    <p>The witch put her hands in the stream. "Now what?"</p>
+    <p>"Scrub the fronts," said Rose.</p>
+    <p>The witch scrubbed. Her fingers began to fizz.</p>
+    <p>"Now the backs."</p>
+    <p>They went pop, pop, pop, like bubbles.</p>
+    <p>"And in between."</p>
+    <p>The last of the green fizzed away. Her hands were clean. And with the magic washed off, all her spells came undone.</p>
+    <p>Behind them, the cauldron gave an enormous gurgle. All at once, it was empty. Every drop of pesto had gone back home, to the jars of Amsterdam.</p>
+    <p>"My dessert!" cried the witch.</p>
+    <p>"Our dinner!" cried Daddy. Then he gasped. "Rose! I can say other words! Cupboard! Custard! Hooray!"</p>
+    <p>The witch sat down on the grass with a bump. "You tricked me," she said.</p>
+    <p>"A little bit," said Rose. "Sorry."</p>
+    <p>The witch sniffed. "I only wanted something nice for pudding."</p>
+    <p>Rose whispered to Foxy. Then she said, "You can come to our house on pasta night. We'll share. And afterwards there's proper pudding."</p>
+    <p>The witch's eyes went wide. "Proper pudding?"</p>
+    <p>"Strawberries," said Rose. "But you have to wash your hands first."</p>
+    <p>The witch held up her clean pink fingers, and she smiled a wobbly, crooked, very nearly kind smile.</p>
+    <p>Rose and Daddy walked home as the sun went down.</p>
+    <p>In every kitchen in Amsterdam, the pesto jars were full again. Daddy stirred some into the pasta, and Rose ate every last bit, with Foxy beside her bowl.</p>
+    <p>And for pudding, they had strawberries. Because pesto isn't pudding. Everybody knows that.</p>
+    <img class="reader-end" src="/test/assets-v3/fox.webp" alt="">
+  </article>
+</dialog>
+<dialog id="sample-editor" aria-labelledby="editor-title">
+  <form method="dialog">
+    <h2 id="editor-title">Make edits</h2>
+    <label for="sample-line">Try editing the opening line</label>
+    <textarea id="sample-line" rows="3" required maxlength="500">It was pasta pesto night in Amsterdam, and pasta pesto night was the best night of the week.</textarea>
+    <p>Your edit stays in this preview. The sample plays the original recording.</p>
+    <div class="review-actions"><button value="save">Save edit</button><button value="cancel" formnovalidate>Cancel</button></div>
+  </form>
+</dialog>
+<!-- 9. THE LIBRARY, THEN LIGHTS OUT -->
+<section class="act" id="curtain">
+  <div class="stage" id="libStage">
+    <div class="lib-head a"><p class="caps">Night after night</p><h2>Each new adventure finds a home on their shelf.</h2></div>
+    <div class="lib-head b"><p class="caps">Lights out</p><h2>They choose tonight&rsquo;s stories. Namesake reads them aloud.</h2></div>
+    <div class="cabinet" id="shelves" role="img" aria-label="A cabinet holding twelve Namesake story books">
+      <div class="cabbg" aria-hidden="true"><i></i><b></b></div>
+      <div class="cgrid"><div class="bk"><img src="/test/assets-v3/shelf-ballet-slippers.webp" alt="Rose and the Magic Ballet Slippers"></div><div class="bk pick" data-n="2"><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt="Rose and Nick and the Runaway Pumpkin"></div><div class="bk"><img src="/test/assets-v3/shelf-silent-star-sky.webp" alt="The Silent Star Sky"></div><div class="bk"><img src="/test/assets-v3/shelf-kite.webp" alt="The Kite That Would Not Come Down"></div><div class="bk pick" data-n="1"><img src="/test/v1/assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="Rose and the Stolen Supper Spell"></div><div class="bk"><img src="/test/assets-v3/shelf-torch-star.webp" alt="The Torch That Pretended to Be a Star"></div><div class="bk pick" data-n="3"><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt="Rose and the Over-the-Top Swing"></div><div class="bk"><img src="/public/home-optimized/cover-03.webp" alt="Rose and the Unicorn Mystery"></div><div class="bk"><img src="/test/assets-v3/shelf-brick-by-brick.webp" alt="Brick by Brick, the Golden Hunt"></div><div class="bk pick" data-n="4"><img src="/test/assets-v3/shelf-toy-grabber.webp" alt="Rose and the Toy Grabber"></div><div class="bk"><img src="/public/home-optimized/cover-20.webp" alt="The Sandcastle Picnic Fort"></div><div class="bk"><img src="/test/assets-v3/shelf-sparkle-shed.webp" alt="The Sparkle Behind the Shed"></div></div>
+    </div>
+    <div class="night" id="night"></div>
+    <div class="bedtime" id="bedtime">
+      <svg class="bedtime-art" viewBox="0 0 1022 969" role="img" aria-label="Rose asleep in bed with Foxy and a cat gently swishing its tail">
+        <defs>
+          <!-- Only the fur below the haunch is visible; the tail root sits behind it. -->
+          <clipPath id="belowHaunch"><path d="M620 481 Q680 523 746 524 Q824 548 893 541 L921 536 L921 554 Q938 539 946 517 L1022 500 V969 H620Z"/></clipPath>
+          <image id="bedtime-scene-art" href="/test/assets-v3/bedasleep.webp" width="1022" height="969"/>
+          <!-- Sample the flank at its original scale; mirror the second half at the seam. -->
+          <svg id="cat-felt" width="96" height="59" viewBox="813 424 96 59">
+            <use href="#bedtime-scene-art"/>
+          </svg>
+          <mask id="tail-shape" maskUnits="userSpaceOnUse" x="-6" y="-16" width="192" height="59" style="mask-type:alpha">
+            <image href="/test/assets-v3/cattail2.webp" x="-6" y="-16" width="192" height="58.7"/>
+          </mask>
+        </defs>
+        <use href="#bedtime-scene-art"/>
+        <g clip-path="url(#belowHaunch)">
+          <g transform="translate(920 515)"><g class="cat-swish"><g transform="scale(-1 1)">
+            <g mask="url(#tail-shape)">
+              <use href="#cat-felt" x="-6" y="-16"/>
+              <use href="#cat-felt" transform="translate(186 -16) scale(-1 1)"/>
+            </g>
+          </g></g></g>
+        </g>
+      </svg>
+    </div>
+    <div class="devs" id="spk">
+      <div class="dev"><b></b><b></b><b></b><img src="/test/assets-v3/dev-player.webp" alt=""><span>Yoto</span></div>
+      <div class="dev"><b></b><b></b><b></b><img src="/test/assets-v3/dev-speaker.webp" alt=""><span>Alexa</span></div>
+      <div class="dev"><b></b><b></b><b></b><img src="/test/assets-v3/dev-nest.webp" alt=""><span>Google Nest</span></div>
+      <div class="dev ph"><b></b><b></b><b></b><img src="/test/assets-v3/dev-phone-off.webp" alt=""><span>Phone, screen off</span></div>
+    </div>
+    <button class="now" id="now" type="button" aria-label="Tonight's queue: four stories, about fifteen minutes. Play or pause the first story, Rose and the Stolen Supper Spell">
+      <span class="caps">Tonight&rsquo;s queue &middot; 4 stories &middot; about 15 minutes</span>
+      <span class="q"><img src="/test/v1/assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt=""><img src="/test/assets-v3/shelf-runaway-pumpkin.webp" alt=""><img src="/test/assets-v3/shelf-over-the-top-swing.webp" alt=""><img src="/test/assets-v3/shelf-toy-grabber.webp" alt=""><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></span>
+      <strong>1. Rose and the Stolen Supper Spell</strong><small id="nowHint">Tap to hear it</small>
+    </button>
+    <div class="drape l" aria-hidden="true"></div><div class="drape r" aria-hidden="true"></div>
+    <div class="final" id="final">
+      <h2>A library of stories, starring them.</h2>
+      <p>You make each one in about a minute. They listen as they drift off to sleep, night after night.</p>
+      <a class="cta" href="/test/download">Download the Namesake app (beta)</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== THE REST OF THE PAGE ===== -->
+<section class="low" id="make" aria-labelledby="make-title">
+  <div class="low-in">
+    <p class="caps">Real screens</p>
+    <h2 id="make-title">From idea to bedtime story, in the app.</h2>
+    <ol class="phone-steps">
+      <li class="phone-step">
+        <h3>Pick who&rsquo;s in it</h3>
+        <div class="iphone-crop"><img src="/test/v1/assets-product/screen-cast.webp?v=1d" width="1170" height="1372" alt="Rose, Daddy and Foxy are selected, with the Sock Monster chosen as the villain." loading="lazy"></div>
+        <p class="phone-caption">Rose stars, with Daddy and Foxy beside her. The Sock Monster is up to no good.</p>
+      </li>
+      <li class="phone-step">
+        <h3>Give it a mood and an idea</h3>
+        <div class="iphone-crop"><img src="/test/v1/assets-product/screen-idea.webp" width="1170" height="1372" alt="Magical is selected. The idea field describes Rose entering a unicorn in a pony show." loading="lazy"></div>
+        <p class="phone-caption">Tap &ldquo;Magical&rdquo;, then type or get your child to say the idea. Stuck? Tap Inspire me.</p>
+      </li>
+      <li class="phone-step">
+        <h3>Read it, then say yes</h3>
+        <div class="iphone-crop"><img src="/test/v1/assets-product/screen-review.webp" width="1170" height="1372" alt="The illustrated cover of A Sock for the Unicorn Show above the button to approve Rose’s story." loading="lazy"></div>
+        <p class="phone-caption">You see the cover and the whole story first. Nothing plays until you approve it.</p>
+      </li>
+    </ol>
+    <a class="make-details" href="/test/v1/how-it-works.html">How we shape stories for their age &rarr;</a>
+  </div>
+</section>
+
+<section class="low dark center" id="hear"><div class="low-in">
+  <h2>Hear more stories</h2>
+  <p class="lede">Choose a book to hear a story made with Namesake.</p>
+  <div class="tracks" id="tracks">
+    <button class="track" type="button" data-id="santosh-3-racing-tiger" data-src="/public/stories/santosh-3-racing-tiger.mp3"><span class="bko"><img src="/public/stories/santosh-3-racing-tiger.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>The Tiger in the Racing Seat</strong><small>For Santosh &middot; Female voice, American</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>4:52</small></span></span></button>
+    <button class="track" type="button" data-id="rose-stolen-supper-spell" data-src="/test/v1/assets-product/rose-and-the-stolen-supper-spell-sulafat-cackly-witch.mp3?v=repaired-v4"><span class="bko"><img src="/test/v1/assets-v3/rose-stolen-supper-cut-paper-v2.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Rose and the Stolen Supper Spell</strong><small>For Rose &middot; Female voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>7:30</small></span></span></button>
+    <button class="track" type="button" data-id="martin-sofia-very-bad-hiders" data-src="/test/v1/assets-product/martin-sofia-and-the-very-bad-hiders-puck.mp3"><span class="bko"><img src="/test/v1/assets-product/martin-sofia-very-bad-hiders.webp" alt="" loading="lazy"><i class="pg" aria-hidden="true"></i></span><strong>Martin, Sofia and the Very Bad Hiders</strong><small>For Martin and Sofia &middot; Male voice, British</small><span class="play"><span class="pi" aria-hidden="true"></span><span class="pt"><b>Play</b><small>5:52</small></span></span></button>
+  </div>
+  <div class="readalong" id="readalong" hidden>
+    <p class="caps"><span id="raTitle"></span> &middot; read along</p>
+    <div class="ra-box" id="raBox" aria-live="off"></div>
+  </div>
+  <audio id="audio2" preload="none"></audio>
 </div></section>
 
-    <section class="home-languages reveal" aria-labelledby="language-heading"><div class="language-layout"><div class="language-copy"><p class="eyebrow">Made for home languages</p><h2 class="section-title" id="language-heading">Their adventure, in the language they know <em>best.</em></h2><p>Every new story can be created in the language they hear at home, with narration and vocabulary made for them.</p><div class="language-list" aria-label="Available story languages"><button type="button" data-language="English" aria-pressed="false">English</button><button type="button" data-language="Français" aria-pressed="true">Français</button><button type="button" data-language="Deutsch" aria-pressed="false">Deutsch</button><button type="button" data-language="Español" aria-pressed="false">Español</button><button type="button" data-language="Italiano" aria-pressed="false">Italiano</button><button type="button" data-language="Nederlands" aria-pressed="false">Nederlands</button></div></div><aside class="language-story" aria-label="Example French story cover" aria-roledescription="rotating story sample"><div class="language-cover-stage"><img class="language-cover" src="public/covers/cover-fr-lanterne.webp" alt="Rose et la Lanterne Perdue story cover"></div><div class="language-quote"><p>Rose suivit la lueur de la lanterne, tout droit dans la forêt endormie…</p></div></aside></div></section>
-    <section class="craft reveal"><div class="make-head reveal"><p class="eyebrow">Rules the AI can’t break</p><h2 class="section-title">How a Namesake story is built.</h2><p>Every Namesake story is built to a written specification — nine named story shapes, peril and vocabulary set by age band, and an ending that has to resolve before the final beat.</p><p class="craft-detail">Structure, pacing and vocabulary are shaped to a child of exactly their age — easy enough to follow, surprising enough to be worth hearing twice.</p></div><ul class="craft-list"><li><b>You set the brief.</b> Choose the theme and the characters, and add the idea itself if they have given you one. A narwhal who is also a firefighter, for instance. And unicorns. Always unicorns.</li><li><b>It already knows them.</b> Their name, age, interests and who lives in their world are saved once. You are not setting it all up again every night.</li><li><b>Nine story shapes.</b> Every story is built on one of nine named shapes, from a quiet wander to a small quest, with a gentler set kept for two to five year olds.</li><li><b>How much goes wrong is a choice.</b> Every story needs something to go a little wrong. How much, and how frightening, is set by age, and for the under-threes it is turned right down.</li><li><b>It resolves before it ends.</b> The ending has to settle the story's central problem before the final beat. No cliffhangers at bedtime.</li><li><b>Vocabulary and pacing by age.</b> Sentence length and word choice shift by age band, rather than one reading level for everyone.</li><li><b>Villains stay silly.</b> If a young child's story has a villain at all, they are bumbling rather than frightening.</li><li><b>Finished before it plays.</b> The story is written and finished in advance, never generated live while they listen. Nothing changes once you have approved it.</li></ul></section>
+<section class="low" id="devices"><div class="low-in">
+  <p class="caps">Screen stays off</p>
+  <h2>Plays wherever bedtime happens.</h2>
+  <p class="lede">Choose tonight&rsquo;s stories on your phone, then put it down. Namesake plays through the speaker they already have, at home or on the way there.</p>
+  <ul class="devgrid">
+    <li><img src="/test/assets-v3/dev-phone-off.webp" alt="" loading="lazy"><h3>Your phone, screen off</h3><p>Lock it and turn it face down. The queue keeps playing, then stops.</p></li>
+    <li><img src="/test/assets-v3/dev-player.webp" alt="" loading="lazy"><h3>Yoto</h3><p>Their stories on the player they already love.</p></li>
+    <li><img src="/test/assets-v3/dev-speaker.webp" alt="" loading="lazy"><h3>Alexa</h3><p>Ask Alexa for tonight&rsquo;s story.</p></li>
+    <li><img src="/test/assets-v3/dev-nest.webp" alt="" loading="lazy"><h3>Google Cast</h3><p>Send it to a Nest or any Cast speaker.</p></li>
+    <li><img src="/test/assets-v3/dev-box.webp" alt="" loading="lazy"><h3>Tonies <em>Coming soon</em></h3><p>Their stories on a Creative Tonie.</p></li>
+    <li><img class="wide" src="/test/assets-v3/dev-car.webp" alt="" loading="lazy"><h3>In the car</h3><p>Android Auto and Apple CarPlay. An alternative to a screen in the headrest, or the same album for the fortieth time.</p></li>
+  </ul>
+</div></section>
 
-  </main>
-  <section class="preview" id="preview"><div class="preview-grid" style="grid-template-columns:1fr;max-width:44rem;text-align:center"><div class="preview-copy reveal"><p class="eyebrow">Small preview, real families</p><h2 class="section-title">Try Namesake before it arrives.</h2><p style="margin-left:auto;margin-right:auto">We’re inviting a small group of families to help shape Namesake before launch. Download the beta on iPhone or Android and create your child’s first bedtime stories tonight.</p><p style="margin-left:auto;margin-right:auto">It works just as well in the car: an alternative to a screen in the headrest, or the same album for the fortieth time.</p><div style="margin-top:2rem"><a class="button" href="download.html">Try the Namesake Beta</a></div></div></div></section>
-  <footer class="footer"><span>© 2026 Namesake · Amsterdam</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></span></footer>
-  <script>
-    const languageStories=[
-      {language:'Français',title:'Rose et la Lanterne Perdue',cover:'public/covers/cover-fr-lanterne.webp',line:'Rose suivit la lueur de la lanterne, tout droit dans la forêt endormie…'},
-      {language:'Deutsch',title:'Rose und die Sternenbrücke',cover:'public/covers/cover-de-sternenbruecke.webp',line:'Rose setzte einen Fuß auf die Sternenbrücke, die leise über den Bach glitzerte…'},
-      {language:'Español',title:'Rose y el Jardín de las Luciérnagas',cover:'public/covers/cover-es-luciernagas.webp',line:'Rose siguió a las luciérnagas hasta el jardín secreto que brillaba en la noche…'},
-      {language:'Italiano',title:'Rose e la Chiave delle Nuvole',cover:'public/covers/cover-it-nuvole.webp',line:'Rose girò la chiave dorata e le nuvole si aprirono come un cancello di sogno…'},
-      {language:'Nederlands',title:'Rose en het Fluisterbos',cover:'public/covers/cover-nl-fluisterbos.webp',line:'Rose luisterde naar het fluisterbos, waar elk blad haar de weg naar huis wees…'},
-      {language:'English',title:'Rose and the Moonlit Map',cover:'public/covers/cover-en-moonlit-map.webp',line:'Rose traced the moonlit path on her map and listened for the owl’s soft hoot…'}
-    ];
-    const languageStory=document.querySelector('.language-story');
-    if(languageStory){
-      const languageCoverStage=languageStory.querySelector('.language-cover-stage');
-      let languageCover=languageCoverStage.querySelector('.language-cover');
-      const languageQuote=languageStory.querySelector('.language-quote');
-      const languageLine=languageQuote.querySelector('p');
-      const languageButtons=[...document.querySelectorAll('.language-list button')];
-      const reduceLanguageMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-      let languageIndex=languageStories.findIndex(story=>story.language==='Français'),languageRotation,languageChanging=false;
-      languageStories.forEach(({cover})=>{const image=new Image();image.src=cover});
-      const showLanguageStory=index=>{
-        if(languageChanging)return;
-        const story=languageStories[index];languageIndex=index;languageChanging=true;
-        const incomingCover=new Image();incomingCover.className='language-cover language-cover--incoming';incomingCover.src=story.cover;incomingCover.alt=`${story.title} story cover`;
-        languageCoverStage.append(incomingCover);languageQuote.classList.add('is-changing');
-        requestAnimationFrame(()=>{incomingCover.classList.add('is-visible');languageCover.classList.add('language-cover--outgoing')});
-        setTimeout(()=>{languageLine.textContent=story.line;languageStory.setAttribute('aria-label',`Example ${story.language} story cover`);languageButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===story.language)));languageQuote.classList.remove('is-changing')},180);
-        setTimeout(()=>{languageCover.remove();languageCover=incomingCover;languageCover.classList.remove('language-cover--incoming','is-visible');languageChanging=false},560);
-      };
-      const startLanguageRotation=()=>{if(reduceLanguageMotion)return;clearInterval(languageRotation);languageRotation=setInterval(()=>showLanguageStory((languageIndex+1)%languageStories.length),5200)};
-      languageButtons.forEach(button=>button.addEventListener('click',()=>{const index=languageStories.findIndex(story=>story.language===button.dataset.language);if(index!==languageIndex)showLanguageStory(index);startLanguageRotation()}));
-      languageStory.addEventListener('mouseenter',()=>clearInterval(languageRotation));languageStory.addEventListener('mouseleave',startLanguageRotation);languageStory.addEventListener('focusin',()=>clearInterval(languageRotation));languageStory.addEventListener('focusout',startLanguageRotation);startLanguageRotation();
+<section class="low dark center" id="languages"><div class="low-in">
+  <p class="caps">In six languages</p>
+  <h2>Their adventure, in the language they know best.</h2>
+  <ul class="language-gallery" role="list">
+    <li><figure lang="en"><img src="/public/covers/cover-en-moonlit-map.webp" width="832" height="1248" alt="Rose and the Moonlit Map" loading="lazy"><figcaption>English</figcaption></figure></li>
+    <li><figure lang="fr"><img src="/public/covers/cover-fr-lanterne.webp" width="832" height="1248" alt="Rose et la Lanterne Perdue" loading="lazy"><figcaption>Français</figcaption></figure></li>
+    <li><figure lang="de"><img src="/public/covers/cover-de-sternenbruecke.webp" width="832" height="1248" alt="Rose und die Sternenbrücke" loading="lazy"><figcaption>Deutsch</figcaption></figure></li>
+    <li><figure lang="es"><img src="/public/covers/cover-es-luciernagas.webp" width="832" height="1248" alt="Rose y el Jardín de las Luciérnagas" loading="lazy"><figcaption>Español</figcaption></figure></li>
+    <li><figure lang="it"><img src="/public/covers/cover-it-nuvole.webp" width="832" height="1248" alt="Rose e la Chiave delle Nuvole" loading="lazy"><figcaption>Italiano</figcaption></figure></li>
+    <li><figure lang="nl"><img src="/public/covers/cover-nl-fluisterbos.webp" width="832" height="1248" alt="Rose en het Fluisterbos" loading="lazy"><figcaption>Nederlands</figcaption></figure></li>
+  </ul>
+  <p class="lede">Read aloud by a narrator who sounds at home in every language. Warm, unhurried, never robotic.</p>
+</div></section>
+
+<section class="low end" id="end"><div class="low-in">
+  <h2>Make their first story tonight.</h2>
+  <a class="cta" href="/test/download"><span class="beta-full">Download the Namesake app (beta)</span><span class="beta-short">Download the app (beta)</span></a>
+  <footer class="foot"><a href="/test/v1/how-it-works.html">How we shape their stories</a><a href="/blog.html">Blog</a><a href="/faq.html">FAQ</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/delete-account.html">Delete account</a><span>&copy; 2026 Namesake &middot; Amsterdam</span></footer>
+</div></section>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function(v){ return v < 0 ? 0 : v > 1 ? 1 : v; };
+  var seg = function(p,a,b){ return clamp((p - a) / (b - a)); };          // progress of p inside [a,b]
+  var ease = function(t){ return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; };
+  var out = function(t){ return 1 - Math.pow(1 - t, 3); };
+  function prog(el){ var r = el.getBoundingClientRect(), travel = r.height - innerHeight; return travel > 4 ? clamp(-r.top / travel) : 0; }
+
+  /* ----- the story is cast -----
+     SCROLL drives all of it. In order: the house curtains part; the headline lifts away; the forest builds; the
+     cast arrive one at a time, each with a printed tag; the scene folds into the book; the book turns over to the
+     real cover. Time only adds idle life (curtain sway, headline rise on load). */
+  var back = function(t){ var c = 1.9; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };   // overshoot
+  var hero = document.getElementById('hero'), stage = document.getElementById('heroStage'), scene = document.getElementById('scene'),
+      copy = document.getElementById('copy'), cue = document.getElementById('cue'),
+      hl = hero.querySelector('.house.l'), hr = hero.querySelector('.house.r'),
+      Q = function(q){ return scene.querySelector(q); }, QA = function(q){ return [].slice.call(scene.querySelectorAll(q)); },
+      grass = Q('.grass'), rows = QA('.birchrow'), cottage = Q('.cottage'), birchL = Q('.birch.l'), birchR = Q('.birch.r'), birchM = Q('.birch.m'), mush = QA('.mush'),
+      figs = QA('.fig'), book = document.getElementById('book'), bookIn = document.getElementById('bookIn'), names = document.getElementById('names'),
+      headA = hero.querySelector('.inv-head.a'), headB = hero.querySelector('.inv-head.b'), foot = document.getElementById('invFoot'), coBox = document.getElementById('callouts'), cos = [].slice.call(coBox.querySelectorAll('.co')), coArrows = [].slice.call(coBox.querySelectorAll('.co-arrow'));
+  var coverImage = book.querySelector('.face.back img'), coverTargets = {};
+  book.querySelectorAll('.cover-target').forEach(function(target){ coverTargets[target.dataset.k] = target; });
+  var mx = 0, my = 0, tx = 0, ty = 0, narrow = matchMedia('(max-width:760px)'), T0 = Infinity;
+  // when each member of the cast arrives (act progress), in scene order: Rose, Foxy, Daddy, the trouble, the pot, the Witch, the badger
+  var ATd = [.25, .30, .36, .43, .49, .52, .585], ATm = [.25, .31, .37, .43, .47, .50, .57], AT = ATd;   // phones: spaced so each tag finishes typing before the next arrives
+  var halo = document.getElementById('halo'), magicEl = document.getElementById('magic'), burstEl = document.getElementById('burst'), wsps = [].slice.call(hero.querySelectorAll('.wsp')), bstars = [].slice.call(burstEl.querySelectorAll('img'));
+  var cast = figs.filter(function(f){ return f.dataset.name; });
+  cast.forEach(function(f, k){ var sp = document.createElement('span'); sp.textContent = (k === cast.length - 1 ? 'and ' : '') + f.dataset.name + (k < cast.length - 1 ? ', ' : ''); names.appendChild(sp); f._name = sp; });
+  figs.forEach(function(f, k){ f._tag = f.querySelector('.tagwrap'); var cn = f.dataset.chip || f.dataset.name; if (cn) { f._chip = document.createElement('span'); f._chip.className = 'chip'; f._chip.textContent = cn; f.appendChild(f._chip); } var sp = f.querySelector('[data-t]');
+    if (sp) {
+      var parts = sp.dataset.t.split('|'), label = document.createElement('b');
+      label.textContent = parts[0];
+      var plot = parts[1].split('pasta pesto');
+      if (f.classList.contains('trouble') && plot.length === 2) {
+        var pesto = document.createElement('mark');
+        pesto.className = 'hero-detail';
+        pesto.textContent = 'pasta pesto';
+        sp.replaceChildren(label, plot[0], pesto, plot[1]);
+      } else {
+        sp.replaceChildren(label, document.createTextNode(parts[1]));
+      }
+      f._who = f._tag.querySelector('.who');
     }
-    const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');revealObserver.unobserve(entry.target)}}),{threshold:.4});document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
-    const profileSection=document.querySelector('.profile-scroll');if(profileSection){const showProfile=()=>profileSection.classList.add('is-shown');if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){showProfile()}else{new IntersectionObserver((entries,obs)=>entries.forEach(e=>{if(e.isIntersecting){showProfile();obs.disconnect()}}),{threshold:.25}).observe(profileSection)}}
-    const choiceScene=document.querySelector('.choice-scene');if(choiceScene&&!matchMedia('(prefers-reduced-motion: reduce)').matches){choiceScene.classList.add('is-ready');const choiceObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){requestAnimationFrame(()=>entry.target.classList.add('is-visible'));choiceObserver.unobserve(entry.target)}}),{threshold:.32,rootMargin:'0px 0px -12% 0px'});choiceObserver.observe(choiceScene)}
-    const appFlow=document.querySelector('.app-flow');if(appFlow&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const flowObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){requestAnimationFrame(()=>entry.target.classList.add('is-visible'));flowObserver.unobserve(entry.target)}}),{threshold:.28,rootMargin:'0px 0px -8% 0px'});flowObserver.observe(appFlow);const mobileFlow=matchMedia('(max-width:47.5rem)');let flowTimer;let flowStart;let activeFlow=0;const stopFlow=()=>{if(flowTimer){clearInterval(flowTimer);flowTimer=undefined}if(flowStart){clearTimeout(flowStart);flowStart=undefined}};const startFlow=()=>{if(!mobileFlow.matches||flowTimer||flowStart)return;activeFlow=0;appFlow.dataset.active='0';flowStart=setTimeout(()=>{activeFlow=1;appFlow.dataset.active='1';flowTimer=setInterval(()=>{activeFlow=(activeFlow+1)%3;appFlow.dataset.active=String(activeFlow)},2600);flowStart=undefined},1100)};const mobileFlowObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)startFlow();else stopFlow()}),{threshold:.16,rootMargin:'0px 0px -12% 0px'});if(mobileFlow.matches)mobileFlowObserver.observe(appFlow)}
-    const shelfPlayCounts=[17,8,22,6,14,19,4,11,21,7,16,9,13,18,12,25,9,15,20,10,17,14];document.querySelectorAll('.book-caption').forEach((caption,index)=>caption.append(` · ${shelfPlayCounts[index]} plays`));document.querySelectorAll('.books').forEach(bookRail=>{[...bookRail.children].forEach(card=>{const duplicate=card.cloneNode(true);duplicate.setAttribute('aria-hidden','true');bookRail.appendChild(duplicate)})})
-    const previewForm=document.querySelector('#preview-form');if(previewForm)previewForm.addEventListener('submit',async event=>{event.preventDefault();const form=event.currentTarget,status=form.querySelector('.form-status'),button=form.querySelector('button'),values=Object.fromEntries(new FormData(form));status.textContent='Saving your request…';button.disabled=true;try{const response=await fetch('/api/request-preview',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(values)});const data=await response.json();if(!response.ok)throw new Error(data.error);const target=values.platform==='iPhone'?'#apple':values.platform==='Android'?'#android':'#download';location.assign(`/download${target}`)}catch(error){status.textContent=error.message||'We could not save that request. Please try again.';button.disabled=false}});
-  </script>
-<script id="hear-js">(function(){
-var stories=[{"id":"rose-stolen-supper-spell","title":"Rose and the Stolen Supper Spell","who":"Rose","voice":"Female voice · British","len":"5:05","duration":305.306,"audio":"public/stories/rose-stolen-supper-spell.mp3","cover":"public/stories/rose-stolen-supper-spell.webp","paragraphs":[[["\"Daddy, the pasta pesto is GONE,\" said Rose.",5.04,9.26]],[["Not just gone from the bowl — gone from the whole city of Amsterdam.",9.9,14.92],["Every pot, every pan, every single noodle.",15.82,20.22],["Rose pressed her nose to the kitchen window and saw the canal boats sitting very still, and all the people looking very confused.",21.04,30.04]],[["Daddy ran in from the hallway, his curly brown hair sticking up on one side.",31.04,35.62],["\"Gone?\" he said.",36.42,37.66],["\"But I made it fresh this morning.\"",38.14,39.98]],[["Then they both saw it: a trail of green pesto footprints leading out the front door, down the steps, and all the way to the edge of the Enchanted Forest at the end of the street.",40.78,55.19]],[["Rose grabbed Daddy's hand.",56.13,57.81],["\"We're going in.\"",58.59,60.43]],[["Daddy smoothed his short beard the way he always did when he was thinking hard.",60.43,65.47],["\"Right,\" he said.",66.35,67.59],["\"Together, then.\"",68.39,69.07]],[["The Enchanted Forest smelled like pine needles and something faintly cheesy.",70.09,75.87],["The trees had silver bark and the mushrooms glowed a soft orange.",76.79,81.71],["Rose kept her eyes on the pesto footprints.",82.33,85.47],["They went left past a sleeping fox, right past a badger with muddy knees, and straight toward a crooked little cottage with smoke coming out of the chimney.",86.51,98.57]],[["Through the window, Rose could see him.",99.43,102.5]],[["Bad Man Matt.",102.5,104.53]],[["He was wearing his white doctor's coat, which was already covered in green smears.",105.13,110.21],["His white hair was wild.",110.21,112.43],["His face looked like a man who had not slept well in about fifteen years.",112.87,117.29],["He was stirring an enormous pot and cackling to himself in a very tired sort of way.",117.93,123.97]],[["\"All the pasta pesto in Amsterdam,\" he muttered, \"and I shall eat it for DESSERT.\"",124.69,130.99]],[["\"That's not even a dessert,\" Daddy whispered.",131.89,135.09]],[["\"Shh,\" said Rose.",136.47,137.57]],[["She had a plan.",138.09,139.35],["She knocked on the door — three sharp knocks.",139.35,143.55]],[["Bad Man Matt opened it.",144.67,146.35],["He blinked at Rose.",146.95,148.05],["He blinked at Daddy.",148.77,149.71],["He looked back at his pot.",150.45,151.83]],[["\"I am a doctor,\" he said, as if that explained everything.",152.89,157.01]],[["\"I know,\" said Rose.",158.11,159.67],["\"And doctors have to wash their hands before eating.",160.35,163.37],["Those are the rules.\"",163.85,165.29]],[["Bad Man Matt looked at his hands.",166.21,168.83],["They were extremely green.",169.45,171.31]],[["\"I suppose,\" he said slowly, \"that is true.\"",172.69,176.87]],[["He shuffled off to find the sink, which was around the back of the cottage and apparently very far away, because they could hear him muttering about it for quite some time.",177.73,188.41]],[["Rose and Daddy stepped inside.",189.51,191.23],["The pot was enormous — far too big to carry.",191.97,197.07],["Rose looked at Daddy.",197.07,198.41],["Daddy looked at Rose.",199.15,200.37]],[["\"The recipe,\" Rose said.",201.67,203.63],["\"If we have the recipe, we can make more.\"",204.27,206.93]],[["Daddy spotted a crumpled piece of paper pinned to the wall.",207.95,211.55],["He reached up and unpinned it.",212.25,214.29],["It was written in loopy old handwriting: THE SPELL FOR PASTA PESTO THAT STAYS WARM FOREVER.",214.93,222.75]],[["That was when Bad Man Matt came back.",223.95,226.89]],[["\"HEY,\" he said.",227.81,228.99]],[["He lunged for the recipe.",229.77,231.73],["Daddy stepped sideways.",232.57,233.67],["Bad Man Matt tripped on his own doctor's coat and sat down very hard in a basket of pine cones.",234.35,240.87]],[["\"Ow,\" he said.",240.87,243.05]],[["Rose and Daddy ran.",244.13,245.49]],[["They ran through the silver trees, past the glowing mushrooms, past the badger with muddy knees who watched them go with great interest.",246.07,254.51],["They ran all the way back to the canal, back up the steps, back into the kitchen.",255.17,260.03]],[["Daddy cooked.",260.93,261.65],["Rose stood on her stool and stirred.",262.39,264.49],["The whole apartment filled with the smell of basil and garlic and something warm and good.",264.49,271.65]],[["When the bowls were on the table and the pasta was perfectly twisted around the fork, Rose took one bite.",272.63,280.45]],[["It was exactly right.",281.21,283.35]],[["Daddy sat across from her, a little pesto on his beard, smiling in the quiet way he did when everything was fine.",284.43,292.11]],[["Outside, the canal boats began to move again.",292.11,296.25]],[["And somewhere in the Enchanted Forest, Bad Man Matt was still sitting in the pine cones, thinking about dessert.",296.89,304.67]]]},{"id":"santosh-3-racing-tiger","title":"The Tiger in the Racing Seat","who":"Santosh","voice":"Female voice · American","len":"4:52","duration":291.696,"audio":"public/stories/santosh-3-racing-tiger.mp3","cover":"public/stories/santosh-3-racing-tiger.webp","paragraphs":[[["Santosh's racing car had two seats, four shiny wheels, and one very serious problem.",2.4,10.3]],[["His co-driver kept falling over.",10.96,13.06]],[["\"Tiger,\" Santosh said, \"you have to watch the road.\"",14.1,17.76]],[["His cuddly orange tiger leaned against the door.",18.86,21.62],["One soft paw rested on the window.",22.32,24.58],["He looked extremely comfortable.",25.46,26.98]],[["Santosh fastened the little seat belt across Tiger's tummy.",27.82,31.42],["Now the toy sat straight, with his black stripes showing and his stitched smile facing the track.",32.36,38.76]],[["\"Much better.\"",39.58,40.28]],[["Dad checked Santosh's helmet and tightened his own glove around the little car's safety strap.",41.14,46.56]],[["\"Three laps,\" he said.",47.16,48.32],["\"Stay on the track, and stop if you need help.\"",48.86,51.02]],[["Santosh nodded.",51.94,53.22],["Beyond the starting line, the racecourse curled around the park.",53.22,58.4],["There was a wooden bridge, a bend beside the flower beds, and a finish line hung with colorful flags.",59.08,66.28]],[["A girl in a green car pulled up beside him.",67.42,69.8]],[["\"I'm Maya,\" she said.",70.5,71.82],["\"Who's that?\"",72.4,72.94]],[["\"Tiger.",74.18,74.38],["He's my co-driver.\"",74.74,75.96]],[["Maya considered Tiger's steady smile.",76.78,78.86]],[["\"He looks fast.\"",79.6,80.72]],[["The starter raised a flag.",80.72,83.52]],[["Three.",84.24,84.7],["Two.",85.48,85.92],["One.",86.52,87.28]],[["Go!",87.92,88.32]],[["Santosh pressed the pedal.",88.32,90.74],["The car rolled forward, then faster.",91.2,93.96],["Wind slipped around his helmet.",94.84,96.44],["Tiger's ears fluttered.",97.18,98.28]],[["Over the wooden bridge they went.",99.04,100.62],["Rumble, rumble, rumble.",101.2,102.2],["Around the flower beds they swept.",102.78,104.58],["The flags flashed red and yellow ahead.",105.02,107.52]],[["Maya's green car was just in front.",108.16,110.38]],[["\"We can catch her,\" Santosh told Tiger.",111.2,113.32]],[["They passed the starting line.",113.98,115.36],["Two laps to go.",115.74,116.72]],[["On the bridge, something bounced against Santosh's elbow.",117.28,120.3]],[["Tiger's striped tail.",123.12,124.58]],[["Santosh glanced at it.",125.38,127.22],["The car drifted toward the edge of the track.",127.68,130.16]],[["He looked up quickly and straightened the wheel.",130.76,132.98]],[["\"Road first,\" he whispered.",134.18,135.56]],[["At the flower-bed bend, a yellow cone lay across the narrowest part of the track.",135.56,142.04],["Maya braked.",143.04,143.54],["Santosh pressed his brake too.",143.54,145.86]],[["Their cars stopped with a small space between them.",146.7,149.4]],[["\"We could drive on the grass,\" Maya said.",149.4,152.64]],[["Santosh looked at the soft ground.",152.64,155.4],["Yesterday's rain had left a dark muddy patch beside the bend.",156.36,160.16]],[["\"We'd get stuck.\"",161.04,162.56]],[["He raised his hand.",162.56,163.6],["At the edge of the course, Dad spotted him and waved to the race helper.",163.6,168.32]],[["The helper lifted the fallen cone and set it upright.",169.0,171.82]],[["\"Good stopping,\" she said.",172.64,174.08],["\"Ready?\"",174.64,174.86]],[["Maya nodded.",175.8,176.28],["Santosh checked Tiger's seat belt.",176.28,179.07]],[["Off they went again.",179.42,180.46]],[["This time Santosh watched the bend all the way through.",181.16,185.18],["He turned smoothly, keeping his hands steady.",185.92,188.92],["Maya was still ahead, but not by much.",188.92,193.0]],[["One lap to go.",193.72,195.38]],[["The bridge rumbled beneath them.",196.62,198.38],["Santosh felt every bump through his seat.",198.38,201.32],["Tiger bounced once, safely strapped in, and settled against the cushion.",202.48,206.46]],[["At the final bend, Santosh started turning a little earlier.",207.38,211.54],["The car followed the curve without wobbling.",212.3,214.82],["He came out beside Maya.",215.4,216.68]],[["The finish flags fluttered closer.",216.88,219.58]],[["Dad was cheering.",220.6,221.14],["Someone rang a bell.",221.78,222.66],["Santosh pressed the pedal and kept his eyes straight ahead.",223.88,226.96]],[["Maya crossed the line first.",228.3,229.4]],[["Santosh crossed one heartbeat later.",230.5,232.62]],[["He let the car slow to a stop.",233.4,235.22],["For a moment he stared at the flags.",236.1,238.08]],[["Then Maya turned around.",238.92,240.38]],[["\"Your tiger didn't even blink!\"",241.18,242.78]],[["Santosh looked at his co-driver.",243.62,246.12],["Tiger was still smiling his stitched smile, with both paws pointed forward.",246.96,252.98]],[["\"He's been practicing,\" Santosh said.",253.8,256.4]],[["Dad came over and lifted Santosh's helmet.",257.32,260.08],["His hair sprang up underneath.",260.64,262.34]],[["\"How was it?\"",263.3,264.1]],[["Santosh thought about the bridge, the fallen cone, and that last smooth turn.",264.9,271.08]],[["\"Can we do it again?\"",272.02,273.14]],[["On the walk home, he carried Tiger under one arm.",274.2,277.46],["A small blue ribbon was tied around the toy's paw.",278.34,281.12]],[["It said: EXCELLENT CO-DRIVER.",281.86,284.53]],[["Tiger, who had done absolutely none of the steering, seemed very pleased.",285.54,291.16]]]},{"id":"rose-pencil-draws-real-things","title":"The Pencil That Draws Real Things","who":"Rose","voice":"Male voice · British","len":"4:51","duration":291.192,"audio":"public/stories/rose-pencil-draws-real-things.mp3","cover":"public/stories/rose-pencil-draws-real-things.webp","paragraphs":[[["Scratchy, scratchy, scribble-scratch.",4.72,6.9],["There was a small sound coming from under the sofa.",7.9,10.72],["Rose got down on her knees and peeped underneath.",12.12,15.2],["There, in the dust, lay a golden pencil.",16.52,20.52],["She pulled it out and held it up to the light.",21.7,24.2]],[["\"Nick, look what I found!\" she said.",25.02,28.08],["\"A shiny pencil.\"",28.62,29.9],["Nick came over from the kitchen table, where Mummy was pouring tea.",31.52,35.42],["He took the pencil and turned it round in his fingers.",36.52,39.46]],[["\"That's not one of ours,\" said Nick.",40.74,42.74],["\"Our pencils are all grey and chewed.\"",43.74,45.86],["Rose wanted to know if it worked.",47.32,49.14],["Nick wanted to know where it came from.",50.02,52.12],["Shosh the fox sat on the table, watching with stitched-on eyes.",52.12,57.96]],[["Rose found a scrap of paper.",59.24,61.28],["She drew a butterfly, with orange wings and little round spots.",62.02,67.1],["Then something amazing happened.",68.04,70.44],["The butterfly lifted right off the page.",71.22,74.48],["It flapped its wings and flew up into the kitchen.",75.26,78.56]],[["\"It's real!\" shouted Rose.",78.56,81.3],["\"The pencil draws real things!\"",82.02,83.74],["The butterfly looped round the lamp.",84.72,86.82],["It swooped past the window.",87.56,89.22],["Then it landed straight on top of Mummy's head.",89.9,92.94]],[["\"Oh!\" said Mummy, holding very still.",93.7,96.8],["\"There is a butterfly on my hair.\"",97.58,99.98],["Mummy laughed, but when she turned round, her elbow bumped her teacup.",100.74,105.68],["The cup tipped over, and tea spread across the table in a brown puddle.",105.68,112.74]],[["\"My tea,\" said Mummy.",113.52,115.2],["\"And my nice quiet kitchen.\"",115.8,117.72],["The butterfly took off again.",119.38,121.04],["It zoomed this way and that.",121.86,123.64],["It landed on Shosh's nose, then bounced off and flew behind the curtains.",124.38,129.42]],[["\"We need to catch it,\" said Nick.",130.18,132.12],["\"But it's too fast for hands.\"",132.64,134.62],["Rose thought for a moment.",134.62,136.64],["Then she had an idea.",137.64,138.62]],[["\"Butterflies like flowers,\" she said.",139.52,141.78],["\"Draw a flower, Nick!",142.8,143.62],["A big one!\"",144.12,144.68],["Nick took the pencil and drew a huge sunflower on the paper.",145.54,149.44],["The flower rose up, real and golden, with a fat brown middle.",150.44,155.76],["He held it high in the middle of the kitchen.",156.5,159.24]],[["The butterfly peeked out from behind the curtain.",160.14,163.24],["It saw the sunflower.",163.24,165.82],["Slowly, slowly, it fluttered across the kitchen.",166.8,170.84],["Then it folded its wings and settled on the flower's middle.",171.74,176.1]],[["\"Got it,\" whispered Nick, grinning.",177.02,179.66],["\"Now what?\" asked Mummy, mopping the tea with a cloth.",180.64,184.72],["\"We can't keep a butterfly in the kitchen forever.\"",185.66,188.38]],[["Rose looked at the window.",189.5,190.88],["Then she looked at her paper.",191.7,193.22],["She knew just what to do.",193.22,196.18],["She took the pencil back from Nick.",196.92,198.68],["On the paper she drew the garden, with green grass and a patch of flowers.",199.44,205.46],["And in the middle of the garden she drew a little open window.",206.36,211.66]],[["Mummy opened the real window wide.",213.26,215.8],["Nick carried the sunflower over, butterfly and all, and held it outside.",216.76,223.14],["The butterfly twitched its wings.",224.66,226.76],["It saw the garden below, full of flowers just like the one it was sitting on.",227.82,233.16],["It lifted off and floated away over the fence, into the sunshine.",234.0,240.2]],[["\"Bye bye, butterfly!\" called Rose, waving.",241.28,244.72],["Shosh the fox sat on the windowsill, and Rose sat Shosh's paw on the sill too, so Shosh could wave as well.",245.94,254.26],["Mummy looked at the tea puddle, all gone now.",255.28,258.46],["She looked at the golden pencil in Rose's hand.",259.26,262.04]],[["\"That's a clever pencil,\" said Mummy.",262.8,265.32],["\"But who is going to tidy up all these pencil marks?\"",265.88,269.14],["Rose smiled.",270.16,270.94],["She drew a small yellow sponge on the paper.",271.82,275.02],["The sponge popped up, real and soapy, and began wiping the table all by itself.",275.02,282.4]],[["\"Careful,\" said Nick, stepping back with a laugh.",283.8,287.14],["\"If she draws a hoover next, we'll all be out of a job!\"",287.86,290.8]]]}];
-var shelf=document.getElementById('hear-shelf'),text=document.getElementById('hear-text'),audio=document.getElementById('hear-audio'),playBtn=document.getElementById('hear-play'),range=document.getElementById('hear-range'),followBtn=document.getElementById('hear-follow'),status=document.getElementById('hear-status');
-var cur=-1,sents=[],following=true,programmatic=false,raf=0,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-var bindings=['oklch(44% .09 80)','oklch(40% .1 25)','oklch(28% .05 250)'];
-function fmt(t){t=Math.max(0,Math.floor(t));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')}
-function esc(x){return x.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
-function book(s,i){return '<span class="book-object" style="--binding:'+bindings[i%3]+'"><span class="book-back" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span><span class="book-pages" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><img src="'+s.cover+'" alt="" width="720" height="1080"><span class="book-binding" aria-hidden="true"></span></span>'}
-function renderShelf(){shelf.innerHTML=stories.map(function(s,i){return '<button class="hear-choice" type="button" data-i="'+i+'" aria-pressed="'+(i===cur)+'" aria-label="'+esc(s.title)+', '+s.len+', '+s.voice+'"><span class="hear-cover">'+book(s,i)+'</span><span class="hear-title">'+esc(s.title)+'</span><span class="hear-meta">'+s.who+'\u2019s story \u00b7 '+s.len+'<br>'+s.voice+'</span><span class="hear-sel">'+(i===cur?'Selected':'')+'</span></button>'}).join('');
- shelf.querySelectorAll('button').forEach(function(b){b.onclick=function(){select(Number(b.dataset.i),true)}})}
-function select(i,fromUser){
- if(i===cur)return; audio.pause(); cancelAnimationFrame(raf); cur=i; var s=stories[i]; following=true;
- audio.src=s.audio; audio.preload='metadata'; audio.load();
- document.getElementById('hear-name').textContent=s.title; document.getElementById('hear-voice').textContent=s.who+'\u2019s story \u00b7 '+s.voice+' narration';
- var n=0; text.innerHTML=s.paragraphs.map(function(p){return '<p>'+p.map(function(x){var h='<span class="sn" data-n="'+(n++)+'">'+esc(x[0])+'</span>';return h}).join(' ')+'</p>'}).join('');
- sents=[].concat.apply([],s.paragraphs.map(function(p){return p.map(function(x){return{s:x[1],e:x[2]}})}));
- text.querySelectorAll('.sn').forEach(function(el){el.onclick=function(){seek(sents[Number(el.dataset.n)].s)}});
- text.scrollTop=0; range.max=s.duration; range.value=0; status.textContent=''; renderShelf(); ui();
-}
-function active(t){var a=-1;for(var k=0;k<sents.length;k++){if(t+0.15>=sents[k].s)a=k;else break}return a}
-function ui(){
- var t=audio.currentTime||0,s=stories[cur]; if(!s)return; var dur=s.duration;
- range.value=t; range.setAttribute('aria-valuetext',fmt(t)+' of '+s.len);
- document.getElementById('hear-time').textContent=fmt(t)+' / '+s.len;
- playBtn.innerHTML=audio.paused?'&#9654;':'&#10074;&#10074;'; playBtn.setAttribute('aria-label',audio.paused?(t>0&&!audio.ended?'Resume story':'Play story'):'Pause story');
- document.getElementById('hear-now').textContent=audio.paused?(t>0.5?(audio.ended?'Finished':'Paused'):'Press play'):'Now playing';
- document.getElementById('hear-sub').textContent=s.title;
- followBtn.innerHTML=following?'Following the story &check;':'Follow narration &darr;';
- var a=active(t); text.querySelectorAll('.sn.on').forEach(function(el){if(Number(el.dataset.n)!==a)el.classList.remove('on')});
- var el=a>=0?text.querySelector('.sn[data-n="'+a+'"]'):null;
- if(el){el.classList.add('on'); if(following){var er=el.getBoundingClientRect(),tr=text.getBoundingClientRect(); if(er.bottom>tr.bottom-45||er.top<tr.top){programmatic=true;text.scrollTo({top:text.scrollTop+er.top-tr.top-55,behavior:reduce?'auto':'smooth'});setTimeout(function(){programmatic=false},650)}}}
-}
-function loop(){ui();if(!audio.paused)raf=requestAnimationFrame(loop)}
-function seek(t){if(!isFinite(t))return;audio.currentTime=Math.max(0,t);following=true;ui()}
-playBtn.onclick=function(){
- if(cur<0)return; status.textContent='';
- if(audio.paused){ if(audio.ended)audio.currentTime=0; var p=audio.play(); if(p&&p.catch)p.catch(function(){status.textContent='We couldn\u2019t play this recording. Please try again.';ui()}); }
- else audio.pause();
-};
-audio.addEventListener('play',function(){cancelAnimationFrame(raf);loop()});
-['pause','ended','seeked','loadedmetadata','timeupdate'].forEach(function(ev){audio.addEventListener(ev,ui)});
-audio.addEventListener('waiting',function(){status.textContent='Loading\u2026'});
-audio.addEventListener('playing',function(){status.textContent=''});
-audio.addEventListener('error',function(){status.textContent='We couldn\u2019t load this recording. Please check your connection and try again.';ui()});
-range.addEventListener('input',function(){seek(Number(range.value))});
-['wheel','touchstart','pointerdown'].forEach(function(ev){text.addEventListener(ev,function(e){if(!programmatic&&!(e.target.classList&&e.target.classList.contains('sn')&&ev==='pointerdown')){following=false;ui()}},{passive:true})});
-text.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End'].indexOf(e.key)>-1){following=false;ui()}});
-followBtn.onclick=function(){following=true;ui()};
-select(0,false);
-})();</script>
+  });
+  var home = [];
+  function castGeo(){ figs.forEach(function(f){ f.style.transform = ''; }); var W = stage.offsetWidth, H = stage.offsetHeight;
+    home = figs.map(function(f){ return { dx: W / 2 - f.offsetLeft, dy: H * .56 - (f.offsetTop + f.offsetHeight / 2) }; }); }
+  var START = window.NS_START || 0;   // variant B begins with the cast already in the forest
+  var creation = document.getElementById('createHero'), createTitle = document.getElementById('createTitle'),
+      createOnce = document.getElementById('createOnce'), createForm = creation.querySelector('.create-form'),
+      createLook = document.getElementById('createLook'), smileWords = document.getElementById('look-smile'), blondeHead = creation.querySelector('[data-rose-layer="head"]'),
+      createDetails = creation.querySelectorAll('[data-create-details]'), createInterests = document.getElementById('createInterests'),
+      typedRose = document.getElementById('typedRose'), roseName = document.getElementById('roseName'),
+      paperRose = creation.querySelector('.paper-rose'), roseLayers = creation.querySelectorAll('[data-rose-layer]');
+  var staticCreation = reduced && !START;
+  stage.classList.toggle('creation-static', staticCreation);
+  function creationFrame(progress) {
+    var active = !START && (staticCreation || (progress >= .13 && progress < .434));
+    creation.hidden = !active;
+    if (!active) return;
+    var ending = !staticCreation && progress >= .365;
+    var length = 4;
+    var name = 'Rose'.slice(0, length);
+    if (typedRose.textContent !== name) typedRose.textContent = name;
+    createTitle.hidden = ending;
+    var formReveal = staticCreation ? 1 : ease(seg(progress, .193, .208));
+    createForm.hidden = ending || formReveal === 0;
+    createForm.style.opacity = formReveal;
+    var dayExit = staticCreation ? 0 : ease(seg(progress, .355, .375));
+    paperRose.hidden = dayExit >= 1;
+    paperRose.style.opacity = 1 - dayExit;
+    paperRose.style.transform = 'translate3d(-50%,' + (-dayExit * 28) + 'vh,0)';
+    var portrait = paperRose.querySelector('.portrait');
+    if (narrow.matches && !staticCreation && !ending) {
+      var portraitTop = createTitle.offsetTop + createTitle.offsetHeight + 20;
+      var portraitSpace = createForm.offsetTop - portraitTop - 48;
+      paperRose.style.top = portraitTop + 'px';
+      paperRose.style.bottom = 'auto';
+      portrait.style.height = Math.max(80, Math.min(214, stage.offsetHeight * .25, portraitSpace)) + 'px';
+    } else if (!narrow.matches || staticCreation) {
+      paperRose.style.top = paperRose.style.bottom = portrait.style.height = '';
+    }
+
+    roseName.hidden = !staticCreation && progress < .256;
+    var nameLand = staticCreation ? 1 : out(seg(progress, .237, .252));
+    roseName.style.transform = 'translateY(' + ((nameLand - 1) * 24) + 'px) rotate(-3deg)';
+    createDetails.forEach(function(field){ field.hidden = !staticCreation && progress < .256; });
+    createLook.hidden = !staticCreation && progress < .269;
+    createInterests.hidden = !staticCreation && progress < .318;
+    creation.querySelector('.creation-scroll').hidden = staticCreation || progress >= .318;
+    var smiling = staticCreation || progress >= .30;
+    smileWords.hidden = !smiling;
+    var blonde = staticCreation ? 1 : ease(seg(progress, .269, .294));
+    // The bob occupies the upper third of the registered full-body image.
+    blondeHead.style.clipPath = blonde === 1 ? 'none' : 'inset(0 0 ' + (100 - 35 * blonde) + '% 0)';
+    roseLayers.forEach(function(layer){
+      var part = layer.dataset.roseLayer;
+      layer.hidden = (!staticCreation && progress < .256) || (part === 'smile' && !smiling) || (part === 'brown' && blonde === 1);
+    });
+    createOnce.hidden = !staticCreation && !ending;
+  }
+  function castFrame(now){
+    var actualScroll = prog(hero), scrollProgress = Math.min(actualScroll / .82, 1), t = (now - T0) / 1000, W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
+    // Keep the later cues on their original timeline after cutting the introductory beats.
+    var progress = START ? scrollProgress : .12 + .88 * scrollProgress;
+    var p = reduced ? 1 : START ? START + (1 - START) * progress : seg(progress, .39, 1);
+    var intro = START || reduced ? 1 : seg(scrollProgress, 0, .085) * .1;
+    var I = function(x, y){ return seg(intro, x, y); };
+    creationFrame(progress);
+    if (!(t > 0)) t = 0;
+    var P = function(x, y){ return seg(p, x, y); };
+    AT = wide ? ATd : ATm;
+
+    // The opening sign leaves as the panels part. The stage copy arrives in complete sentences.
+    var opening = ease(I(0, .1)), th = Math.sin(opening * Math.PI) * 3 * Math.min(1, W / H * .8);
+    hl.style.transform = 'translate3d(' + (-opening * 103) + '%,0,0) skewX(' + th + 'deg)';
+    hr.style.transform = 'translate3d(' + (opening * 103) + '%,0,0) skewX(' + (-th) + 'deg)';
+    cue.style.opacity = 1 - I(0, .025);
+
+    var sign = reduced && !START ? 1 : 1 - I(.025, .065);
+    copy.style.opacity = sign;
+    copy.style.visibility = sign > 0 ? 'visible' : 'hidden';
+    copy.inert = sign <= .55;
+    scene.style.setProperty('--scenery', P(.1, .15));
+    headA.style.opacity = P(.23, .27) * (1 - P(.74, .78)); headB.style.opacity = P(.83, .87) * (1 - P(.925, .955));
+
+    // .11 to .26: the forest builds, back to front; .7 onward it clears for the book
+    var clear = ease(P(.75, .86)), px = function(d){ return mx * d * -14; };
+    k = out(P(.11, .18)); grass.style.transform = 'translate3d(' + px(1) + 'px,' + ((1 - k) * 46 + clear * 50) + 'vh,0)';
+    rows.forEach(function(r, n){ k = out(P(.12 + n * .012, .2 + n * .012)); r.style.transform = 'translate3d(' + px(.2) + 'px,' + ((1 - k) * 70 + clear * 90) + 'vh,0)'; });
+    k = back(P(.15, .24)); cottage.style.transform = 'translate3d(calc(-50% + ' + px(.5) + 'px),' + (clear * 80) + 'vh,0) scale(' + (.01 + k * .99) + ') rotate(' + ((1 - k) * 7 + (reduced ? 0 : Math.sin(t * .6) * .25)) + 'deg)';
+    k = out(P(.14, .22)); birchM.style.transform = 'translate3d(' + px(.4) + 'px,' + ((1 - k) * 90 + clear * 100) + 'vh,0)';
+    k = out(P(.13, .22)); birchL.style.transform = 'translate3d(calc(' + ((1 - k) * -40 - clear * 50) + 'vw + ' + px(1.3) + 'px),0,0)';
+    k = out(P(.15, .24)); birchR.style.transform = 'translate3d(calc(' + ((1 - k) * 40 + clear * 50) + 'vw + ' + px(1.3) + 'px),0,0)';
+    mush.forEach(function(m, n){ k = back(P(.21 + n * .02, .26 + n * .02)) * (1 - clear); m.style.transform = 'translate3d(' + (n ? '-50%' : '0') + ',0,0) scale(' + Math.max(k, 0) + ')'; });
+
+    // the cast: each hops in, its finished tag appears, and at the end everyone but the badger folds into the book
+    var bump = 0;
+    figs.forEach(function(f, n){
+      var a = AT[n], inn = back(P(a, a + .045)), vis = P(a, a + .012), extra = f.classList.contains('extra'), g = extra ? 0 : ease(P(.75 + n * .011, .82 + n * .011)), h = home[n] || { dx:0, dy:0 };
+      var gone = 1 - P(.73, .76), swap = 0;
+      if (f._tag) {
+        var nxt = AT[n + 1] === undefined ? .76 : (n === 3 ? AT[5] : AT[n + 1]);            // phone: one tag at a time
+        swap = wide ? 0 : P(nxt - .005, nxt + .01);
+        f._tag.style.opacity = (wide ? P(a + .02, a + .035) : P(a + .006, a + .016)) * gone * (1 - swap);
+        if (f._who) f._who.classList.toggle('on', p >= a + (wide ? .075 : .045));
+      }
+      if (f._chip) f._chip.style.opacity = swap * gone;
+      if (extra) { var glum = P(.855, .875); f.classList.toggle('sad', p > .86); f.style.opacity = vis * (1 - P(.888, .908)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
+      if (!START && !reduced && n === 0 && p < a + .045) {
+        var landing = out(seg(progress, .404, .466));
+        var center = W * (wide ? .47 : .5) - f.offsetLeft;
+        var toCast = 1 - ease(seg(progress, .466, .553));
+        f.style.opacity = seg(progress, .403, .417);
+        f.style.transform = 'translate3d(' + (center * toCast) + 'px,' + ((landing - 1) * 66) + 'vh,0)';
+        return;
+      }
+      f.style.opacity = vis * (g < .93 ? 1 : 0);
+      f.style.transform = 'translate3d(' + (h.dx * g + px(1) * (1 - g)) + 'px,calc(' + (h.dy * g) + 'px + ' + ((1 - inn) * 20 - Math.sin(g * Math.PI) * 16) + 'vh),0) scale(' + (1 - g * .62) + ') rotate(' + ((1 - Math.min(inn, 1)) * (n % 2 ? 7 : -7) + g * (n % 2 ? 200 : -200)) + 'deg)';
+      if (!extra) bump += Math.sin(seg(g, .8, 1) * Math.PI);
+      if (f._name) f._name.classList.toggle('on', g > .9);
+    });
+
+    // the book rises, then turns over to the real cover; on desktop it grows and the words sit beside it
+    var rise = back(P(.745, .8)), flip = ease(P(.925, .975)), mg = P(.865, .925), brew = Math.sin(mg * Math.PI);
+    book.style.opacity = clamp(P(.745, .765));
+    var bx = (wide ? flip * 19 : 0), by = flip * (wide ? 4 : 17);
+    // once the turn is done and the book is enlarged, it is laid out at that size instead of being a stretched small copy, so the cover stays sharp
+    var bsc = .7 + rise * .3 + bump * .045 + brew * .06 + flip * (wide ? .78 : -.1);
+    // Leave a label gutter beside the finished cover, including tall, narrow desktop windows.
+    var naturalWidth = Math.max(150, Math.min(innerHeight * .27, 270));
+    var coverLimit = (wide ? .62 * W - 164 : W - 152) / naturalWidth;
+    bsc = Math.min(bsc, bsc + (coverLimit - bsc) * flip);
+    if (!wide && !staticCreation && flip > 0) {
+      var coverHeight = naturalWidth * 1.5 * bsc;
+      var liftCover = ease(seg(actualScroll, .82, .85));
+      var highCentre = document.getElementById('top').offsetHeight + 24 + coverHeight / 2;
+      var restingCentre = H * .56 + (highCentre - H * .56) * liftCover;
+      by = flip * (book.offsetTop - restingCentre) * 100 / innerHeight;
+      foot.style.top = (restingCentre + coverHeight / 2 + 32) + 'px';
+      foot.style.bottom = 'auto';
+      below.style.marginTop = -Math.max(0, H - foot.offsetTop - foot.offsetHeight - 24) * liftCover + 'px';
+    } else {
+      foot.style.top = foot.style.bottom = '';
+      below.style.marginTop = '';
+    }
+    var big = flip >= 1 && bsc > 1;
+    if (big) { book.style.setProperty('--bwd', 'calc(clamp(150px,27vh,270px) * ' + bsc + ')'); book.style.perspective = (1400 * bsc) + 'px'; bsc = 1; } else { book.style.removeProperty('--bwd'); book.style.perspective = ''; }
+    book.style.transform = 'translate(calc(-50% - ' + bx + 'vw),calc(-50% - ' + by + 'vh)) scale(' + bsc + ') rotate(' + ((1 - rise) * -6 + Math.sin(bump * 2.4) * 2.2 + Math.sin(mg * 38) * 1.7 * brew) + 'deg)';
+    // the story is written: typed scraps spiral in behind the book, it glows and trembles, then stars fly as it turns over
+    magicEl.style.transform = burstEl.style.transform = 'translate(' + (-bx) + 'vw,' + (-by) + 'vh)';
+    wsps.forEach(function(w, n){
+      var phrase = seg(mg, n * .085, .4 + n * .085), e = ease(phrase), ang = n * 2.3 + e * 3.4;
+      var radiusX = Math.min(W * .25, H * .65), radiusY = H * .37;
+      w.style.opacity = seg(phrase, 0, .14) * (1 - seg(phrase, .82, 1));
+      w.style.transform = 'translate(-50%,-50%) translate3d(' + (Math.cos(ang) * radiusX * (1 - e)) + 'px,' + (Math.sin(ang) * radiusY * (1 - e)) + 'px,0) rotate(' + ((1 - e) * (n % 2 ? 18 : -18)) + 'deg) scale(' + (1 - e * .55) + ')';
+    });
+    var glow = P(.875, .925) * (1 - P(.95, .985)), bs = P(.925, .97);
+    halo.style.opacity = glow * (reduced ? 1 : .82 + Math.sin(t * 7) * .18); halo.style.transform = 'scale(' + (.45 + glow * .45 + P(.925, .96) * .45) + ')';
+    bstars.forEach(function(st, n){ var e = out(bs), ang = n / bstars.length * 6.283 + .3, R = e * (wide ? 34 + (n % 3) * 10 : 22 + (n % 3) * 7);
+      st.style.opacity = seg(bs, 0, .08) * (1 - seg(bs, .55, 1)); st.style.transform = 'translate3d(' + (Math.cos(ang) * R) + 'vh,' + (Math.sin(ang) * R + e * e * 9) + 'vh,0) rotate(' + (e * 320 + n * 40) + 'deg) scale(' + (.6 + (n % 4) * .32) + ')'; });
+    bookIn.style.transform = 'rotateX(' + ((1 - flip) * 7 + flip * 2) + 'deg) rotateY(' + (24 * (1 - flip) * rise + flip * 167) + 'deg)';   // rests turned a little, before and after the turn, so its thickness shows
+    bookIn.classList.toggle('turned', flip > .5);
+    // at rest after the turn, drop the layer hint so the browser redraws the cover at its enlarged size (otherwise it is a stretched small copy)
+    var settled = flip >= 1; if (settled !== bookSettled) { bookSettled = settled; book.style.willChange = bookIn.style.willChange = settled ? 'auto' : ''; }
+    var f2 = P(.975, .995);
+    var reveal = reduced ? 1 : seg(actualScroll, .82, 1);
+    var summaryReveal = reduced ? 1 : ease(seg(reveal, .12, .32));
+    foot.style.opacity = 1;
+    foot.querySelector(':scope > p').style.opacity = summaryReveal;
+    foot.style.pointerEvents = summaryReveal > .5 ? 'auto' : 'none';
+    foot.inert = summaryReveal < .5;
+    if (review.parentElement === foot) {
+      [document.getElementById('review-check'), document.getElementById('review-approval')].forEach(function(group, n) {
+        var shown = reduced ? 1 : ease(seg(reveal, n ? .68 : .36, n ? .9 : .6));
+        group.style.opacity = shown;
+        group.inert = shown < .5;
+      });
+    }
+    coBox.style.opacity = f2;
+    if (f2 > 0) {
+      var br = coverImage.getBoundingClientRect(), sr2 = stage.getBoundingClientRect();
+      var L = br.left - sr2.left, T = br.top - sr2.top, bw = br.width, bh = br.height, R = L + bw;
+      var lw = wide ? Math.min(150, L - 18) : L - 14, lx = wide ? L - lw - 12 : 6;
+      var rx = wide ? R + bw * .08 : R + 8, rw = wide ? Math.min(bw * .42, 150) : W - R - 14;
+      // Label height on the cover and the curve's control point, expressed as fractions of the image bounds.
+      var layout = { name:[wide ? .02 : -.02, .05, .1], face:[.42, .03, .46],
+                     baddy:[wide ? .82 : .5, 1.04, .72], fox:[.81, .12, .82] };
+      cos.forEach(function(c, n){
+        var key = c.dataset.k, guide = layout[key], onRight = key === 'baddy', arrow = coArrows[n];
+        var available = onRight ? rw : lw;
+        c.style.visibility = arrow.style.visibility = available < 60 ? 'hidden' : '';
+        c.style.left = (onRight ? rx : lx) + 'px';
+        var top = T + bh * guide[0];
+        if (wide && onRight) top = Math.max(top, foot.getBoundingClientRect().bottom - sr2.top + 10);
+        c.style.top = top + 'px';
+        c.style.width = Math.max(available, 60) + 'px';
+        c.style.textAlign = onRight ? 'left' : 'right';
+        var label = c.getBoundingClientRect(), target = coverTargets[key].getBoundingClientRect();
+        var sx = (onRight ? label.left - 5 : label.right + 5) - sr2.left;
+        var sy = label.top - sr2.top + label.height * (onRight ? .7 : .55);
+        arrow.setAttribute('d', 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) +
+          ' Q' + (L + bw * guide[1]).toFixed(1) + ' ' + (T + bh * guide[2]).toFixed(1) +
+          ' ' + (target.left - sr2.left).toFixed(1) + ' ' + (target.top - sr2.top).toFixed(1));
+      });
+    }
+  }
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced)
+    addEventListener('pointermove', function(e){ tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, { passive:true });
+
+  /* ----- library, then lights out ----- */
+  var cur = document.getElementById('curtain'), dl = cur.querySelector('.drape.l'), dr = cur.querySelector('.drape.r'), fin = document.getElementById('final'),
+      libStage = document.getElementById('libStage'), shelves = document.getElementById('shelves'), bks = [].slice.call(shelves.querySelectorAll('.bk')),
+      night = document.getElementById('night'), devs = [].slice.call(cur.querySelectorAll('.dev')), bedtime = document.getElementById('bedtime'), spk = document.getElementById('spk'),
+      now = document.getElementById('now'), picks = bks.filter(function(b){ return b.dataset.n; }).map(function(b){ var d = document.createElement('div'); d.className = 'picklit';
+        d.innerHTML = '<img src="' + b.querySelector('img').getAttribute('src') + '" alt=""><b>' + b.dataset.n + '</b>'; libStage.insertBefore(d, bedtime); return { el:b, lit:d, n:+b.dataset.n }; }),
+      libA = cur.querySelector('.lib-head.a'), libB = cur.querySelector('.lib-head.b');
+
+  var foxFigure = figs.filter(function(f){ return f.dataset.name === 'Foxy'; })[0];
+  var foxString = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  foxString.classList.add('fox-label-string');
+  foxString.setAttribute('aria-hidden', 'true');
+  var foxLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  foxString.appendChild(foxLine);
+  foxFigure._tag.appendChild(foxString);
+  function placeFoxString() {
+    var tagWidth = foxFigure._tag.offsetWidth;
+    var dx = innerWidth * .30;
+    foxString.setAttribute('width', innerWidth);
+    foxString.setAttribute('height', 80);
+    foxLine.setAttribute('x1', innerWidth / 2 + 12);
+    foxLine.setAttribute('y1', 0);
+    foxLine.setAttribute('x2', innerWidth / 2 + tagWidth / 2 - dx);
+    foxLine.setAttribute('y2', 30.4 + foxFigure.offsetHeight * .125);
+  }
+  addEventListener('resize', placeFoxString);
+  addEventListener('load', placeFoxString);
+  placeFoxString();
+  var bookSettled = false;
+  function frame(){
+    mx += (tx - mx) * .06; my += (ty - my) * .06;
+
+    castFrame(performance.now());
+    var wide = !narrow.matches;
+
+    // the library fills, the lights go out, and one story plays
+    var c = reduced ? .7 : prog(cur);
+    var dark = ease(wide ? seg(c, .42, .56) : seg(c, .36, .46)), up = ease(seg(c, .42, .6)), leave = wide ? 0 : ease(seg(c, .6, .67)), bo = wide ? .027 : .02;   // phones: the cabinet leaves before the bed arrives
+    var arrival = clamp((innerHeight - cur.getBoundingClientRect().top) / innerHeight);
+    var bookProgress = wide ? c : c + arrival * .12;
+    if (!wide) shelves.style.top = Math.max(libStage.offsetHeight * .6, libA.offsetTop + libA.offsetHeight + 24 + shelves.offsetHeight / 2) + 'px';
+    else shelves.style.top = '';
+    bks.forEach(function(b, n){ var o = .02 + n * bo, fly = seg(bookProgress, o, o + .1), k = back(fly), e = out(fly), rest = -16 * (1 - dark);
+      b.style.opacity = seg(bookProgress, o, o + .008); b.style.zIndex = fly < 1 ? 6 : 1;
+      b.style.transform = 'perspective(120vh) translate3d(' + ((1 - e) * (n % 2 ? 22 : -16)) + 'vh,' + ((1 - e) * 78 - Math.sin(e * Math.PI) * 9) + 'vh,' + ((1 - e) * 26) + 'vh) rotateX(' + ((1 - k) * 46) + 'deg) rotateY(' + (rest - (1 - k) * 44) + 'deg) rotateZ(' + ((1 - k) * (n % 2 ? 22 : -22)) + 'deg)'; });
+    shelves.style.transform = wide ? 'translate(calc(-50% - ' + (up * 28) + 'vw),-50%) scale(' + (1 - up * .13) + ')' : 'translate(-50%,calc(-50% - ' + (leave * 75) + 'vh))';
+    shelves.style.opacity = 1 - leave;
+    night.style.opacity = dark * .88;
+    var sr = libStage.getBoundingClientRect();
+    picks.forEach(function(pk){ var r = pk.el.getBoundingClientRect(), on = wide ? seg(c, .5 + pk.n * .025, .54 + pk.n * .025) : seg(c, .44 + pk.n * .025, .48 + pk.n * .025) * (1 - leave);
+      pk.lit.style.left = (r.left - sr.left) + 'px'; pk.lit.style.top = (r.top - sr.top) + 'px'; pk.lit.style.width = r.width + 'px'; pk.lit.style.height = r.height + 'px'; pk.lit.style.opacity = on; });
+    var act = Math.floor(performance.now() / 2600) % devs.length; devs.forEach(function(d, n){ d.classList.toggle('on', reduced ? n === 0 : n === act); });
+    libA.style.opacity = wide ? 1 - seg(c, .38, .46) : 1 - seg(c, .34, .4); libB.style.opacity = wide ? seg(c, .5, .58) : seg(c, .42, .5);
+    var bedIn = out(wide ? seg(c, .5, .66) : seg(c, .64, .76)), nowIn = out(wide ? seg(c, .64, .72) : seg(c, .7, .77)), dv = wide ? seg(c, .56, .68) : seg(c, .68, .78);
+    bedtime.style.transform = 'translate3d(0,' + ((1 - bedIn) * 110) + '%,0)'; spk.style.transform = 'translate3d(0,' + ((1 - back(dv)) * 30) + 'vh,0)'; spk.style.opacity = seg(dv, 0, .35);
+    now.style.opacity = nowIn; now.style.transform = 'translate3d(0,' + ((1 - nowIn) * 14) + 'px,0)'; now.style.pointerEvents = nowIn > .5 ? 'auto' : 'none';
+    libStage.classList.toggle('playing', c > (wide ? .64 : .7));
+    var close = 0;
+    dl.style.transform = 'translate3d(' + (-101 + close * 101) + '%,0,0)';
+    dr.style.transform = 'translate3d(' + (101 - close * 101) + '%,0,0)';
+    fin.style.opacity = wide ? seg(c, .93, .99) : seg(c, .95, .995); fin.style.pointerEvents = c > .95 ? 'auto' : 'none';
+
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize', castGeo); addEventListener('load', function(){ castGeo(); if (T0 === Infinity) T0 = performance.now(); });
+  setTimeout(function(){ if (T0 === Infinity) T0 = performance.now(); }, 2500);   // slow connection: do not hold the headline forever
+  castGeo();
+  requestAnimationFrame(frame);
+
+  var audio = document.getElementById('audio'), btn = document.getElementById('listen'), hint = document.getElementById('nowHint');
+  var listenLabel = document.getElementById('listenLabel');
+  var review = document.getElementById('story-review'), below = document.getElementById('review-below');
+  var beside = matchMedia('(min-width:1000px) and (min-height:680px) and (prefers-reduced-motion:no-preference)');
+  function placeReview() {
+    (beside.matches ? foot : below).appendChild(review);
+    review.querySelectorAll('#review-check, #review-approval').forEach(function(group) {
+      group.style.opacity = '';
+      group.inert = false;
+    });
+  }
+  placeReview();
+  beside.addEventListener('change', placeReview);
+  function jumpToReview() {
+    if (location.hash === '#lights-out') {
+      scrollTo(0, cur.offsetTop + Math.max(0, cur.offsetHeight - innerHeight) * .85);
+      return;
+    }
+    if (location.hash === '#cast' && !START && !reduced) {
+      scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * ((.755 - .12) / .88) * .82);
+      return;
+    }
+    if (location.hash === '#create-hero' && !START) {
+      if (reduced) creation.scrollIntoView({block:'center'});
+      else scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .088 * .82);
+      return;
+    }
+    if (location.hash !== '#review-story') return;
+    if (beside.matches) scrollTo(0, hero.offsetTop + hero.offsetHeight - innerHeight);
+    else review.scrollIntoView({block:'center'});
+  }
+  addEventListener('load', function(){ requestAnimationFrame(jumpToReview); });
+  addEventListener('hashchange', jumpToReview);
+  var approve = document.getElementById('approve-demo'), edit = document.getElementById('edit-demo');
+  var editor = document.getElementById('sample-editor'), line = document.getElementById('sample-line');
+  var status = document.getElementById('review-status'), savedLine = line.value;
+  approve.addEventListener('click', function(){
+    document.getElementById('approve-hint').hidden = true;
+    approve.parentElement.hidden = true;
+    btn.hidden = false;
+    status.textContent = savedLine === line.defaultValue ? 'Story approved' : 'Edit approved. Hear the original recording below.';
+    btn.focus({preventScroll:true});
+  });
+  var reader = document.getElementById('story-reader');
+  document.getElementById('read-demo').addEventListener('click', function(){
+    reader.querySelector('article p').textContent = savedLine;
+    reader.showModal();
+    reader.querySelector('article').scrollTop = 0;
+  });
+  edit.addEventListener('click', function(){
+    line.value = savedLine; editor.returnValue = ''; editor.showModal(); line.focus();
+  });
+  editor.addEventListener('close', function(){
+    if (editor.returnValue !== 'save') return;
+    savedLine = line.value.trim() || savedLine;
+    status.textContent = 'Opening line saved for this preview.';
+    edit.focus({preventScroll:true});
+  });
+  function label(){ btn.classList.toggle('on', !audio.paused); listenLabel.textContent = audio.paused ? 'Play this story' : 'Pause'; hint.textContent = audio.paused ? 'Tap to hear it' : 'Playing. Tap to pause'; }
+  function playStory(player, message) {
+    player.play().catch(function(error) {
+      // A listener can pause or switch stories before the play promise resolves.
+      if (error.name !== 'AbortError') message.textContent = 'Couldn’t play. Tap to retry';
+    });
+  }
+  function toggle(){ if (audio.paused) playStory(audio, listenLabel); else audio.pause(); }
+  btn.addEventListener('click', toggle); now.addEventListener('click', toggle); audio.addEventListener('play', label); audio.addEventListener('pause', label);
+
+  // Start when enough of the item is on screen to see it move.
+  if ('IntersectionObserver' in window) {
+    var entryObserver = new IntersectionObserver(function(entries) {
+      var groupCounts = new Map();
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting || entry.intersectionRatio < .18) return;
+        var item = entry.target;
+        var group = item.parentElement;
+        var index = groupCounts.get(group) || 0;
+        item.style.setProperty('--entry-delay', index * 150 + 'ms');
+        item.classList.add('entry-visible');
+        groupCounts.set(group, index + 1);
+      });
+    }, { threshold:.18, rootMargin:'0px 0px -8% 0px' });
+    var exitObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) entry.target.classList.remove('entry-visible');
+      });
+    });
+    document.querySelectorAll('.phone-step, #hear .track, #devices .devgrid li, .language-gallery > li, #languages .lede, #review-below #review-check, #review-below #review-approval').forEach(function(item) {
+      item.classList.add('entry-ready');
+      entryObserver.observe(item);
+      exitObserver.observe(item);
+    });
+  }
+
+  // hear more: one shared player; starting one story stops the other players on the page
+  var audio2 = document.getElementById('audio2'), tracks = [].slice.call(document.querySelectorAll('.track')), curTrack = null;
+  function markTracks(){ tracks.forEach(function(t){ var on = t === curTrack && !audio2.paused; t.querySelector('.play').classList.toggle('on', on); t.querySelector('.pt b').textContent = on ? 'Pause' : 'Play'; }); }
+  tracks.forEach(function(t){ t.addEventListener('click', function(){ if (curTrack === t && !audio2.paused) { audio2.pause(); return; }
+    if (curTrack !== t) { audio2.src = t.dataset.src; curTrack = t; } audio.pause(); playStory(audio2, t.querySelector('.pt b')); }); });
+  audio2.addEventListener('play', markTracks); audio2.addEventListener('pause', markTracks); audio2.addEventListener('ended', markTracks);
+  audio.addEventListener('play', function(){ audio2.pause(); });
+
+  // read along: transcripts with timings (the same data the current site uses), loaded the first time a story is played
+  var raEl = document.getElementById('readalong'), raBox = document.getElementById('raBox'), raTitle = document.getElementById('raTitle'), raData = null, raSpans = [], raNow = -1;
+  function raShow(id){ var st = (raData || []).filter(function(x){ return x.id === id; })[0]; if (!st) { raEl.hidden = true; return; }
+    raTitle.textContent = st.title; raBox.innerHTML = ''; raSpans = []; raNow = -1;
+    st.paragraphs.forEach(function(par){ var pEl = document.createElement('p'); par.forEach(function(sn){ var sp = document.createElement('span'); sp.textContent = sn[0]; sp._a = sn[1]; sp._b = sn[2]; pEl.appendChild(sp); pEl.appendChild(document.createTextNode(' ')); raSpans.push(sp); }); raBox.appendChild(pEl); });
+    raEl.hidden = false; raBox.scrollTop = 0;
+    setTimeout(function(){ if (raEl.scrollIntoView) raEl.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block:'nearest' }); }, 60); }   // the panel sits below the books, so bring it into view
+  function raTick(){ if (!raSpans.length) return; var t = audio2.currentTime, k = -1; for (var n = 0; n < raSpans.length; n++) { if (raSpans[n]._a <= t) k = n; else break; }
+    if (k === raNow) return; raNow = k; raSpans.forEach(function(sp, n){ sp.classList.toggle('ra-now', n === k); sp.classList.toggle('ra-done', n < k); });
+    if (k >= 0) raBox.scrollTop = Math.max(0, raSpans[k].offsetTop - raBox.clientHeight * .32); }
+  audio2.addEventListener('timeupdate', raTick); audio2.addEventListener('seeked', raTick);
+  tracks.forEach(function(t){ t.addEventListener('click', function(){ tracks.forEach(function(x){ x.classList.toggle('live', x === t); });
+    if (raData) raShow(t.dataset.id); else fetch('/test/v1/assets-product/readalong.json?v=martin-sofia').then(function(r){ return r.json(); }).then(function(d){ raData = d; raShow(curTrack ? curTrack.dataset.id : t.dataset.id); }).catch(function(){ raEl.hidden = true; }); }); });
+})();
+</script>
 </body>
 </html>
