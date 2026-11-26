@@ -29,22 +29,22 @@
   .pup { width:max-content; }
   .pup > img { height:100%; width:auto; filter:drop-shadow(0 .04em .03em rgba(40,40,20,.35)); }
   .pup.rose { --h:1.42em; left:30%; bottom:calc(100% - .52em); margin-left:-.25em; }
-  .pup.shosh { --h:.82em; left:30%; bottom:calc(100% - .06em); margin-left:.34em; }
+  .pup.foxy { --h:.82em; left:30%; bottom:calc(100% - .06em); margin-left:.34em; }
   .pup.mummy { --h:1.95em; left:calc(100% - .2em); top:.05em; transform-origin:0 80%; }
-  .pup.bitey { --h:.72em; z-index:4; left:84%; bottom:calc(100% + .2em); }
+  .pup.biscuit { --h:.72em; z-index:4; left:84%; bottom:calc(100% + .2em); }
   .pup.daddy { --h:1.95em; right:calc(100% - .2em); top:-.2em; transform-origin:100% 80%; }
-  .pup.matt { --h:1.95em; left:calc(100% - .2em); top:.05em; transform-origin:0 80%; }
+  .pup.witch { --h:1.95em; left:calc(100% - .2em); top:.05em; transform-origin:0 80%; }
   .pup.badger { --h:.66em; z-index:4; left:84%; bottom:calc(100% + .2em); }
   /* a plaque is positioned in the SIGN's em units (so it tracks the figures at every size); the card inside sets its own type */
   .plq { position:absolute; z-index:5; margin:0; opacity:0; will-change:transform,opacity; }
   .plq > span { display:block; padding:.5em .65em .42em; background:var(--cream) var(--paint) center/cover; font:400 clamp(.7rem,.115em,1.02rem)/1.25 var(--tag); color:#3a3027; white-space:nowrap; text-align:left; box-shadow:0 3px 2px rgba(60,25,25,.28); }
   .plq b { display:block; font-weight:400; color:var(--tomato); letter-spacing:.08em; text-transform:uppercase; font-size:.86em; margin-bottom:.1em; }
   .plq.rose { right:calc(70% + .4em); bottom:calc(100% + .42em); }
-  .plq.shosh { left:calc(30% + 1.06em); bottom:calc(100% + .26em); }
+  .plq.foxy { left:calc(30% + 1.06em); bottom:calc(100% + .26em); }
   .plq.mummy { right:-1.05em; top:calc(100% + .06em); }
-  .plq.bitey { left:calc(84% + .5em); bottom:calc(100% + .5em); transform:rotate(-2deg); }
+  .plq.biscuit { left:calc(84% + .5em); bottom:calc(100% + .5em); transform:rotate(-2deg); }
   .plq.daddy { right:calc(100% - .12em); top:calc(100% + .04em); transform:rotate(-3deg); }
-  .plq.matt { right:-1.05em; top:calc(100% + .06em); transform:rotate(2.5deg); }
+  .plq.witch { right:-1.05em; top:calc(100% + .06em); transform:rotate(2.5deg); }
   .plq.badger { left:calc(84% + .5em); bottom:calc(100% + .5em); transform:rotate(-2deg); }
 
   .under { position:absolute; z-index:6; left:50%; bottom:clamp(1.2rem,4.5vh,3rem); transform:translateX(-50%); width:min(90vw,40rem); text-align:center; }
@@ -81,15 +81,15 @@
     #opening { height:470vh; } .under { display:none; }
     .signwrap { margin-top:23vh; font-size:18.5vw; } .sign { line-height:.86; } .sign .w { display:block; } .sign .l2 { font-size:.72em; margin-top:.08em; }
     .thread.a { left:22%; } .thread.b { right:22%; }
-    .pup.rose { --h:1.4em; left:38%; bottom:calc(100% - .5em); } .pup.shosh { --h:.8em; left:38%; margin-left:.36em; bottom:calc(100% - .06em); }
-    .pup.daddy { --h:1.95em; right:calc(100% - .6em); top:.4em; } .pup.matt, .pup.mummy { --h:1.95em; left:calc(100% - .6em); top:.6em; }
-    .pup.badger, .pup.bitey { left:72%; }
+    .pup.rose { --h:1.4em; left:38%; bottom:calc(100% - .5em); } .pup.foxy { --h:.8em; left:38%; margin-left:.36em; bottom:calc(100% - .06em); }
+    .pup.daddy { --h:1.95em; right:calc(100% - .6em); top:.4em; } .pup.witch, .pup.mummy { --h:1.95em; left:calc(100% - .6em); top:.6em; }
+    .pup.badger, .pup.biscuit { left:72%; }
     .plq > span { font-size:.84rem; }
-    .plq.rose { left:auto; right:calc(62% + .36em); bottom:calc(100% + .5em); } .plq.shosh { left:calc(38% + 1.12em); right:auto; bottom:calc(100% + .22em); } .plq.shosh > span, .plq.matt > span { white-space:normal; width:8.8rem; }
-    .plq.daddy { right:auto; left:-.62em; top:calc(100% + .08em); } .plq.matt, .plq.mummy { left:auto; right:-.62em; top:calc(100% + .08em); }
+    .plq.rose { left:auto; right:calc(62% + .36em); bottom:calc(100% + .5em); } .plq.foxy { left:calc(38% + 1.12em); right:auto; bottom:calc(100% + .22em); } .plq.foxy > span, .plq.witch > span { white-space:normal; width:8.8rem; }
+    .plq.daddy { right:auto; left:-.62em; top:calc(100% + .08em); } .plq.witch, .plq.mummy { left:auto; right:-.62em; top:calc(100% + .08em); }
     .bill { top:calc(100% + 3.2em); width:92vw; margin-left:-46vw; } .bill-in p { font-size:1.2rem; } .bt { height:var(--bth,3em); opacity:.55; }
     .fl.ufo { right:4vw; bottom:33vh; height:9vh; } .fl.sat, .fl.planet2, .hang.xs, .fl.comet { display:none; }
-    .plq.badger, .plq.bitey { display:none; }
+    .plq.badger, .plq.biscuit { display:none; }
     .fl.cottage { height:25vh; right:3vw; bottom:17.5vh; } .fl.rowa, .fl.rowb, .fl.rowc { bottom:17vh; height:36vh; } .fl.rowa { margin-left:-27vh; } .fl.rowb { margin-left:-81vh; } .fl.rowc { margin-left:27vh; }
     .fl.grass { bottom:-23.5vh; } .fl.mush { bottom:18.5vh; left:8vw; } .fl.pot { bottom:18vh; left:31vw; height:10vh; }
     .fl.planet { left:5vw; bottom:21vh; height:14vh; } .fl.rocket { bottom:20vh; height:11vh; }

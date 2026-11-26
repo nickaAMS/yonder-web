@@ -11,9 +11,9 @@
   [.08, .16, .24, .32].forEach(function(r){ for (var a = 0; a < 28; a++) { var th = a / 28 * Math.PI * 2; sh.push((Math.cos(th) * r).toFixed(3) + 'em ' + (Math.sin(th) * r).toFixed(3) + 'em 0 #efe4cf'); } });
   sign.style.textShadow = sh.join(',');
 
-  var rig = document.getElementById('rig'), rose = $('.pup.rose'), daddy = $('.pup.daddy'), matt = $('.pup.matt'),
-      shosh = $('.pup.shosh'), mummy = $('.pup.mummy'), bitey = $('.pup.bitey'),
-      plq = { rose:$('.plq.rose'), shosh:$('.plq.shosh'), daddy:$('.plq.daddy'), matt:$('.plq.matt'), mummy:$('.plq.mummy'), bitey:$('.plq.bitey') }, rot = { rose:-2, shosh:2, daddy:-3, matt:2.5, badger:-2, mummy:2.5, bitey:-2 },
+  var rig = document.getElementById('rig'), rose = $('.pup.rose'), daddy = $('.pup.daddy'), witch = $('.pup.witch'),
+      foxy = $('.pup.foxy'), mummy = $('.pup.mummy'), biscuit = $('.pup.biscuit'),
+      plq = { rose:$('.plq.rose'), foxy:$('.plq.foxy'), daddy:$('.plq.daddy'), witch:$('.plq.witch'), mummy:$('.plq.mummy'), biscuit:$('.plq.biscuit') }, rot = { rose:-2, foxy:2, daddy:-3, witch:2.5, badger:-2, mummy:2.5, biscuit:-2 },
       rows = $$('.fl.rowa, .fl.rowb, .fl.rowc'), grass = $('.fl.grass'), cottage = $('.fl.cottage'), mush = $('.fl.mush'), pot = $('.fl.pot'),
       backdrop = document.getElementById('backdrop'), hangs = $$('.hang'), planet = $('.fl.planet'), rocket = $('.fl.rocket'),
       slips = $$('#billIn p'), bill = document.getElementById('bill'), ufo = $('.fl.ufo'), sat = $('.fl.sat'), planet2 = $('.fl.planet2'), comet = $('.fl.comet'), helms = $$('.helm'), space = document.getElementById('space'), cue = document.getElementById('bcue'), T0 = performance.now();
@@ -23,7 +23,7 @@
   hangs = $$('.hang');
   hangs.forEach(function(h){ h.firstChild.style.height = h.dataset.l + 'vh'; h.lastChild.style.height = h.dataset.s + 'vh'; });
   function tagIn(el, key, k){ el.style.opacity = clamp(k * 3); el.style.transform = 'translateY(' + ((1 - out(k)) * 10) + 'px) rotate(' + rot[key] + 'deg)'; }
-  rot.mummy = 2.5; rot.rose = -2; rot.shosh = 2;
+  rot.mummy = 2.5; rot.rose = -2; rot.foxy = 2;
 
   var curW = -1, billInEl = document.getElementById('billIn');
   var underEl = hero.querySelector('.under');
@@ -38,16 +38,16 @@ var drop = reduced ? 1 : clamp((t - .15) / 1.3), settle = Math.sin(drop * Math.P
 
     // the cast come out from behind the letters, one at a time
     k = Math.max(back(P(.04, .1)), pk(0, .5)); rose.style.opacity = Math.max(P(.04, .055), idle > 0 ? 1 : 0); rose.style.transform = 'translateY(' + ((1 - k) * .9) + 'em) rotate(' + ((1 - k) * 6) + 'deg)'; tagIn(plq.rose, 'rose', P(.08, .12));
-    k = Math.max(back(P(.11, .16)), pk(-.5, .55)); shosh.style.opacity = Math.max(P(.11, .12), idle > 0 ? 1 : 0); shosh.style.transform = 'translateY(' + ((1 - k) * .7) + 'em) rotate(' + ((1 - k) * -10 + 4) + 'deg)'; tagIn(plq.shosh, 'shosh', P(.14, .18)); if (narrow) plq.shosh.style.opacity = clamp(P(.14, .18) * 3) * (1 - P(.83, .855));
+    k = Math.max(back(P(.11, .16)), pk(-.5, .55)); foxy.style.opacity = Math.max(P(.11, .12), idle > 0 ? 1 : 0); foxy.style.transform = 'translateY(' + ((1 - k) * .7) + 'em) rotate(' + ((1 - k) * -10 + 4) + 'deg)'; tagIn(plq.foxy, 'foxy', P(.14, .18)); if (narrow) plq.foxy.style.opacity = clamp(P(.14, .18) * 3) * (1 - P(.83, .855));
     k = Math.max(back(P(.19, .26)), pk(2.2, .5)); daddy.style.opacity = Math.max(P(.19, .205), idle > 0 ? 1 : 0); daddy.style.transform = 'translateX(' + ((1 - k) * .9) + 'em) rotate(' + (-14 + (1 - k) * 14 + Math.sin(t * 1.2) * .6) + 'deg)'; tagIn(plq.daddy, 'daddy', P(.24, .28));
-    // the baddy arrives, and when the story changes he is thrown out and Mummy takes his place
+    // the baddy arrives, and when the story changes she is thrown out and Mummy takes her place
     var chuck = P(.68, .78), c2 = chuck * chuck;
-    k = Math.max(back(P(.29, .36)), pk(4.1, .45)); matt.style.opacity = Math.max(P(.29, .305), idle > 0 ? 1 : 0) * (1 - P(.77, .78));
-    matt.style.transform = 'translate(' + ((1 - k) * -.9 + c2 * 5) + 'em,' + (-Math.sin(chuck * Math.PI * .75) * 3.2 + c2 * 1.5) + 'em) rotate(' + (13 - (1 - k) * 13 + Math.sin(t * 1.1 + 1) * .6 * (1 - chuck) + chuck * 560) + 'deg)';
-    plq.matt.style.opacity = clamp(P(.34, .38) * 3) * (1 - P(.66, .69)); plq.matt.style.transform = 'translateY(' + ((1 - out(P(.34, .38))) * 10 + P(.66, .69) * 14) + 'px) rotate(' + (2.5 + P(.66, .69) * 14) + 'deg)';
+    k = Math.max(back(P(.29, .36)), pk(4.1, .45)); witch.style.opacity = Math.max(P(.29, .305), idle > 0 ? 1 : 0) * (1 - P(.77, .78));
+    witch.style.transform = 'translate(' + ((1 - k) * -.9 + c2 * 5) + 'em,' + (-Math.sin(chuck * Math.PI * .75) * 3.2 + c2 * 1.5) + 'em) rotate(' + (13 - (1 - k) * 13 + Math.sin(t * 1.1 + 1) * .6 * (1 - chuck) + chuck * 560) + 'deg)';
+    plq.witch.style.opacity = clamp(P(.34, .38) * 3) * (1 - P(.66, .69)); plq.witch.style.transform = 'translateY(' + ((1 - out(P(.34, .38))) * 10 + P(.66, .69) * 14) + 'px) rotate(' + (2.5 + P(.66, .69) * 14) + 'deg)';
     k = back(P(.8, .87)); mummy.style.opacity = P(.8, .815); mummy.style.transform = 'translateX(' + ((1 - k) * -.9) + 'em) rotate(' + (11 - (1 - k) * 11 + Math.sin(t * 1.1 + 1) * .5) + 'deg)'; tagIn(plq.mummy, 'mummy', P(.85, .89));
-    // Mr Bitey takes a perch on the sign once the story moves to space
-    k = P(.86, .93); bitey.style.opacity = P(.86, .87); bitey.style.transform = 'translateY(' + ((1 - back(k)) * -2.2) + 'em)'; tagIn(plq.bitey, 'bitey', P(.92, .96));
+    // Biscuit takes a perch on the sign once the story moves to space
+    k = P(.86, .93); biscuit.style.opacity = P(.86, .87); biscuit.style.transform = 'translateY(' + ((1 - back(k)) * -2.2) + 'em)'; tagIn(plq.biscuit, 'biscuit', P(.92, .96));
 
     // world one rises from the floor; world two drops from the flies while world one sinks
     var sink = ease(P(.66, .8));
