@@ -397,17 +397,29 @@
   var home = [];
   function castGeo(){ figs.forEach(function(f){ f.style.transform = ''; }); var W = stage.offsetWidth, H = stage.offsetHeight;
     home = figs.map(function(f){ return { dx: W / 2 - f.offsetLeft, dy: H * .56 - (f.offsetTop + f.offsetHeight / 2) }; }); }
-  var START = window.NS_START || 0;   // variant B begins with the cast already in the forest
+  var variantOpening = document.getElementById('opening'), skippedTravel = 0;
+  function sizeCastScene() {
+    if (!variantOpening || reduced) return;
+    hero.style.height = '';
+    var fullHeight = hero.getBoundingClientRect().height;
+    var fullTravel = fullHeight - innerHeight;
+    // Run the original timeline from cast progress .70, just before the book rises at .745.
+    var handoff = (.39 + .61 * .70 - .12) / .88 * .82;
+    skippedTravel = Math.round(fullTravel * handoff);
+    hero.style.height = (fullHeight - skippedTravel) + 'px';
+  }
+  sizeCastScene();
+  addEventListener('resize', sizeCastScene);
   var creation = document.getElementById('createHero'), createTitle = document.getElementById('createTitle'),
       createOnce = document.getElementById('createOnce'), createForm = creation.querySelector('.create-form'),
       createLook = document.getElementById('createLook'), smileWords = document.getElementById('look-smile'), blondeHead = creation.querySelector('[data-rose-layer="head"]'),
       createDetails = creation.querySelectorAll('[data-create-details]'), createInterests = document.getElementById('createInterests'),
       typedRose = document.getElementById('typedRose'), roseName = document.getElementById('roseName'),
       paperRose = creation.querySelector('.paper-rose'), roseLayers = creation.querySelectorAll('[data-rose-layer]');
-  var staticCreation = reduced && !START;
+  var staticCreation = reduced && !variantOpening;
   stage.classList.toggle('creation-static', staticCreation);
   function creationFrame(progress) {
-    var active = !START && (staticCreation || (progress >= .13 && progress < .434));
+    var active = !variantOpening && (staticCreation || (progress >= .13 && progress < .434));
     creation.hidden = !active;
     if (!active) return;
     var ending = !staticCreation && progress >= .365;
@@ -452,11 +464,16 @@
     createOnce.hidden = !staticCreation && !ending;
   }
   function castFrame(now){
-    var actualScroll = prog(hero), scrollProgress = Math.min(actualScroll / .82, 1), t = (now - T0) / 1000, W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
+    var actualScroll = prog(hero);
+    if (skippedTravel) {
+      var travel = hero.getBoundingClientRect().height - innerHeight;
+      actualScroll = (skippedTravel + actualScroll * travel) / (travel + skippedTravel);
+    }
+    var scrollProgress = Math.min(actualScroll / .82, 1), t = (now - T0) / 1000, W = stage.offsetWidth, H = stage.offsetHeight, k, wide = !narrow.matches;
     // Keep the later cues on their original timeline after cutting the introductory beats.
-    var progress = START ? scrollProgress : .12 + .88 * scrollProgress;
-    var p = reduced ? 1 : START ? START + (1 - START) * progress : seg(progress, .39, 1);
-    var intro = START || reduced ? 1 : seg(scrollProgress, 0, .085) * .1;
+    var progress = .12 + .88 * scrollProgress;
+    var p = reduced ? 1 : seg(progress, .39, 1);
+    var intro = variantOpening || reduced ? 1 : seg(scrollProgress, 0, .085) * .1;
     var I = function(x, y){ return seg(intro, x, y); };
     creationFrame(progress);
     if (!(t > 0)) t = 0;
@@ -469,7 +486,7 @@
     hr.style.transform = 'translate3d(' + (opening * 103) + '%,0,0) skewX(' + (-th) + 'deg)';
     cue.style.opacity = 1 - I(0, .025);
 
-    var sign = reduced && !START ? 1 : 1 - I(.025, .065);
+    var sign = reduced && !variantOpening ? 1 : 1 - I(.025, .065);
     copy.style.opacity = sign;
     copy.style.visibility = sign > 0 ? 'visible' : 'hidden';
     copy.inert = sign <= .55;
@@ -499,7 +516,7 @@
       }
       if (f._chip) f._chip.style.opacity = swap * gone;
       if (extra) { var glum = P(.855, .875); f.classList.toggle('sad', p > .86); f.style.opacity = vis * (1 - P(.888, .908)); f.style.transform = 'translate3d(' + px(1.2) + 'px,' + ((1 - inn) * 16 + glum * .8) + 'vh,0) rotate(' + (glum * -4) + 'deg) scale(' + (1 - glum * .05) + ')'; return; }
-      if (!START && !reduced && n === 0 && p < a + .045) {
+      if (!variantOpening && !reduced && n === 0 && p < a + .045) {
         var landing = out(seg(progress, .404, .466));
         var center = W * (wide ? .47 : .5) - f.offsetLeft;
         var toCast = 1 - ease(seg(progress, .466, .553));
@@ -687,11 +704,11 @@
       scrollTo(0, cur.offsetTop + Math.max(0, cur.offsetHeight - innerHeight) * .85);
       return;
     }
-    if (location.hash === '#cast' && !START && !reduced) {
+    if (location.hash === '#cast' && !variantOpening && !reduced) {
       scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * ((.755 - .12) / .88) * .82);
       return;
     }
-    if (location.hash === '#create-hero' && !START) {
+    if (location.hash === '#create-hero' && !variantOpening) {
       if (reduced) creation.scrollIntoView({block:'center'});
       else scrollTo(0, hero.offsetTop + (hero.offsetHeight - innerHeight) * .088 * .82);
       return;

@@ -1,4 +1,5 @@
 {
+  "buildCommand": "node build-v2.mjs",
   "outputDirectory": ".",
   "redirects": [
     {
@@ -8,6 +9,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/v2",
+      "destination": "/test/v2/index.html"
+    },
     {
       "source": "/s/:token/cover",
       "destination": "/api/shared-story?token=:token&asset=cover"
