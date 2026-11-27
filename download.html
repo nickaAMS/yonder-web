@@ -107,6 +107,9 @@
     main a:focus-visible { outline:2px solid var(--navy); outline-offset:4px; }
     .cta[aria-disabled="true"] { cursor:not-allowed; opacity:.5; transform:none; }
     .setup-note { margin:.9rem 0 0; color:#42465d; font-size:.82rem; line-height:1.5; text-align:center; } .setup-note a { color:var(--navy); text-decoration:underline; text-underline-offset:2px; }
+    .install-demo { margin:1.35rem 0 0; padding-top:1.15rem; border-top:1px solid var(--card-line); }
+    .install-demo figcaption { margin:0 0 .65rem; color:#42465d; font:600 .72rem/1.2 var(--text); letter-spacing:.16em; text-transform:uppercase; text-align:center; }
+    .install-demo img { display:block; width:100%; height:auto; border-radius:.6rem; }
 
     .reassurance { display:grid; grid-template-columns:auto minmax(0,1fr); gap:1.1rem; align-items:start; padding:clamp(2.6rem,7vh,4.5rem) var(--gut); border-top:1px solid #d2c2a8; }
     .moon { display:grid; width:2.4rem; height:2.4rem; place-items:center; border-radius:50%; background:#e2d2b6; color:var(--navy); }
@@ -118,13 +121,14 @@
       .platforms { row-gap:0; }
       .platform {
         display:grid;
-        grid-row:span 9;
+        grid-row:span 10;
         grid-template-rows:subgrid;
         align-self:stretch;
         align-items:start;
       }
       .steps { display:grid; grid-row:span 3; grid-template-rows:subgrid; }
       .setup-notes { grid-row:9; }
+      .install-demo { grid-row:10; align-self:start; }
     }
     @media (max-width:760px) {
       .nav-r .wide { display:none; }
@@ -244,6 +248,10 @@
             <div class="setup-notes">
               <p class="setup-note">You may be asked to sign in with your Apple ID.</p>
             </div>
+            <figure class="install-demo">
+              <figcaption>Quick walkthrough</figcaption>
+              <img src="/public/install-ios.gif" alt="Three-step iPhone walkthrough: install TestFlight, open the invitation link, and tap Install." width="440" height="400" loading="lazy">
+            </figure>
           </article>
 
           <article class="platform android" id="android">
@@ -278,6 +286,10 @@
                 <p class="setup-note" id="android-play-note">Use the same Google account you are signed into on the Play Store.</p>
                 <p class="setup-note" id="android-apk-fallback" hidden style="margin-top: .45rem;">Already installed via direct download? <a id="android-fallback-cta" href="?mode=apk">Download latest APK directly</a></p>
               </div>
+              <figure class="install-demo">
+                <figcaption>Quick walkthrough</figcaption>
+                <img src="/public/install-android.gif" alt="Three-step Android walkthrough: join the preview group, accept the tester invite, and tap Install on Google Play." width="440" height="400" loading="lazy">
+              </figure>
             </div>
           </article>
         </div>
